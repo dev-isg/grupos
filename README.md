@@ -1,0 +1,1 @@
+"Grupos" es una aplicación para organizar o encontrar actividades grupales
