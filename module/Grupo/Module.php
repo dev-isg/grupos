@@ -12,6 +12,10 @@ namespace Grupo;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Grupo\Model\Grupo;
+use Grupo\Model\GrupoTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -33,6 +37,26 @@ class Module implements AutoloaderProviderInterface
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Grupo\Model\GrupoTable' =>  function($sm) {
+                    $tableGateway = $sm->get('GrupoTableGateway');
+                    $table = new GrupoTable($tableGateway);
+                    return $table;
+                },
+                'GrupoTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Grupo());
+                    return new TableGateway('ta_grupo', $dbAdapter, null, $resultSetPrototype);//
+                },
+                        
+            ),
+        );
     }
 
     public function onBootstrap(MvcEvent $e)

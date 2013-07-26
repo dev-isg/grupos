@@ -29,12 +29,14 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action[/:in_id]]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+                                'controller' => 'Grupo\Controller\Index',
+                                'action'     => 'index',
                             ),
                         ),
                     ),
@@ -44,7 +46,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'Grupo' => __DIR__ . '/../view',
+            'grupo' => __DIR__ . '/../view',
         ),
     ),
 );
