@@ -197,6 +197,15 @@ class Grupo implements InputFilterAwareInterface
                     array('name' => 'StringTrim'),
                 ),
             )));
+                
+        $inputFilter->add($factory->createInput(array(
+                'name'     => 'tipo_notificacion',
+                'required' => false,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+            )));
             
 //           $inputFilter->add(
 //                $factory->createInput(array(
