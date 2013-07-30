@@ -11,13 +11,13 @@ class Grupo implements InputFilterAwareInterface
     public $in_id;
     public $va_nombre;
     public $va_descripcion;
-    public $va_costo;
-    public $va_latitud;
-    public $va_longitud;
-    public $va_direccion;
-    public $va_referencia;
+//    public $va_costo;
+//    public $va_latitud;
+//    public $va_longitud;
+//    public $va_direccion;
+//    public $va_referencia;
     public $va_imagen;
-    public $va_dirigido;
+//    public $va_dirigido;
     public $va_estado;
     //foraneas
     public $ta_usuario_in_id;
@@ -37,13 +37,13 @@ class Grupo implements InputFilterAwareInterface
             $this->in_id= (!empty($data['in_id'])) ? $data['in_id'] : null;
             $this->va_nombre= (!empty($data['va_nombre'])) ? $data['va_nombre'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-            $this->va_costo= (!empty($data['va_costo'])) ? $data['va_costo'] : null;
-            $this->va_latitud= (!empty($data['va_latitud'])) ? $data['va_latitud'] : null;
-            $this->va_longitud= (!empty($data['va_longitud'])) ? $data['va_longitud'] : null;
-            $this->va_direccion= (!empty($data['va_direccion'])) ? $data['va_direccion'] : null;
-            $this->va_referencia= (!empty($data['va_referencia'])) ? $data['va_referencia'] : null;
+//            $this->va_costo= (!empty($data['va_costo'])) ? $data['va_costo'] : null;
+//            $this->va_latitud= (!empty($data['va_latitud'])) ? $data['va_latitud'] : null;
+//            $this->va_longitud= (!empty($data['va_longitud'])) ? $data['va_longitud'] : null;
+//            $this->va_direccion= (!empty($data['va_direccion'])) ? $data['va_direccion'] : null;
+//            $this->va_referencia= (!empty($data['va_referencia'])) ? $data['va_referencia'] : null;
             $this->va_imagen= (!empty($data['va_imagen'])) ? $data['va_imagen'] : null;
-            $this->va_dirigido= (!empty($data['va_dirigido'])) ? $data['va_dirigido'] : null;
+//            $this->va_dirigido= (!empty($data['va_dirigido'])) ? $data['va_dirigido'] : null;
             $this->va_estado= (!empty($data['va_estado'])) ? $data['va_estado'] : 1;
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
@@ -121,63 +121,63 @@ class Grupo implements InputFilterAwareInterface
                 ),
             )));
             
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'va_costo',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-            
-              $inputFilter->add($factory->createInput(array(
-                'name'     => 'va_direccion',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 3,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-              
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'va_referencia',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 3,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-            
+//            $inputFilter->add($factory->createInput(array(
+//                'name'     => 'va_costo',
+//                'required' => false,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name'    => 'StringLength',
+//                        'options' => array(
+//                            'encoding' => 'UTF-8',
+//                            'min'      => 1,
+//                            'max'      => 100,
+//                        ),
+//                    ),
+//                ),
+//            )));
+//            
+//              $inputFilter->add($factory->createInput(array(
+//                'name'     => 'va_direccion',
+//                'required' => false,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name'    => 'StringLength',
+//                        'options' => array(
+//                            'encoding' => 'UTF-8',
+//                            'min'      => 3,
+//                            'max'      => 100,
+//                        ),
+//                    ),
+//                ),
+//            )));
+//              
+//            $inputFilter->add($factory->createInput(array(
+//                'name'     => 'va_referencia',
+//                'required' => false,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name'    => 'StringLength',
+//                        'options' => array(
+//                            'encoding' => 'UTF-8',
+//                            'min'      => 3,
+//                            'max'      => 100,
+//                        ),
+//                    ),
+//                ),
+//            )));
+//            
 
             
               $inputFilter->add($factory->createInput(array(

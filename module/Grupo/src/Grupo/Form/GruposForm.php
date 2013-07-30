@@ -10,7 +10,7 @@ use Zend\Db\Adapter\AdapterInterface;
 class GruposForm extends Form
 {
     protected $dbAdapter;
-    protected $idplato;
+//    protected $idplato;
      public function __construct(AdapterInterface $dbAdapter)//$name = null
     {
         $this->setDbAdapter($dbAdapter);
@@ -37,21 +37,21 @@ class GruposForm extends Form
         ));
               
               
-        $this->add(array(
-            'name' => 'va_latitud',
-            'type' => 'Hidden',
-           'attributes' => array(               
-                'id'   => 'va_latitud',         
-            ),
-        ));
-        
-          $this->add(array(
-            'name' => 'va_longitud',
-            'type' => 'Hidden',
-           'attributes' => array(               
-                'id'   => 'va_longitud',         
-            ),
-        ));
+//        $this->add(array(
+//            'name' => 'va_latitud',
+//            'type' => 'Hidden',
+//           'attributes' => array(               
+//                'id'   => 'va_latitud',         
+//            ),
+//        ));
+//        
+//          $this->add(array(
+//            'name' => 'va_longitud',
+//            'type' => 'Hidden',
+//           'attributes' => array(               
+//                'id'   => 'va_longitud',         
+//            ),
+//        ));
         
        
   
@@ -98,59 +98,59 @@ class GruposForm extends Form
             ),
         ));  
           
-         
-          $this->add(array(
-            'name' => 'va_costo',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'de_precio',
-                'placeholder'=>'Ingrese el costo'
-            ),
-            'options' => array(
-                'label' => 'Costo',
-            ),
-        ));
-          
-        
-        $this->add(array(
-            'name' => 'va_direccion',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_direccion',
-                'placeholder'=>'Ingrese direccion'
-            ),
-            'options' => array(
-                'label' => 'Direccion',
-            ),
-        ));
-        
-         $this->add(array(
-            'name' => 'va_referencia',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_referencia',
-                'placeholder'=>'Ingrese direccion de referencia'
-            ),
-            'options' => array(
-                'label' => 'Referencia',
-            ),
-        ));
-          
-          $this->add(array(
-            'name' => 'va_dirigido',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_dirigido',
-                'placeholder'=>'A quien?'
-            ),
-            'options' => array(
-                'label' => 'Dirigido a :',
-            ),
-        ));
+//         
+//          $this->add(array(
+//            'name' => 'va_costo',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'de_precio',
+//                'placeholder'=>'Ingrese el costo'
+//            ),
+//            'options' => array(
+//                'label' => 'Costo',
+//            ),
+//        ));
+//          
+//        
+//        $this->add(array(
+//            'name' => 'va_direccion',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'va_direccion',
+//                'placeholder'=>'Ingrese direccion'
+//            ),
+//            'options' => array(
+//                'label' => 'Direccion',
+//            ),
+//        ));
+//        
+//         $this->add(array(
+//            'name' => 'va_referencia',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'va_referencia',
+//                'placeholder'=>'Ingrese direccion de referencia'
+//            ),
+//            'options' => array(
+//                'label' => 'Referencia',
+//            ),
+//        ));
+//          
+//          $this->add(array(
+//            'name' => 'va_dirigido',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'va_dirigido',
+//                'placeholder'=>'A quien?'
+//            ),
+//            'options' => array(
+//                'label' => 'Dirigido a :',
+//            ),
+//        ));
           
         $this->add(array(
             'name' => 'tipo_notificacion',
@@ -346,17 +346,6 @@ class GruposForm extends Form
     {
         return $this->idplato;
     }
-    
-//        public function populateValues($data)
-//    {   
-//        foreach($data as $key=>$row)
-//        {
-//           if (is_array(@json_decode($row))){
-//                $data[$key] =   new \ArrayObject(\Zend\Json\Json::decode($row), \ArrayObject::ARRAY_AS_PROPS);
-//           }
-//        } 
-//         
-//        parent::populateValues($data);
-//    }
+
 }
 
