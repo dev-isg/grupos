@@ -54,6 +54,18 @@ class Module implements AutoloaderProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Grupo());
                     return new TableGateway('ta_grupo', $dbAdapter, null, $resultSetPrototype);//
                 },
+               'Grupo\Model\EventoTable' =>  function($sm) {
+                    $tableGateway = $sm->get('EventoTableGateway');
+                    $table = new EventoTable($tableGateway);
+                    return $table;
+                },
+                'EventoTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Evento());
+                    return new TableGateway('ta_evento', $dbAdapter, null, $resultSetPrototype);//
+                },
+                     
                         
             ),
         );

@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Grupo\Controller\Index' => 'Grupo\Controller\IndexController',
+            'Grupo\Controller\Evento' => 'Grupo\Controller\EventoController',
         ),
     ),
     'router' => array(
