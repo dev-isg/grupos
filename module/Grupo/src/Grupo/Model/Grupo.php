@@ -48,11 +48,11 @@ class Grupo implements InputFilterAwareInterface
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
             $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
-            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
+//            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
    
-            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
-            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
-            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
+//            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
+//            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
+//            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
 //            $this->distrito = (!empty($data['distrito'])) ? $data['distrito'] : null;
             
             $this->tipo_notificacion=(!empty($data['tipo_notificacion'])) ? $data['tipo_notificacion'] : null;
@@ -189,14 +189,14 @@ class Grupo implements InputFilterAwareInterface
                 ),
             )));
               
-                $inputFilter->add($factory->createInput(array(
-                'name'     => 'ta_ubigeo_in_id',//distrito
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-            )));
+//                $inputFilter->add($factory->createInput(array(
+//                'name'     => 'ta_ubigeo_in_id',//distrito
+//                'required' => true,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+//            )));
                 
         $inputFilter->add($factory->createInput(array(
                 'name'     => 'tipo_notificacion',

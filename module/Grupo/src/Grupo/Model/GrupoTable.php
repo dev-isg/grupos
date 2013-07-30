@@ -28,14 +28,14 @@ class GrupoTable{
             $selecttot = $sql->select()
                     ->from('ta_grupo')
                     ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
-                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
-                    ->join(array('u'=>'ta_ubigeo'),'ta_ubigeo_in_id=u.in_id',array('va_pais','va_departamento','va_provincia','va_distrito'),'left');
+                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
+//                    ->join(array('u'=>'ta_ubigeo'),'ta_ubigeo_in_id=u.in_id',array('va_pais','va_departamento','va_provincia','va_distrito'),'left');
                     
-            if($id!=null){
-                $selecttot->join(array('gn'=>'ta_grupo_has_ta_notificacion'),'ta_grupo.in_id=gn.ta_grupo_in_id',array(),'left');
-//                $selecttot->join(array('tn'=>'ta_notificacion'),'gn.ta_notificacion_in_id=tn.in_id',array('tipo_notificacion'=>'in_id'),'left');
-                $selecttot->where(array('ta_grupo.in_id'=>$id));
-            }
+//            if($id!=null){
+//                $selecttot->join(array('gn'=>'ta_grupo_has_ta_notificacion'),'ta_grupo.in_id=gn.ta_grupo_in_id',array(),'left');
+////                $selecttot->join(array('tn'=>'ta_notificacion'),'gn.ta_notificacion_in_id=tn.in_id',array('tipo_notificacion'=>'in_id'),'left');
+//                $selecttot->where(array('ta_grupo.in_id'=>$id));
+//            }
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
@@ -77,17 +77,17 @@ class GrupoTable{
       $data=array(
          'va_nombre'=>$grupo->va_nombre,
          'va_descripcion'=>$grupo->va_descripcion,
-         'va_costo'=>$grupo->va_costo,
-         'va_latitud'=>$grupo->va_latitud,
-          'va_longitud'=>$grupo->va_longitud,
-          'va_direccion'=>$grupo->va_direccion,
-          'va_referencia'=>$grupo->va_referencia,
+//         'va_costo'=>$grupo->va_costo,
+//         'va_latitud'=>$grupo->va_latitud,
+//          'va_longitud'=>$grupo->va_longitud,
+//          'va_direccion'=>$grupo->va_direccion,
+//          'va_referencia'=>$grupo->va_referencia,
           'va_imagen'=>$grupo->va_imagen['name'],
           'va_estado'=>$grupo->va_estado,
-          'va_dirigido'=>$grupo->va_dirigido,
+//          'va_dirigido'=>$grupo->va_dirigido,
           'ta_usuario_in_id'=>$grupo->ta_usuario_in_id,
           'ta_categoria_in_id'=>$grupo->ta_categoria_in_id,
-          'ta_ubigeo_in_id'=>$grupo->ta_ubigeo_in_id//distrito,//$convertir[0]['in_id']            
+//          'ta_ubigeo_in_id'=>$grupo->ta_ubigeo_in_id//distrito,//$convertir[0]['in_id']            
       );
       $id = (int) $grupo->in_id;
   

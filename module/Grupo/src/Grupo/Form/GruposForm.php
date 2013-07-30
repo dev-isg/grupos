@@ -181,20 +181,20 @@ class GruposForm extends Form
              )
         ));
         
-          $this->add(array(
-            'name' => 'ta_ubigeo_in_id',//distrito
-            'type' => 'Select',
-             'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'ta_ubigeo_in_id'
-            ),
-           'options' => array(
-                     'label' => 'Distrito',
-                     'value_options' =>$this->Distrito(),                                               
-                    'empty_option'  => '--- Seleccionar ---',
-                   
-             )
-        ));
+//          $this->add(array(
+//            'name' => 'ta_ubigeo_in_id',//distrito
+//            'type' => 'Select',
+//             'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'ta_ubigeo_in_id'
+//            ),
+//           'options' => array(
+//                     'label' => 'Distrito',
+//                     'value_options' =>$this->Distrito(),                                               
+//                    'empty_option'  => '--- Seleccionar ---',
+//                   
+//             )
+//        ));
             
 //            $this->add(array(
 //            'name' => 'provincia',
