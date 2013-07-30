@@ -115,15 +115,25 @@ class GrupoTable{
             if ($this->getGrupo($id)) {
                 $this->tableGateway->update($data, array('in_id' => $id));
                     if($notificacion!=null){
+//                        print_r($notificacion);exit();
+                           $delete=$this->tableGateway->getSql()->delete()->from('ta_grupo_has_ta_notificacion')
+                                   ->where(array('ta_grupo_in_id'=>$id));
+                           $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
+                           $adapter1=$this->tableGateway->getAdapter();
+                           $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
                         foreach($notificacion as $key=>$value){
-                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
-                                    ->set(array('ta_notificacion_in_id'=>$value))
-                                    ->where(array('ta_grupo_in_id'=>$id));
+//                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
+//                                    ->set(array('ta_notificacion_in_id'=>$value))
+//                                    ->where(array('ta_grupo_in_id'=>$id));  
+                          $update = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
+                           ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
+                          
                            $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-                           //var_dump($selectStringUpdate);Exit;
-                           $adapter=$this->tableGateway->getAdapter();
-                           $adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);
+//                           var_dump($selectStringUpdate);
+                           $adapter2=$this->tableGateway->getAdapter();
+                           $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
                         }
+//                        Exit;
                     }
                 
             } else {

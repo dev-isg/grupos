@@ -346,5 +346,17 @@ class GruposForm extends Form
     {
         return $this->idplato;
     }
+    
+//        public function populateValues($data)
+//    {   
+//        foreach($data as $key=>$row)
+//        {
+//           if (is_array(@json_decode($row))){
+//                $data[$key] =   new \ArrayObject(\Zend\Json\Json::decode($row), \ArrayObject::ARRAY_AS_PROPS);
+//           }
+//        } 
+//         
+//        parent::populateValues($data);
+//    }
 }
 
