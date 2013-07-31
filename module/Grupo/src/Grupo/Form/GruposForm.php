@@ -5,6 +5,8 @@ use Zend\Form\Form;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Adapter\AdapterInterface;
 
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 
 class GruposForm extends Form
@@ -346,6 +348,9 @@ class GruposForm extends Form
     {
         return $this->idplato;
     }
+    
+    
+    
 
 }
 

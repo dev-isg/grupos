@@ -129,11 +129,9 @@ class GrupoTable{
                            ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
                           
                            $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-//                           var_dump($selectStringUpdate);
                            $adapter2=$this->tableGateway->getAdapter();
                            $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
                         }
-//                        Exit;
                     }
                 
             } else {
@@ -162,6 +160,44 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 
         return $resultSet;
+         
+     }
+     
+     public function unirseGrupo($idgrup,$iduser){
+           $insert = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
+                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo'));
+           $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
+           $adapter=$this->tableGateway->getAdapter();
+           $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+     }
+     
+     public function retiraGrupo($idgrup,$iduser){
+            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                    ->set(array('va_estado'=>'desactivo'))
+                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
+           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+           $adapter=$this->tableGateway->getAdapter();
+           $adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);  
+     }
+     
+     public function usuarioxGrupo($iduser=null){
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_usuario_has_ta_grupo')
+                    ->where(array('va_estado'=>'activo'));
+         if($iduser!=null){
+             $selecttot->where(array('ta_usuario_in_id'=>$iduser));
+             
+         }
+           // $selecttot ->order('ta_grupo.in_id desc');
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            
+         if (!$resultSet) {
+            throw new \Exception("No se puede encontrar el/los grupo(s)");
+        }
+            return $resultSet;
          
      }
 }

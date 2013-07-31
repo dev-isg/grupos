@@ -27,7 +27,7 @@ class IndexController extends AbstractActionController
     protected $_options;
     public function __construct()
 	{
-//		$this->_options = new \Zend\Config\Config ( include APPLICATION_PATH . '/config/autoload/global.php' );
+		$this->_options = new \Zend\Config\Config ( include APPLICATION_PATH . '/config/autoload/global.php' );
 	}
         
     public function indexAction()
@@ -45,7 +45,9 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         
         if ($request->isPost()) {
-//          $File    = $this->params()->fromFiles('va_imagen');
+          $File    = $this->params()->fromFiles('va_imagen');
+          $nonFile = $this->params()->fromPost('va_nombre');
+          
             $data    = array_merge_recursive(
                         $this->getRequest()->getPost()->toArray(),          
                         $this->getRequest()->getFiles()->toArray()
@@ -57,9 +59,14 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                
                 $grupo->exchangeArray($form->getData());
-                $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                if($this->redimensionarImagen($File,$nonFile)){
+                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                    return $this->redirect()->toRoute('grupo');
+                }
+                else{
+                    echo 'problemas con el redimensionamiento';exit;
+                }
 
-                return $this->redirect()->toRoute('grupo');
             }else{
                     foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                         print_r ($error->getMessages());//$inputFilter->getInvalidInput()
@@ -104,6 +111,8 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         
         if ($request->isPost()) {
+            $File    = $this->params()->fromFiles('va_imagen');
+            $nonFile = $this->params()->fromPost('va_nombre');
             
             $data    = array_merge_recursive(
             $this->getRequest()->getPost()->toArray(),          
@@ -115,10 +124,14 @@ class IndexController extends AbstractActionController
 //            var_dump($form->setData($data));
             
             if ($form->isValid()) {
-                
-//                var_dump($grupo);
-                $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
-                return $this->redirect()->toRoute('grupo');
+                if($this->redimensionarImagen($File,$nonFile)){
+                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                    return $this->redirect()->toRoute('grupo');
+                }
+                else{
+                    echo 'problemas con el redimensionamiento';exit;
+                }
+
             }else{
 //                var_dump($form->isValid());
                     foreach ($form->getInputFilter()->getInvalidInput() as $error) {
@@ -138,6 +151,14 @@ class IndexController extends AbstractActionController
         
     }
     
+    public function unirAction(){
+
+       $this->getGrupoTable()->unirseGrupo($idgrup,$iduser);
+    }
+    
+    public function dejarAction(){
+       $this->getGrupoTable()->retiraGrupo($idgrup,$iduser);
+    }
      public function uploadAction(){
          
          
@@ -157,4 +178,115 @@ class IndexController extends AbstractActionController
         }
         return $this->grupoTable;
     }
+    
+    private function redimensionarImagen($File,$nonFile){
+    try{
+        
+              $anchura = 248;
+              $altura = 500;//143; 
+
+              $generalx=270;
+              $imf =$File['name'];
+              $info =  pathinfo($File['name']);
+              $tamanio = getimagesize($File['tmp_name']);
+              $ancho =$tamanio[0]; 
+              $alto =$tamanio[1]; 
+//              $altura=$tamanio[1];
+              $valor  = uniqid();
+              if($ancho>$alto)
+              {//echo 'ddd';exit;
+                  require './vendor/Classes/Filter/Alnum.php';
+                  //$altura =(int)($alto*$anchura/$ancho);    //($alto*$anchura/$ancho); 
+                  $altura =(int)($alto*$anchura/$ancho);
+                  $anchura =(int)($ancho*$altura/$alto); 
+                  if($info['extension']=='jpg' or $info['extension']=='JPG' or $info['extension']=='jpeg' or $info['extension']=='png'
+                          or $info['extension']=='PNG')      
+                  {   $nom = $nonFile; 
+                  $imf2 =  $valor.'.'.$info['extension'];
+                  $filter   = new \Filter_Alnum();
+                  $filtered = $filter->filter($nom);
+                  $name = $filtered.'-'.$imf2;
+               
+                       if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
+                            $viejaimagen=  imagecreatefromjpeg($File['tmp_name']);
+                            $nuevaimagen = imagecreatetruecolor($anchura, $altura);
+                            $generalimagen = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/grupos/original/' . $name;
+                            $general=$this->_options->upload->images . '/grupos/general/' . $name;
+                                 imagejpeg($nuevaimagen,$copia);
+                                 imagejpeg($viejaimagen,$origen);
+                                 imagejpeg($generalimagen,$general);
+                       }else{
+                            $viejaimagen=  imagecreatefrompng($File['tmp_name']);
+                           $nuevaimagen = imagecreatetruecolor($anchura, $altura);
+                           $generalimagen = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/grupos/original/' . $name;
+                            $general=$this->_options->upload->images . '/grupos/general/' . $name;
+                                 imagepng($nuevaimagen,$copia);
+                                 imagepng($viejaimagen,$origen);
+                                 imagepng($generalimagen,$general);
+                       }
+                       return true; 
+                  }
+
+               }
+                   if($ancho<$alto)
+              {require './vendor/Classes/Filter/Alnum.php';
+                  //$anchura =(int)($ancho*$altura/$alto); 
+                   $altura =(int)($alto*$anchura/$ancho);
+                  if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg' or $info['extension']=='png'
+                          or $info['extension']=='PNG')      
+                  {  $nom = $nonFile; 
+                  $imf2 =  $valor.'.'.$info['extension'];
+                  $filter   = new \Filter_Alnum();
+                  $filtered = $filter->filter($nom); 
+                   $name = $filtered.'-'.$imf2;
+                            
+                       if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
+                            $viejaimagen=  imagecreatefromjpeg($File['tmp_name']);
+                            $nuevaimagen = imagecreatetruecolor($anchura, $altura);
+                            $generalimagen = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/grupos/original/' . $name;
+                            $general=$this->_options->upload->images . '/grupos/general/' . $name;
+                                 imagejpeg($nuevaimagen,$copia);
+                                 imagejpeg($viejaimagen,$origen);
+                                 imagejpeg($generalimagen,$general);
+                       }else{
+                            $viejaimagen=  imagecreatefrompng($File['tmp_name']);
+                           $nuevaimagen = imagecreatetruecolor($anchura, $altura);
+                           $generalimagen = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/grupos/original/' . $name;
+                            $general=$this->_options->upload->images . '/grupos/general/' . $name;
+                                 imagepng($nuevaimagen,$copia);
+                                 imagepng($viejaimagen,$origen);
+                                 imagepng($generalimagen,$general);
+                       }
+
+                       return true;
+ 
+                  }
+
+               }
+
+        return true;
+            
+    }catch(Exception $e){
+        return false;
+    }         
+           
+       }
+       
+    
 }

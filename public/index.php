@@ -1,10 +1,15 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set('session.cookie_httponly', 1);
+date_default_timezone_set('America/Lima');
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
  */
 chdir(dirname(__DIR__));
 
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../'));
 // Setup autoloading
 require 'init_autoloader.php';
 

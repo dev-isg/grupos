@@ -10,8 +10,8 @@
           
             <th>Nombre</th>
             <th>Categoria</th>
-            <th>Distrito</th>
-            <th>Direccion</th>
+<!--            <th>Distrito</th>
+            <th>Direccion</th>-->
             <th>Usuario</th>
         </tr>
     </thead>
@@ -21,8 +21,8 @@
         <tr id="<?php echo $this->escapeHtml($grupo->in_id); ?>">
             <td><?php echo $this->escapeHtml($grupo->va_nombre); ?></td>
             <td><?php echo $this->escapeHtml($grupo->nombre_categ); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->va_distrito); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->va_direccion); ?></td>
+<!--            <td><?php echo $this->escapeHtml($grupo->va_distrito); ?></td>
+            <td><?php echo $this->escapeHtml($grupo->va_direccion); ?></td>-->
             <td><?php echo $this->escapeHtml($grupo->nombre_user); ?></td>
             
              <td><a data-id="<?php echo $this->escapeHtml($grupo->in_id); ?>" href="/grupo/index/editargrupo/<?php echo $grupo->in_id;?>" class='modificar btn btn-success'><i class='icon-edit icon-white'></i>Editar </a>
