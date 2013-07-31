@@ -65,6 +65,13 @@ class Module implements AutoloaderProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Evento());
                     return new TableGateway('ta_evento', $dbAdapter, null, $resultSetPrototype);//
                 },
+                'mail.transport' => function ($sm) {
+                $config = $sm->get('config'); 
+                $transport = new \Zend\Mail\Transport\Smtp();   
+                $transport->setOptions(new \Zend\Mail\Transport\SmtpOptions($config['mail']['transport']['options']));
+
+                return $transport;
+            },
                      
                         
             ),

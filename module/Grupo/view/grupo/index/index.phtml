@@ -1,7 +1,23 @@
-  <div class="control-group span4 text-right" >
-        <a  class="btn" href="<?php echo $this->basePath();?>/grupo/index/agregargrupo">Agregar Grupo</a>
-    </div>
+<form name='form_busqueda'class="form-search" action='/grupo/index/index' method ="post" style=" margin: 0px;">
+        <div class="span12">
+         <input type='text' name='nombre' id="texto" class="span8 " placeholder="Nombre" />
+        <button type="submit" class="btn" name="submit" style="">Buscar</button>
+        </div>
+</form>
 
+<ul>
+    <?php foreach($this->categorias as $categoria): ?>
+    <li><a href="<?php echo $this->url('grupo')?>?categoria=<?php echo $categoria->in_id?>"><?php echo $categoria->va_nombre?></a></li>
+    <?php  endforeach;?>
+</ul>
+
+<a href="/grupo/index/unir">UNIRSE GRUPO</a>  
+<a href="/grupo/index/dejar">DEJAR GRUPO</a>  
+
+
+<div class="control-group span4 text-right" >
+        <a  class="btn" href="<?php echo $this->basePath();?>/grupo/index/agregargrupo">Agregar Grupo</a>
+</div>
 <div class="row-fluid">
 <div class="span12" id="flip-scroll">
 <table class="table table-bordered table-hover">

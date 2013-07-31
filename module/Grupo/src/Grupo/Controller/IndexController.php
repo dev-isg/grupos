@@ -20,6 +20,7 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+use Zend\Mail\Message;
 
 class IndexController extends AbstractActionController
 {
@@ -32,8 +33,27 @@ class IndexController extends AbstractActionController
         
     public function indexAction()
     {
-       $listagrupos=$this->getGrupoTable()->fetchAll();
-        return array('grupos'=>$listagrupos);
+//   $container = new \Zend\Session\Container('Grupo\Controller');
+//    $container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
+        $listagrupos=$this->getGrupoTable()->fetchAll();
+        $categorias=$this->getGrupoTable()->tipoCategoria();
+//        var_dump($categorias);exit;
+        $submit=$this->params()->fromPost('submit');
+        $tipo=$this->params()->fromQuery('categoria');
+        $nombre=$this->params()->fromPost('nombre');
+        if(isset($submit) || isset($tipo)){
+         if($tipo){
+            $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
+  
+
+        }else if($nombre){
+            $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+        }
+         
+        }
+
+
+        return array('grupos'=>$listagrupos,'categorias'=>$categorias);
     }
     
     public function agregargrupoAction(){
@@ -152,12 +172,74 @@ class IndexController extends AbstractActionController
     }
     
     public function unirAction(){
-
-       $this->getGrupoTable()->unirseGrupo($idgrup,$iduser);
+        $iduser=1;
+        $idgrup=48;
+      if($this->getGrupoTable()->unirseGrupo($idgrup,$iduser)){
+//                  $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
+                  $user_info['nom_grup']=  $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
+                  $bodyHtml='<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Uds. se ha unido al grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).'</strong><br />
+                                              
+                                                     </div>
+                                               </body>
+                                               </html>';
+    
+        $message = new Message();
+        $message->addTo('ola@yopmail.com', $nombre)
+        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setSubject('Se ha unido al grupo');
+        //->setBody($bodyHtml);
+            $bodyPart = new \Zend\Mime\Message();
+            $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+            $bodyMessage->type = 'text/html';
+            $bodyPart->setParts(array($bodyMessage));
+            $message->setBody($bodyPart);
+            $message->setEncoding('UTF-8');
+            
+        $transport = $this->getServiceLocator()->get('mail.transport');//new SendmailTransport();//$this->getServiceLocator('mail.transport')
+        $transport->send($message);
+        $this->redirect()->toUrl('/grupo');
+      } 
     }
     
     public function dejarAction(){
-       $this->getGrupoTable()->retiraGrupo($idgrup,$iduser);
+        $iduser=1;
+        $idgrup=50;
+      if( $this->getGrupoTable()->retiraGrupo($idgrup,$iduser)){
+                  $user_info['nom_grup']=  $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
+                  $bodyHtml='<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Uds. se ha dejado al grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).'</strong><br />
+                                              
+                                                     </div>
+                                               </body>
+                                               </html>';
+    
+        $message = new Message();
+        $message->addTo('ola@yopmail.com', $nombre)
+        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setSubject('Ha dejado un grupo');
+        //->setBody($bodyHtml);
+            $bodyPart = new \Zend\Mime\Message();
+            $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+            $bodyMessage->type = 'text/html';
+            $bodyPart->setParts(array($bodyMessage));
+            $message->setBody($bodyPart);
+            $message->setEncoding('UTF-8');
+            
+        $transport = $this->getServiceLocator()->get('mail.transport');
+        $transport->send($message);
+        $this->redirect()->toUrl('/grupo');
+      } 
     }
      public function uploadAction(){
          

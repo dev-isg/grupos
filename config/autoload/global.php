@@ -24,6 +24,19 @@ return array(
    'upload' => array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
+        'mail' => array(
+        'transport' => array(
+            'options' => array(
+                'host'              => 'smtp.innovationssystems.com',
+                'connection_class'  => 'login',
+                'connection_config' => array(
+                    'username' => 'listadelsabor@innovationssystems.com',
+                    'password' => 'L1st@d3ls@b0r',
+                    // 'ssl' => 'tls'
+                ),
+            ),
+        ),
+    ),
         'service_manager' => array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'

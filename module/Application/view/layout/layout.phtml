@@ -20,6 +20,7 @@
 
     </head>
     <body>
+        <?php echo $this->partial('layout/header.phtml',array('header'=>'header')); ?>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -45,5 +46,7 @@
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
+        
+        <?php echo $this->partial('layout/footer.phtml',array('footer'=>'footer')); ?>
     </body>
 </html>
