@@ -48,7 +48,7 @@ class IndexController extends AbstractActionController
         //AGREGAR CSS
         $renderer->headLink()->prependStylesheet('/css/bootstrap-responsive.min222222222.css');
         
-        $this->layout()->clase='/js/somejs.js';
+     
 
         
         if(isset($submit) || isset($tipo)){
