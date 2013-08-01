@@ -41,6 +41,14 @@ class IndexController extends AbstractActionController
         $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
+        
+//       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+//
+//        $renderer->headScript()->appendFile('/js/somejs.js');
+        
+        $this->layout()->clase='/js/somejs.js';
+
+        
         if(isset($submit) || isset($tipo)){
          if($tipo){
             $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);

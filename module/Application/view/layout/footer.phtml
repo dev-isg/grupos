@@ -11,7 +11,9 @@
                 $(".inlineEvento").colorbox({inline:true, width:"500px"});
             });
         </script>
-        <?php echo $this->partial; ?>
+        <?php if($this->partial){ ?>
+         <script src="<?php echo $this->partial;?>"></script>
+        <?php } ?>
 
     </body>
 </html>
