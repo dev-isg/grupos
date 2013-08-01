@@ -36,7 +36,7 @@ class IndexController extends AbstractActionController
 
       //Agregando script en el index
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-      $renderer->inlineScript()->prependFile('js/main.js');
+      $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
       $listagrupos=$this->getGrupoTable()->fetchAll();
@@ -67,14 +67,14 @@ class IndexController extends AbstractActionController
     public function agregargrupoAction(){
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-      $renderer->headLink()->prependStylesheet('/css/datetimepicker.css');
+      $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
 
       //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
       $renderer->inlineScript()->setScript('crearevento();')
                               ->prependFile($this->_options->host->base .'/js/main.js')
                               ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
                               ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
-                              ->prependFile($this->_options->host->base .'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                              ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
                               ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js')
                               ->prependFile($this->_options->host->base .'/js/bootstrap-datetimepicker.js')
                               ->prependFile($this->_options->host->base .'/js/mockjax/jquery.mockjax.js')
