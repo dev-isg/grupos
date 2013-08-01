@@ -35,44 +35,33 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
-//    public function getServiceConfig()
-//    {
-//        return array(
-//            'factories' => array(
-//                'Grupo\Model\GrupoTable' =>  function($sm) {
-//                    $tableGateway = $sm->get('GrupoTableGateway');
-//                    $table = new GrupoTable($tableGateway);
-//                    return $table;
-//                },
-//                'GrupoTableGateway' => function ($sm) {
-//                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-//                    $resultSetPrototype = new ResultSet();
-//                    $resultSetPrototype->setArrayObjectPrototype(new Grupo());
-//                    return new TableGateway('ta_grupo', $dbAdapter, null, $resultSetPrototype);//
-//                },
-//               'Grupo\Model\EventoTable' =>  function($sm) {
-//                    $tableGateway = $sm->get('EventoTableGateway');
-//                    $table = new EventoTable($tableGateway);
-//                    return $table;
-//                },
-//                'EventoTableGateway' => function ($sm) {
-//                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-//                    $resultSetPrototype = new ResultSet();
-//                    $resultSetPrototype->setArrayObjectPrototype(new Evento());
-//                    return new TableGateway('ta_evento', $dbAdapter, null, $resultSetPrototype);//
-//                },
-//                'mail.transport' => function ($sm) {
-//                $config = $sm->get('config'); 
-//                $transport = new \Zend\Mail\Transport\Smtp();   
-//                $transport->setOptions(new \Zend\Mail\Transport\SmtpOptions($config['mail']['transport']['options']));
-//
-//                return $transport;
-//            },
-//
-//
-//            ),
-//        );
-//    }
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Usuario\Model\UsuarioTable' =>  function($sm) {
+                    $tableGateway = $sm->get('GrupoTableGateway');
+                    $table = new GrupoTable($tableGateway);
+                    return $table;
+                },
+                'GrupoTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Usuario());
+                    return new TableGateway('ta_usuario', $dbAdapter, null, $resultSetPrototype);//
+                },
+                'mail.transport' => function ($sm) {
+                $config = $sm->get('config'); 
+                $transport = new \Zend\Mail\Transport\Smtp();   
+                $transport->setOptions(new \Zend\Mail\Transport\SmtpOptions($config['mail']['transport']['options']));
+
+                return $transport;
+            },
+
+
+            ),
+        );
+    }
     
     public function onBootstrap(MvcEvent $e)
     {
