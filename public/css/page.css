@@ -1,0 +1,494 @@
+
+/* =====[ GLOBAL STYLES ]======================================================================== */
+
+
+#content {
+    padding-top: 52px;
+    padding-bottom: 52px;
+}
+
+#content[data-ui-scrollbar] {
+    height: 100% !important;
+}
+
+#content .scrollarea,
+#content .scrollarea .jspPane {
+    width: 100% !important;
+}
+
+#content .scrollarea .jspPane {
+    padding-right: 35px !important;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+
+/* =====[ SIDEBAR ]============================================================================== */
+
+#bar {
+    height: 100%;
+    z-index: 2;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.filter tr{
+    float: left;
+}
+#bar .jspVerticalBar {
+    left: 0;
+}
+
+
+
+
+/* -----[ FILTER ]------------------------------------------------------------------------------- */
+#bar .jspPane.jspContainer{
+    margin-top: 5px;
+}
+.main-container .jspContainer ul{
+    list-style: none;
+    margin-left: 0;
+}
+
+#bar.scrollbar .filter {
+    border-left: 8px solid;
+}
+
+#bar.scrollbar .filter td:first-child {
+    padding-left: 25px;
+}
+
+#bar.scrollbar .filter th {
+    padding: 27px 26px;
+}
+
+#bar .filter th {
+    padding: 27px 34px;
+    font-weight: bold;
+}
+
+#bar .filter td {
+    vertical-align: top;
+    padding-bottom: 0px;
+}
+
+
+#bar .filter td:first-child + td {
+    padding-right: 19px;
+}
+
+#bar .filter tr:last-child td {
+    padding-bottom: 0px;
+}
+
+#bar .filter label {
+    vertical-align: top;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#bar .filter input {
+    display: none;
+}
+
+#bar .filter input + label {
+    display: block;
+    margin: 1px 4px 0 0;
+    border: 1px solid;
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+}
+
+#bar .filter input + label span {
+    display: none;
+    margin: 3px;
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
+}
+
+#bar .filter input:checked + label span {
+    display: block;
+}
+
+[data-msie="8"] #bar .filter input[checked="checked"] + label span {
+    display: block;
+}
+
+/* -----[ FOOTER ]------------------------------------------------------------------------------- */
+
+#bar .footer {
+    position: absolute;
+    bottom: 0;
+    padding: 33px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+#bar .footer p {
+    margin-top: 9px;
+    line-height: 22px;
+}
+
+#bar .footer p a:hover {
+    text-decoration: underline;
+}
+
+/* =====[ INFO BAR ]============================================================================= */
+
+#info {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 460px;
+    z-index: 3 !important;
+}
+
+#info,
+#info a {
+    line-height: 15px;
+}
+
+#info.hidden {
+    z-index: 1;
+}
+
+/* -----[ SWITCH ]------------------------------------------------------------------------------- */
+
+#info .switch {
+    position: absolute;
+    top: 34px;
+    left: 0;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    -o-transition: 0.25s;
+    -ms-transition: 0.25s;
+    transition: 0.25s;
+}
+
+#info .switch,
+#info .switch .front,
+#info .switch .back {
+    width: 24px;
+    height: 31px;
+}
+
+#info .switch .front,
+#info .switch .back {
+    background: no-repeat 8px center;
+    transition: background 0.35s;
+    -webkit-transition: background 0.35s;
+    -moz-transition: background 0.35s;
+    -o-transition: background 0.35s;
+    -ms-transition: background 0.35s;
+}
+
+#info .switch .front {
+    border-radius: 0 3px 3px 0;
+}
+
+#info .switch .back {
+    border-radius: 3px 0 0 3px;
+}
+
+#info .switch[data-flip="false"] {
+    right: 0;
+}
+
+#info .switch[data-flip="true"] {
+    left: -24px;
+}
+
+/* -----[ PANEL ]-------------------------------------------------------------------------------- */
+
+#info .navigation a.link {
+    padding-left: 52px;
+    line-height: 15px;
+    width: auto;
+}
+
+#info .navigation a.link span {
+    overflow: hidden;
+    display: inline-block;
+    padding: 18px 32px 18px 0;
+    white-space: nowrap;
+}
+
+#info .navigation a.link:hover span {
+    text-decoration: underline;
+}
+
+/* -----[ CONTENT ]------------------------------------------------------------------------------ */
+
+#info .content {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+}
+
+#info .jspPane {
+    padding: 41px 37px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+#info h1 {
+    border-bottom: 1px dotted;
+    margin-bottom: 12px;
+    padding-bottom: 16px;
+    font-size: 25px;
+}
+
+#info .category {
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+#info .content a:hover {
+    text-decoration: underline;
+}
+
+#info .content p {
+    line-height: 22px;
+}
+
+#info .content p + p {
+    margin-top: 22px;
+}
+
+/* =====[ PANEL ]================================================================================ */
+
+#panel {
+    position: fixed;
+    padding: 6px 18px;
+    left: 260px;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 27px;
+    z-index: 1;
+    transition: height 0.25s;
+    -webkit-transition: height 0.25s;
+    -moz-transition: height 0.25s;
+    -o-transition: height 0.25s;
+    -ms-transition: height 0.25s;
+}
+
+#panel .scroll,
+#panel .scroll .arrow {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#panel .scroll .arrow {
+    width: 27px;
+    height: 27px;
+    border-radius: 13px;
+    cursor: pointer;
+    background: no-repeat center center;
+    transition: background 0.35s;
+    -webkit-transition: background 0.35s;
+    -moz-transition: background 0.35s;
+    -o-transition: background 0.35s;
+    -ms-transition: background 0.35s;
+}
+
+#panel .scroll .up {
+    margin-right: 2px;
+}
+
+#panel .scroll .arrow.disabled {
+    cursor: default;
+}
+
+#panel .feedback {
+    float: right;
+    padding-left: 26px;
+    background: no-repeat left 8px;
+}
+
+#panel .feedback a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+
+    #panel .feedback {
+        display: none;
+    }
+
+}
+
+
+/* =====[ BLOG ]================================================================================= */
+
+#blog #content {
+    padding: 0;
+    height: 100% !important;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    #blog #content ul {
+        margin: 15px 25px 0;
+    }
+
+}
+
+#blog #content li {
+    margin-bottom: 30px;
+    width: 345px;
+    transition: top 0.35s, left 0.35s;
+    -webkit-transition: top 0.35s, left 0.35s;
+    -moz-transition: top 0.35s, left 0.35s;
+    -o-transition: top 0.35s, left 0.35s;
+    -ms-transition: top 0.35s, left 0.35s;
+}
+
+#blog #content li,
+#blog #content li a {
+    line-height: 15px;
+}
+
+/* -----[ PREVIEW ]------------------------------------------------------------------------------ */
+
+#blog #content li .preview {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+#blog #content li a.preview img {
+    width: 100%;
+    vertical-align: top;
+}
+
+/* -----[ CONTENT BAR ]-------------------------------------------------------------------------- */
+
+#blog #content li .content {
+    padding: 18px 18px 22px;
+}
+
+#blog #content li a {
+    text-decoration: underline;
+}
+
+#blog #content li a:hover {
+    text-decoration: none;
+}
+
+#blog #content .info a,
+#blog #content h2 a {
+    text-decoration: none;
+}
+
+#blog #content .info a:hover,
+#blog #content h2 a:hover {
+    text-decoration: underline;
+}
+
+#blog #content .info {
+    display: table;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+#blog #content .info > span {
+    display: table-cell;
+}
+
+#blog #content .category,
+#blog #content .comments {
+    text-align: right;
+}
+
+#blog #content .category a {
+    padding-left: 16px;
+    background: no-repeat left 3px;
+}
+
+#blog #content .comments {
+    padding-left: 11px;
+}
+
+#blog #content .comments a {
+    padding-left: 22px;
+    background: no-repeat left 1px;
+}
+
+/* -----[ CONTENT ]------------------------------------------------------------------------------ */
+
+#blog #content h2 {
+    margin-bottom: 7px;
+    padding: 0;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+#blog #content p {
+    line-height: 18px;
+}
+
+
+/* -----[ CONTENT ]------------------------------------------------------------------------------ */
+
+#slider #content .content {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 40px;
+    max-width: 397px;
+    text-align: right;
+    z-index: 1;
+}
+
+#slider #content .content * {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+
+#slider #content .content h2 {
+    padding: 12px 16px 13px 15px;
+    font-size: 20px;
+    line-height: 22px;
+}
+
+#slider #content .content p {
+    padding: 12px 18px 16px;
+}
+
+#slider #content .content * + p {
+    margin-top: 5px;
+}
+
+@media screen and (max-width: 480px) {
+
+    #slider #content .content {
+        margin: 20px;
+    }
+
+}
+
+

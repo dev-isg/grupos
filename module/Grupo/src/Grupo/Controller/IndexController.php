@@ -42,10 +42,11 @@ class IndexController extends AbstractActionController
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
         
-       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-
-        $renderer->headScript()->appendFile('/js/somejs.js');//$renderer->baseUrl() .
+//       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+//
+//        $renderer->headScript()->appendFile('/js/somejs.js');
         
+        $this->layout()->clase='/js/somejs.js';
 
         
         if(isset($submit) || isset($tipo)){
