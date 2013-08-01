@@ -33,25 +33,19 @@ class IndexController extends AbstractActionController
         
     public function indexAction()
     {
-//   $container = new \Zend\Session\Container('Grupo\Controller');
-//    $container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
-        $listagrupos=$this->getGrupoTable()->fetchAll();
-        $categorias=$this->getGrupoTable()->tipoCategoria();
-//        var_dump($categorias);exit;
+
+      //Agregando script en el index
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->prependFile('js/main.js');
+      //$container = new \Zend\Session\Container('Grupo\Controller');
+      //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
+      $listagrupos=$this->getGrupoTable()->fetchAll();
+      $categorias=$this->getGrupoTable()->tipoCategoria();
+      //var_dump($categorias);exit;
         $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
         
-//       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-//
-        
-
-        //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->headScript()->appendFile('/css/datetimepicker.css');
-
-        $renderer->inlineScript()->prependFile('/js/somejs2222.js')->prependFile('/js/somejs33333.js');
-
         
         if(isset($submit) || isset($tipo)){
          if($tipo){
@@ -69,8 +63,25 @@ class IndexController extends AbstractActionController
     }
     
     public function agregargrupoAction(){
-           
-//        $local = (int) $this->params()->fromQuery('id');
+      //AGREGAR CSS
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->headLink()->prependStylesheet('/css/datetimepicker.css');
+
+      //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+      $renderer->inlineScript()->setScript('crearevento();')
+                              ->prependFile('/js/main.js')
+                              ->prependFile('/js/map/locale-es.js')
+                              ->prependFile('/js/map/ju.google.map.js')
+                              ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                              ->prependFile('/js/map/ju.img.picker.js')
+                              ->prependFile('/js/bootstrap-datetimepicker.js')
+                              ->prependFile('/js/mockjax/jquery.mockjax.js')
+                              ->prependFile('/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                              ->prependFile('/js/jquery.validate.min.js')
+                              ->prependFile('/js/ckeditor/ckeditor.js');
+
+
+//      $local = (int) $this->params()->fromQuery('id');
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->get('submit')->setValue('Crear Grupo');
