@@ -44,10 +44,13 @@ class IndexController extends AbstractActionController
         
 //       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 //
-//        $renderer->headScript()->appendFile('/js/somejs.js');
+        
 
-        //Agregando script por cada view        
-        $this->layout()->clase='/js/somejs.js';
+        //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->headScript()->appendFile('/css/datetimepicker.css');
+
+        $renderer->inlineScript()->prependFile('/js/somejs2222.js')->prependFile('/js/somejs33333.js');
 
         
         if(isset($submit) || isset($tipo)){

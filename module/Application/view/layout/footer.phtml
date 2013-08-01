@@ -4,6 +4,18 @@
             </footer>
         </div>
         <!--Script-->
+        
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/bootstrap-dropdown.js"></script>
+        <script src="/js/bootstrap-button.js"></script>
+        <script src="/js/jquery.colorbox-min.js"></script>
+        <!--Home evento-->
+        <script src="/js/respond.js"></script>
+        <script src="/js/browser.js"></script>
+        <script src="/js/loaded.js"></script>
+        <script src="/js/page.js"></script>
+
+        <?php echo $this->inlineScript() ?>
 
         <script src="/js/main.js"></script>
         <script>
@@ -11,9 +23,6 @@
                 $(".inlineEvento").colorbox({inline:true, width:"500px"});
             });
         </script>
-        <?php if($this->partial){ ?>
-         <script src="<?php echo $this->partial;?>"></script>
-        <?php } ?>
 
     </body>
 </html>
