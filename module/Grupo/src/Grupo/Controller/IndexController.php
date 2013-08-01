@@ -84,6 +84,8 @@ class IndexController extends AbstractActionController
 
 
 //      $local = (int) $this->params()->fromQuery('id');
+        $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
+//        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->get('submit')->setValue('Crear Grupo');
@@ -100,7 +102,7 @@ class IndexController extends AbstractActionController
             $grupo = new Grupo();
             $form->setInputFilter($grupo->getInputFilter());
             $form->setData($data);//$request->getPost()
-            $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
+//            $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
             if ($form->isValid()) {
                
                 $grupo->exchangeArray($form->getData());
@@ -119,7 +121,7 @@ class IndexController extends AbstractActionController
             }
         }
  
-        return array('form'=>$form);
+        return array('form'=>$form,'grupos'=>$user_info);
     }
     
     public function editargrupoAction(){
@@ -144,12 +146,12 @@ class IndexController extends AbstractActionController
         $form = new GruposForm($adpter);
         $form->bind($grupo);
         
-        $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
-        $aux = array();
-        foreach($var as $y){
-            $aux[]=$y['ta_notificacion_in_id'];
-        }
-        $form->get('tipo_notificacion')->setValue($aux);
+//        $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
+//        $aux = array();
+//        foreach($var as $y){
+//            $aux[]=$y['ta_notificacion_in_id'];
+//        }
+//        $form->get('tipo_notificacion')->setValue($aux);
         
         $form->get('submit')->setAttribute('value', 'Editar');
         

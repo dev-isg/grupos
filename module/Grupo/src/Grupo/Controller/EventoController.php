@@ -12,9 +12,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
-use Grupo\Model\Grupo;
-use Grupo\Model\GrupoTable;
-use Grupo\Form\GruposForm;
+use Grupo\Model\Evento;
+use Grupo\Model\EventoTable;
+use Grupo\Form\EventoForm;
 use Zend\Form\Element;
 use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
@@ -23,7 +23,7 @@ use Zend\Db\Sql\Sql;
 
 class EventoController extends AbstractActionController
 {
-    protected $grupoTable;
+    protected $eventoTable;
     protected $_options;
     public function __construct()
 	{
@@ -32,16 +32,16 @@ class EventoController extends AbstractActionController
         
     public function indexAction()
     {
-       $listagrupos=$this->getGrupoTable()->fetchAll();
-        return array('grupos'=>$listagrupos);
+//       $listagrupos=$this->getGrupoTable()->fetchAll();
+        return array();
     }
     
     public function agregareventoAction(){
            
 //        $local = (int) $this->params()->fromQuery('id');
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new GruposForm($adpter);
-        $form->get('submit')->setValue('Crear Grupo');
+        $form = new EventoForm($adpter);
+        $form->get('submit')->setValue('Crear Evento');
         $request = $this->getRequest();
         
         if ($request->isPost()) {
@@ -50,14 +50,13 @@ class EventoController extends AbstractActionController
                         $this->getRequest()->getPost()->toArray(),          
                         $this->getRequest()->getFiles()->toArray()
                         ); 
-            $grupo = new Grupo();
-            $form->setInputFilter($grupo->getInputFilter());
+            $evento = new Evento();
+            $form->setInputFilter($evento->getInputFilter());
             $form->setData($data);//$request->getPost()
-            $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
             if ($form->isValid()) {
                
-                $grupo->exchangeArray($form->getData());
-                $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                $evento->exchangeArray($form->getData());
+                $this->getEventoTable()->guardarGrupo($evento);
 
                 return $this->redirect()->toRoute('grupo');
             }else{
@@ -150,11 +149,11 @@ class EventoController extends AbstractActionController
         return array();
     }
     
-        public function getGrupoTable() {
-        if (!$this->grupoTable) {
+        public function getEventoTable() {
+        if (!$this->eventoTable) {
             $sm = $this->getServiceLocator();
-            $this->grupoTable = $sm->get('Grupo\Model\EventoTable');
+            $this->eventoTable = $sm->get('Grupo\Model\EventoTable');
         }
-        return $this->grupoTable;
+        return $this->eventoTable;
     }
 }
