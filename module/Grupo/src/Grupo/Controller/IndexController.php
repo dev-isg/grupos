@@ -42,13 +42,12 @@ class IndexController extends AbstractActionController
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
         
-//       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-//
-//        $renderer->headScript()->appendFile('/js/somejs.js');
         //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile('/js/somejs2222.js')->prependFile('/js/somejs33333.js');
-
+        //AGREGAR CSS
+        $renderer->headLink()->prependStylesheet('/css/bootstrap-responsive.min222222222.css');
+        
         $this->layout()->clase='/js/somejs.js';
 
         
