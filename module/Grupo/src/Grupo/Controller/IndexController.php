@@ -44,7 +44,8 @@ class IndexController extends AbstractActionController
         
         //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile('/js/somejs2222.js')->prependFile('/js/somejs33333.js');
+        $renderer->inlineScript()->setScript("$('audio').mediaelementplayer();")
+                ->prependFile($this->_options->host->base.'/js/somejs2222.js')->prependFile('/js/somejs33333.js');
         //AGREGAR CSS
         $renderer->headLink()->prependStylesheet('/css/bootstrap-responsive.min222222222.css');
         
