@@ -1,1 +1,18 @@
-<h1><?php echo $this->footer?></h1>
+		<div class="footer-container">
+            <footer class="container">
+                <h3>footer</h3>
+            </footer>
+        </div>
+        <!--Script-->
+
+        <script src="/js/main.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".inlineEvento").colorbox({inline:true, width:"500px"});
+            });
+        </script>
+        <?php echo $this->partial; ?>
+
+    </body>
+</html>
+
