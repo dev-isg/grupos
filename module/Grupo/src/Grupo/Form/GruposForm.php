@@ -151,19 +151,19 @@ class GruposForm extends Form
 //            ),
 //        ));
           
-        $this->add(array(
-            'name' => 'tipo_notificacion',
-            'type' => 'MultiCheckbox',
-             'attributes' => array(               
-                'class' => 'checkbox inline',
-                'id'   => 'en_destaque',
-                 'placeholder'=>'Ingrese su destaque'
-            ),
-            'options' => array(
-                   'label' => 'Notificaciones',
-                  'value_options' => $this->tipoNotificacion(),
-                )
-        ));
+//        $this->add(array(
+//            'name' => 'tipo_notificacion',
+//            'type' => 'MultiCheckbox',
+//             'attributes' => array(               
+//                'class' => 'checkbox inline',
+//                'id'   => 'en_destaque',
+//                 'placeholder'=>'Ingrese su destaque'
+//            ),
+//            'options' => array(
+//                   'label' => 'Notificaciones',
+//                  'value_options' => $this->tipoNotificacion(),
+//                )
+//        ));
           
                
         $this->add(array(

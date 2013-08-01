@@ -29,7 +29,7 @@ class Grupo implements InputFilterAwareInterface
     public $provincia;
     public $distrito;
     
-    public $tipo_notificacion;
+//    public $tipo_notificacion;
    
     protected $inputFilter;   
     
@@ -55,7 +55,7 @@ class Grupo implements InputFilterAwareInterface
 //            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
 //            $this->distrito = (!empty($data['distrito'])) ? $data['distrito'] : null;
             
-            $this->tipo_notificacion=(!empty($data['tipo_notificacion'])) ? $data['tipo_notificacion'] : null;
+//            $this->tipo_notificacion=(!empty($data['tipo_notificacion'])) ? $data['tipo_notificacion'] : null;
 
          }
     
@@ -198,14 +198,14 @@ class Grupo implements InputFilterAwareInterface
 //                ),
 //            )));
                 
-        $inputFilter->add($factory->createInput(array(
-                'name'     => 'tipo_notificacion',
-                'required' => false,
-//                'filters'  => array(
-//                    array('name' => 'StripTags'),
-//                    array('name' => 'StringTrim'),
-//                ),
-            )));
+//        $inputFilter->add($factory->createInput(array(
+//                'name'     => 'tipo_notificacion',
+//                'required' => false,
+////                'filters'  => array(
+////                    array('name' => 'StripTags'),
+////                    array('name' => 'StringTrim'),
+////                ),
+//            )));
             
 //           $inputFilter->add(
 //                $factory->createInput(array(

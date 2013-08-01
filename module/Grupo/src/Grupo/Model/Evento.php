@@ -19,17 +19,20 @@ class Evento implements InputFilterAwareInterface
     public $va_imagen;
 
     public $va_estado;
+    public $va_max;
+    public $va_min;
     //foraneas
     public $ta_usuario_in_id;
     public $ta_categoria_in_id;
     public $ta_ubigeo_in_id;
+    public $ta_grupo_in_id;
     
-    public $pais;
-    public $departamento;
-    public $provincia;
-    public $distrito;
+//    public $pais;
+//    public $departamento;
+//    public $provincia;
+//    public $distrito;
     
-    public $tipo_notificacion;
+    
    
     protected $inputFilter;   
     
@@ -45,17 +48,20 @@ class Evento implements InputFilterAwareInterface
             $this->va_imagen= (!empty($data['va_imagen'])) ? $data['va_imagen'] : null;
  
             $this->va_estado= (!empty($data['va_estado'])) ? $data['va_estado'] : 1;
+            $this->va_max= (!empty($data['va_max'])) ? $data['va_max'] : null;
+            $this->va_min= (!empty($data['va_min'])) ? $data['va_min'] : null;
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
             $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
-   
-            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
-            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
-            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
+            $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : null;
+
+//            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
+//            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
+//            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
 //            $this->distrito = (!empty($data['distrito'])) ? $data['distrito'] : null;
             
-            $this->tipo_notificacion=(!empty($data['tipo_notificacion'])) ? $data['tipo_notificacion'] : null;
+
 
          }
     
@@ -82,6 +88,29 @@ class Evento implements InputFilterAwareInterface
                             array('name' => 'Int'),
                         ),
                     )));
+            
+            $inputFilter->add($factory->createInput(array(
+                        'name' => 'ta_grupo_in_id',
+                        'required' => true,
+                        'filters' => array(
+                            array('name' => 'Int'),
+                        ),
+                    )));    
+            
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'va_latitud',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'va_longitud',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
             
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'va_nombre',
