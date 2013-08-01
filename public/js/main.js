@@ -81,14 +81,14 @@ function crearevento(){
 
         $("#crear-group").validate({
             rules: {
-                nameGrupo: "required",
-                categoriaGrupo: "required",
-                editorGrupo: "required"
+                va_nombre: "required",
+                ta_categoria_in_id: "required",
+                va_descripcion: "required"
             },
             messages: {
-                nameGrupo: "Ingrese un nombre de grupo",
-                categoriaGrupo: "Ingrese una categoria de grupo",
-                editorGrupo : "Ingrese una descripción"                        
+                va_nombre: "Ingrese un nombre de grupo",
+                ta_categoria_in_id: "Ingrese una categoria de grupo",
+                va_descripcion : "Ingrese una descripción"                        
             }
         });
 
