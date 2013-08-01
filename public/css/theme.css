@@ -373,23 +373,6 @@ a.social {
     color: #fff;
 }
 
-/* =====[ CAROUSELS ]============================================================================ */
-
-#carousels #content hr {
-    border-color: #808080
-}
-
-#carousels #content h2 .ico {
-    background-color: #fa565a;
-}
-
-#carousels #content h2 .ico.latest {
-    background-image: url("assets/ico_heart.png");
-}
-
-#carousels #content h2 .ico.news {
-    background-image: url("assets/ico_note.png");
-}
 
 /* =====[ STRIPES ]============================================================================== */
 
@@ -418,23 +401,6 @@ a.social {
     -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
 }
 
-/* -----[ CONTENT BAR ]-------------------------------------------------------------------------- */
-
-#blog #content li a {
-    color: #fa565a;
-}
-
-#blog #content .info {
-    color: #747474;
-}
-
-#blog #content .category a {
-    background-image: url("assets/blog_category.png");
-}
-
-#blog #content .comments a {
-    background-image: url("assets/blog_comments.png");
-}
 
 /* -----[ CONTENT ]------------------------------------------------------------------------------ */
 
@@ -447,19 +413,6 @@ a.social {
     color: #585858;
 }
 
-/* -----[ TWITTER ]------------------------------------------------------------------------------ */
-
-#blog #content .twitter .tweet a {
-    background-image: url("assets/tweet.png");
-}
-
-#blog #content .twitter h2 span {
-    color: #747474;
-}
-
-#blog #content .twitter p {
-    color: #1f1f1f;
-}
 
 /* =====[ POST ]================================================================================= */
 

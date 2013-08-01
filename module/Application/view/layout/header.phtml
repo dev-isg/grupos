@@ -4,7 +4,6 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <?php echo $this->headLink(); ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Grupos</title>
@@ -15,23 +14,13 @@
         <link rel="stylesheet" href="/css/bootstrap-responsive.css">
         <link rel="stylesheet" href="/css/main.css">
 
-        <link href="/css/page.css" rel="stylesheet"/>
-        <link href="/css/theme.css" rel="stylesheet"/>
+      <link href="/css/page.css" rel="stylesheet"/>
+      <link href="/css/theme.css" rel="stylesheet"/>
+      <?php echo $this->headLink(); ?>
 		
-        <script src="/js/modernizr.js"></script>
-        <script src="/js/vendor/jquery.js"></script>
-
-        <script src="/js/bootstrap.js"></script>
-        <script src="/js/bootstrap-dropdown.js"></script>
-        <script src="/js/bootstrap-button.js"></script>
-        <script src="/js/jquery.colorbox-min.js"></script>
-        <!--Home evento-->
-        <script src="/js/respond.js"></script>
-        <script src="/js/browser.js"></script>
-        <script src="/js/loaded.js"></script>
-        <script src="/js/masonry.js"></script>
-        <script src="/js/page.js"></script>
-
+      <script src="/js/modernizr.js"></script>
+      <script src="/js/vendor/jquery.js"></script>
+      <script src="/js/masonry.js"></script>
 
     </head>
     <body id="blog">
@@ -43,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </a>
-                  <a class="brand" href="#">Grupos</a>
+                  <a class="brand" href="/">Grupos</a>
                   <div class="nav-collapse collapse navbar-responsive-collapse">
                     <ul class="nav pull-right menu-dev">
                         <li class="top-ini"><a href="Login.html">Iniciar sesion</a></li>
