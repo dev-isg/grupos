@@ -45,7 +45,8 @@ class IndexController extends AbstractActionController
 //       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 //
 //        $renderer->headScript()->appendFile('/js/somejs.js');
-        
+
+        //Agregando script por cada view        
         $this->layout()->clase='/js/somejs.js';
 
         
