@@ -43,6 +43,27 @@ class GrupoTable{
 //            var_dump($resultSet->toArray());exit;
         return $resultSet;
     }
+    
+    public function buscarGrupo($nombre=null,$tipo=null){
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_grupo')
+                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
+                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
+            if($tipo!=null){
+                $selecttot->where(array('ta_grupo.ta_categoria_in_id'=>$tipo));
+            }
+            if($nombre!=null){
+                $selecttot->where(array('ta_grupo.va_nombre'=>$nombre));
+            }
+            $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            
+            return $resultSet;
+        
+    }
     public function getGrupo($id)
     {
         $id  = (int) $id;
@@ -129,11 +150,9 @@ class GrupoTable{
                            ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
                           
                            $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-//                           var_dump($selectStringUpdate);
                            $adapter2=$this->tableGateway->getAdapter();
                            $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
                         }
-//                        Exit;
                     }
                 
             } else {
@@ -163,5 +182,70 @@ class GrupoTable{
 
         return $resultSet;
          
+     }
+     
+     public function unirseGrupo($idgrup,$iduser){
+           $insert = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
+                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo'));
+           $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
+           $adapter=$this->tableGateway->getAdapter();
+           $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+          if (!$row) {
+            throw new \Exception("No se puede unir al grupo");
+            }
+          return true;
+
+     }
+     
+     public function retiraGrupo($idgrup,$iduser){
+            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                    ->set(array('va_estado'=>'desactivo'))
+                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
+           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+           $adapter=$this->tableGateway->getAdapter();
+           $row=$adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);  
+            if (!$row) {
+            throw new \Exception("No se puede retirar al grupo");
+            }
+          return true;
+     }
+     
+     public function usuarioxGrupo($iduser=null){
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_usuario_has_ta_grupo')
+                    ->join(array('tg'=>'ta_grupo'),'tg.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array('nom_grup'=>'va_nombre'),'LEFT')
+                    ->where(array('ta_usuario_has_ta_grupo.va_estado'=>'activo'));
+         if($iduser!=null){
+             $selecttot->where(array('ta_usuario_has_ta_grupo.ta_usuario_in_id'=>$iduser));
+             
+         }
+           // $selecttot ->order('ta_grupo.in_id desc');
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            
+         if (!$resultSet) {
+            throw new \Exception("No se puede encontrar el/los grupo(s)");
+        }
+            return $resultSet->toArray();
+         
+     }
+     
+      public function tipoCategoria()
+   {   
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+            ->from('ta_categoria'); 
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//            $tipocateg=$results->toArray();
+//        $auxtipo=array();
+//        foreach($tipocateg as $tipo){
+//            $auxtipo[$tipo['in_id']] = $tipo['va_nombre'];      
+//        }
+            return $results;
+            
      }
 }

@@ -1,37 +1,1298 @@
-  <div class="control-group span4 text-right" >
-        <a  class="btn" href="<?php echo $this->basePath();?>/grupo/index/agregargrupo">Agregar Grupo</a>
-    </div>
+        <div class="search">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span9 form-search">
+                        <form class="form-search span8" name="search" action="">
+                            <input type="text" class="input-medium search-query span10">
+                            <button type="submit" class="btn btn-primary btn-evento-i">Buscar</button>
+                        </form>
+                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
+                    </div>
+                    <div class="span3 btn-evento">
+                        <div class="btn-group group-right" data-toggle="buttons-radio">
+                            <button type="button" class="btn btn-primary active">Evento</button>
+                            <button type="button" class="btn btn-primary ">Grupo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class="row-fluid">
-<div class="span12" id="flip-scroll">
-<table class="table table-bordered table-hover">
-    <thead class="cf">  
-        <tr>
-          
-            <th>Nombre</th>
-            <th>Categoria</th>
-            <th>Distrito</th>
-            <th>Direccion</th>
-            <th>Usuario</th>
-        </tr>
-    </thead>
-        <?php 
-    foreach ($this->grupos  as $grupo) :
-        ?>
-        <tr id="<?php echo $this->escapeHtml($grupo->in_id); ?>">
-            <td><?php echo $this->escapeHtml($grupo->va_nombre); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->nombre_categ); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->va_distrito); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->va_direccion); ?></td>
-            <td><?php echo $this->escapeHtml($grupo->nombre_user); ?></td>
-            
-             <td><a data-id="<?php echo $this->escapeHtml($grupo->in_id); ?>" href="/grupo/index/editargrupo/<?php echo $grupo->in_id;?>" class='modificar btn btn-success'><i class='icon-edit icon-white'></i>Editar </a>
-            <a data-id="<?php echo $this->escapeHtml($grupo->in_id); ?>" href="#" class='eli-lo btn btn-danger'><i class='icon-trash icon-white'></i>Eliminar</a> </td>
-        </tr>
+        <!--<div class="filtrar-home">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span12" id="bar">
+                        <table class="filter">
+                            <tbody>
+                                <tr>
+                                    <td><input type="radio" name="category" value="all" checked="checked"/></td>
+                                    <td><label>Toda las categorias</label></td>
+                                </tr>
+                                    <td><input type="radio" name="category" value="web"/></td>
+                                    <td><label>Arte</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="category" value="grafica"/></td>
+                                    <td><label>Campamentos</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="category" value="art"/></td>
+                                    <td><label>Musica</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="category" value="3d"/></td>
+                                    <td><label>Desarrollador</label></td>
+                                </tr>
+                                <tr>
+                                   <td><input type="radio" name="category" value="foto"/></td>
+                                    <td><label>Conferencias</label></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>-->
 
-<?php endforeach; ?>
-    
-</table>
-     
-</div>
-</div>
+        <div class="main-container">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span12 main wrapper" id="content" data-ui-scrollbar>
+                        <ul>
+                            <!-- ITEM -->
+                            <li data-category="web">
+                                <a href="ficha-producto.html" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/1.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>2013</span>
+                                        <span class="category">
+                                            <a href="#">Web</a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="ficha-producto.html">Tumidei Spa</a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>
+                            
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/2.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                
+                            
+                            
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="foto">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/3.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Lo Studio
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Overdrive
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        I nostro Quartier Generale. Lissone. Piazzale Giotto 1.
+                                    </p>
+                                </div>
+                            </li>                
+
+                            <!-- ITEM -->
+
+                            <li data-category="grafica">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/4.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2010
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Catalogo
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei 
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Tiramolla Collection
+                                    </p>
+                                </div>
+                            </li>         
+                            
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/5.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                 
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/6.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive. Cms.
+                                    </p>
+                                </div>
+                            </li>                
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/7.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art Design
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image Furniture (mobili artistici d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                
+
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/8.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Gymmy Fit. Palestra Low Cost.
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>               
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/9.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>         
+
+                  
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/10.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art Design
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image Furniture (mobili artistici d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/11.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Sphaus
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>        
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/12.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2012
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Orange Country Store
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        E.Commerce web site. Html. Cms.
+                                    </p>
+                                </div>
+                            </li>         
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/13.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art Design
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image Furniture (mobili artistici d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                
+
+
+                   
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/14.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Angelo Pozzoli Architetto
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Personal web site. Html5.
+                                    </p>
+                                </div>
+                            </li>                        
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/15.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>           
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/16.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Turati T4
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>
+
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/17.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>                   
+                            
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/18.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Colico Design
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>   
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/19.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Bontempi Cucine
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+                            </li>     
+
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/20.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Bontempi Cucine
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+                            </li>     
+
+
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/21.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Momenti
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>       
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/22.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Bontempi Cucine
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+
+
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/23.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Monticello Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5.
+                                    </p>
+                                </div>
+                            </li>                   
+                                        
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/24.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>     
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/25.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>                        
+                                  
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/26.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Turati T4
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/27.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li> 
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="grafica">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/28.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Catalogo
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Fimes
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Catalogo Fimes
+                                    </p>
+                                </div>                
+                            </li>
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/29.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+                            </li>
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/30.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Arredamenti
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Responsive.
+                                    </p>
+                                </div>
+                            </li>   
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/31.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>
+
+                            </li>
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/32.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>           
+
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/33.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Villa Sistemi Medicali
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Cms.
+                                    </p>
+                                </div>
+                            </li>   
+
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/34.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li> 
+
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/35.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>        
+                            </li>
+
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/36.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>        
+                            </li>
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/37.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Casa&amp;Style
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Cms.
+                                    </p>
+                                </div>
+                            </li>   
+
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/38.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Arredaesse
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5.
+                                    </p>
+                                </div>
+                            </li>   
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="3d">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/39.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                3D
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Tumidei Spa
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Modellazione 3D.
+                                    </p>
+                                </div>                        
+                            
+                            
+                            </li>
+                            
+                            <!-- ITEM -->
+
+                            <li data-category="web">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/40.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Web
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Acquaworld
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Corporate web site. Html5. Cms.
+                                    </p>
+                                </div>
+                            </li>                   
+                            
+
+                            <!-- ITEM -->
+
+                            <li data-category="art">
+                                 <a href="#" class="preview" data-ui-lightbox>
+                                    <img src="img/eventos/41.jpg" alt=""/>
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span>
+                                            2013
+                                        </span>
+                                        <span class="category">
+                                            <a href="#">
+                                                Art
+                                            </a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="#">
+                                            Crazy Home
+                                        </a>
+                                    </h2>
+                                    <p>
+                                        Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
+                                    </p>
+                                </div>
+                            </li>             
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- #main-container -->
+
+        <!--Login-->
+        <div style='display:none'>
+            <div id='inline_evento' style='padding:10px; background:#fff;'>
+                <h3>Iniciar sesión</h3>
+                <form class="bs-docs-example form-horizontal" action="<?php echo $this->basePath();?>/grupo/index/agregargrupo">
+                    <div class="control-group">
+                      <label class="control-label" for="inputEmail">Email</label>
+                      <div class="controls">
+                        <input type="text" id="inputEmail" placeholder="Email">
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label" for="inputPassword">Contraseña</label>
+                      <div class="controls">
+                        <input type="password" id="inputPassword" placeholder="Password">
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <div class="controls">
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+                      </div>
+                    </div>
+                  </form>
+            </div>
+        </div>

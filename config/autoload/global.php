@@ -21,6 +21,31 @@ return array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         )
     ),
+   'upload' => array(
+        'images' => APPLICATION_PATH . '/public/imagenes'
+    ),
+   'host' => array(
+        'base' => 'http://192.168.1.47:8081',
+        'static' => 'http://192.168.1.47:8081',
+        'images' => 'http://192.168.1.47:8081/imagenes',
+        'img'=>'http://192.168.1.47:8081/img',
+        'ruta' => 'http://192.168.1.47:8081',
+        'version'=>1,
+    ),
+    
+        'mail' => array(
+        'transport' => array(
+            'options' => array(
+                'host'              => 'smtp.innovationssystems.com',
+                'connection_class'  => 'login',
+                'connection_config' => array(
+                    'username' => 'listadelsabor@innovationssystems.com',
+                    'password' => 'L1st@d3ls@b0r',
+                    // 'ssl' => 'tls'
+                ),
+            ),
+        ),
+    ),
         'service_manager' => array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'

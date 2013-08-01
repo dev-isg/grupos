@@ -15,7 +15,7 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Grupo\Controller\Index',//'Application\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),
@@ -84,6 +84,8 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+             'layout/header'                => __DIR__ . '/../view/layout/header.phtml',
+             'layout/footer'                => __DIR__ . '/../view/layout/footer.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
@@ -92,4 +94,10 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+          'view_helpers' => array(
+        'invokables' => array(
+            'host' => 'Application\View\Helper\Host',
+        )
+    )
+
 );
