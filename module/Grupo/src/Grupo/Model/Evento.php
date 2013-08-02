@@ -25,7 +25,7 @@ class Evento implements InputFilterAwareInterface
     public $va_duracion;
     //foraneas
     public $ta_usuario_in_id;
-    public $ta_categoria_in_id;
+//    public $ta_categoria_in_id;   
     public $ta_ubigeo_in_id;
     public $ta_grupo_in_id;
     
@@ -56,9 +56,9 @@ class Evento implements InputFilterAwareInterface
             $this->va_duracion=(!empty($data['va_duracion'])) ? $data['va_duracion'] : null;
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
-            $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
+//            $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
-            $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : null;
+            $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : 2;
 
 //            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
 //            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
@@ -85,21 +85,21 @@ class Evento implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
 
-            $inputFilter->add($factory->createInput(array(
-                        'name' => 'in_id',
-                        'required' => true,
-                        'filters' => array(
-                            array('name' => 'Int'),
-                        ),
-                    )));
-            
-            $inputFilter->add($factory->createInput(array(
-                        'name' => 'ta_grupo_in_id',
-                        'required' => true,
-                        'filters' => array(
-                            array('name' => 'Int'),
-                        ),
-                    )));    
+                $inputFilter->add($factory->createInput(array(
+                'name' => 'in_id',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+//            
+//            $inputFilter->add($factory->createInput(array(
+//                        'name' => 'ta_grupo_in_id',
+//                        'required' => true,
+//                        'filters' => array(
+//                            array('name' => 'Int'),
+//                        ),
+//                    )));    
             
             $inputFilter->add($factory->createInput(array(
                 'name' => 'va_latitud',
@@ -211,17 +211,17 @@ class Evento implements InputFilterAwareInterface
                 ),
             )));
             
-
-            
-              $inputFilter->add($factory->createInput(array(
-                'name'     => 'ta_categoria_in_id',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-            )));
-              
+//
+//            
+////              $inputFilter->add($factory->createInput(array(
+////                'name'     => 'ta_categoria_in_id',
+////                'required' => true,
+////                'filters'  => array(
+////                    array('name' => 'StripTags'),
+////                    array('name' => 'StringTrim'),
+////                ),
+////            )));
+//              
                 $inputFilter->add($factory->createInput(array(
                 'name'     => 'ta_ubigeo_in_id',//distrito
                 'required' => true,

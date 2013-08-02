@@ -71,15 +71,28 @@ class UsuarioForm extends Form{
         ));
         
          $this->add(array(
-            'name' => 'va_contraseña',
-            'type' => 'Text',
+            'name' => 'va_contrasena',
+            'type' => 'password',
           
             'options' => array(
                 'label' => '',          
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese la contraseña…'
+                'placeholder'=>'Ingrese la contrasena…'
+            ),
+        ));  
+         
+         $this->add(array(
+            'name' => 'verificar_contrasena',
+            'type' => 'password',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese la contrasena…'
             ),
         ));  
                     
@@ -94,6 +107,61 @@ class UsuarioForm extends Form{
 //                'id' => 'submitbutton',
             ),
         ));
+               
+               //---------------
+               
+               $this->add(array(
+            'name' => 'va_dni',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del usuario…'
+            ),
+        ));  
+               
+                  $this->add(array(
+            'name' => 'va_genero',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del usuario…'
+            ),
+        ));  
+                  
+                     $this->add(array(
+            'name' => 'va_descripcion',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del usuario…'
+            ),
+        ));  
+                     
+                        $this->add(array(
+            'name' => 'ta_ubigeo_in_id',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del usuario…'
+            ),
+        ));  
+               
        
        
     }

@@ -45,11 +45,11 @@ class Module implements AutoloaderProviderInterface
         return array(
             'factories' => array(
                 'Usuario\Model\UsuarioTable' =>  function($sm) {
-                    $tableGateway = $sm->get('UsuarioTableGateway');
+                    $tableGateway = $sm->get('TableGateway');
                     $table = new UsuarioTable($tableGateway);
                     return $table;
                 },
-                'UsuarioTableGateway' => function ($sm) {
+                'TableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Usuario());
