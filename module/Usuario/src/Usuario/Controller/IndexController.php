@@ -62,34 +62,34 @@ class IndexController extends AbstractActionController
         $form->get('submit')->setValue('Crear Usuario');
         $request = $this->getRequest();
         
-//        if ($request->isPost()) {
-//          $File    = $this->params()->fromFiles('va_foto');
-//          $nonFile = $this->params()->fromPost('va_nombre');
-//          
-//            $data    = array_merge_recursive(
-//                        $this->getRequest()->getPost()->toArray(),          
-//                        $this->getRequest()->getFiles()->toArray()
-//                        ); 
-//            $usuario = new Usuario();
-//            $form->setInputFilter($usuario->getInputFilter());
-//            $form->setData($data);//$request->getPost()
-//            if ($form->isValid()) {
-//               
-//                $usuario->exchangeArray($form->getData());
-//                if($this->redimensionarFoto($File,$nonFile)){
-//                    $this->getUsuarioTable()->guardarUusario($usuario);
-//                    return $this->redirect()->toRoute('usuario');
-//                }
-//                else{
-//                    echo 'problemas con el redimensionamiento';exit;
-//                }
-//
-//            }else{
-//                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
-//                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
-//                    }
-//            }
-//        }
+        if ($request->isPost()) {
+          $File    = $this->params()->fromFiles('va_foto');
+          $nonFile = $this->params()->fromPost('va_nombre');
+          
+            $data    = array_merge_recursive(
+                        $this->getRequest()->getPost()->toArray(),          
+                        $this->getRequest()->getFiles()->toArray()
+                        ); 
+            $usuario = new Usuario();
+            $form->setInputFilter($usuario->getInputFilter());
+            $form->setData($data);//$request->getPost()
+            if ($form->isValid()) {
+               
+                $usuario->exchangeArray($form->getData());
+                if($this->redimensionarFoto($File,$nonFile)){
+                    $this->getUsuarioTable()->guardarUsuario($usuario);
+                    return $this->redirect()->toRoute('usuario');
+                }
+                else{
+                    echo 'problemas con el redimensionamiento';exit;
+                }
+
+            }else{
+                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
+                    }
+            }
+        }
  
         return array('form'=>$form);
 //         return array();
@@ -109,4 +109,114 @@ class IndexController extends AbstractActionController
         }
         return $this->usuarioTable;
     }
+    
+    private function redimensionarFoto($File,$nonFile){
+    try{
+        
+              $anchura = 248;
+              $altura = 500;//143; 
+
+              $generalx=270;
+              $imf =$File['name'];
+              $info =  pathinfo($File['name']);
+              $tamanio = getimagesize($File['tmp_name']);
+              $ancho =$tamanio[0]; 
+              $alto =$tamanio[1]; 
+//              $altura=$tamanio[1];
+              $valor  = uniqid();
+              if($ancho>$alto)
+              {//echo 'ddd';exit;
+                  require './vendor/Classes/Filter/Alnum.php';
+                  //$altura =(int)($alto*$anchura/$ancho);    //($alto*$anchura/$ancho); 
+                  $altura =(int)($alto*$anchura/$ancho);
+                  $anchura =(int)($ancho*$altura/$alto); 
+                  if($info['extension']=='jpg' or $info['extension']=='JPG' or $info['extension']=='jpeg' or $info['extension']=='png'
+                          or $info['extension']=='PNG')      
+                  {   $nom = $nonFile; 
+                  $imf2 =  $valor.'.'.$info['extension'];
+                  $filter   = new \Filter_Alnum();
+                  $filtered = $filter->filter($nom);
+                  $name = $filtered.'-'.$imf2;
+               
+                       if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
+                            $viejafoto=  imagecreatefromjpeg($File['tmp_name']);
+                            $nuevafoto = imagecreatetruecolor($anchura, $altura);
+                            $generalfoto = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/usuario/original/' . $name;
+                            $general=$this->_options->upload->images . '/usuario/general/' . $name;
+                                 imagejpeg($nuevafoto,$copia);
+                                 imagejpeg($viejafoto,$origen);
+                                 imagejpeg($generalfoto,$general);
+                       }else{
+                            $viejafoto=  imagecreatefrompng($File['tmp_name']);
+                           $nuevafoto = imagecreatetruecolor($anchura, $altura);
+                           $generalfoto = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/usuario/original/' . $name;
+                            $general=$this->_options->upload->images . '/usuario/general/' . $name;
+                                 imagepng($nuevafoto,$copia);
+                                 imagepng($viejafoto,$origen);
+                                 imagepng($generalfoto,$general);
+                       }
+                       return true; 
+                  }
+
+               }
+                   if($ancho<$alto)
+              {require './vendor/Classes/Filter/Alnum.php';
+                  //$anchura =(int)($ancho*$altura/$alto); 
+                   $altura =(int)($alto*$anchura/$ancho);
+                  if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg' or $info['extension']=='png'
+                          or $info['extension']=='PNG')      
+                  {  $nom = $nonFile; 
+                  $imf2 =  $valor.'.'.$info['extension'];
+                  $filter   = new \Filter_Alnum();
+                  $filtered = $filter->filter($nom); 
+                   $name = $filtered.'-'.$imf2;
+                            
+                       if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
+                            $viejafoto =  imagecreatefromjpeg($File['tmp_name']);
+                            $nuevafoto = imagecreatetruecolor($anchura, $altura);
+                            $generalfoto = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/usuario/original/' . $name;
+                            $general=$this->_options->upload->images . '/usuario/general/' . $name;
+                                 imagejpeg($nuevafoto,$copia);
+                                 imagejpeg($viejafoto,$origen);
+                                 imagejpeg($generalfoto,$general);
+                       }else{
+                            $viejafoto =  imagecreatefrompng($File['tmp_name']);
+                           $nuevafoto = imagecreatetruecolor($anchura, $altura);
+                           $generalfoto = imagecreatetruecolor($generalx, $altura);
+                            imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
+                            imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                            $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                            $origen = $this->_options->upload->images . '/usuario/original/' . $name;
+                            $general=$this->_options->upload->images . '/usuario/general/' . $name;
+                                 imagepng($nuevafoto,$copia);
+                                 imagepng($viejafoto,$origen);
+                                 imagepng($generalfoto,$general);
+                       }
+
+                       return true;
+ 
+                  }
+
+               }
+
+        return true;
+            
+    }catch(Exception $e){
+        return false;
+    }         
+           
+       }
+    
 }

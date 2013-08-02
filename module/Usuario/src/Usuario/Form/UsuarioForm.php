@@ -29,6 +29,61 @@ class UsuarioForm extends Form{
                 'id'   => 'in_id',         
             ),
         ));
+       
+        $this->add(array(
+            'name' => 'va_nombre',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del usuario…'
+            ),
+        ));  
+        
+        $this->add(array(
+            'name' => 'va_email',
+            'type' => 'email',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese un correo electrónico..'
+            ),
+        ));  
+        
+        
+       
+       
+        $this->add(array(
+            'name' => 'va_foto',
+            'type' => 'File',
+              'attributes' => array(               
+                'class' => '',
+                'id'   => 'va_foto',
+                'placeholder'=>''
+            )
+
+        ));
+        
+         $this->add(array(
+            'name' => 'va_contraseña',
+            'type' => 'Text',
+          
+            'options' => array(
+                'label' => '',          
+            ),
+            'attributes' => array(               
+                'class' => 'span12',
+                'placeholder'=>'Ingrese la contraseña…'
+            ),
+        ));  
+                    
+        
     
                $this->add(array(
             'name' => 'submit',
