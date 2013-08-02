@@ -5,7 +5,7 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
-use Platos\Model\Platos;
+
 
 class UsuarioTable{
 

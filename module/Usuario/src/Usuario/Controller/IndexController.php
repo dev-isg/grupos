@@ -13,9 +13,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
-use Grupo\Model\Grupo;
-use Grupo\Model\GrupoTable;
-use Grupo\Form\GruposForm;
+use Usuario\Model\Usuario;
+use Usuario\Model\UsuarioTable;
+use Usuario\Form\UsuarioForm;
 use Zend\Form\Element;
 use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
@@ -59,12 +59,13 @@ class IndexController extends AbstractActionController
                               ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js')
                               ->prependFile($this->_options->host->base .'/js/ckeditor/ckeditor.js');
 
-        $user_info = $this->getUsuarioTable()->usuariox(1);
+//        $user_info = $this->getUsuarioTable()->usuariox(1);
 //        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm($adpter);
+//        $form = new UsuarioForm($adpter);
+        $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-        $request = $this->getRequest();
+//        $request = $this->getRequest();
         
         if ($request->isPost()) {
           $File    = $this->params()->fromFiles('va_foto');
@@ -95,7 +96,8 @@ class IndexController extends AbstractActionController
             }
         }
  
-        return array('form'=>$form,'usuario'=>$user_info);
+        return array('form'=>$form);
+//         return array();
     }
 
     public function fooAction()

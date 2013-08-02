@@ -1,7 +1,20 @@
-<?php
+                    <?php
+                    $form = $this->form;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+                    $form->setAttributes(array(
+                        'action' => $this->url.'/usuario/index/agregarusuario',
+                        'method' => 'post',
+                        'class'=>'span12 form-crear-grupo',
+                        'id'=>'crear-group'
+                    ));
+
+                    $form->prepare();
+                    echo $this->form()->openTag($form);
+                    ?>
+
+
+
+                            <?php echo $this->formSubmit($form->get('submit'));?>
+  
+                    <?php echo $this->form()->closeTag();?>
+   

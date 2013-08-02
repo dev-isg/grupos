@@ -13,9 +13,9 @@ use Zend\ServiceManager\ServiceManagerAwareInterface;
 class UsuarioForm extends Form{
     
     
-    public function __construct(AdapterInterface $dbAdapter)//$name = null
+    public function __construct(AdapterInterface $dbAdapter=null)//$name = null
     {
-        $this->setDbAdapter($dbAdapter);
+//        $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
         parent::__construct('usuario');
         $this->setAttribute('method', 'post');
@@ -30,26 +30,34 @@ class UsuarioForm extends Form{
             ),
         ));
     
+               $this->add(array(
+            'name' => 'submit',
+            'type' => 'Submit',
+            'attributes' => array(
+                'value' => 'Guardar',
+                'class' => 'btn btn-info btn-large',
+//                'id' => 'submitbutton',
+            ),
+        ));
        
        
-       
     }
     
     
-     public function getDbAdapter()
-    {
-        return $this->dbAdapter;
-    }
+//     public function getDbAdapter()
+//    {
+//        return $this->dbAdapter;
+//    }
     
-    public function setId($id){
-        $this->idusu=$id;
-        return $this;
-    }
-    
-        public function getId()
-    {
-        return $this->idusu;
-    }
+//    public function setId($id){
+//        $this->idusu=$id;
+//        return $this;
+//    }
+//    
+//        public function getId()
+//    {
+//        return $this->idusu;
+//    }
 
     
     
