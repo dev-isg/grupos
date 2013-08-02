@@ -38,6 +38,21 @@ class EventoController extends AbstractActionController
     
     public function agregareventoAction(){
            
+
+        //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
+        $renderer->inlineScript()->setScript('crearevento();')
+                              ->prependFile($this->_options->host->base .'/js/main.js')
+                              ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
+                              ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
+                              ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                              ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js')
+                              ->prependFile($this->_options->host->base .'/js/bootstrap-datetimepicker.js')
+                              ->prependFile($this->_options->host->base .'/js/mockjax/jquery.mockjax.js')
+                              ->prependFile($this->_options->host->base .'/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                              ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js')
+                              ->prependFile($this->_options->host->base .'/js/ckeditor/ckeditor.js');
 //        $local = (int) $this->params()->fromQuery('id');
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
