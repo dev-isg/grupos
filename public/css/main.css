@@ -330,6 +330,10 @@ margin-left: 8em;
   color: red;
   font-size: 1.3em;
   vertical-align: middle;
+  background: none;
+}
+.btn-file strong{
+  background: none;
 }
 .cambiofotouser {
 margin-top: 5em;

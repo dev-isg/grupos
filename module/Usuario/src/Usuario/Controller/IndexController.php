@@ -46,18 +46,13 @@ class IndexController extends AbstractActionController
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
 
+
       //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-      $renderer->inlineScript()->setScript('crearevento();')
-                              ->prependFile($this->_options->host->base .'/js/main.js')
-                              ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
-                              ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
-                              ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+      $renderer->inlineScript()->setScript('if( $("#registro").length){valregistro("#registro");};')
+                              ->prependFile($this->_options->host->base .'/js/main.js')                              
                               ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js')
-                              ->prependFile($this->_options->host->base .'/js/bootstrap-datetimepicker.js')
-                              ->prependFile($this->_options->host->base .'/js/mockjax/jquery.mockjax.js')
                               ->prependFile($this->_options->host->base .'/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-                              ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js')
-                              ->prependFile($this->_options->host->base .'/js/ckeditor/ckeditor.js');
+                              ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js');
 
 //        $user_info = $this->getUsuarioTable()->usuariox(1);
 //        var_dump($user_info);Exit;
@@ -65,7 +60,7 @@ class IndexController extends AbstractActionController
 //        $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-//        $request = $this->getRequest();
+        $request = $this->getRequest();
         
         if ($request->isPost()) {
           $File    = $this->params()->fromFiles('va_foto');
