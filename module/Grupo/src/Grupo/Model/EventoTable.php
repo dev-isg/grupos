@@ -107,6 +107,7 @@ class EventoTable{
           'va_estado'=>$evento->va_estado,
           'va_max'=>$evento->va_max,
           'va_min'=>$evento->va_min,
+          'va_duracion'=>$evento->va_duracion,
           'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
           'ta_categoria_in_id'=>$evento->ta_categoria_in_id,
           'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   

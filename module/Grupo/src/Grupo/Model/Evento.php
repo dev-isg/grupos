@@ -17,10 +17,12 @@ class Evento implements InputFilterAwareInterface
     public $va_direccion;
     public $va_referencia;
     public $va_imagen;
+    public $va_fecha;
 
     public $va_estado;
     public $va_max;
     public $va_min;
+    public $va_duracion;
     //foraneas
     public $ta_usuario_in_id;
     public $ta_categoria_in_id;
@@ -46,10 +48,12 @@ class Evento implements InputFilterAwareInterface
             $this->va_direccion= (!empty($data['va_direccion'])) ? $data['va_direccion'] : null;
             $this->va_referencia= (!empty($data['va_referencia'])) ? $data['va_referencia'] : null;
             $this->va_imagen= (!empty($data['va_imagen'])) ? $data['va_imagen'] : null;
+            $this->va_fecha= (!empty($data['va_fecha'])) ? $data['va_fecha'] : null;
  
             $this->va_estado= (!empty($data['va_estado'])) ? $data['va_estado'] : 1;
             $this->va_max= (!empty($data['va_max'])) ? $data['va_max'] : null;
             $this->va_min= (!empty($data['va_min'])) ? $data['va_min'] : null;
+            $this->va_duracion=(!empty($data['va_duracion'])) ? $data['va_duracion'] : null;
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
             $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;

@@ -65,8 +65,7 @@ class EventoController extends AbstractActionController
                     }
             }
         }
- 
-        return array('form'=>$form);
+        return array('formevento'=>$form);
     }
     
     public function editareventoAction(){
@@ -116,7 +115,7 @@ class EventoController extends AbstractActionController
             if ($form->isValid()) {
                 
 //                var_dump($grupo);
-                $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                $this->getGrupoTable()->guardarEvento($grupo,$notificacion);
                 return $this->redirect()->toRoute('grupo');
             }else{
 //                var_dump($form->isValid());
