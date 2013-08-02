@@ -36,24 +36,33 @@ function crearevento(){
 
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
-            if( $(".crear-evento-grupos").css("display") == 'none' ){
-                if($("#crearGrupo").val()===""){
+            alert('fdbbf');
+            if($("#crearGrupo").val()===""){
                     $(".activar-agregar").show();
                     $(".next-space").hide();
                 }else{
                     $(".activar-agregar").hide();
                     $(".next-space").show();
                 }
-            }
-            else{
-                $(".activar-agregar").hide();
-                $(".next-space").hide();
-            }
         });
 
-        $(".next-grupo").click(function(){
-            $(".next-space").hide();
-            $(".crear-evento-grupos").show();
+//        $(".next-grupo").click(function(){
+//            $(".next-space").hide();
+//            $(".crear-evento-grupos").show();
+//            $("#map").juGoogleMap({
+//                editable:true,
+//                dataBound:{
+//                    lat:'#mapLocationLat',
+//                    lng:'#mapLocationLon',
+//                    city:'#cityId',
+//                    address:'#address',
+//                    addressRef:'#addressReference'
+//                },
+//                center:{lat:-12.047816, lng:-77.062203},
+//                zoom:8  
+//            });
+//        });
+
             $("#map").juGoogleMap({
                 editable:true,
                 dataBound:{
@@ -66,7 +75,6 @@ function crearevento(){
                 center:{lat:-12.047816, lng:-77.062203},
                 zoom:8  
             });
-        });
 
         $(".btn-agregar").click(function(){
             $(".elige-crea").hide();

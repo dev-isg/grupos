@@ -15,7 +15,7 @@ class EventoForm extends Form
     {
         $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
-        parent::__construct('evento');
+        parent::__construct('eventojkljl');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
         

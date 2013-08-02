@@ -114,7 +114,7 @@ class EventoTable{
           'ta_grupo_in_id'=>$evento->ta_ubigeo_in_id
       );
       
- 
+  var_dump($data);exit;
     
       $id = (int) $evento->in_id;
   
@@ -123,6 +123,7 @@ class EventoTable{
               $data[$key]=0;
           }
       }
+     
      
       if ($id == 0) {
           $this->tableGateway->insert($data);

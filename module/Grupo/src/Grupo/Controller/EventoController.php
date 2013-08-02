@@ -62,10 +62,11 @@ class EventoController extends AbstractActionController
 
                 return $this->redirect()->toRoute('grupo');
             }else{
-               
+              
                     foreach ($form->getInputFilter()->getInvalidInput() as $error) {
-                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
+                        print_r ($error->getMessages());
                     }
+//                     return $this->redirect()->toRoute('grupo/index/agregargrupo');
             }
         }
         return array('formevento'=>$form);
