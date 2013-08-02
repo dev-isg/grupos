@@ -45,6 +45,7 @@ class EventoController extends AbstractActionController
         $request = $this->getRequest();
         
         if ($request->isPost()) {
+            
 //          $File    = $this->params()->fromFiles('va_imagen');
             $data    = array_merge_recursive(
                         $this->getRequest()->getPost()->toArray(),          
@@ -53,20 +54,22 @@ class EventoController extends AbstractActionController
             $evento = new Evento();
             $form->setInputFilter($evento->getInputFilter());
             $form->setData($data);//$request->getPost()
+            
             if ($form->isValid()) {
                
                 $evento->exchangeArray($form->getData());
-                $this->getEventoTable()->guardarGrupo($evento);
+                $this->getEventoTable()->guardarEvento($evento);
 
                 return $this->redirect()->toRoute('grupo');
             }else{
+              
                     foreach ($form->getInputFilter()->getInvalidInput() as $error) {
-                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
+                        print_r ($error->getMessages());
                     }
+//                     return $this->redirect()->toRoute('grupo/index/agregargrupo');
             }
         }
- 
-        return array('form'=>$form);
+        return array('formevento'=>$form);
     }
     
     public function editareventoAction(){
@@ -116,7 +119,7 @@ class EventoController extends AbstractActionController
             if ($form->isValid()) {
                 
 //                var_dump($grupo);
-                $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                $this->getGrupoTable()->guardarEvento($grupo,$notificacion);
                 return $this->redirect()->toRoute('grupo');
             }else{
 //                var_dump($form->isValid());

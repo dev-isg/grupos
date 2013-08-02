@@ -120,8 +120,14 @@ class IndexController extends AbstractActionController
                     }
             }
         }
- 
-        return array('form'=>$form,'grupos'=>$user_info);
+        $mainViewModel = new ViewModel();
+       $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
+        'action' => 'agregarevento',
+         ));
+
+     $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
+    return  $mainViewModel->setVariables(array('form'=>$form,'grupos'=>$user_info));
+//        return array('form'=>$form,'grupos'=>$user_info);
     }
     
     public function editargrupoAction(){

@@ -15,7 +15,7 @@ class EventoForm extends Form
     {
         $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
-        parent::__construct('grupo');
+        parent::__construct('eventojkljl');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
         
@@ -34,14 +34,21 @@ class EventoForm extends Form
            'attributes' => array(               
                 'id'   => 'Ta_usuario_in_id',         
             ),
+        )); 
+              
+       $this->add(array(
+            'name' => 'ta_grupo_in_id',
+            'type' => 'Hidden',
+           'attributes' => array(               
+                'id'   => 'ta_grupo_in_id',         
+            ),
         ));
-              
-              
+        
         $this->add(array(
             'name' => 'va_latitud',
             'type' => 'Hidden',
            'attributes' => array(               
-                'id'   => 'va_latitud',         
+                'id'   => 'mapLocationLat',         
             ),
         ));
         
@@ -49,7 +56,7 @@ class EventoForm extends Form
             'name' => 'va_longitud',
             'type' => 'Hidden',
            'attributes' => array(               
-                'id'   => 'va_longitud',         
+                'id'   => 'mapLocationLon',         
             ),
         ));
         
@@ -61,26 +68,20 @@ class EventoForm extends Form
               'attributes' => array(               
                 'class' => '',
                 'id'   => 'va_imagen',
-                'placeholder'=>'Ingrese su página Web'
-            ),
-            'options' => array(
-                'label' => 'Agregar Imagen : ',
-            ),
+                'placeholder'=>'Ingrese su imagen'
+            )
         ));
         
           $this->add(array(
             'name' => 'va_descripcion',
             'type' => 'Textarea',
             'attributes' => array(               
-                'class' => 'span11',
-                'id'   => 'va_descripcion',
-                'placeholder'=>'Ingrese descripción',
-                'colls'=>40,
-                'rows'=>4
+                'class' => 'ckeditor',
+                'id'   => 'editor1',
+                'colls'=>80,
+                'rows'=>10
             ),
-            'options' => array(
-                'label' => 'Descripción',
-            ),
+
         ));
            
           
@@ -89,12 +90,12 @@ class EventoForm extends Form
             'type' => 'Text',
           
             'options' => array(
-                'label' => 'Nombre del Grupo :',          
+                'label' => 'Nombre del evento:',          
             ),
             'attributes' => array(               
-                'class' => 'span11',
+                'class' => 'span12',
                 'id'   => 'va_nombre',
-                'placeholder'=>'Ingrese nombre del grupo'
+                'placeholder'=>'Ingrese el nombre del evento…'
             ),
         ));  
           
@@ -103,13 +104,36 @@ class EventoForm extends Form
             'name' => 'va_costo',
             'type' => 'Text',
             'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'de_precio',
-                'placeholder'=>'Ingrese el costo'
-            ),
-            'options' => array(
-                'label' => 'Costo',
-            ),
+                'class' => 'span6',
+                'id'   => 'inputCosto',
+                'placeholder'=>'Costo...'
+            )
+        ));
+          
+                    $this->add(array(
+            'name' => 'va_duracion',
+            'type' => 'Text',
+            'attributes' => array(               
+                'class' => 'span6',
+                'placeholder'=>'Cuanto tiempo...'
+            )
+        ));
+                    
+          $this->add(array(
+            'name' => 'va_min',
+            'type' => 'Text',
+            'attributes' => array(               
+                'class' => 'span5',
+                'id'   => 'inputIcon',
+            )
+        ));
+          $this->add(array(
+            'name' => 'va_max',
+            'type' => 'Text',
+            'attributes' => array(               
+                'class' => 'span5',
+                'id'   => 'inputIcon',
+            )
         ));
           
         
@@ -117,25 +141,31 @@ class EventoForm extends Form
             'name' => 'va_direccion',
             'type' => 'Text',
             'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_direccion',
-                'placeholder'=>'Ingrese direccion'
-            ),
-            'options' => array(
-                'label' => 'Direccion',
-            ),
+                'class' => 'input-block-level',
+                'id'   => 'address',
+                'placeholder'=>'Ingrese direccion',
+                'maxlength'=>150
+            )
         ));
         
          $this->add(array(
             'name' => 'va_referencia',
             'type' => 'Text',
             'attributes' => array(               
+                'class' => 'input-block-level',
+                'id'   => 'addressReference',
+                'placeholder'=>'Ingrese direccion de referencia',
+                'maxlength'=>250
+            )
+        ));
+         
+           $this->add(array(
+            'name' => 'va_fecha',
+            'type' => 'Text',
+            'attributes' => array(
+                'size'=>16,
+                'readonly' => 'true',
                 'class' => 'span10',
-                'id'   => 'va_referencia',
-                'placeholder'=>'Ingrese direccion de referencia'
-            ),
-            'options' => array(
-                'label' => 'Referencia',
             ),
         ));
           
@@ -172,11 +202,10 @@ class EventoForm extends Form
             'name' => 'ta_ubigeo_in_id',//distrito
             'type' => 'Select',
              'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'ta_ubigeo_in_id'
+                'class' => 'input-block-level',
+                'id'   => 'cityId'
             ),
            'options' => array(
-                     'label' => 'Distrito',
                      'value_options' =>$this->Distrito(),                                               
                     'empty_option'  => '--- Seleccionar ---',
                    
@@ -237,8 +266,8 @@ class EventoForm extends Form
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(
-                'value' => 'Guardar',
-                'class' => 'btn btn-success',
+                'value' => 'Crear evento',
+                'class' => 'btn btn-info btn-large',
                 'id' => 'submitbutton',
             ),
         ));
