@@ -25,7 +25,7 @@
                         </div>
                     </div><!--Crear grupo o agregar-->
                     <p class="next-space" style="display:none;">
-                        <a href="#" class="btn btn-warning next-grupo">Siguiente</a>
+                        <a href="/grupo/evento/agregarevento" class="btn btn-warning next-grupo">Siguiente</a>
                     </p>
                 </div>    
                 <div class="row-fluid crear-grupos" style="display:none;">
@@ -33,7 +33,7 @@
                     $form = $this->form;
 
                     $form->setAttributes(array(
-                        'action' => $this->url.'/grupo/index/agregargrupo',
+                        'action' => $this->url.'/grupo/index/agregargrupo', 
                         'method' => 'post',
                         'class'=>'span12 form-crear-grupo',
                         'id'=>'crear-group'
@@ -77,7 +77,7 @@
                         </div>
                         <p class="crear-evento">
                             <?php echo $this->formSubmit($form->get('submit'));?>
-                            <a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
+                            <a href="" class="btn btn-inverse btn-cancelar">Cancelar</a>
                         </p>
                     <!--</form>-->
                     <?php echo $this->form()->closeTag();?>

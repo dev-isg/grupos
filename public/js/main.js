@@ -36,7 +36,6 @@ function crearevento(){
 
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
-            alert('fdbbf');
             if($("#crearGrupo").val()===""){
                     $(".activar-agregar").show();
                     $(".next-space").hide();
