@@ -67,34 +67,34 @@ class IndexController extends AbstractActionController
         $form->get('submit')->setValue('Crear Usuario');
 //        $request = $this->getRequest();
         
-        if ($request->isPost()) {
-          $File    = $this->params()->fromFiles('va_foto');
-          $nonFile = $this->params()->fromPost('va_nombre');
-          
-            $data    = array_merge_recursive(
-                        $this->getRequest()->getPost()->toArray(),          
-                        $this->getRequest()->getFiles()->toArray()
-                        ); 
-            $usuario = new Usuario();
-            $form->setInputFilter($usuario->getInputFilter());
-            $form->setData($data);//$request->getPost()
-            if ($form->isValid()) {
-               
-                $usuario->exchangeArray($form->getData());
-                if($this->redimensionarFoto($File,$nonFile)){
-                    $this->getUsuarioTable()->guardarUusario($usuario);
-                    return $this->redirect()->toRoute('usuario');
-                }
-                else{
-                    echo 'problemas con el redimensionamiento';exit;
-                }
-
-            }else{
-                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
-                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
-                    }
-            }
-        }
+//        if ($request->isPost()) {
+//          $File    = $this->params()->fromFiles('va_foto');
+//          $nonFile = $this->params()->fromPost('va_nombre');
+//          
+//            $data    = array_merge_recursive(
+//                        $this->getRequest()->getPost()->toArray(),          
+//                        $this->getRequest()->getFiles()->toArray()
+//                        ); 
+//            $usuario = new Usuario();
+//            $form->setInputFilter($usuario->getInputFilter());
+//            $form->setData($data);//$request->getPost()
+//            if ($form->isValid()) {
+//               
+//                $usuario->exchangeArray($form->getData());
+//                if($this->redimensionarFoto($File,$nonFile)){
+//                    $this->getUsuarioTable()->guardarUusario($usuario);
+//                    return $this->redirect()->toRoute('usuario');
+//                }
+//                else{
+//                    echo 'problemas con el redimensionamiento';exit;
+//                }
+//
+//            }else{
+//                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+//                        print_r ($error->getMessages());//$inputFilter->getInvalidInput()
+//                    }
+//            }
+//        }
  
         return array('form'=>$form);
 //         return array();
