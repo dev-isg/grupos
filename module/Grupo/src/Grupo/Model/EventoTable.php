@@ -99,6 +99,7 @@ class EventoTable{
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>$evento->va_descripcion,
          'va_costo'=>$evento->va_costo,
+          'va_fecha'=>$evento->va_fecha,
          'va_latitud'=>$evento->va_latitud,
           'va_longitud'=>$evento->va_longitud,
           'va_direccion'=>$evento->va_direccion,
@@ -109,12 +110,11 @@ class EventoTable{
           'va_min'=>$evento->va_min,
           'va_duracion'=>$evento->va_duracion,
           'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
-          'ta_categoria_in_id'=>$evento->ta_categoria_in_id,
           'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
-          'ta_grupo_in_id'=>$evento->ta_ubigeo_in_id
+          'ta_grupo_in_id'=>$evento->ta_grupo_in_id
       );
       
-  var_dump($data);exit;
+//  var_dump($data);exit;
     
       $id = (int) $evento->in_id;
   

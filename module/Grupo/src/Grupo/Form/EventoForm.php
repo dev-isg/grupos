@@ -15,7 +15,7 @@ class EventoForm extends Form
     {
         $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
-        parent::__construct('eventojkljl');
+        parent::__construct('evento');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
         
@@ -169,34 +169,34 @@ class EventoForm extends Form
             ),
         ));
           
-          $this->add(array(
-            'name' => 'va_dirigido',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_dirigido',
-                'placeholder'=>'A quien?'
-            ),
-            'options' => array(
-                'label' => 'Dirigido a :',
-            ),
-        ));
+//          $this->add(array(
+//            'name' => 'va_dirigido',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'va_dirigido',
+//                'placeholder'=>'A quien?'
+//            ),
+//            'options' => array(
+//                'label' => 'Dirigido a :',
+//            ),
+//        ));
           
           
                
-        $this->add(array(
-            'name' =>'ta_categoria_in_id',
-            'type' => 'Select',  
-            
-             'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'ta_categoria_in_id'
-            ),
-           'options' => array('label' => 'Categoria del Grupo : ',
-                     'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
-                     'empty_option'  => '--- Seleccionar ---'
-             )
-        ));
+//        $this->add(array(
+//            'name' =>'ta_categoria_in_id',
+//            'type' => 'Select',  
+//            
+//             'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'ta_categoria_in_id'
+//            ),
+//           'options' => array('label' => 'Categoria del Grupo : ',
+//                     'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
+//                     'empty_option'  => '--- Seleccionar ---'
+//             )
+//        ));
         
           $this->add(array(
             'name' => 'ta_ubigeo_in_id',//distrito
@@ -207,7 +207,7 @@ class EventoForm extends Form
             ),
            'options' => array(
                      'value_options' =>$this->Distrito(),                                               
-                    'empty_option'  => '--- Seleccionar ---',
+//                    'empty_option'  => '--- Seleccionar ---',
                    
              )
         ));
@@ -322,21 +322,21 @@ class EventoForm extends Form
      public function Distrito()
         {   
        
-        $this->dbAdapter =$this->getDbAdapter();
-        $adapter = $this->dbAdapter;
-        $sql = new Sql($adapter);
-        $select = $sql->select()
-                ->columns(array('in_iddistrito','va_distrito'))
-            ->from('ta_ubigeo')
-            ->where(array('va_departamento'=>'LIMA','va_provincia'=>'LIMA'))->group('in_iddistrito');
-            $selectString = $sql->getSqlStringForSqlObject($select);
-            $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-            $distrito=$results->toArray();
+//        $this->dbAdapter =$this->getDbAdapter();
+//        $adapter = $this->dbAdapter;
+//        $sql = new Sql($adapter);
+//        $select = $sql->select()
+//                ->columns(array('in_iddistrito','va_distrito'))
+//            ->from('ta_ubigeo')
+//            ->where(array('va_departamento'=>'LIMA','va_provincia'=>'LIMA'))->group('in_iddistrito');
+//            $selectString = $sql->getSqlStringForSqlObject($select);
+//            $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//            $distrito=$results->toArray();
             
-        $auxtipo=array();
-        foreach($distrito as $tipo){
-            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];      
-        }
+        $auxtipo=array('PER-LIM'=>'Lima, Perú');
+//        foreach($distrito as $tipo){
+//            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];      
+//        }
             return $auxtipo;
             
      }

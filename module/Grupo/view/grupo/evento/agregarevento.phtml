@@ -3,18 +3,19 @@
         <div class="row-fluid">
 <div class="row-fluid crear-evento-grupos">
             <?php
-        $formevento = $this->formevento;
+        $form = $this->formevento;
 
-        $formevento->setAttributes(array(
+        $form->setAttributes(array(
             'action' => $this->url.'/grupo/evento/agregarevento',
             'method' => 'post',
             'class'=>'span12 form-crear-grupo',
-            'id'=>'crearEventoGñññññ'
+            'id'=>'crearEventosadasd'
         ));
 
-        $formevento->prepare();
-        echo $this->form()->openTag($formevento);
+        $form->prepare();
+        echo $this->form()->openTag($form);
         ?>
+    <?php echo $this->formHidden($form->get('in_id'));?>
         <div class="row-fluid">
             <div class="span12 crear-evento event">
                 <h1>Crear un nuevo evento</h1>
@@ -24,9 +25,9 @@
         <div class="row-fluid crear-evento-1 event">
             <h2>Describe tu evento</h2>
             <div class="span8 desc-evento">
-                <?php echo $this->formRow($formevento->get('va_nombre'));?>
+                <?php echo $this->formRow($form->get('va_nombre'));?>
                 <label>Descripción del evento:</label>
-                <?php echo $this->formRow($formevento->get('va_descripcion'));?>
+                <?php echo $this->formRow($form->get('va_descripcion'));?>
                 <!--<textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10"></textarea>-->
             </div>
             <div class="span4">
@@ -40,7 +41,7 @@
                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                             <div>
                                 <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
-                                   <?php echo $this->formRow($formevento->get('va_imagen'));?>
+                                   <?php echo $this->formRow($form->get('va_imagen'));?>
                                 </span>
                                 <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                             </div>
@@ -56,7 +57,7 @@
                     <label class="field_name">Fecha y hora:</label>
                     <div class="field">
                         <div class="span10 input-append date form_datetime2" data-date="2013-02-21T15:25:00Z">
-                            <?php echo $this->formRow($formevento->get('va_fecha'));?>
+                            <?php echo $this->formRow($form->get('va_fecha'));?>
                             <span class="add-on"><i class="icon-remove"></i></span>
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
@@ -67,7 +68,7 @@
                 <label class="field_name">Duración del evento:</label>
                 <div class="input-prepend input-append">
                     <span class="add-on"><i class="icon-time"></i></span>
-                    <?php echo $this->formRow($formevento->get('va_duracion'));?>
+                    <?php echo $this->formRow($form->get('va_duracion'));?>
                     <span class="add-on">Horas</span>
                 </div>
             </div>
@@ -75,7 +76,7 @@
                 <label class="field_name">Precio referencial para el evento:</label>
                 <div class="input-prepend input-append">
                     <span class="add-on">S/.</span>
-                     <?php echo $this->formRow($formevento->get('va_costo'));?>
+                     <?php echo $this->formRow($form->get('va_costo'));?>
                     <span class="add-on">.00</span>
                 </div>
             </div>
@@ -85,7 +86,7 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-envelope"></i></span>
-                      <?php echo $this->formRow($formevento->get('va_min'));?>
+                      <?php echo $this->formRow($form->get('va_min'));?>
                     </div>
                   </div>
                 </div>
@@ -94,7 +95,7 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-envelope"></i></span>
-                      <?php echo $this->formRow($formevento->get('va_max'));?>
+                      <?php echo $this->formRow($form->get('va_max'));?>
                     </div>
                   </div>
                 </div>
@@ -111,7 +112,7 @@
                         <label for="cityId" class="required">Ciudad</label>
                     </div>
                     <div class="item-value">
-                        <?php echo $this->formRow($formevento->get('ta_ubigeo_in_id'));?>
+                        <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
 <!--                        <select name="cityId" id="cityId" class="input-block-level">
                             <option value="PER-LIM" label="Lima, Perú" selected="selected">Lima, Perú</option>
                         </select>-->
@@ -124,7 +125,7 @@
                         <label for="address" class="required">Dirección</label>
                     </div>
                     <div class="item-value">
-                        <?php echo $this->formRow($formevento->get('va_direccion'));?>
+                        <?php echo $this->formRow($form->get('va_direccion'));?>
                        
                     </div>
                 </div>      
@@ -135,18 +136,19 @@
                         <label for="addressReference" class="optional">Referencia de ubicación</label>
                     </div>
                     <div class="item-value">
-                         <?php echo $this->formRow($formevento->get('va_referencia'));?>                      
+                         <?php echo $this->formRow($form->get('va_referencia'));?>                      
                     </div>
                 </div>
-                <?php echo $this->formRow($formevento->get('va_latitud'));?>
-                <?php echo $this->formRow($formevento->get('va_longitud'));?>       
+                <?php echo $this->formRow($form->get('va_latitud'));?>
+                <?php echo $this->formRow($form->get('va_longitud'));?>       
             </div>
         </div>
         <p class="crear-evento">
-            <?php echo $this->formSubmit($formevento->get('submit'));?>
+            <?php echo $this->formSubmit($form->get('submit'));?>
         </p>
             <?php echo $this->form()->closeTag();?>
     </div>
+
         </div>
   </div>
 </div>
