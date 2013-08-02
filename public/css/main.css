@@ -1221,6 +1221,9 @@ span.nm{
 .next-space{
   margin-top: 20px;
 }
+.datetimepicker{
+  z-index: 100!important;
+}
 /*Color box*/
 /*
     Colorbox Core Style:
