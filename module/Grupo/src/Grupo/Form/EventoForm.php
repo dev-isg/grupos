@@ -15,7 +15,7 @@ class EventoForm extends Form
     {
         $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
-        parent::__construct('eventojkljl');
+        parent::__construct('evento');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
         
@@ -169,34 +169,34 @@ class EventoForm extends Form
             ),
         ));
           
-          $this->add(array(
-            'name' => 'va_dirigido',
-            'type' => 'Text',
-            'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'va_dirigido',
-                'placeholder'=>'A quien?'
-            ),
-            'options' => array(
-                'label' => 'Dirigido a :',
-            ),
-        ));
+//          $this->add(array(
+//            'name' => 'va_dirigido',
+//            'type' => 'Text',
+//            'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'va_dirigido',
+//                'placeholder'=>'A quien?'
+//            ),
+//            'options' => array(
+//                'label' => 'Dirigido a :',
+//            ),
+//        ));
           
           
                
-        $this->add(array(
-            'name' =>'ta_categoria_in_id',
-            'type' => 'Select',  
-            
-             'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'ta_categoria_in_id'
-            ),
-           'options' => array('label' => 'Categoria del Grupo : ',
-                     'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
-                     'empty_option'  => '--- Seleccionar ---'
-             )
-        ));
+//        $this->add(array(
+//            'name' =>'ta_categoria_in_id',
+//            'type' => 'Select',  
+//            
+//             'attributes' => array(               
+//                'class' => 'span10',
+//                'id'   => 'ta_categoria_in_id'
+//            ),
+//           'options' => array('label' => 'Categoria del Grupo : ',
+//                     'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
+//                     'empty_option'  => '--- Seleccionar ---'
+//             )
+//        ));
         
           $this->add(array(
             'name' => 'ta_ubigeo_in_id',//distrito
