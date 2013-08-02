@@ -92,7 +92,7 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese la contrasena…'
+                'placeholder'=>'Confirme la contrasena…'
             ),
         ));  
                     
