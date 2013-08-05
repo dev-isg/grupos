@@ -96,9 +96,7 @@
                         <ul>
                             
                             
-                             <?php 
-    foreach ($this->eventos  as $eventos) :
-        ?>
+            <?php foreach ($this->eventos  as $eventos) :?>
                             <li data-category="web">
                                 <a href="ficha-producto.html" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
