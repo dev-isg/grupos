@@ -116,6 +116,75 @@ function crearevento(){
     });
 }
 
+function actualizarDatos(){
+    $(document).ready(function(){
+        $("#datos").on("click",function(){
+                 $(".mifoto").slideUp();
+                  $(".cface").slideUp();              
+                   $(".noti").slideUp();
+                 $(".ocultar").hide();
+                 $(".misdatos").animate({
+                 'width': "100%",
+                 'height': "100%"
+                  });
+                 $(".modificardatos").slideDown();
+                 $(".misdatos span").slideDown();
+        });
+
+        $(".misdatos").delegate("span","click",function(){
+         $(".modificardatos").hide(); 
+         $(".misdatos span").slideUp(); 
+          $(".ocultar").slideDown();      
+         $(".misdatos").animate({
+         'width': "48.717948717948715%",
+         'height': "180px"
+           });        
+            $(".mifoto").slideDown();
+             $(".cface").slideDown();              
+            $(".noti").slideDown();            
+           
+        });
+
+        $("#inoti").on("click",function(){
+                  $(".ocultarnoti").hide();
+
+                 $(".notificaciones").slideDown();
+                 $(".noti").animate({
+                 'width': "48.93617021276595%",
+                 'height': "180px"
+                  });
+                 $(".noti span").slideDown();
+        });
+        $(".noti").delegate("span","click",function(){
+             $(".notificaciones").hide();
+                  $(".ocultarnoti").slideDown(); 
+                     $(".noti span").hide(); 
+                     $(".noti").animate({
+                     'width': "48.93617021276595%",
+                     'height': "180px"
+                       }); 
+            });
+         $("#afoto").on("click",function(){
+                  $(".ocultarfoto").hide();
+                 $(".cambiofoto").slideDown();
+                 $(".mifoto").animate({
+                 'width': "48.93617021276595%",
+                 'height': "180px"
+                  });
+                 $(".mifoto span").slideDown();
+        });
+          $(".mifoto").delegate("span","click",function(){
+             $(".cambiofoto").hide();
+                  $(".ocultarfoto").slideDown(); 
+                     $(".mifoto span").hide(); 
+                     $(".mifoto").animate({
+                     'width': "48.93617021276595%",
+                     'height': "180px"
+                       }); 
+            });
+    });
+}
+
 var valregistro=function(elemento){
     $(elemento).validate({
         rules: {
@@ -157,3 +226,5 @@ var valregistro=function(elemento){
             
     });
 }
+
+
