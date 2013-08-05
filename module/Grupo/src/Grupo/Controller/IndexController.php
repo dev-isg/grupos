@@ -37,10 +37,10 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $listaEventos =$this->getEventoTable()->listadoEvento();
-        $nombre = $this->params()->fromQuery('dato');
+     
+      $nombre = $this->params()->fromQuery('dato');
       $submit=$this->params()->fromPost('submit');
-      $grupo = $this->params()->fromQuery('grupo');
+//        $grupo = $this->params()->fromQuery('grupo');
       // var_dump($grupo);exit;
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
@@ -52,16 +52,17 @@ class IndexController extends AbstractActionController
         //var_dump($tipo);exit;
       //  $nombre=$this->params()->fromPost('nombre');  
       //var_dump($listaEventos);exit;
-        if(isset($submit) and  isset($tipo)){
-                        echo 'ddd';exit;
+        if($nombre){
+                       
              if($tipo){
                 $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
 
             }else if($nombre){ 
                 $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+              
             }
 
-        }
+        }else{ $listaEventos =$this->getEventoTable()->listadoEvento();}
 
         return array('grupos'=>$listagrupos,'categorias'=>$categorias,'eventos'=>$listaEventos);
     }

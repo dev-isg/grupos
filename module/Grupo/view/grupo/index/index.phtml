@@ -63,7 +63,31 @@
                                     </p>
                                 </div>
                             </li>
-          <?php endforeach; ?>    
+          <?php endforeach; ?>   
+   
+                            <?php foreach ($this->grupos  as $grupos) :?>
+                            <li data-category="web">
+                                <a href="ficha-producto.html" class="preview" data-ui-lightbox>
+                               <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span><?php  $fecha = date_create($grupos->va_fecha);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
+                                        <span class="category">
+                                            <a href="#"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="ficha-producto.html"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
+                                    </h2>
+                                    <p>
+                                       <?php echo  $this->escapeHtml($grupos->va_descripcion);?>
+                                    </p>
+                                </div>
+                            </li>
+          <?php endforeach; ?> 
                             
                             <!-- ITEM -->
 
