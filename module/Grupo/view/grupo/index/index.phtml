@@ -1,4 +1,3 @@
-
         <!--<div class="filtrar-home">
             <div class="container">
                 <div class="row-fluid">
@@ -40,32 +39,37 @@
                 <div class="row-fluid">
                     <div class="span12 main wrapper" id="content" data-ui-scrollbar>
                         <ul>
-                            <!-- ITEM -->
+                            
+                            
+                             <?php 
+    foreach ($this->eventos  as $eventos) :
+        ?>
                             <li data-category="web">
                                 <a href="ficha-producto.html" class="preview" data-ui-lightbox>
-                                    <img src="img/eventos/1.jpg" alt=""/>
+                               <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
                                 </a>
                                 <div class="content">
                                     <div class="info">
-                                        <span>2013</span>
+                                        <span><?php  $fecha = date_create($eventos->va_fecha);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
                                         <span class="category">
-                                            <a href="#">Web</a>
+                                            <a href="#"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
                                         </span>
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="ficha-producto.html">Tumidei Spa</a>
+                                        <a href="ficha-producto.html"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                                     </h2>
                                     <p>
-                                        Corporate web site. Html5. Responsive.
+                                       <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
                                     </p>
                                 </div>
                             </li>
-                            
+          <?php endforeach; ?>    
                             
                             <!-- ITEM -->
 
-                            <li data-category="art">
+                         <!--    <li data-category="art">
                                 <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/2.jpg" alt=""/>
                                 </a>
@@ -94,7 +98,7 @@
                             
                             
                             
-                            <!-- ITEM -->
+                            
 
                             <li data-category="foto">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -123,7 +127,7 @@
                                 </div>
                             </li>                
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="grafica">
                                 <a href="#" class="preview" data-ui-lightbox>
@@ -153,7 +157,7 @@
                             </li>         
                             
                             
-                            <!-- ITEM -->
+                        
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -182,7 +186,7 @@
                                 </div>
                             </li>                 
                             
-                            <!-- ITEM -->
+                        
 
                             <li data-category="web">
                                 <a href="#" class="preview" data-ui-lightbox>
@@ -211,7 +215,7 @@
                                 </div>
                             </li>                
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -241,7 +245,7 @@
                             </li>                
 
 
-                            <!-- ITEM -->
+                          
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -270,7 +274,7 @@
                                 </div>
                             </li>               
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -300,7 +304,7 @@
                             </li>         
 
                   
-                            <!-- ITEM -->
+                           
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -329,7 +333,7 @@
                                 </div>
                             </li>                
 
-                            <!-- ITEM -->
+                           
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -358,7 +362,7 @@
                                 </div>
                             </li>        
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="web">
                                 <a href="#" class="preview" data-ui-lightbox>
@@ -388,7 +392,7 @@
                             </li>         
                             
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -419,7 +423,7 @@
 
 
                    
-                            <!-- ITEM -->
+                       
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -449,8 +453,7 @@
                             </li>                        
                             
 
-                            <!-- ITEM -->
-
+                          
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/15.jpg" alt=""/>
@@ -478,7 +481,7 @@
                                 </div>
                             </li>           
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -508,7 +511,7 @@
                             </li>
 
                             
-                            <!-- ITEM -->
+                          
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -539,7 +542,7 @@
                             
                             
 
-                            <!-- ITEM -->
+                            
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -569,7 +572,7 @@
                             </li>   
                             
 
-                            <!-- ITEM -->
+                          
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -599,7 +602,7 @@
                             </li>     
 
 
-                            <!-- ITEM -->
+                           
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -630,8 +633,7 @@
 
 
                             
-                            <!-- ITEM -->
-
+                           
                             <li data-category="web">
                                 <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/21.jpg" alt=""/>
@@ -660,7 +662,7 @@
                             </li>       
                             
 
-                            <!-- ITEM -->
+                           
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -690,7 +692,7 @@
 
 
                             
-                            <!-- ITEM -->
+                          
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -720,8 +722,7 @@
                             </li>                   
                                         
 
-                            <!-- ITEM -->
-
+                          
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/24.jpg" alt=""/>
@@ -749,7 +750,7 @@
                                 </div>
                             </li>     
                             
-                            <!-- ITEM -->
+                           
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -778,7 +779,7 @@
                                 </div>                        
                                   
 
-                            <!-- ITEM -->
+                          
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -806,7 +807,7 @@
                                     </p>
                                 </div>
 
-                            <!-- ITEM -->
+                          
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -835,7 +836,7 @@
                                 </div>
                             </li> 
                             
-                            <!-- ITEM -->
+                           
 
                             <li data-category="grafica">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -863,7 +864,7 @@
                                     </p>
                                 </div>                
                             </li>
-                            <!-- ITEM -->
+                          
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -891,7 +892,7 @@
                                     </p>
                                 </div>
                             </li>
-                            <!-- ITEM -->
+                           
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -920,7 +921,7 @@
                                 </div>
                             </li>   
 
-                            <!-- ITEM -->
+                        
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -949,7 +950,7 @@
                                 </div>
 
                             </li>
-                            <!-- ITEM -->
+                            
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -979,7 +980,7 @@
                             </li>           
 
 
-                            <!-- ITEM -->
+                           
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1009,7 +1010,7 @@
                             </li>   
 
 
-                            <!-- ITEM -->
+                            
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1039,7 +1040,7 @@
                             </li> 
 
 
-                            <!-- ITEM -->
+                           
 
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1068,7 +1069,7 @@
                                 </div>        
                             </li>
 
-                            <!-- ITEM -->
+                            
 
                             <li data-category="3d">
                                 <a href="#" class="preview" data-ui-lightbox>
@@ -1097,7 +1098,7 @@
                                 </div>        
                             </li>
 
-                            <!-- ITEM -->
+                          
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1126,7 +1127,7 @@
                                 </div>
                             </li>   
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1155,8 +1156,7 @@
                                 </div>
                             </li>   
                             
-                            <!-- ITEM -->
-
+                           
                             <li data-category="3d">
                                  <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/39.jpg" alt=""/>
@@ -1186,8 +1186,7 @@
                             
                             </li>
                             
-                            <!-- ITEM -->
-
+                            
                             <li data-category="web">
                                  <a href="#" class="preview" data-ui-lightbox>
                                     <img src="img/eventos/40.jpg" alt=""/>
@@ -1216,7 +1215,7 @@
                             </li>                   
                             
 
-                            <!-- ITEM -->
+                         
 
                             <li data-category="art">
                                  <a href="#" class="preview" data-ui-lightbox>
@@ -1243,7 +1242,7 @@
                                         Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
                                     </p>
                                 </div>
-                            </li>             
+                            </li>   -->          
                             </li>
                         </ul>
                     </div>

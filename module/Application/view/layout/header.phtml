@@ -65,14 +65,14 @@
                             <input type="text" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
                             <ul class="dropdown-menu" id="menu-categoria">
                                 <li class="man-dev">
-                                    <ul>
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Action</a></li>
+                                    <ul>  <?php 
+                    foreach ($this->categorias  as $categorias) :
+                        ?>
+                         <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                    <?php endforeach; ?>  
                                     </ul>
                                 </li>
-                                <li class="man-dev">
+                               <!-- <li class="man-dev">
                                     <ul>
                                         <li><a href="#">Another action</a></li>
                                         <li><a href="#">Another action</a></li>
@@ -95,7 +95,7 @@
                                         <li><a href="#">Something else here</a></li>
                                         <li><a href="#">Something else here</a></li>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                             <button type="submit" class="btn btn-primary btn-evento-i">Buscar</button>
                         </form>
