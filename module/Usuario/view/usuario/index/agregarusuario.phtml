@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="container">
-    <div class="row-fluid">
+    <div class="row-fluid content-general sep">
       <?php
         $form = $this->form;
         $form->setAttributes(array(
@@ -23,17 +23,17 @@
             </div>
             <div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
             <div class="detalle-img">
-              <strong class="botonuser btn-file">
-              <strong class="fileupload-new">Cargar una imagen</strong>
-              <strong class="fileupload-exists">Cambiar Imagen </strong>
-               <?php echo $this->formRow($form->get('va_foto'));?>
-              </strong>
-              <a href="#" class="boton-rem-user fileupload-exists" data-dismiss="fileupload">Remover</a>         
+              <span class="btn botonuser btn-file">
+                <span class="fileupload-new">Cargar una imagen</span>
+                <span class="fileupload-exists">Cambiar Imagen </span>
+                 <?php echo $this->formRow($form->get('va_foto'));?>
+              </span>
+              <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
             </div>
           </div>
         </div>      
       </div>
-      <div class="span8 registro">
+      <div class="span6 registro">
         <?php echo $this->formHidden($form->get('in_id'));?>
         <span>(<strong> * </strong>) Por favor complete los campos requeridos</span>
           <p>
@@ -63,7 +63,6 @@
       </div>
         <?php echo $this->form()->closeTag();?>
     </div>
-     
   </div> <!-- #main -->
 </div> <!-- #main-container -->
    
