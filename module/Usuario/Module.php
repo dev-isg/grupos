@@ -9,9 +9,14 @@
 
 namespace Usuario;
 
+
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Usuario\Model\Usuario;
+use Usuario\Model\UsuarioTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -35,6 +40,34 @@ class Module implements AutoloaderProviderInterface
         return include __DIR__ . '/config/module.config.php';
     }
 
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Usuario\Model\UsuarioTable' =>  function($sm) {
+                    $tableGateway = $sm->get('UsuarioTableGateway');
+                    $table = new UsuarioTable($tableGateway);
+                    return $table;
+                },
+                'UsuarioTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Usuario());
+                    return new TableGateway('ta_usuario', $dbAdapter, null, $resultSetPrototype);//
+                },
+                'mail.transport' => function ($sm) {
+                $config = $sm->get('config'); 
+                $transport = new \Zend\Mail\Transport\Smtp();   
+                $transport->setOptions(new \Zend\Mail\Transport\SmtpOptions($config['mail']['transport']['options']));
+
+                return $transport;
+            },
+
+
+            ),
+        );
+    }
+    
     public function onBootstrap(MvcEvent $e)
     {
         // You may not need to do this if you're doing it elsewhere in your

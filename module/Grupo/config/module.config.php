@@ -50,4 +50,5 @@ return array(
             'grupo' => __DIR__ . '/../view',
         ),
     ),
+
 );

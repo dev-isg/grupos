@@ -122,15 +122,15 @@ class GrupoTable{
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
           
-             if($notificacion!=null){
-                foreach($notificacion as $key=>$value){
-                    $insert = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
-                           ->values(array('ta_grupo_in_id'=>$idgrupo,'ta_notificacion_in_id'=>$value));
-                   $selectString2 = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
-                   $adapter=$this->tableGateway->getAdapter();
-                   $adapter->query($selectString2, $adapter::QUERY_MODE_EXECUTE);
-                }
-             }
+//             if($notificacion!=null){
+//                foreach($notificacion as $key=>$value){
+//                    $insert = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
+//                           ->values(array('ta_grupo_in_id'=>$idgrupo,'ta_notificacion_in_id'=>$value));
+//                   $selectString2 = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
+//                   $adapter=$this->tableGateway->getAdapter();
+//                   $adapter->query($selectString2, $adapter::QUERY_MODE_EXECUTE);
+//                }
+//             }
       }else {
           
             if ($this->getGrupo($id)) {
@@ -142,17 +142,17 @@ class GrupoTable{
                            $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
                            $adapter1=$this->tableGateway->getAdapter();
                            $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
-                        foreach($notificacion as $key=>$value){
-//                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
-//                                    ->set(array('ta_notificacion_in_id'=>$value))
-//                                    ->where(array('ta_grupo_in_id'=>$id));  
-                          $update = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
-                           ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
-                          
-                           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-                           $adapter2=$this->tableGateway->getAdapter();
-                           $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
-                        }
+//                        foreach($notificacion as $key=>$value){
+////                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
+////                                    ->set(array('ta_notificacion_in_id'=>$value))
+////                                    ->where(array('ta_grupo_in_id'=>$id));  
+//                          $update = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
+//                           ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
+//                          
+//                           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+//                           $adapter2=$this->tableGateway->getAdapter();
+//                           $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
+//                        }
                     }
                 
             } else {

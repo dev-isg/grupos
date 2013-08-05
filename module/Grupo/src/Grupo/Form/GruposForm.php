@@ -64,24 +64,22 @@ class GruposForm extends Form
                 'class' => '',
                 'id'   => 'va_imagen',
                 'placeholder'=>'Ingrese su página Web'
-            ),
-            'options' => array(
-                'label' => 'Agregar Imagen : ',
-            ),
+            )
+
         ));
         
           $this->add(array(
             'name' => 'va_descripcion',
             'type' => 'Textarea',
             'attributes' => array(               
-                'class' => 'span11',
-                'id'   => 'va_descripcion',
+                'class' => 'desc-grupo span12',
+                'id'   => 'editorGrupo',
                 'placeholder'=>'Ingrese descripción',
-                'colls'=>40,
-                'rows'=>4
+                'cols'=>80,
+                'rows'=>10
             ),
             'options' => array(
-                'label' => 'Descripción',
+                'label' => 'Descripción:',
             ),
         ));
            
@@ -94,9 +92,8 @@ class GruposForm extends Form
                 'label' => 'Nombre del Grupo :',          
             ),
             'attributes' => array(               
-                'class' => 'span11',
-                'id'   => 'va_nombre',
-                'placeholder'=>'Ingrese nombre del grupo'
+                'class' => 'span12',
+                'placeholder'=>'Ingrese el nombre del grupo…'
             ),
         ));  
           
@@ -154,19 +151,19 @@ class GruposForm extends Form
 //            ),
 //        ));
           
-        $this->add(array(
-            'name' => 'tipo_notificacion',
-            'type' => 'MultiCheckbox',
-             'attributes' => array(               
-                'class' => 'checkbox inline',
-                'id'   => 'en_destaque',
-                 'placeholder'=>'Ingrese su destaque'
-            ),
-            'options' => array(
-                   'label' => 'Notificaciones',
-                  'value_options' => $this->tipoNotificacion(),
-                )
-        ));
+//        $this->add(array(
+//            'name' => 'tipo_notificacion',
+//            'type' => 'MultiCheckbox',
+//             'attributes' => array(               
+//                'class' => 'checkbox inline',
+//                'id'   => 'en_destaque',
+//                 'placeholder'=>'Ingrese su destaque'
+//            ),
+//            'options' => array(
+//                   'label' => 'Notificaciones',
+//                  'value_options' => $this->tipoNotificacion(),
+//                )
+//        ));
           
                
         $this->add(array(
@@ -174,8 +171,8 @@ class GruposForm extends Form
             'type' => 'Select',  
             
              'attributes' => array(               
-                'class' => 'span10',
-                'id'   => 'ta_categoria_in_id'
+                'class' => 'span12 categoria-evento',
+
             ),
            'options' => array('label' => 'Categoria del Grupo : ',
                      'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
@@ -253,8 +250,8 @@ class GruposForm extends Form
             'type' => 'Submit',
             'attributes' => array(
                 'value' => 'Guardar',
-                'class' => 'btn btn-success',
-                'id' => 'submitbutton',
+                'class' => 'btn btn-info btn-large',
+//                'id' => 'submitbutton',
             ),
         ));
         

@@ -12,15 +12,12 @@
                         <div class="row-fluid event nmb">
                             <div class="span12 space-group">
                                 <label>Elige tu grupo:</label>
-                                <select name="grupos" class="span11 nm-crear-grupo" id="crearGrupo">
+                                 <select name="grupos" class="span11 nm-crear-grupo" id="crearGrupo">
                                     <option value="" label="..Elige un grupo..">..Elige un grupo..</option>
-                                    <option value="12" label="Familias">Familias</option>
-                                    <option value="10" label="Deportes">Deportes</option>
-                                    <option value="8" label="Negocio">Negocio</option>
-                                    <option value="10" label="Viajes">Viajes</option>
-                                    <option value="5" label="Cultura">Cultura</option>
-                                    <option value="2" label="Ciencia">Ciencia</option>
-                                </select>
+                                <?php foreach($this->grupos as $grupo): ?>
+                                    <option value="<?php echo $grupo['ta_grupo_in_id'];?>" label="<?php echo $grupo['nom_grup'];?>"><?php echo $grupo['nom_grup'];?></option>
+                                <?php endforeach; ?>
+                               </select>
                             </div>
                             <p class="activar-agregar" style="margin-top:10px;margin-left:10px;">
                                 <a href="#" class="btn btn-primary btn-agregar">Agregar un nuevo grupo</a>
@@ -32,7 +29,20 @@
                     </p>
                 </div>    
                 <div class="row-fluid crear-grupos" style="display:none;">
-                    <form action="" class="span12 form-crear-grupo" id="crear-group">
+                    <?php
+                    $form = $this->form;
+
+                    $form->setAttributes(array(
+                        'action' => $this->url.'/grupo/index/agregargrupo',
+                        'method' => 'post',
+                        'class'=>'span12 form-crear-grupo',
+                        'id'=>'crear-group'
+                    ));
+
+                    $form->prepare();
+                    echo $this->form()->openTag($form);
+                    ?>
+                    <!--<form action="" class="span12 form-crear-grupo" id="crear-group">-->
                         <div class="row-fluid">
                             <div class="span12 crear-evento event">
                                 <h1>Crear tu grupo</h1>
@@ -41,20 +51,10 @@
                         </div>
                         <div class="row-fluid event nmb">
                             <div class="span8 space-group">
-                                <label>Nombre grupo:</label>
-                                <input type="text" name="nameGrupo" placeholder="Ingrese el nombre del grupo…" class="span12"> 
-                                <label>Categoria de grupo:</label>
-                                <select name="categoriaGrupo" class="span12 categoria-evento">
-                                    <option value="" label="Elija una categoria">Elija una categoria</option>
-                                  <option value="52" label="Deporte">Deporte</option>
-                                  <option value="22" label="Arte y cultura">Arte y cultura</option>
-                                  <option value="10" label="Conferencias">Conferencias</option>
-                                  <option value="98" label="Hackaton">Hackaton</option>
-                                  <option value="87" label="Fiesta">Fiesta</option>
-                                  <option value="21" label="Campamento">Campamento</option>
-                                </select>
-                                <label>Descripción del grupo:</label>
-                                <textarea class="desc-grupo span12" cols="80" id="editorGrupo" name="editorGrupo" rows="10"></textarea>
+                                <?php echo $this->formHidden($form->get('in_id'));?>
+                                <?php echo $this->formRow($form->get('va_nombre'));?>
+                                <?php echo $this->formRow($form->get('ta_categoria_in_id'));?>
+                                <?php echo $this->formRow($form->get('va_descripcion'));?>
                             </div>
                             <div class="span4 space-group">
                                 <div class="control-group">
@@ -66,7 +66,8 @@
                                             </div>
                                             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                             <div>
-                                                <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name='imagefile' /></span>
+                                                <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
+                                                   <?php echo $this->formRow($form->get('va_imagen'));?></span>
                                                 <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                             </div>
                                         </div>
@@ -75,282 +76,18 @@
                             </div>
                         </div>
                         <p class="crear-evento">
-                            <input type="submit" class="btn btn-info btn-large" value="Crear grupo" />
-                            <!--<button type="button" class="btn btn-info btn-large">Crear grupo</button>-->
+                            <?php echo $this->formSubmit($form->get('submit'));?>
                             <a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
                         </p>
-                    </form>
+                    <!--</form>-->
+                    <?php echo $this->form()->closeTag();?>
                 </div>        
-                <div class="row-fluid crear-evento-grupos" style="display:none;">
-                    <form action="" class="span12 form-crear-grupo" id="crearEventoG">
-                        <input type="hidden" name="grupoEvento" value="">
-                        <div class="row-fluid">
-                            <div class="span12 crear-evento event">
-                                <h1>Crear un nuevo evento</h1>
-                                <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
-                            </div>
-                        </div>
-                        <div class="row-fluid crear-evento-1 event">
-                            <h2>Describe tu actividad</h2>
-                            <div class="span8 desc-evento">
-                                <label>Nombre del evento:</label>
-                                <input type="text" name="evento" placeholder="Ingrese el nombre del evento…" class="span12"> 
-                                
-                                <label>Descripción del evento:</label>
-                                <textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10"></textarea>
-                            </div>
-                            <div class="span4">
-                                <div class="control-group">
-                                    <label for="textfield" class="control-label"></label>
-                                    <div class="controls">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
-                                            </div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                            <div>
-                                                <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name='imagefile' /></span>
-                                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row-fluid crear-evento-2 event">
-                            <h2>Cuando? y Cuanto sera el precio.</h2>
-                            <div class="span3 fecha event-padding">
-                                <div class="form_row">
-                                    <label class="field_name">Fecha y hora:</label>
-                                    <div class="field">
-                                        <div class="span10 input-append date form_datetime2" data-date="2013-02-21T15:25:00Z">
-                                            <input size="16" type="text" value="" readonly class="span10">
-                                            <span class="add-on"><i class="icon-remove"></i></span>
-                                            <span class="add-on"><i class="icon-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <label class="field_name">Duración del evento:</label>
-                                <div class="input-prepend input-append">
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                    <input class="span6" id="inputCosto" type="text">
-                                    <span class="add-on">Horas</span>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <label class="field_name">Precio referencial para el evento:</label>
-                                <div class="input-prepend input-append">
-                                    <span class="add-on">S/.</span>
-                                    <input class="span6" id="inputCosto" type="text">
-                                    <span class="add-on">.00</span>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <div class="control-group span5">
-                                  <label class="control-label" for="inputIcon">Minimo:</label>
-                                  <div class="controls">
-                                    <div class="input-prepend">
-                                      <span class="add-on"><i class="icon-envelope"></i></span>
-                                      <input class="span5" id="inputIcon" type="text">
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="control-group span5">
-                                  <label class="control-label" for="inputIcon">Maximo:</label>
-                                  <div class="controls">
-                                    <div class="input-prepend">
-                                      <span class="add-on"><i class="icon-envelope"></i></span>
-                                      <input class="span5" id="inputIcon" type="text">
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row-fluid crear-evento-3 event">
-                            <h2>Elige el lugar del evento</h2>
-                            <div class="span12 event-padding dev-padd">
-                                <div id="map" style="border:1px solid #eee;"></div>
-                            </div>
-                            <div class="span3 lugar-nm event-padding">
-                                <div class="form-item">
-                                    <div id="cityId-label" class="item-label">
-                                        <label for="cityId" class="required">Ciudad</label>
-                                    </div>
-                                    <div class="item-value">
-                                        <select name="cityId" id="cityId" class="input-block-level">
-                                            <option value="PER-LIM" label="Lima, Perú" selected="selected">Lima, Perú</option>
-                                        </select>
-                                    </div>
-                                </div>       
-                            </div>
-                            <div class="span5">
-                                <div class="form-item tooltip-errors">
-                                    <div id="address-label" class="item-label">
-                                        <label for="address" class="required">Dirección</label>
-                                    </div>
-                                    <div class="item-value">
-                                        <input type="text" name="address" id="address" value="" maxlength="150" class="input-block-level">
-                                    </div>
-                                </div>      
-                            </div>
-                            <div class="span3">
-                                <div class="form-item tooltip-errors">
-                                    <div id="addressReference-label" class="item-label">
-                                        <label for="addressReference" class="optional">Referencia de ubicación</label>
-                                    </div>
-                                    <div class="item-value">
-                                        <input type="text" name="addressReference" id="addressReference" value="" maxlength="250" class="input-block-level">
-                                    </div>
-                                </div>            
-                                <input type="hidden" name="mapLocationLat" value="" id="mapLocationLat">            
-                                <input type="hidden" name="mapLocationLon" value="" id="mapLocationLon">        
-                            </div>
-                        </div>
-                        <div class="row-fluid crear-evento-4 event">
-                            <h2>Notificaciones</h2>
-                            <div class="span10 noti-span span-dev">
-                                <label class="checkbox">
-                                    <input type="checkbox"> Cuando alguien se une a la actividad
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"> Cuando alguien abandona el grupo
-                                </label>
-                                <label class="checkbox">
-                                    <input type="checkbox"> Notificacion cuando el organizador crea un grupo
-                                </label>
-                            </div>
-                        </div>
-                        <p class="crear-evento">
-                            <input type="submit" class="btn btn-info btn-large" value="Crear evento" />
-                        </p>
-                    </form>
-                </div>
+                
+
+                <!--Agregar eventos-->
+
             </div>
         </div> <!-- #main-container -->
-
-		<script src="js/ckeditor/ckeditor.js"></script>
-        <script src="js/jquery.validate.min.js"></script>
-		<!--Cargar imagenes-->
-        <script src="js/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-        <script src="js/mockjax/jquery.mockjax.js"></script>
-        <!--Datatimepicker-->
-        <script src="js/bootstrap-datetimepicker.js"></script>
-
-		<!--Mapas-->
-        <script type="text/javascript" src="js/map/ju.img.picker.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&amp;sensor=true"></script>
-        <script type="text/javascript" src="js/map/ju.google.map.js"></script>
-        <script type="text/javascript" src="js/map/locale-es.js"></script>
-
-        <script src="js/main.js"></script>
-        <script>
-            $(document).ready(function(){
-                $('.fileupload').fileupload();
-                $(".form_datetime2").datetimepicker({
-                    format: "dd MM yyyy - hh:ii",
-                    autoclose: true,
-                    todayBtn: false,
-                    startDate: "2013-07-25 10:00",
-                    minuteStep: 10,
-                    pickerPosition: "bottom-left",
-                    todayHighlight:true
-                });
-
-                $("[data-toggle='tooltip']").tooltip();
-                $("#imageUrl").juImgPicker({
-                    maxFileSize:'4M'
-                });
-                
-                
-                $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
-                    var e = event;
-                    if ((e.keyCode || e.which || e.charCode || 0) !== 13)
-                        return true;
-                    else
-                    {
-                        var nextInput = $(":input:eq(" + ($(":input").index(this) + 1) + ")").first();
-                        nextInput.focus();
-                        event.preventDefault();
-                        return false;
-                    }
-                });
-
-                //funcionalidad de crear evento
-                $("#crearGrupo").change(function(){
-                    if( $(".crear-evento-grupos").css("display") == 'none' ){
-                        if($("#crearGrupo").val()===""){
-                            $(".activar-agregar").show();
-                            $(".next-space").hide();
-                        }else{
-                            $(".activar-agregar").hide();
-                            $(".next-space").show();
-                        }
-                    }
-                    else{
-                        $(".activar-agregar").hide();
-                        $(".next-space").hide();
-                    }
-                });
-
-                $(".next-grupo").click(function(){
-                    $(".next-space").hide();
-                    $(".crear-evento-grupos").show();
-                    $("#map").juGoogleMap({
-                        editable:true,
-                        dataBound:{
-                            lat:'#mapLocationLat',
-                            lng:'#mapLocationLon',
-                            city:'#cityId',
-                            address:'#address',
-                            addressRef:'#addressReference'
-                        },
-                        center:{lat:-12.047816, lng:-77.062203},
-                        zoom:8  
-                    });
-                });
-
-                $(".btn-agregar").click(function(){
-                    $(".elige-crea").hide();
-                    $(".crear-grupos").show();
-                });
-                $(".btn-cancelar").click(function(){
-                    $(".elige-crea").show();
-                    $(".crear-grupos").hide();
-                });
-
-                /*Validar Formularios*/
-
-                $("#crear-group").validate({
-                    rules: {
-                        nameGrupo: "required",
-                        categoriaGrupo: "required",
-                        editorGrupo: "required"
-                    },
-                    messages: {
-                        nameGrupo: "Ingrese un nombre de grupo",
-                        categoriaGrupo: "Ingrese una categoria de grupo",
-                        editorGrupo : "Ingrese una descripción"                        
-                    }
-                });
-
-                $("#crearEventoG").validate({
-                    rules: {
-                        evento: "required",
-                        address: "required",
-                        addressReference: "required",
-                        editor1: "required"
-                    },
-                    messages: {
-                        evento: "Ingrese un nombre del evento",
-                        address: "Ingrese la dirección del evento",
-                        addressReference : "Ingrese dirección de referencia",
-                        editor1 : "Ingrese una descripción del evento"
-                    }
-                });
-            });
-        </script>
 
 
 
@@ -362,32 +99,32 @@ $this->headTitle($title);
 
 <div class="span12">
 <?php
-$form = $this->form;
-
-$form->setAttributes(array(
-    'action' => $this->url.'/grupo/index/agregargrupo',
-    'method' => 'post',
-    'class'=>'form-horizontal'
-));
-
-$form->prepare();
-echo $this->form()->openTag($form);
+//$form = $this->form;
+//
+//$form->setAttributes(array(
+//    'action' => $this->url.'/grupo/index/agregargrupo',
+//    'method' => 'post',
+//    'class'=>'form-horizontal'
+//));
+//
+//$form->prepare();
+//echo $this->form()->openTag($form);
 ?>
 <legend><?php echo $this->escapeHtml($title); ?></legend>
-<?php echo $this->formHidden($form->get('in_id'));?>
+<?php // echo $this->formHidden($form->get('in_id'));?>
 
 <div class="row-fluid">
-<div class="control-group span6"><?php echo $this->formRow($form->get('va_nombre'));?></div>
-<div class="control-group span6"><?php echo $this->formRow($form->get('va_imagen'));?></div>
+<div class="control-group span6"><?php // echo $this->formRow($form->get('va_nombre'));?></div>
+<div class="control-group span6"><?php // echo $this->formRow($form->get('va_imagen'));?></div>
 </div>
 <div class="row-fluid">
-<div class="control-group span5"><?php echo $this->formRow($form->get('va_descripcion'));?></div>
+<div class="control-group span5"><?php // echo $this->formRow($form->get('va_descripcion'));?></div>
 
 <div class="control-group span3"><?php // echo $this->formRow($form->get('ta_ubigeo_in_id'));?></div>
-<div class="control-group span3"><?php echo $this->formRow($form->get('ta_categoria_in_id'));?></div>
+<div class="control-group span3"><?php // echo $this->formRow($form->get('ta_categoria_in_id'));?></div>
  
-<div class="control-group span3"><?php echo $this->formRow($form->get('tipo_notificacion'));?></div>
+<div class="control-group span3"><?php // echo $this->formRow($form->get('tipo_notificacion'));?></div>
 </div>
 <div class="row-fluid">
-<div class="control-group span12 "><?php echo $this->formSubmit($form->get('submit'));?></div></div><?php echo $this->form()->closeTag();?> 
+<div class="control-group span12 "><?php // echo $this->formSubmit($form->get('submit'));?></div></div><?php // echo $this->form()->closeTag();?> 
 </div>-->
