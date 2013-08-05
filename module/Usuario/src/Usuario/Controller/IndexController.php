@@ -57,7 +57,7 @@ class IndexController extends AbstractActionController
 //        $user_info = $this->getUsuarioTable()->usuariox(1);
 //        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $valor = $this->headerAction();
+        
 //        $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
@@ -92,7 +92,7 @@ class IndexController extends AbstractActionController
             }
         }
  
-        return array('form'=>$form,'valor'=>$valor);
+        return array('form'=>$form);
 //         return array();
     }
 
@@ -119,7 +119,7 @@ class IndexController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-
+        $valor = $this->headerAction();
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
@@ -166,22 +166,25 @@ class IndexController extends AbstractActionController
 
         return array(
             'in_id' => $id,
-            'form' => $form,
+            'form' => $form,'valor'=>$valor
         );
         
     }
     private function headerAction()
     {
        $estados = '<div class="span12 menu-login">
-    <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
-    <div class="logincuenta">
-    <ul>
-        <li><i class="icon-group"> </i> <a href="usuario.html" >Mis Grupos</a> </li>
-        <li><i class="icon-cuenta"></i> <a href="usuario-cuenta.html" class="activomenu">Mi cuenta</a></li>
-        <li><i class="icon-salir"></i><a href="">Cerrar Sesion</a></li>                   
-    </ul> 
-    </div>                            
-</div>'; 
+          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
+          <div class="logincuenta">
+          <ul>
+            <li><i class="icon-group"> </i> <a href="#">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href="#">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href="#">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href="#">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
+          </ul> 
+          </div>                            
+        </div>'; 
        return $estados;
     }
     
