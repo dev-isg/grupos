@@ -664,26 +664,98 @@ float: left;
 #modificargrupo label{
   font-weight: bold;
 }
-
+#menu-categoria{
+  width: 940px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin-top: 15px;
+}
+#menu-categoria li ul{
+  width: 25%;
+  float: left;
+  margin-left: 0;
+  list-style: none;
+}
+#menu-categoria li{
+  border-left: 1px solid #eee;
+}
+#menu-categoria li:first-child{
+  /*border-left: 0;*/
+}
+#menu-categoria li:first-child ul li{
+  border-left: 0!important;
+}
 #modificargrupo select,input,textarea{
  width: 96%;
 }
-#modificargrupo input[type="submit"]{
-background-color: #1b6e75;
-color: #fff;
-border: none;
-font-size: 16px;
-width: 99%;
-padding: 9px 0px 10px 0px;
-text-align: center;
-text-decoration: none;
--webkit-border-radius: 0;
--moz-border-radius: 0;
--ms-border-radius: 0;
--o-border-radius: 0;
-border-radius: 0;
+.form-search .dropdown-menu {
+  margin-top: 15px;
+  -moz-box-shadow: rgba(0,0,0,0.5) 0 3px 40px 0;
+  -webkit-box-shadow: rgba(0,0,0,0.5) 0 3px 40px 0;
+  -o-box-shadow: rgba(0,0,0,0.5) 0 3px 40px 0;
+  box-shadow: rgba(0,0,0,0.5) 0 3px 40px 0;
+  font-size: 14px;
 }
-
+.dropdown-menu{
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+.dropdown-menu:before {
+  content: ".";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  display: block;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  border-style: solid;
+  border-width: 0 12px 12px 12px;
+  border-color: transparent transparent #fff transparent;
+}
+#modificargrupo input[type="submit"]{
+  background-color: #1b6e75;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  width: 99%;
+  padding: 9px 0px 10px 0px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+.dropdown .dropdown-menu li a:hover {
+  text-decoration: none;
+  background: #e0393e;
+  color: #fff!important;
+}
+.dropdown .dropdown-menu li {
+  line-height: 1.3em;
+  padding: 0 6px;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.dropdown .dropdown-menu li a {
+  display: block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: normal;
+  color: #555;
+  padding: 6px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  font-size: 14px;
+  color: #888;
+}
 .img-grupo-modificar{
   padding: 10px;
 border-bottom: 1px solid #ddd;
