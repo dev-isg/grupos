@@ -46,7 +46,6 @@ class IndexController extends AbstractActionController
         $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
-        //$listaEventos = $this->getGrupoTable()->listadoEvento();
       $listaEventos =$this->getEventoTable()->listadoEvento();
       //var_dump($listaEventos);exit;
         if(isset($submit) || isset($tipo)){
