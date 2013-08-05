@@ -332,8 +332,8 @@ margin-left: 8em;
   vertical-align: middle;
   background: none;
 }
-.btn-file strong{
-  background: none;
+.fileupload-exists{
+  font-weight: normal!important;
 }
 .cambiofotouser {
 margin-top: 5em;
@@ -346,11 +346,11 @@ line-height: 40px;
 color: #444;
 }
 .img-thu-user {
-float: left;
-padding: 18px 0px;
-border: none !important;
-width: 100%;
-box-shadow: none;
+  float: left;
+  padding: 18px 0px 0 0;
+  border: none !important;
+  width: 100%;
+  box-shadow: none;
 }
 .boton-rem-user {
 background-color: #F04D4E;
@@ -438,13 +438,14 @@ padding-left: 0.7em;
 }
 
 .cuenta p {
-display: block;
-font-family: georgia;
-cursor: pointer;
-text-decoration: underline;
-float: right;
-width: 74%;
-padding-top: 3em;
+  display: block;
+  font-family: georgia;
+  cursor: pointer;
+  text-decoration: underline;
+  float: right;
+  width: 74%;
+  padding-top: 3em;
+  color: white;
 }
 .misdatos{background: #008641 ;margin-left: 15px !important;}
 .mifoto{background: #2e8bcc ;margin-left: 0px !important;}
@@ -460,86 +461,94 @@ padding-top: 3em;
 }
 .actualizar h1{
   font-family: "league_gothicregular";
-font-weight: normal !important;
-font-size: 34px;
-line-height: 40px;
-color: #fff;
-margin: 0px;
-padding: 10px 25px 0px;
+  font-weight: normal !important;
+  font-size: 34px;
+  line-height: 40px;
+  color: #fff;
+  margin: 0px;
+  padding: 10px 25px 0px;
 }
 
 .actualizar label{
   display: block;
-font-size: 14px;
-margin: 10px 0px 4px;
-color: #fff;
-text-decoration: none !important;
-font-weight: 700;
-text-align: left;
+  font-size: 14px;
+  margin: 10px 0px 4px;
+  color: #fff;
+  text-decoration: none !important;
+  font-weight: 700;
+  text-align: left;
 }
 .actualizar input {
   font-family: "proxima-nova","Helvetica Neue", Helvetica, Arial, sans-serif;
-display: block;
-padding: 14px 0px 11px 10px;
-font-size: 14px;
-font-weight: 600;
-border: none;
-width: 100%;
+  display: block;
+  padding: 14px 0px 11px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  width: 100%;
 }
 .actualizar input[type="submit"]{
   background-color: #555555;
-color: #fff;
-cursor: pointer;
-font-size: 16px;
-padding: 9px 20px 10px;
-text-align: center;
-text-decoration: none;
-width: 100%;
-margin: 32px 0px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 9px 20px 10px;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  margin: 0px 0px 32px 0;
 }
 
 .actualizar select {
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-display: block;
-padding: 15px;
-font-size: 14px;
-font-weight: bold;
-border: none;
-width: 100%;
-height: 45px;
-background: #fff;
-color: #888;}
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: block;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  color: #888;
+}
 
 .actualizar p {
   float: left;
-margin: 0;
-padding: 2px 25px;
-width: 27%;
-text-decoration: none !important;
+  margin: 0;
+  padding: 2px 25px;
+  width: 27%;
+  text-decoration: none !important;
+}
+#actualizar{
+  overflow: hidden;
 }
 .actualizar h5{
   margin-left: 24px;
-border-bottom: 2px solid;
-width: 92%;
-font-size: 16px;
-margin-top: 14px;
+  border-bottom: 2px solid;
+  width: 92%;
+  font-size: 16px;
+  margin-top: 14px;
+  overflow: hidden;
 }
 .int{
-  width: 58%;
-float: left;
-vertical-align: top;
-margin: 0px 1em 20px;
+  width: 91%;
+  float: left;
+  vertical-align: top;
+  margin: 0px 1em 20px;
 }
 .int textarea{
   width: 100%;
 }
 .actint{
   background: #F7DF43 !important;
-width: 27% !important;
-margin-top: 31px !important;
-margin-left: 39px !important;
-float: left;
-color: #1A1919 !important;
+  width: 27% !important;
+  margin-top: 31px !important;
+  margin-left: 39px !important;
+  float: left;
+  color: #1A1919 !important;
+}
+strong.btn-file{
+  background: none;
 }
 .notificaciones{
   display: none;
@@ -1005,7 +1014,9 @@ p.crear-evento{
   display: inline-block;
   margin-bottom: 5px;
   vertical-align: middle;
-  text-align: center;
+}
+.cambiofoto2 .fileupload{
+  margin-left: 25px;
 }
 .fileupload .thumbnail > img {
   display: inline-block;

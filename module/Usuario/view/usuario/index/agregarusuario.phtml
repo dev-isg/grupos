@@ -1,20 +1,18 @@
 <div class="main-container">
   <div class="container">
-      
     <div class="row-fluid">
-        <?php
-                    $form = $this->form;
+      <?php
+        $form = $this->form;
+        $form->setAttributes(array(
+          'action' => $this->url.'/usuario/index/agregarusuario',
+          'method' => 'post',
+          'class'=>'span12 form-crear-usuario',
+          'id'=>'registro'
+        ));
 
-                    $form->setAttributes(array(
-                        'action' => $this->url.'/usuario/index/agregarusuario',
-                        'method' => 'post',
-                        'class'=>'span12 form-crear-usuario',
-                        'id'=>'crear-user'
-                    ));
-
-                    $form->prepare();
-                    echo $this->form()->openTag($form);
-                    ?>
+        $form->prepare();
+        echo $this->form()->openTag($form);
+      ?>
       <div class="span4 cambiofotouser">
         <h1>Registro de Usuario</h1>
         <p>Seleccione una Imagen para su perfil</p>
@@ -36,35 +34,34 @@
         </div>      
       </div>
       <div class="span8 registro">
-          <?php echo $this->formHidden($form->get('in_id'));?>
-          <span>(<strong> * </strong>) Por favor complete los campos requeridos</span>
+        <?php echo $this->formHidden($form->get('in_id'));?>
+        <span>(<strong> * </strong>) Por favor complete los campos requeridos</span>
+          <p>
+          <label for=""><strong> * </strong>Nombre Completo</label>
+          <?php echo $this->formRow($form->get('va_nombre'));?>
+          <!--<input type="text" id="va_nombre" name="va_nombre" placeholder="Ingrese su nombre completo">-->
+          </p>
           
-              <p>
-              <label for=""><strong> * </strong>Nombre Completo</label>
-              <?php echo $this->formRow($form->get('va_nombre'));?>
-              <!--<input type="text" id="va_nombre" name="va_nombre" placeholder="Ingrese su nombre completo">-->
-              </p>
-              
-              <p>
-              <label for=""><strong> * </strong>Correo Electrónico</label>
-<!--              <input type="email" id="va_email" name="va_email" placeholder="Ingrese un correo electrónico">-->
-              <?php echo $this->formRow($form->get('va_email'));?>
-              </p>
-              <p>
-              <label for=""><strong> * </strong>Password</label>
-<!--              <input type="Text" id="va_contrasena" name="va_contrasena" placeholder="Ingrese un password">-->
-<!--              <input type="password"  -->
-              <?php echo $this->formRow($form->get('va_contrasena'));?>
-              </p>
-              <p>
-              <label for=""><strong> * </strong>Confirmar Password</label>
-              <?php echo $this->formRow($form->get('verificar_contrasena'));?>
-              <!--<input type="password" id="va_contrasena2" name="va_contrasena2" placeholder="Confirme su password">-->
-              </p>
-<!--              <input type="submit" value="Registrarse">-->
-              <?php echo $this->formSubmit($form->get('submit'));?>
+          <p>
+          <label for=""><strong> * </strong>Correo Electrónico</label>
+          <!--<input type="email" id="va_email" name="va_email" placeholder="Ingrese un correo electrónico">-->
+          <?php echo $this->formRow($form->get('va_email'));?>
+          </p>
+          <p>
+          <label for=""><strong> * </strong>Password</label>
+          <!--<input type="Text" id="va_contrasena" name="va_contrasena" placeholder="Ingrese un password">-->
+          <!--<input type="password"  -->
+          <?php echo $this->formRow($form->get('va_contrasena'));?>
+          </p>
+          <p>
+          <label for=""><strong> * </strong>Confirmar Password</label>
+          <?php echo $this->formRow($form->get('verificar_contrasena'));?>
+          <!--<input type="password" id="va_contrasena2" name="va_contrasena2" placeholder="Confirme su password">-->
+          </p>
+          <!--<input type="submit" value="Registrarse">-->
+          <?php echo $this->formSubmit($form->get('submit'));?>
       </div>
-         <?php echo $this->form()->closeTag();?>
+        <?php echo $this->form()->closeTag();?>
     </div>
      
   </div> <!-- #main -->

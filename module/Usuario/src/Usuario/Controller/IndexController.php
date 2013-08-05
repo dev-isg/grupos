@@ -96,6 +96,12 @@ class IndexController extends AbstractActionController
     }
 
     public function editarusuarioAction(){
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
+                              ->prependFile($this->_options->host->base .'/js/main.js')                              
+                              ->prependFile($this->_options->host->base .'/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                              ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js');
+
        $id = (int) $this->params()->fromRoute('in_id', 0);    
         if (!$id) {
             return $this->redirect()->toRoute('usuario', array(
