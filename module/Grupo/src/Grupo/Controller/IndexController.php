@@ -37,8 +37,10 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $nombre = $this->params()->fromQuery('dato');
-//       $evento = $this->params()->fromQuery('evento');
+      $listaEventos =$this->getEventoTable()->listadoEvento();
+      $this->layout()->clase = 'buscar';
+        $nombre = $this->params()->fromQuery('dato');
+      $submit=$this->params()->fromQuery('submit');
 //        $grupo = $this->params()->fromQuery('grupo');
       // var_dump($grupo);exit;
       //$container = new \Zend\Session\Container('Grupo\Controller');
@@ -46,28 +48,24 @@ class IndexController extends AbstractActionController
       $listagrupos=$this->getGrupoTable()->fetchAll();
       $categorias=$this->getGrupoTable()->tipoCategoria();
      //$this->_helper->layout->disableLayout();
-        $submit=$this->params()->fromPost('submit');
+       // $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         //var_dump($tipo);exit;
       //  $nombre=$this->params()->fromPost('nombre');
-      $listaEventos =$this->getEventoTable()->listadoEvento();
+      
       //var_dump($listaEventos);exit;
-        if(isset($submit) || isset($tipo)){
+        if(isset($submit) and  isset($tipo)){
+                        echo 'ddd';exit;
              if($tipo){
                 $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
 
-            }else if($nombre){
+            }else if($nombre){ 
                 $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
             }
 
         }
-        
-        
-        
-        
-        
 
-        return array('grupos'=>$listagrupos,'hol'=>$nombre,'categorias'=>$categorias,'eventos'=>$listaEventos);
+        return array('grupos'=>$listagrupos,'categorias'=>$categorias,'eventos'=>$listaEventos);
     }
     
       public function getEventoTable() {
