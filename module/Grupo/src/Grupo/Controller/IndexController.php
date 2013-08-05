@@ -37,32 +37,38 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
+      $listaEventos =$this->getEventoTable()->listadoEvento();
      
-      $nombre = $this->params()->fromQuery('dato');
+      $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
 //        $grupo = $this->params()->fromQuery('grupo');
       // var_dump($grupo);exit;
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
-      $listagrupos=$this->getGrupoTable()->fetchAll();
+     // $listagrupos=$this->getGrupoTable()->fetchAll();
       $categorias=$this->getGrupoTable()->tipoCategoria();
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         //var_dump($tipo);exit;
-      //  $nombre=$this->params()->fromPost('nombre');  
-      //var_dump($listaEventos);exit;
-        if($nombre){
-                       
-             if($tipo){
-                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-
-            }else if($nombre){ 
-                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-              
-            }
-
-        }else{ $listaEventos =$this->getEventoTable()->listadoEvento();}
+      //  $nombre=$this->params()->fromPost('nombre');
+      
+      //var_dump($listaEventos);exit;$request = $this->getRequest();
+        $request = $this->getRequest();
+         if ($request->isPost()) {
+             $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+             
+         }
+//        if(isset($submit) || isset($tipo)){
+//                       
+//             if($tipo){
+//                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
+//
+//            }else if($nombre){ 
+//                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+//            }
+//
+//        }
 
         return array('grupos'=>$listagrupos,'categorias'=>$categorias,'eventos'=>$listaEventos);
     }

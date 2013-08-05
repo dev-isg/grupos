@@ -40,8 +40,9 @@
                     <div class="span12 main wrapper" id="content" data-ui-scrollbar>
                         <ul>
                            
-                             
-            <?php foreach ($this->eventos  as $eventos) :?>
+               <?php if($this->grupos =='' ) { 
+                   
+                foreach ($this->eventos  as $eventos) :?>
                             <li data-category="web">
                                 <a href="ficha-producto.html" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
@@ -63,9 +64,7 @@
                                     </p>
                                 </div>
                             </li>
-          <?php endforeach; ?>   
-   
-                            <?php foreach ($this->grupos  as $grupos) :?>
+          <?php endforeach; } else  { foreach ($this->grupos  as $grupos) :?>
                             <li data-category="web">
                                 <a href="ficha-producto.html" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
@@ -87,7 +86,7 @@
                                     </p>
                                 </div>
                             </li>
-          <?php endforeach; ?> 
+          <?php endforeach;} ?> 
                             
                             <!-- ITEM -->
 
