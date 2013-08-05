@@ -190,7 +190,7 @@ class IndexController extends AbstractActionController
           <div class="logincuenta">
           <ul>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo>Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
