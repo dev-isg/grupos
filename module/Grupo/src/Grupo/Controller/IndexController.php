@@ -20,6 +20,7 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+use Application\Model\EventoTable;
 use Zend\Mail\Message;
 
 class IndexController extends AbstractActionController
@@ -41,27 +42,32 @@ class IndexController extends AbstractActionController
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
       $listagrupos=$this->getGrupoTable()->fetchAll();
       $categorias=$this->getGrupoTable()->tipoCategoria();
-      //var_dump($categorias);exit;
+    //var_dump($categorias);exit;
         $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         $nombre=$this->params()->fromPost('nombre');
-        
-
-
-        
+        //$listaEventos = $this->getGrupoTable()->listadoEvento();
+      $listaEventos =$this->getEventoTable()->listadoEvento();
+      //var_dump($listaEventos);exit;
         if(isset($submit) || isset($tipo)){
-         if($tipo){
-            $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-  
+             if($tipo){
+                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
 
-        }else if($nombre){
-            $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+            }else if($nombre){
+                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+            }
+
         }
-         
+
+        return array('grupos'=>$listagrupos,'categorias'=>$categorias,'eventos'=>$listaEventos);
+    }
+    
+      public function getEventoTable() {
+        if (!$this->eventoTable) {
+            $sm = $this->getServiceLocator();
+            $this->eventoTable = $sm->get('Grupo\Model\EventoTable');
         }
-
-
-        return array('grupos'=>$listagrupos,'categorias'=>$categorias);
+        return $this->eventoTable;
     }
     
     public function agregargrupoAction(){
