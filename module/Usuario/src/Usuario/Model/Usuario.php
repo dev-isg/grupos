@@ -12,7 +12,8 @@ class Usuario implements InputFilterAwareInterface{
     public $in_id;
     public $va_nombre;
     public $va_email;  
-    public $va_contraseña;
+    public $va_contrasena;
+    public $verificar_contrasena;
     public $va_dni;
     public $va_foto;
     public $va_genero;
@@ -25,12 +26,13 @@ class Usuario implements InputFilterAwareInterface{
             $this->in_id= (!empty($data['in_id'])) ? $data['in_id'] : null;
             $this->va_nombre= (!empty($data['va_nombre'])) ? $data['va_nombre'] : null;
             $this->va_email= (!empty($data['va_email'])) ? $data['va_email'] : null;
-            $this->va_contraseña= (!empty($data['va_contraseña'])) ? $data['va_contraseña'] : null;
+            $this->va_contrasena= (!empty($data['va_contrasena'])) ? $data['va_contrasena'] : null;
+            $this->verificar_contrasena = (!empty($data['va_contrasena'])) ? $data['va_contrasena'] : null;
             $this->va_dni= (!empty($data['va_dni'])) ? $data['va_dni'] : null;
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : null;
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
+            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -77,59 +79,59 @@ class Usuario implements InputFilterAwareInterface{
                 ),
             )));
             
-            $inputFilter->add($factory->createInput([ 
+            $inputFilter->add($factory->createInput(array( 
                 'name' => 'va_email', 
                 'required' => true, 
-                'filters' => [ 
-                    ['name' => 'StripTags'], 
-                    ['name' => 'StringTrim'], 
-                ], 
-                'validators' => [ 
-                    [ 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ), 
+                'validators' => array( 
+                    array( 
                         'name' => 'EmailAddress', 
-                        'options' => [ 
+                        'options' => array( 
                             'encoding' => 'UTF-8', 
                             'min'      => 5, 
                             'max'      => 255, 
                             'messages' => array( 
                                 \Zend\Validator\EmailAddress::INVALID_FORMAT => 'Formato de Email Inválido' 
                             ) 
-                        ], 
-                    ], 
-                ], 
-            ])); 
+                        ), 
+                    ), 
+                ), 
+            ))); 
             
-             $inputFilter->add($factory->createInput([ 
-                'name' => 'va_contraseña', 
+             $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_contrasena', 
                 'required' => true, 
-                'filters' => [ ['name' => 'StringTrim'], ], 
-                'validators' => [ 
-                    [ 
+                'filters' => array( array('name' => 'StringTrim'), ), 
+                'validators' => array( 
+                    array( 
                         'name' => 'StringLength', 
-                        'options' => [ 
+                        'options' => array( 
                             'encoding' => 'UTF-8', 
                             'min'      => 6, 
                             'max'      => 128, 
-                        ], 
-                    ], 
-                ], 
-            ]));
+                        ), 
+                    ), 
+                ), 
+            )));
              
-            $inputFilter->add($factory->createInput([ 
-                'name' => 'verificar_contraseña', 
+            $inputFilter->add($factory->createInput(array( 
+                'name' => 'verificar_contrasena', 
                 'required' => true, 
-                'filters' => [ ['name' => 'StringTrim'], ], 
-                'validators' => [ 
+                'filters' => array ( array('name' => 'StringTrim'), ), 
+                'validators' => array( 
                     array( 
                         'name'    => 'StringLength', 
                         'options' => array( 'min' => 6 ), 
                     ), 
                     array( 
                         'name' => 'identical', 
-                        'options' => array('token' => 'va_contraseña' ) 
+                        'options' => array('token' => 'va_contrasena' ) 
                     ), 
-                ], 
-            ]));
+                ), 
+            )));
              
              $inputFilter->add($factory->createInput(array(
                         'name' => 'va_dni',
@@ -144,11 +146,11 @@ class Usuario implements InputFilterAwareInterface{
                     'name'     => 'va_foto',
                     'required' => false,
                      'validators' => array(
-                    array(
-                        'name'    => 'filemimetype',
-                      //  'options' =>  array('mimeType' => 'image/png,image/x-png,image/jpg,image/gif,image/jpeg'),
-                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
-                    ),
+//                    array(
+//                        'name'    => 'filemimetype',
+//                      //  'options' =>  array('mimeType' => 'image/png,image/x-png,image/jpg,image/gif,image/jpeg'),
+//                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
+//                    ),
                     array(
                         'name'    => 'filesize',
                         'options' =>  array('max' => 204800),
@@ -158,8 +160,8 @@ class Usuario implements InputFilterAwareInterface{
             );
             
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'va_descripcion',
-                'required' => true,
+                'name'     => 'va_genero',
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -175,7 +177,28 @@ class Usuario implements InputFilterAwareInterface{
                     ),
                 ),
             )));
-            
+             
+              $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_descripcion',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 3,
+                            'max'      => 200,
+                        ),
+                    ),
+                ),
+            )));
+              
+              
+             $this->inputFilter = $inputFilter;
          }
         
          return $this->inputFilter;

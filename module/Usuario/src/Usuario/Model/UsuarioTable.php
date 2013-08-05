@@ -24,7 +24,7 @@ class UsuarioTable{
                     ->from('ta_usuario')
                     ->join('ta_ubigeo','ta_usuario.ta_ubigeo_in_id=ta_ubigeo.in_id',array(),'left');
 
-                   $selecttot ->group('ta_usuario.in_id')->order('ta_usuario.in_id desc');
+                   $selecttot ->user('ta_usuario.in_id')->order('ta_usuario.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 
@@ -49,7 +49,7 @@ class UsuarioTable{
       $data=array(
          'va_nombre'=>$usuario->va_nombre,
           'va_email'=>$usuario->va_email,
-          'va_contraseña'=>$usuario->va_contraseña,
+          'va_contrasena'=>$usuario->va_contrasena,
           'va_dni'=>$usuario->va_dni,
           'va_foto'=>$usuario->va_foto['name'],
           'va_genero'=>$usuario->va_genero,
@@ -58,53 +58,32 @@ class UsuarioTable{
       );
       $id = (int) $usuario->in_id;
   
-      foreach($data as $key=>$value){
-          if(empty($value)){
-              $data[$key]=0;
-          }
-      }
+//      foreach($data as $key=>$value){
+//          if(empty($value)){
+//              $data[$key]=0;
+//          }
+//      }
+//   
+//      var_dump($data);
+//      exit();
      
-//      if ($id == 0) {
-//          $this->tableGateway->insert($data);
+     
+      
+     if ($id == 0) {
+          $this->tableGateway->insert($data);
 //          $idusuario=$this->tableGateway->getLastInsertValue();
-//          
-//             if($notificacion!=null){
-//                foreach($notificacion as $key=>$value){
-//                    $insert = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
-//                           ->values(array('ta_grupo_in_id'=>$idgrupo,'ta_notificacion_in_id'=>$value));
-//                   $selectString2 = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
-//                   $adapter=$this->tableGateway->getAdapter();
-//                   $adapter->query($selectString2, $adapter::QUERY_MODE_EXECUTE);
-//                }
-//             }
-//      }else {
-//          
-//            if ($this->getGrupo($id)) {
-//                $this->tableGateway->update($data, array('in_id' => $id));
-//                    if($notificacion!=null){
-////                        print_r($notificacion);exit();
-//                           $delete=$this->tableGateway->getSql()->delete()->from('ta_grupo_has_ta_notificacion')
-//                                   ->where(array('ta_grupo_in_id'=>$id));
-//                           $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
-//                           $adapter1=$this->tableGateway->getAdapter();
-//                           $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
-//                        foreach($notificacion as $key=>$value){
-////                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
-////                                    ->set(array('ta_notificacion_in_id'=>$value))
-////                                    ->where(array('ta_grupo_in_id'=>$id));  
-//                          $update = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')
-//                           ->values(array('ta_grupo_in_id'=>$id,'ta_notificacion_in_id'=>$value));
-//                          
-//                           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-//                           $adapter2=$this->tableGateway->getAdapter();
-//                           $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
-//                        }
-//                    }
-//                
-//            } else {
-//                throw new \Exception('no existe el usuario');
-//            }
-//        }
+          
+
+      }else {
+          
+            if ($this->getUsuario($id)) {
+                $this->tableGateway->update($data, array('in_id' => $id));
+                    
+                
+            } else {
+                throw new \Exception('no existe el usuario');
+            }
+        }
       
   }
     

@@ -36,24 +36,32 @@ function crearevento(){
 
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
-            if( $(".crear-evento-grupos").css("display") == 'none' ){
-                if($("#crearGrupo").val()===""){
+            if($("#crearGrupo").val()===""){
                     $(".activar-agregar").show();
                     $(".next-space").hide();
                 }else{
                     $(".activar-agregar").hide();
                     $(".next-space").show();
                 }
-            }
-            else{
-                $(".activar-agregar").hide();
-                $(".next-space").hide();
-            }
         });
 
-        $(".next-grupo").click(function(){
-            $(".next-space").hide();
-            $(".crear-evento-grupos").show();
+//        $(".next-grupo").click(function(){
+//            $(".next-space").hide();
+//            $(".crear-evento-grupos").show();
+//            $("#map").juGoogleMap({
+//                editable:true,
+//                dataBound:{
+//                    lat:'#mapLocationLat',
+//                    lng:'#mapLocationLon',
+//                    city:'#cityId',
+//                    address:'#address',
+//                    addressRef:'#addressReference'
+//                },
+//                center:{lat:-12.047816, lng:-77.062203},
+//                zoom:8  
+//            });
+//        });
+
             $("#map").juGoogleMap({
                 editable:true,
                 dataBound:{
@@ -66,7 +74,6 @@ function crearevento(){
                 center:{lat:-12.047816, lng:-77.062203},
                 zoom:8  
             });
-        });
 
         $(".btn-agregar").click(function(){
             $(".elige-crea").hide();
@@ -94,17 +101,59 @@ function crearevento(){
 
         $("#crearEventoG").validate({
             rules: {
-                evento: "required",
-                address: "required",
-                addressReference: "required",
+                va_nombre: "required",
+                va_direccion: "required",
+                va_referencia: "required",
                 editor1: "required"
             },
             messages: {
-                evento: "Ingrese un nombre del evento",
-                address: "Ingrese la dirección del evento",
-                addressReference : "Ingrese dirección de referencia",
+                va_nombre: "Ingrese un nombre del evento",
+                va_direccion: "Ingrese la dirección del evento",
+                va_referencia : "Ingrese dirección de referencia",
                 editor1 : "Ingrese una descripción del evento"
             }
         });
+    });
+}
+
+var valregistro=function(elemento){
+    $(elemento).validate({
+        rules: {
+            va_nombre: {
+                required: true
+            },          
+            va_email: {
+                required: true,
+                email: true
+            },
+            va_contrasena:{
+                required : true,
+                minlength:8             
+            },
+            va_contrasena2:{
+                required : true,
+                equalTo: "#va_contrasena",
+                minlength:8               
+            }
+        },
+        messages:{
+            va_nombre: {
+                required:"Por favor ingresar un nombre"
+            },
+            va_email:{
+                required:"Por favor ingresa un Email"
+            },
+            va_contrasena: {
+                required : "Ingrese la clave",
+                minlength:"Ingresa un password de 8 caracteres a mas"
+            },
+            va_contrasena2: {
+                required : "Repita la clave",            
+                minlength:"Ingresa un password de 8 caracteres a mas",
+                equalTo : "Ingrese el mismo valor de Clave"
+            }
+         
+        }
+            
     });
 }

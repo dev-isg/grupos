@@ -14,6 +14,8 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Grupo\Model\Grupo;
 use Grupo\Model\GrupoTable;
+use Grupo\Model\Evento;
+use Grupo\Model\EventoTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 

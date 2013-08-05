@@ -70,7 +70,7 @@ class IndexController extends AbstractActionController
       $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
 
       //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-      $renderer->inlineScript()->setScript('crearevento();')
+      $renderer->inlineScript()->setScript('$(document).ready(function(){crearevento();});')
                               ->prependFile($this->_options->host->base .'/js/main.js')
                               ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
                               ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
@@ -120,8 +120,14 @@ class IndexController extends AbstractActionController
                     }
             }
         }
- 
-        return array('form'=>$form,'grupos'=>$user_info);
+        $mainViewModel = new ViewModel();
+       $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
+        'action' => 'agregarevento',
+         ));
+
+     $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
+    return  $mainViewModel->setVariables(array('form'=>$form,'grupos'=>$user_info));
+//        return array('form'=>$form,'grupos'=>$user_info);
     }
     
     public function editargrupoAction(){
