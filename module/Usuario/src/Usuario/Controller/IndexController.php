@@ -48,7 +48,12 @@ class IndexController extends AbstractActionController
     
     public function misgruposAction()
     {
-    return new ViewModel;
+      $valor = $this->headerAction();
+
+      return array('grupo'=>$valor);
+      /*return new ViewModel(
+        array('grupo'=>$valor);
+      );*/
     }
     
     
