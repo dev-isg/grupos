@@ -251,58 +251,58 @@ nav a:hover {
   font-weight: normal !important;
 }
 .menu-login img{
-    float:left;
-    padding-top: 10px;
-padding-left: 20px;
+  float:left;
+  padding-top: 10px;
+  padding-left: 20px;
 }
 .logincuenta{
-    float: right;
-    width: 260px;
-padding: 5px 0px;
-background: #fff;
+  float: right;
+  width: 620px;
+  padding: 5px 0px;
+  background: #fff;
 }
 .logincuenta ul{
-    list-style: none;
-    padding: 0px;
-margin: 0px;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
 }
 .logincuenta ul li{
-    display: inline-block;
-    background: #e3e3e3;
-    color: #999 !important;
+  display: inline-block;
+  background: #e3e3e3;
+  color: #999 !important;
 }
 .logincuenta ul li:hover{    
-    background: #228EC8;
-    color: #fff !important;
+  background: #228EC8;
+  color: #fff !important;
 }
 .logincuenta ul li i{
-    display: block;
-    text-align: center;
-font-size: 30px;
-padding-top: 5px;
-width: auto;
-height: auto;
-background: none;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  padding-top: 5px;
+  width: auto;
+  height: auto;
+  background: none;
 }
 
 .logincuenta a{
-color: #999;
-padding: 37px 7px 0px;
-text-decoration: none;
+  color: #999;
+  padding: 37px 7px 0px;
+  text-decoration: none;
 }
 .contenido-group {
-float: left;
-width: 100%;
-padding: 15px 0px;
+  float: left;
+  width: 100%;
+  padding: 15px 0px;
 }
 .contenido{
-padding: 15px 8px;
-float: left;
+  padding: 15px 8px;
+  float: left;
 }
 .contenido-group header{
-float: left;
-width: 100%;
-background: #fff;
+  float: left;
+  width: 100%;
+  background: #fff;
 }
 .contenido-group header span{
   float: left;  
@@ -1371,7 +1371,14 @@ span.nm{
 /* ==========================================================================
    Media Queries
    ========================================================================== */
-
+@media (max-width: 979px){
+  .navbar-fixed-top {
+    margin-bottom: 0px;
+  }
+  .search{
+    margin-top: 0;
+  }
+}
 @media only screen and (min-width: 480px) {
 
 /* ====================
@@ -1607,3 +1614,4 @@ span.nm{
         page-break-after: avoid;
     }
 }
+
