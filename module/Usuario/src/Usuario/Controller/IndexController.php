@@ -41,6 +41,17 @@ class IndexController extends AbstractActionController
 //        return array();
     }
     
+      public function grupoparticipoAction()
+    {
+    return new ViewModel;
+    }
+    
+    public function misgruposAction()
+    {
+    return new ViewModel;
+    }
+    
+    
     public function agregarusuarioAction(){
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -172,14 +183,16 @@ class IndexController extends AbstractActionController
     }
     private function headerAction()
     {
+        //$ruta =  $this->host('ruta');
+    
        $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href="#">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href="#">Eventos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href="#">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href="#">Mis Grupos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
