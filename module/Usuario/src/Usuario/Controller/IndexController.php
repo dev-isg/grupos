@@ -95,6 +95,76 @@ class IndexController extends AbstractActionController
 //         return array();
     }
 
+    public function editarusuarioAction(){
+       $id = (int) $this->params()->fromRoute('in_id', 0);    
+        if (!$id) {
+            return $this->redirect()->toRoute('usuario', array(
+                'action' => 'agregarusuario'
+            ));
+        }
+        
+        try {
+            $usuario = $this->getUsuarioTable()->getUsuario($id);
+        }
+        catch (\Exception $ex) {
+            
+            return $this->redirect()->toRoute('usuario', array(
+                'action' => 'index'
+            ));
+        }
+
+        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $form = new UsuarioForm($adpter);
+        $form->bind($usuario);
+        
+//        $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
+//        $aux = array();
+//        foreach($var as $y){
+//            $aux[]=$y['ta_notificacion_in_id'];
+//        }
+//        $form->get('tipo_notificacion')->setValue($aux);
+        
+        $form->get('submit')->setAttribute('value', 'Editar');
+        
+        $request = $this->getRequest();
+        
+        if ($request->isPost()) {
+            $File    = $this->params()->fromFiles('va_foto');
+            $nonFile = $this->params()->fromPost('va_nombre');
+            
+            $data    = array_merge_recursive(
+            $this->getRequest()->getPost()->toArray(),          
+            $this->getRequest()->getFiles()->toArray()
+            ); 
+            $form->setInputFilter($usuario->getInputFilter());
+            $form->setData($data);
+//            var_dump($form->setData($data));
+            
+            if ($form->isValid()) {
+                if($this->redimensionarFoto($File,$nonFile)){
+                    $this->getUsuarioTable()->guardarUsuario($usuario);
+                    return $this->redirect()->toRoute('usuario');
+                }
+                else{
+                    echo 'problemas con el redimensionamiento';exit;
+                }
+
+            }else{
+//                var_dump($form->isValid());
+                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                        print_r ($error->getMessages());
+                    }
+            }
+        }
+
+        return array(
+            'in_id' => $id,
+            'form' => $form,
+        );
+        
+    }
+    
+    
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route
