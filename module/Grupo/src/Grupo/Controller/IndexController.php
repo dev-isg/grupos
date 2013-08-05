@@ -38,10 +38,9 @@ class IndexController extends AbstractActionController
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $listaEventos =$this->getEventoTable()->listadoEvento();
-      $this->layout()->clase = 'buscar';
         $nombre = $this->params()->fromQuery('dato');
-      $submit=$this->params()->fromQuery('submit');
-//        $grupo = $this->params()->fromQuery('grupo');
+      $submit=$this->params()->fromPost('submit');
+      $grupo = $this->params()->fromQuery('grupo');
       // var_dump($grupo);exit;
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
@@ -51,8 +50,7 @@ class IndexController extends AbstractActionController
        // $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         //var_dump($tipo);exit;
-      //  $nombre=$this->params()->fromPost('nombre');
-      
+      //  $nombre=$this->params()->fromPost('nombre');  
       //var_dump($listaEventos);exit;
         if(isset($submit) and  isset($tipo)){
                         echo 'ddd';exit;
