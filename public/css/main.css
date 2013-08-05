@@ -1224,6 +1224,12 @@ span.nm{
 .datetimepicker{
   z-index: 100!important;
 }
+.typeahead li a strong{
+  background: none;
+}
+.ju-google-map-overlay{
+  display: none!important;
+}
 /*Color box*/
 /*
     Colorbox Core Style:

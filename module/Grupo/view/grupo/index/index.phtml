@@ -2,8 +2,15 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span9 form-search">
-                        <form class="form-search span8" name="search" action="">
-                            <input type="text" class="input-medium search-query span10">
+                        <form class="form-search span8 dropdown" name="search" action="">
+                            <input type="text" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
+                            <ul class="dropdown-menu">
+                              <li><a href="#">Action</a></li>
+                              <li><a href="#">Another action</a></li>
+                              <li><a href="#">Something else here</a></li>
+                              <li><a href="#">Separated link</a></li>
+                              <li><a href="#">One more separated link</a></li>
+                            </ul>
                             <button type="submit" class="btn btn-primary btn-evento-i">Buscar</button>
                         </form>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
