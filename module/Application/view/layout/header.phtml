@@ -61,8 +61,8 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="span9 form-search">
-                        <form class="form-search span8 dropdown" name="search" action="">
-                            <input type="text" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
+                        <form class="form-search span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/grupo/index/index">
+                            <input type="text" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
                             <ul class="dropdown-menu" id="menu-categoria">
                                 <li class="man-dev">
                                     <ul>  <?php 
@@ -71,43 +71,24 @@
                          <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                     <?php endforeach; ?>  
                                     </ul>
-                                </li>
-                               <!-- <li class="man-dev">
-                                    <ul>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                    </ul>
-                                </li>
-                                <li class="man-dev">
-                                    <ul>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                    </ul>
-                                </li>
-                                <li class="man-dev">
-                                    <ul>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                    </ul>
-                                </li>-->
+                                </li>       
                             </ul>
-                            <button type="submit" class="btn btn-primary btn-evento-i">Buscar</button>
+                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
                         </form>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
                         <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
                     </div>
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio">
-                            <button type="button" class="btn btn-primary active">Evento</button>
-                            <button type="button" class="btn btn-primary ">Grupo</button>
+                              <form   action="<?php echo $this->host('ruta')?>/grupo/index/index">
+                            <button type="button" name="evento" class="btn btn-primary active">Evento</button>
+                            <button type="button" name="grupo" class="btn btn-primary ">Grupo</button>
+                              </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+        
