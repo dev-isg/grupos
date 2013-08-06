@@ -31,6 +31,7 @@ return array(
         'images' => 'http://192.168.1.41:8080/imagenes',
         'img'=>'http://192.168.1.41:8080/img',
         'ruta' => 'http://192.168.1.41:8080',
+
         'version'=>1,
     ),
     

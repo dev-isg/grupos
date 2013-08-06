@@ -8,12 +8,12 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class User extends AbstractDbMapper implements UserInterface
 {
-    protected $tableName  = 'ta_usuario';//'user';
+    protected $tableName  = 'user';
 
     public function findByEmail($email)
     {
         $select = $this->getSelect()
-                       ->where(array('va_email' => $email));//'email'
+                       ->where(array('email' => $email));
 
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));

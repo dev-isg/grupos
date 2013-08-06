@@ -79,11 +79,9 @@
                         <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
                     </div>
                     <div class="span3 btn-evento">
-                        <div class="btn-group group-right" data-toggle="buttons-radio">
-                              <form   action="<?php echo $this->host('ruta')?>/grupo/index/index">
-                            <button type="button" name="evento" class="btn btn-primary active">Evento</button>
-                            <button type="button" name="grupo" class="btn btn-primary ">Grupo</button>
-                              </form>
+                        <div class="btn-group group-right" data-toggle="buttons-radio">                             
+                                <button type="button" name="evento" class="btn btn-primary active"><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a></li></button>
+                                <button type="button" name="grupo" class="btn btn-primary "><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a></li></button>
                         </div>
                     </div>
                 </div>

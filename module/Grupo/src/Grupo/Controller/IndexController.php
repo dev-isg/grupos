@@ -22,6 +22,7 @@ use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Application\Model\EventoTable;
 use Zend\Mail\Message;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController
 {
@@ -30,47 +31,50 @@ class IndexController extends AbstractActionController
     public function __construct()
 	{
 		$this->_options = new \Zend\Config\Config ( include APPLICATION_PATH . '/config/autoload/global.php' );
-	}
+                
+
+        }
         
     public function indexAction()
     {
 
+//          if (! $this->getServiceLocator()->get('AuthService')->hasIdentity()){
+//            return $this->redirect()->toRoute('login');
+//            }
+      //Agregando script en el index
+
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $listaEventos =$this->getEventoTable()->listadoEvento();
-     
+      $categorias=$this->getGrupoTable()->tipoCategoria();
+      $this->layout->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
-//        $grupo = $this->params()->fromQuery('grupo');
-      // var_dump($grupo);exit;
+      $valor = $this->params()->fromQuery('tipo');
+    
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
-     // $listagrupos=$this->getGrupoTable()->fetchAll();
-      $categorias=$this->getGrupoTable()->tipoCategoria();
+     // $listagrupos=$this->getGrupoTable()->fetchAll();     
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
         $tipo=$this->params()->fromQuery('categoria');
         //var_dump($tipo);exit;
       //  $nombre=$this->params()->fromPost('nombre');
-      
-      //var_dump($listaEventos);exit;$request = $this->getRequest();
         $request = $this->getRequest();
-         if ($request->isPost()) {
-             $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-             
-         }
-//        if(isset($submit) || isset($tipo)){
-//                       
-//             if($tipo){
-//                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-//
-//            }else if($nombre){ 
-//                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-//            }
-//
-//        }
+        if($request->isPost()){          
+             if($tipo){
+                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
+            }else if($nombre){ 
+                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
+            }   
+        }
+           if($valor){
+                if($valor=='Eventos')
+                { $listaEventos =$this->getEventoTable()->listadoEvento();}
+              else {$listagrupos=$this->getGrupoTable()->fetchAll();}
+            }
 
-        return array('grupos'=>$listagrupos,'categorias'=>$categorias,'eventos'=>$listaEventos);
+        return array('grupos'=>$listagrupos,'eventos'=>$listaEventos,'dato'=>$valor);
     }
     
       public function getEventoTable() {
