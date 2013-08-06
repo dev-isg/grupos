@@ -51,11 +51,10 @@ class AuthController extends AbstractActionController
     
     public function loginAction()
     {
-//        var_dump($this->getRequest());Exit;
         //if already login, redirect to success page 
-        if ($this->getAuthService()->hasIdentity()){
-            return $this->redirect()->toRoute('success');
-        }
+//        if ($this->getAuthService()->hasIdentity()){
+//            return $this->redirect()->toRoute('success');
+//        }
                 
         $form       = $this->getForm();
         
@@ -77,8 +76,8 @@ class AuthController extends AbstractActionController
             if (true){//$form->isValid()
 //                echo 'entro';exit;
                 //check authentication...
-                var_dump($request->getPost('va_nombre'));
-                var_dump($request->getPost('va_contrasena'));
+//                var_dump($request->getPost('va_nombre'));
+//                var_dump($request->getPost('va_contrasena'));
                 $this->getAuthService()->getAdapter()
                                        ->setIdentity($request->getPost('va_nombre'))
                                        ->setCredential($request->getPost('va_contrasena'));

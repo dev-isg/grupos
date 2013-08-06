@@ -76,27 +76,23 @@ public function onBootstrap(MvcEvent $e)
         $app->getEventManager()->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) { 
             $locator = $e->getApplication()->getServiceManager();
              $authAdapter = $locator->get('AuthService');
-//            $controller = $e->getTarget();
-//            $controllerClass = get_class($controller);
-//            $moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
-//            $config          = $e->getApplication()->getServiceManager()->get('config');
+            $controller = $e->getTarget();
             $routeMatch = $e->getRouteMatch();
-            $actionName = $routeMatch->getParam('action', 'not-found');//$routeMatch->getParam('controller');
+            $actionName = $routeMatch->getParam('action', 'not-found');
         
-//            
-//            if($actionName==login){
-//                
-//            }else{
-//                
-//            }
-//        if($authAdapter->hasIdentity() === true){
-//    
-//     
-////             return $controller->redirect()->toRoute('adminwithlang/adminindex');
-//        }else{
-//                var_dump($actionName);Exit;
-////             return $controller->redirect()->toRoute('grupo');
-//        }
+            if($actionName==login){
+                  if($authAdapter->hasIdentity() === true){
+                      return $controller->redirect()->toRoute('grupo');
+                    }
+                    else{
+                            return;
+                    }
+            }else if ($actionName=='agregargrupo'){
+                if($authAdapter->hasIdentity() === false){
+                    return $controller->redirect()->toRoute('login');
+                    }
+            }
+
         }, 100);
 }
 }
