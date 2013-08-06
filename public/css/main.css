@@ -443,6 +443,9 @@ padding-left: 0.7em;
   padding-top: 3em;
   color: white;
 }
+.contenido-group .menu-login{
+  margin-top: 0;
+}
 .misdatos{background: #008641;}
 .mifoto{background: #2e8bcc ;margin-left: 0px !important;}
 .noti{background: #f09609;margin-left: 0px !important;}
@@ -454,6 +457,9 @@ padding-left: 0.7em;
   cursor: pointer;
   display: none;
   width: 21px;
+}
+.mi-grupo{
+  margin-top: 10px;
 }
 .actualizar h1{
   font-family: "league_gothicregular";
