@@ -22,7 +22,8 @@ class UsuarioTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_usuario')
-                    ->join('ta_ubigeo','ta_usuario.ta_ubigeo_in_id=ta_ubigeo.in_id',array(),'left');
+//                    ->join('ta_ubigeo','ta_usuario.ta_ubigeo_in_id=ta_ubigeo.in_id',array(),'left')
+                           ;
 
                    $selecttot ->user('ta_usuario.in_id')->order('ta_usuario.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
@@ -54,8 +55,10 @@ class UsuarioTable{
           'va_foto'=>$usuario->va_foto['name'],
           'va_genero'=>$usuario->va_genero,
          'va_descripcion'=>$usuario->va_descripcion,
-          'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
+//          'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
       );
+//      var_dump($data);
+//      exit;
       $id = (int) $usuario->in_id;
   
 //      foreach($data as $key=>$value){
