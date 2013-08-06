@@ -25,7 +25,6 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
    'host' => array(
-
         'base' => 'http://192.168.1.48:8081',
         'static' => 'http://192.168.1.48:8081',
         'images' => 'http://192.168.1.48:8081/imagenes',

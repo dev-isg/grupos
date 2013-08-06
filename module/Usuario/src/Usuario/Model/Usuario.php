@@ -7,6 +7,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
+
 class Usuario implements InputFilterAwareInterface{
     
     public $in_id;
@@ -18,7 +19,7 @@ class Usuario implements InputFilterAwareInterface{
     public $va_foto;
     public $va_genero;
     public $va_descripcion;
-    public $ta_ubigeo_in_id;
+//    public $ta_ubigeo_in_id;
     
     protected $inputFilter;  
     
@@ -26,13 +27,13 @@ class Usuario implements InputFilterAwareInterface{
             $this->in_id= (!empty($data['in_id'])) ? $data['in_id'] : null;
             $this->va_nombre= (!empty($data['va_nombre'])) ? $data['va_nombre'] : null;
             $this->va_email= (!empty($data['va_email'])) ? $data['va_email'] : null;
-            $this->va_contrasena= (!empty($data['va_contrasena'])) ? $data['va_contrasena'] : null;
+            $this->va_contrasena = (!empty($data['va_contrasena'])) ? $data['va_contrasena'] : null;
             $this->verificar_contrasena = (!empty($data['va_contrasena'])) ? $data['va_contrasena'] : null;
             $this->va_dni= (!empty($data['va_dni'])) ? $data['va_dni'] : null;
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : null;
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
+//            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -171,7 +172,7 @@ class Usuario implements InputFilterAwareInterface{
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 3,
+                            'min'      => 1,
                             'max'      => 200,
                         ),
                     ),

@@ -51,6 +51,7 @@ class AuthController extends AbstractActionController
     
     public function loginAction()
     {
+//        var_dump($this->getRequest());Exit;
         //if already login, redirect to success page 
         if ($this->getAuthService()->hasIdentity()){
             return $this->redirect()->toRoute('success');

@@ -167,10 +167,14 @@ class IndexController extends AbstractActionController
             $this->getRequest()->getFiles()->toArray()
             ); 
             $form->setInputFilter($usuario->getInputFilter());
+//            var_dump($data);
             $form->setData($data);
 //            var_dump($form->setData($data));
             
             if ($form->isValid()) {
+                
+//                var_dump($data);
+//                exit;
                 if($this->redimensionarFoto($File,$nonFile)){
                     $this->getUsuarioTable()->guardarUsuario($usuario);
                     return $this->redirect()->toRoute('usuario');
@@ -186,6 +190,10 @@ class IndexController extends AbstractActionController
                     }
             }
         }
+//        else{
+//            echo "may";
+//            exit;
+//        }
 
         return array(
             'in_id' => $id,
