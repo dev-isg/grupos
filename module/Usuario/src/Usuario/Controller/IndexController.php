@@ -111,13 +111,17 @@ class IndexController extends AbstractActionController
         
         try {
             $usuario = $this->getUsuarioTable()->getUsuario($id);
-        }
+            }
         catch (\Exception $ex) {
             
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'index'
             ));
         }
+        
+//        var_dump($usuario);
+//        exit;
+//        
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
@@ -166,6 +170,7 @@ class IndexController extends AbstractActionController
         return array(
             'in_id' => $id,
             'form' => $form,
+            'usuario' => $usuario
         );
         
     }
@@ -213,7 +218,10 @@ class IndexController extends AbstractActionController
                   $filter   = new \Filter_Alnum();
                   $filtered = $filter->filter($nom);
                   $name = $filtered.'-'.$imf2;
-               
+                  
+//                  $contenido = new \Zend\Session\Container('contenido');
+                  
+                  
                        if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
                             $viejafoto=  imagecreatefromjpeg($File['tmp_name']);
                             $nuevafoto = imagecreatetruecolor($anchura, $altura);
