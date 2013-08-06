@@ -36,7 +36,18 @@ return array(
                     ),
                 ),
             ),
-            
+                            
+             'cambio' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cambio',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'changeemail'
+                    )
+                )
+            ),
             'success' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -47,6 +58,7 @@ return array(
                         'action'        => 'index',
                     ),
                 ),
+
                 'may_terminate' => true,
                 'child_routes' => array(
                     'default' => array(
