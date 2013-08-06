@@ -110,7 +110,7 @@ class EventoTable{
           'va_min'=>$evento->va_min,
           'va_duracion'=>$evento->va_duracion,
           'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
-          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
+//          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
           'ta_grupo_in_id'=>$evento->ta_grupo_in_id
       );
       
