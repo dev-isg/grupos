@@ -165,6 +165,23 @@ class EventoController extends AbstractActionController
          
      }
 
+     
+       public function miseventosAction()
+    {
+    return new ViewModel;
+    }
+    
+    public function misgruposAction()
+    {
+    return new ViewModel;
+    }
+      public function eventosparticipoAction()
+    {
+    return new ViewModel;
+    }
+     
+     
+     
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route

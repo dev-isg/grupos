@@ -41,6 +41,22 @@ class IndexController extends AbstractActionController
 //        return array();
     }
     
+      public function grupoparticipoAction()
+    {
+    return new ViewModel;
+    }
+    
+    public function misgruposAction()
+    {
+      $valor = $this->headerAction();
+
+      return array('grupo'=>$valor);
+      /*return new ViewModel(
+        array('grupo'=>$valor);
+      );*/
+    }
+    
+    
     public function agregarusuarioAction(){
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -57,6 +73,7 @@ class IndexController extends AbstractActionController
 //        $user_info = $this->getUsuarioTable()->usuariox(1);
 //        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        
 //        $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
@@ -118,10 +135,14 @@ class IndexController extends AbstractActionController
                 'action' => 'index'
             ));
         }
+
         
 //        var_dump($usuario);
 //        exit;
 //        
+
+
+        $valor = $this->headerAction();
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
@@ -170,11 +191,30 @@ class IndexController extends AbstractActionController
         return array(
             'in_id' => $id,
             'form' => $form,
-            'usuario' => $usuario
+            'usuario' => $usuario,
+            'form' => $form,'valor'=>$valor
         );
         
     }
+    private function headerAction()
+    {
+        //$ruta =  $this->host('ruta');
     
+       $estados = '<div class="span12 menu-login">
+          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
+          <div class="logincuenta">
+          <ul>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
+          </ul> 
+          </div>                            
+        </div>'; 
+       return $estados;
+    }
     
     public function fooAction()
     {
