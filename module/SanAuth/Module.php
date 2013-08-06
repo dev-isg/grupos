@@ -68,22 +68,35 @@ class Module implements AutoloaderProviderInterface
     }
 public function onBootstrap(MvcEvent $e)
 {
-         $app = $e->getApplication();
-        $locator = $app->getServiceManager();
-        $authAdapter = $locator->get('AuthService');
-//        $controller = $e->getTarget();
-//        $routeMatch = $e->getRouteMatch();
-//        $controller = $routeMatch->getParam('action', 'not-found');//$routeMatch->getParam('controller');
-//        var_dump($controller);exit;
-
-        if($authAdapter->hasIdentity() === true){
-    
+        $eventManager        = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
         
-//             return $controller->redirect()->toRoute('adminwithlang/adminindex');
-        }else{
-//             echo 'no estas logeado';exit;
-//                var_dump($controller->plugin('redirect')->toRoute('login'));exit;
-//             return $controller->redirect()->toRoute('login');
-        }
+         $app = $e->getApplication();
+        $app->getEventManager()->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) { 
+            $locator = $e->getApplication()->getServiceManager();
+             $authAdapter = $locator->get('AuthService');
+//            $controller = $e->getTarget();
+//            $controllerClass = get_class($controller);
+//            $moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
+//            $config          = $e->getApplication()->getServiceManager()->get('config');
+            $routeMatch = $e->getRouteMatch();
+            $actionName = $routeMatch->getParam('action', 'not-found');//$routeMatch->getParam('controller');
+        
+//            
+//            if($actionName==login){
+//                
+//            }else{
+//                
+//            }
+//        if($authAdapter->hasIdentity() === true){
+//    
+//     
+////             return $controller->redirect()->toRoute('adminwithlang/adminindex');
+//        }else{
+//                var_dump($actionName);Exit;
+////             return $controller->redirect()->toRoute('grupo');
+//        }
+        }, 100);
 }
 }

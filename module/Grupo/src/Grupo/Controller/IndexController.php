@@ -300,6 +300,7 @@ class IndexController extends AbstractActionController
          
      }
 
+
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route

@@ -180,6 +180,9 @@ class EventoController extends AbstractActionController
     return new ViewModel;
     }
      
+    public function detalleAction(){
+            return array();
+        }
      
      
     public function fooAction()
