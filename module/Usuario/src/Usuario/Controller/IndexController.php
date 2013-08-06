@@ -48,12 +48,11 @@ class IndexController extends AbstractActionController
     
     public function misgruposAction()
     {
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $valor = $this->headerAction();
 
       return array('grupo'=>$valor);
-      /*return new ViewModel(
-        array('grupo'=>$valor);
-      );*/
     }
     
     

@@ -36,8 +36,7 @@ return array(
                     ),
                 ),
             ),
-                            
-             'cambio' => array(
+            'cambio' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/cambio',
@@ -47,7 +46,8 @@ return array(
                         'action' => 'changeemail'
                     )
                 )
-            ),
+            ),           
+
             'success' => array(
                 'type'    => 'Literal',
                 'options' => array(
