@@ -127,14 +127,22 @@ class IndexController extends AbstractActionController
         
         try {
             $usuario = $this->getUsuarioTable()->getUsuario($id);
-        }
+            }
         catch (\Exception $ex) {
             
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'index'
             ));
         }
-        $valor = $this->headerAction();
+
+        
+//        var_dump($usuario);
+//        exit;
+//        
+
+
+        $valor = $this->headerAction($id);
+
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
@@ -181,16 +189,20 @@ class IndexController extends AbstractActionController
 
         return array(
             'in_id' => $id,
-            'form' => $form,'valor'=>$valor
+            'form' => $form,
+            'usuario' => $usuario,
+            'valor'=>$valor
         );
         
     }
-    private function headerAction()
+    private function headerAction($id)
     {
         //$ruta =  $this->host('ruta');
+         $usuario = $this->getUsuarioTable()->getUsuario($id);
+         $nombre =  $usuario->va_nombre;
     
        $estados = '<div class="span12 menu-login">
-          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
+          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido '.$nombre.'</span>
           <div class="logincuenta">
           <ul>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
@@ -247,7 +259,10 @@ class IndexController extends AbstractActionController
                   $filter   = new \Filter_Alnum();
                   $filtered = $filter->filter($nom);
                   $name = $filtered.'-'.$imf2;
-               
+                  
+//                  $contenido = new \Zend\Session\Container('contenido');
+                  
+                  
                        if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
                             $viejafoto=  imagecreatefromjpeg($File['tmp_name']);
                             $nuevafoto = imagecreatetruecolor($anchura, $altura);

@@ -52,7 +52,7 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese un correo electrónico..'
+                'placeholder'=>'Ingrese un correo electrónico...'
             ),
         ));  
         
@@ -79,7 +79,7 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese la contrasena…'
+                'placeholder'=>'Ingrese la contraseña…'
             ),
         ));  
          
@@ -92,21 +92,13 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Confirme la contrasena…'
+                'placeholder'=>'Confirme la contraseña…'
             ),
         ));  
                     
         
     
-               $this->add(array(
-            'name' => 'submit',
-            'type' => 'Submit',
-            'attributes' => array(
-                'value' => 'Guardar',
-                'class' => 'btn btn-info btn-large',
-//                'id' => 'submitbutton',
-            ),
-        ));
+
                
                //---------------
                
@@ -119,7 +111,7 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese el nombre del usuario…'
+                'placeholder'=>'Ingrese su número de DNI…'
             ),
         ));  
                
@@ -132,24 +124,23 @@ class UsuarioForm extends Form{
             ),
             'attributes' => array(               
                 'class' => 'span12',
-                'placeholder'=>'Ingrese el nombre del usuario…'
+                'placeholder'=>''
             ),
         ));  
                   
-                     $this->add(array(
+            $this->add(array(
             'name' => 'va_descripcion',
-            'type' => 'Text',
-          
-            'options' => array(
-                'label' => '',          
-            ),
+            'type' => 'Textarea',
             'attributes' => array(               
-                'class' => 'span12',
-                'placeholder'=>'Ingrese el nombre del usuario…'
+                'class' => 'ckeditor',
+                'id'   => 'editor1',
+                'colls'=>80,
+                'rows'=>10
             ),
+
         ));  
                      
-                        $this->add(array(
+            $this->add(array(
             'name' => 'ta_ubigeo_in_id',
             'type' => 'Text',
           
@@ -161,16 +152,26 @@ class UsuarioForm extends Form{
                 'placeholder'=>'Ingrese el nombre del usuario…'
             ),
         ));  
+            
+                           $this->add(array(
+            'name' => 'submit',
+            'type' => 'Submit',
+            'attributes' => array(
+                'value' => 'Guardar',
+                'class' => 'btn btn-info btn-large',
+//                'id' => 'submitbutton',
+            ),
+        ));
                
        
        
     }
     
     
-//     public function getDbAdapter()
-//    {
-//        return $this->dbAdapter;
-//    }
+     public function getDbAdapter()
+    {
+        return $this->dbAdapter;
+    }
     
 //    public function setId($id){
 //        $this->idusu=$id;
