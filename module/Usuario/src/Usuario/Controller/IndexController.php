@@ -142,7 +142,7 @@ class IndexController extends AbstractActionController
 //        
 
 
-        $valor = $this->headerAction();
+        $valor = $this->headerAction($id);
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
@@ -192,16 +192,18 @@ class IndexController extends AbstractActionController
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
-            'form' => $form,'valor'=>$valor
+            'valor'=>$valor
         );
         
     }
-    private function headerAction()
+    private function headerAction($id)
     {
         //$ruta =  $this->host('ruta');
+         $usuario = $this->getUsuarioTable()->getUsuario($id);
+         $nombre =  $usuario->va_nombre;
     
        $estados = '<div class="span12 menu-login">
-          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido Usuario</span>
+          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido '.$nombre.'</span>
           <div class="logincuenta">
           <ul>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
