@@ -41,6 +41,22 @@ class IndexController extends AbstractActionController
 //        return array();
     }
     
+      public function grupoparticipoAction()
+    {
+    return new ViewModel;
+    }
+    
+    public function misgruposAction()
+    {
+      $valor = $this->headerAction();
+
+      return array('grupo'=>$valor);
+      /*return new ViewModel(
+        array('grupo'=>$valor);
+      );*/
+    }
+    
+    
     public function agregarusuarioAction(){
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -57,6 +73,7 @@ class IndexController extends AbstractActionController
 //        $user_info = $this->getUsuarioTable()->usuariox(1);
 //        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        
 //        $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
@@ -95,6 +112,112 @@ class IndexController extends AbstractActionController
 //         return array();
     }
 
+    public function editarusuarioAction(){
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
+                              ->prependFile($this->_options->host->base .'/js/main.js')                              
+                              ->prependFile($this->_options->host->base .'/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                              ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js');
+
+       $id = (int) $this->params()->fromRoute('in_id', 0);    
+        if (!$id) {
+            return $this->redirect()->toRoute('usuario', array(
+                'action' => 'agregarusuario'
+            ));
+        }
+        
+        try {
+            $usuario = $this->getUsuarioTable()->getUsuario($id);
+            }
+        catch (\Exception $ex) {
+            
+            return $this->redirect()->toRoute('usuario', array(
+                'action' => 'index'
+            ));
+        }
+
+        
+//        var_dump($usuario);
+//        exit;
+//        
+
+
+        $valor = $this->headerAction($id);
+
+        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $form = new UsuarioForm($adpter);
+        $form->bind($usuario);
+        
+//        $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
+//        $aux = array();
+//        foreach($var as $y){
+//            $aux[]=$y['ta_notificacion_in_id'];
+//        }
+//        $form->get('tipo_notificacion')->setValue($aux);
+        
+        $form->get('submit')->setAttribute('value', 'Editar');
+        
+        $request = $this->getRequest();
+        
+        if ($request->isPost()) {
+            $File    = $this->params()->fromFiles('va_foto');
+            $nonFile = $this->params()->fromPost('va_nombre');
+            
+            $data    = array_merge_recursive(
+            $this->getRequest()->getPost()->toArray(),          
+            $this->getRequest()->getFiles()->toArray()
+            ); 
+            $form->setInputFilter($usuario->getInputFilter());
+            $form->setData($data);
+//            var_dump($form->setData($data));
+            
+            if ($form->isValid()) {
+                if($this->redimensionarFoto($File,$nonFile)){
+                    $this->getUsuarioTable()->guardarUsuario($usuario);
+                    return $this->redirect()->toRoute('usuario');
+                }
+                else{
+                    echo 'problemas con el redimensionamiento';exit;
+                }
+
+            }else{
+//                var_dump($form->isValid());
+                    foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                        print_r ($error->getMessages());
+                    }
+            }
+        }
+
+        return array(
+            'in_id' => $id,
+            'form' => $form,
+            'usuario' => $usuario,
+            'valor'=>$valor
+        );
+        
+    }
+    private function headerAction($id)
+    {
+        //$ruta =  $this->host('ruta');
+         $usuario = $this->getUsuarioTable()->getUsuario($id);
+         $nombre =  $usuario->va_nombre;
+    
+       $estados = '<div class="span12 menu-login">
+          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido '.$nombre.'</span>
+          <div class="logincuenta">
+          <ul>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
+          </ul> 
+          </div>                            
+        </div>'; 
+       return $estados;
+    }
+    
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route
@@ -137,7 +260,10 @@ class IndexController extends AbstractActionController
                   $filter   = new \Filter_Alnum();
                   $filtered = $filter->filter($nom);
                   $name = $filtered.'-'.$imf2;
-               
+                  
+//                  $contenido = new \Zend\Session\Container('contenido');
+                  
+                  
                        if($info['extension']=='jpg'or $info['extension']=='JPG'or $info['extension']=='jpeg'){
                             $viejafoto=  imagecreatefromjpeg($File['tmp_name']);
                             $nuevafoto = imagecreatetruecolor($anchura, $altura);

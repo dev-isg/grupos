@@ -47,4 +47,20 @@ return array(
             'Usuario' => __DIR__ . '/../view',
         ),
     ),
+    'view_manager' => array(
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'template_map' => array(
+            'usuario/index'           => __DIR__ . '/../view/usuario/index/header-usuario.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        ),
+    ),
+        'view_helpers' => array(
+        'invokables' => array(
+            'host' => 'Application\View\Helper\Host',
+        )
+    ),
 );

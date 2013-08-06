@@ -38,11 +38,16 @@ class GrupoTable{
 //            }
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
+         //   var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 
 //            var_dump($resultSet->toArray());exit;
         return $resultSet;
     }
+    
+    
+  
+    
     
     public function buscarGrupo($nombre=null,$tipo=null){
             $adapter = $this->tableGateway->getAdapter();
@@ -56,9 +61,12 @@ class GrupoTable{
             }
             if($nombre!=null){
                 $selecttot->where(array('ta_grupo.va_nombre'=>$nombre));
+                
             }
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
+        
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
+           // var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             
             return $resultSet;

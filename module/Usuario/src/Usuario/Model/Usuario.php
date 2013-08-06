@@ -146,11 +146,11 @@ class Usuario implements InputFilterAwareInterface{
                     'name'     => 'va_foto',
                     'required' => false,
                      'validators' => array(
-                    array(
-                        'name'    => 'filemimetype',
-                      //  'options' =>  array('mimeType' => 'image/png,image/x-png,image/jpg,image/gif,image/jpeg'),
-                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
-                    ),
+//                    array(
+//                        'name'    => 'filemimetype',
+//                      //  'options' =>  array('mimeType' => 'image/png,image/x-png,image/jpg,image/gif,image/jpeg'),
+//                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
+//                    ),
                     array(
                         'name'    => 'filesize',
                         'options' =>  array('max' => 204800),

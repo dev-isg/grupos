@@ -37,7 +37,7 @@
                     <ul class="nav pull-right menu-dev">
                         <li class="top-ini"><a href="Login.html">Iniciar sesion</a></li>
                         <li class="divider-vertical divider-one"></li>
-                        <li class="top-ini"><a href="registro.html">Registrarse</a></li>
+                        <li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
                         
                         <!--<li class="dropdown">
                             <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown">
@@ -57,3 +57,36 @@
                 </div>
             </div>
         </div>
+        <div class="search">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span9 form-search">
+                        <form METHOD="post" class="form-search span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/grupo/index/index">
+                            <input type="text" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
+                            <ul class="dropdown-menu" id="menu-categoria">
+                                <li class="man-dev">
+                                    <ul>  <?php 
+                    foreach ($this->categorias  as $categorias) :
+                        ?>
+                         <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                    <?php endforeach; ?>  
+                                    </ul>
+                                </li>       
+                            </ul>
+                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
+                        </form>
+                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
+                    </div>
+                    <div class="span3 btn-evento">
+                        <div class="btn-group group-right" data-toggle="buttons-radio">                             
+                                <button type="button" name="evento" class="btn btn-primary active"><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a></li></button>
+                                <button type="button" name="grupo" class="btn btn-primary "><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a></li></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
