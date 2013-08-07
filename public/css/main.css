@@ -1312,6 +1312,47 @@ span.nm{
 .controls input{
   min-height: 30px;
 }
+.lista-usuario ul li .users{
+  padding-top: 10px;
+}
+.lista-usuario ul{
+  list-style: none;
+  margin-top: 20px;
+  margin-left: 0;
+}
+.lista-usuario ul li{
+  border-top: 1px dotted #cbcbcb;
+}
+.unio p.span12{
+  font-size: 11px;
+  color: #888;
+  line-height: 15px;
+  min-height: 25px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.desc-user p{
+  line-height: 14px;
+}
+.desc-user h3{
+  margin: 0;
+  line-height: 16px;
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+.form-asistir{
+  margin-bottom: 0;
+}
+.form-asistir h4{
+  font-size: 20px;
+}
+.desc-user h3 a{
+  color: #005580;
+  font-size: 14px;
+}
+.btn-unete{
+  margin-top: 10px;
+}
 /*Color box*/
 /*
     Colorbox Core Style:
