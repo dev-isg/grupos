@@ -49,9 +49,9 @@ class IndexController extends AbstractActionController
      // $listagrupos=$this->getGrupoTable()->fetchAll();     
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
-        $tipo=$this->params()->fromQuery('categoria');
+     $tipo=$this->params()->fromQuery('categoria');
         //var_dump($tipo);exit;
-      //  $nombre=$this->params()->fromPost('nombre');
+      //  $nombre=$this->params()->fromPost('nombre');s
         $request = $this->getRequest();
         if($request->isPost()){          
              if($tipo){
