@@ -78,10 +78,18 @@ public function onBootstrap(MvcEvent $e)
              $authAdapter = $locator->get('AuthService');
             $controller = $e->getTarget();
             $routeMatch = $e->getRouteMatch();
+//            $config = $e->getApplication()->getServiceManager()->get('config');
             $actionName = $routeMatch->getParam('action', 'not-found');
         
-            if($actionName==login){
+            if($actionName=='login'){
                   if($authAdapter->hasIdentity() === true){
+//                             $session = $e->getApplication()
+//                                    ->getServiceManager()
+//                                    ->get('\Zend\Session\SessionManager');
+//                       $session->start();
+//
+//                       $container = new Container('user');
+//                       var_dump($container->username);exit;
                       return $controller->redirect()->toRoute('grupo');
                     }
                     else{

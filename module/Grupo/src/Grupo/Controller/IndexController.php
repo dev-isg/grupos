@@ -47,7 +47,7 @@ class IndexController extends AbstractActionController
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $listaEventos =$this->getEventoTable()->listadoEvento();
       $categorias=$this->getGrupoTable()->tipoCategoria();
-      $this->layout->categoria=$categorias;
+      $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
       $valor = $this->params()->fromQuery('tipo');

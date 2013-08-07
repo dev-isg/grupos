@@ -97,7 +97,7 @@ class AuthController extends AbstractActionController
                              ->setRememberMe(1);
                         //set storage again
                   $user_session = new Container('user');
-                $user_session->username = 'andy124';
+                   $user_session->username = 'andy124';
                         $this->getAuthService()->setStorage($this->getSessionStorage());
                     }
                     $this->getAuthService()->setStorage($this->getSessionStorage());
