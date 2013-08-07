@@ -24,7 +24,7 @@
                                     Organizador:  
                                 </div>
                                 <div class="ficha-desc">
-                                   <?php echo $this->eventos[0]['ta_usuario_in_id']; ?>
+                                   <?php echo $this->eventos[0]['nombre_user']; ?>
                                 </div>
                             </li>
                             <li>
@@ -33,8 +33,14 @@
                                 </div>
                                 <div class="ficha-desc">
                                     <p><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></p>
-                                    <em>7 PM</em>
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
+                                    <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
+                                          $hora = date_format($fecha, 'h:m');
+                                                  if($hora<12)
+                                                  { echo $hora.' AM'; }
+                                                  else
+                                                      { echo $hora.' PM'; }
+                                         ?></em>
                                 </div>
                             </li>
                             <li>
