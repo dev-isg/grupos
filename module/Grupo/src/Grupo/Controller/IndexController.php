@@ -51,13 +51,14 @@ class IndexController extends AbstractActionController
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
       $valor = $this->params()->fromQuery('tipo');
+      $tipo=$this->params()->fromQuery('categoria');
     
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
      // $listagrupos=$this->getGrupoTable()->fetchAll();     
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
-     $tipo=$this->params()->fromQuery('categoria');
+     
         //var_dump($tipo);exit;
       //  $nombre=$this->params()->fromPost('nombre');s
         $request = $this->getRequest();
@@ -68,6 +69,11 @@ class IndexController extends AbstractActionController
                 $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
             }   
         }
+         if($tipo){
+                if($tipo)
+                { $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);}
+              else {$listagrupos=$this->getGrupoTable()->fetchAll();}
+            }
            if($valor){
                 if($valor=='Eventos')
                 { $listaEventos =$this->getEventoTable()->listadoEvento();}

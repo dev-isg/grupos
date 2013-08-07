@@ -69,7 +69,7 @@
                                         <?php 
                                         foreach ($this->categorias  as $categorias) :
                                         ?>
-                                        <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                         <?php endforeach; ?>  
                                     </ul>
                                 </li>       
@@ -81,8 +81,8 @@
                     </div>
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                            <a class="btn btn-primary  active" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
-                            <a class="btn btn-primary  active" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
+                            <a   class="btn btn-primary active " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
+                            <a  class="btn btn-primary  " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
                         </div>
                     </div>
                 </div>
