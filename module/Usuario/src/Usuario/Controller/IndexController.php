@@ -50,8 +50,9 @@ class IndexController extends AbstractActionController
     {
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $valor = $this->headerAction();
-
+      $id= $this->params()->fromQuery('id');
+      $valor = $this->headerAction($id);
+    
       return array('grupo'=>$valor);
     }
     
@@ -216,7 +217,7 @@ class IndexController extends AbstractActionController
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos?id='.$id.'">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
