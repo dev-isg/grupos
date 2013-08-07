@@ -48,12 +48,11 @@ class IndexController extends AbstractActionController
     
     public function misgruposAction()
     {
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $valor = $this->headerAction();
 
       return array('grupo'=>$valor);
-      /*return new ViewModel(
-        array('grupo'=>$valor);
-      );*/
     }
     
     
@@ -168,10 +167,14 @@ class IndexController extends AbstractActionController
             $this->getRequest()->getFiles()->toArray()
             ); 
             $form->setInputFilter($usuario->getInputFilter());
+//            var_dump($data);
             $form->setData($data);
 //            var_dump($form->setData($data));
             
             if ($form->isValid()) {
+                
+//                var_dump($data);
+//                exit;
                 if($this->redimensionarFoto($File,$nonFile)){
                     $this->getUsuarioTable()->guardarUsuario($usuario);
                     return $this->redirect()->toRoute('usuario');
@@ -187,6 +190,10 @@ class IndexController extends AbstractActionController
                     }
             }
         }
+//        else{
+//            echo "may";
+//            exit;
+//        }
 
         return array(
             'in_id' => $id,

@@ -65,15 +65,16 @@
                             <input type="text" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
                             <ul class="dropdown-menu" id="menu-categoria">
                                 <li class="man-dev">
-                                    <ul>  <?php 
-                    foreach ($this->categorias  as $categorias) :
-                        ?>
-                         <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                    <?php endforeach; ?>  
+                                    <ul>  
+                                        <?php 
+                                        foreach ($this->categorias  as $categorias) :
+                                        ?>
+                                        <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <?php endforeach; ?>  
                                     </ul>
                                 </li>       
                             </ul>
-                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
+                            <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
                         </form>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
                         <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->

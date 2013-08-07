@@ -154,6 +154,25 @@ class Evento implements InputFilterAwareInterface
                 ),
             )));
             
+             $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_fecha',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+//                'validators' => array(
+//                    array(
+//                        'name'    => 'StringLength',
+//                        'options' => array(
+//                            'encoding' => 'UTF-8',
+//                            'min'      => 3,
+//                            'max'      => 200,
+//                        ),
+//                    ),
+//                ),
+            )));
+            
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'va_costo',
                 'required' => false,

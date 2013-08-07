@@ -117,10 +117,13 @@ class UsuarioForm extends Form{
                
                   $this->add(array(
             'name' => 'va_genero',
-            'type' => 'Text',
+            'type' => 'select',
           
             'options' => array(
-                'label' => '',          
+                'label' => '', 
+                'value_options' => array(
+                    'masculino'=>'masculino','femenino'=>'femenino'
+                    )
             ),
             'attributes' => array(               
                 'class' => 'span12',
@@ -140,18 +143,18 @@ class UsuarioForm extends Form{
 
         ));  
                      
-            $this->add(array(
-            'name' => 'ta_ubigeo_in_id',
-            'type' => 'Text',
-          
-            'options' => array(
-                'label' => '',          
-            ),
-            'attributes' => array(               
-                'class' => 'span12',
-                'placeholder'=>'Ingrese el nombre del usuario…'
-            ),
-        ));  
+//            $this->add(array(
+//            'name' => 'ta_ubigeo_in_id',
+//            'type' => 'Text',
+//          
+//            'options' => array(
+//                'label' => '',          
+//            ),
+//            'attributes' => array(               
+//                'class' => 'span12',
+//                'placeholder'=>'Ingrese el nombre del usuario…'
+//            ),
+//        ));  
             
                            $this->add(array(
             'name' => 'submit',
@@ -168,10 +171,10 @@ class UsuarioForm extends Form{
     }
     
     
-     public function getDbAdapter()
-    {
-        return $this->dbAdapter;
-    }
+//     public function getDbAdapter()
+//    {
+//        return $this->dbAdapter;
+//    }
     
 //    public function setId($id){
 //        $this->idusu=$id;

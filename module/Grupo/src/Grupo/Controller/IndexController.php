@@ -22,6 +22,7 @@ use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Application\Model\EventoTable;
 use Zend\Mail\Message;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController
 {
@@ -30,16 +31,23 @@ class IndexController extends AbstractActionController
     public function __construct()
 	{
 		$this->_options = new \Zend\Config\Config ( include APPLICATION_PATH . '/config/autoload/global.php' );
-	}
+                
+
+        }
         
     public function indexAction()
     {
+
+//          if (! $this->getServiceLocator()->get('AuthService')->hasIdentity()){
+//            return $this->redirect()->toRoute('login');
+//            }
+      //Agregando script en el index
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       $listaEventos =$this->getEventoTable()->listadoEvento();
       $categorias=$this->getGrupoTable()->tipoCategoria();
-      $this->layout->categoria=$categorias;
+      $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
       $valor = $this->params()->fromQuery('tipo');
@@ -291,6 +299,7 @@ class IndexController extends AbstractActionController
          
          
      }
+
 
     public function fooAction()
     {
