@@ -45,7 +45,7 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $listaEventos =$this->getEventoTable()->listadoEvento();
+      //$listaEventos =$this->getEventoTable()->listadoEvento();
       $categorias=$this->getGrupoTable()->tipoCategoria();
       $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
@@ -61,23 +61,28 @@ class IndexController extends AbstractActionController
      
         //var_dump($tipo);exit;
       //  $nombre=$this->params()->fromPost('nombre');s
+    
         $request = $this->getRequest();
+          if(empty($valor) and empty($tipo) and !$request->isPost())  
+          { $listaEventos=$this->getEventoTable()->listadoEvento();} 
         if($request->isPost()){          
-             if($tipo){
-                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-            }else if($nombre){ 
-                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-            }   
-        }
-         if($tipo){
+            if($nombre){
+           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                if(count($grupo)>0){$listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);}
+                else{ 
+                 $listaEventos=$this->getEventoTable()->listado2Evento($nombre);
+                }
+              }   
+           }
+            if($tipo){
                 if($tipo)
                 { $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);}
               else {$listagrupos=$this->getGrupoTable()->fetchAll();}
             }
            if($valor){
-                if($valor=='Eventos')
-                { $listaEventos =$this->getEventoTable()->listadoEvento();}
-              else {$listagrupos=$this->getGrupoTable()->fetchAll();}
+                if($valor=='Grupos')
+                { $listagrupos=$this->getGrupoTable()->fetchAll();}
+              else {$listaEventos =$this->getEventoTable()->listadoEvento();}
             }
 
         return array('grupos'=>$listagrupos,'eventos'=>$listaEventos,'dato'=>$valor);

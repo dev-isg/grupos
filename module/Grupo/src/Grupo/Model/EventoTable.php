@@ -226,6 +226,35 @@ class EventoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);           
             return $resultSet;
     }
+    
+       public function listadocategoriasEvento($categoria)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_evento')
+          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
+          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
+          ->where(array('ta_grupo.ta_categoria_in_id'=>$categoria))
+          ->order('in_id desc');
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);           
+            return $resultSet;
+    }
+      public function listado2Evento($categoria)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_evento')
+          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
+          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
+          ->where(array('ta_evento.va_nombre'=>$categoria))
+          ->order('in_id desc');
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);           
+            return $resultSet;
+    }
 }
 
 
