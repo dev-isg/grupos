@@ -195,8 +195,15 @@ class EventoController extends AbstractActionController
         return $this->usuarioTable;
     } 
     public function detalleAction(){
-            return array();
-        }
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:-12.254819706378063,lng:-76.90810561180115,address:"Museo de Sitio Pachacámac",addressRef:"Puerta del museo"}});});')
+                            ->prependFile($this->_options->host->base .'/js/main.js')
+                            ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
+                            ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
+                            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                            ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
+      return array();
+    }
      
      
     public function fooAction()
