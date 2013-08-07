@@ -46,6 +46,7 @@ class IndexController extends AbstractActionController
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
       //$listaEventos =$this->getEventoTable()->listadoEvento();
+     
       $categorias=$this->getGrupoTable()->tipoCategoria();
       $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
@@ -71,9 +72,7 @@ class IndexController extends AbstractActionController
                 if(count($grupo)>0){$listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);}
                 else{ 
                  $listaEventos=$this->getEventoTable()->listado2Evento($nombre);
-                }
-              }   
-           }
+                }}  }
             if($tipo){
                 if($tipo)
                 { $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);}

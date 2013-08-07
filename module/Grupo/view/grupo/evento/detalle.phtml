@@ -3,12 +3,12 @@
         <div class="row-fluid">
             <div class="span3 group-sidebar">
                 <div class="img-grupo">
-                    <img src="../../img/2.jpg" alt="">
+                    <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['va_imagen'], ENT_QUOTES, 'utf-8');  ?>">
                 </div>
-                <h2 class="gh"><a href="#">Desarrollador web</a></h2>
+                <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_categoria']; ?>  </a></h2>
                 <p class="fund gh"><em>Fundado el 20-marzo-2013</em></p>
                 <p class="desc gh">
-                    es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor.<br> <a href="#">Ver mas...</a>
+                  <?php echo $this->eventos[0]['va_descripcion']; ?> <br> <a href="#">Ver mas...</a>
                 </p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm">4521</span></a></p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm">21</span></a></p>
@@ -16,7 +16,7 @@
             </div>
             <div class="span6">
                 <div class="event-group">
-                    <h1>Backpacking in Peru the Cordillera Huayhuash plus a side trip to Machu Pichu.</h1>
+                    <h1><?php echo $this->eventos[0]['va_nombre']; ?></h1>
                     <div class="asig-evento">
                         <ul>
                             <li>
@@ -24,7 +24,7 @@
                                     Organizador:  
                                 </div>
                                 <div class="ficha-desc">
-                                    Juan perez
+                                   <?php echo $this->eventos[0]['ta_usuario_in_id']; ?>
                                 </div>
                             </li>
                             <li>
@@ -32,7 +32,8 @@
                                     Fecha y hora:  
                                 </div>
                                 <div class="ficha-desc">
-                                    <p>Sabdo 17 de Agosto del 2013</p>
+                                    <p><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></p>
                                     <em>7 PM</em>
                                 </div>
                             </li>
@@ -41,7 +42,7 @@
                                     Duración:  
                                 </div>
                                 <div class="ficha-desc">
-                                    5 Horas
+                                   <?php echo $this->eventos[0]['va_duracion']; ?> Horas
                                 </div>
                             </li>
                             <li>
@@ -49,7 +50,7 @@
                                     Precio:  
                                 </div>
                                 <div class="ficha-desc">
-                                    S/. 50.00 soles
+                                    S/. <?php echo $this->eventos[0]['va_costo']; ?>
                                 </div>
                             </li>
                             <li>
@@ -57,7 +58,7 @@
                                     Categoría:  
                                 </div>
                                 <div class="ficha-desc">
-                                    Desarrollador Web
+                                    <?php echo $this->eventos[0]['nombre_categoria']; ?>  
                                 </div>
                             </li>
                             <li>
@@ -65,7 +66,7 @@
                                     Dirección:  
                                 </div>
                                 <div class="ficha-desc">
-                                    <p>Av. juan de almorguera 352</p>
+                                    <p>   <?php echo $this->eventos[0]['va_direccion']; ?> </p>
                                     <em>Lima, Lima (<a href="#">Mapa</a>)</em>
                                 </div>
                             </li>
@@ -101,7 +102,7 @@
                 </div>
             </div>
             <div class="span3">
-                dfgdfh
+               
             </div>
         </div>
     </div>

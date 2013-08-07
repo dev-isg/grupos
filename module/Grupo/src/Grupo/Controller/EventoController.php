@@ -202,7 +202,10 @@ class EventoController extends AbstractActionController
                             ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
                             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
                             ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
-      return array();
+      
+    $id= $this->params()->fromQuery('id');
+    $evento=$this->getEventoTable()->Evento($id);
+  return array('eventos'=>$evento);
     }
      
      

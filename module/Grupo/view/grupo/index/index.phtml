@@ -57,7 +57,7 @@
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="/grupo/evento/detalle"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
+                                        <a href="/grupo/evento/detalle?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
@@ -71,8 +71,8 @@
                                 </a>
                                 <div class="content">
                                     <div class="info">
-                                       <!-- <span><?php  $fecha = date_create($grupos->va_fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>-->
+                                        <span><?php  $fecha = date_create($grupos->va_fecha);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
                                         <span class="category">
                                             <a href="#"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
                                         </span>
