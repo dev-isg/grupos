@@ -47,33 +47,43 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $listaEventos =$this->getEventoTable()->listadoEvento();
+      //$listaEventos =$this->getEventoTable()->listadoEvento();
+     
       $categorias=$this->getGrupoTable()->tipoCategoria();
       $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
       $valor = $this->params()->fromQuery('tipo');
+      $tipo=$this->params()->fromQuery('categoria');
     
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
      // $listagrupos=$this->getGrupoTable()->fetchAll();     
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
-        $tipo=$this->params()->fromQuery('categoria');
+     
         //var_dump($tipo);exit;
-      //  $nombre=$this->params()->fromPost('nombre');
+      //  $nombre=$this->params()->fromPost('nombre');s
+    
         $request = $this->getRequest();
+          if(empty($valor) and empty($tipo) and !$request->isPost())  
+          { $listaEventos=$this->getEventoTable()->listadoEvento();} 
         if($request->isPost()){          
-             if($tipo){
-                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-            }else if($nombre){ 
-                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-            }   
-        }
-           if($valor){
-                if($valor=='Eventos')
-                { $listaEventos =$this->getEventoTable()->listadoEvento();}
+            if($nombre){
+           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                if(count($grupo)>0){$listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);}
+                else{ 
+                 $listaEventos=$this->getEventoTable()->listado2Evento($nombre);
+                }}  }
+            if($tipo){
+                if($tipo)
+                { $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);}
               else {$listagrupos=$this->getGrupoTable()->fetchAll();}
+            }
+           if($valor){
+                if($valor=='Grupos')
+                { $listagrupos=$this->getGrupoTable()->fetchAll();}
+              else {$listaEventos =$this->getEventoTable()->listadoEvento();}
             }
 
         return array('grupos'=>$listagrupos,'eventos'=>$listaEventos,'dato'=>$valor);
@@ -269,6 +279,11 @@ class IndexController extends AbstractActionController
         $this->redirect()->toUrl('/grupo');
       } 
     }
+    public function detallegrupoAction()
+    {
+    return new ViewModel;
+    }
+    
     
     public function dejarAction(){
         $iduser=1;

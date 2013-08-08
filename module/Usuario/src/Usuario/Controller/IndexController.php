@@ -43,15 +43,19 @@ class IndexController extends AbstractActionController
     
       public function grupoparticipoAction()
     {
-    return new ViewModel;
+      $id= $this->params()->fromQuery('id');
+      $valor = $this->headerAction($id);
+    
+      return array('grupo'=>$valor);
     }
     
     public function misgruposAction()
     {
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $valor = $this->headerAction();
-
+      $id= $this->params()->fromQuery('id');
+      $valor = $this->headerAction($id);
+    
       return array('grupo'=>$valor);
     }
     
@@ -203,7 +207,7 @@ class IndexController extends AbstractActionController
         );
         
     }
-    private function headerAction($id)
+    public function headerAction($id)
     {
         //$ruta =  $this->host('ruta');
          $usuario = $this->getUsuarioTable()->getUsuario($id);
@@ -213,10 +217,10 @@ class IndexController extends AbstractActionController
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido '.$nombre.'</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos?id='.$id.'">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 

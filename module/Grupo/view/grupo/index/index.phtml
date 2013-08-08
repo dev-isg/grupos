@@ -57,7 +57,7 @@
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="/grupo/evento/detalle"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
+                                        <a href="/grupo/evento/detalle?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
@@ -79,7 +79,7 @@
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="ficha-producto.html"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
+                                        <a href="/grupo/index/detallegrupo"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($grupos->va_descripcion);?>

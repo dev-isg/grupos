@@ -20,10 +20,12 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+use Usuario\Controller\IndexController;
 
 class EventoController extends AbstractActionController
 {
     protected $eventoTable;
+    protected $usuarioTable;
     protected $_options;
     public function __construct()
 	{
@@ -168,7 +170,10 @@ class EventoController extends AbstractActionController
      
        public function miseventosAction()
     {
-    return new ViewModel;
+     $id= $this->params()->fromQuery('id');
+     $valor = IndexController::headerAction($id);
+
+      return array('grupo'=>$valor);
     }
     
     public function misgruposAction()
@@ -177,12 +182,31 @@ class EventoController extends AbstractActionController
     }
       public function eventosparticipoAction()
     {
-    return new ViewModel;
+     $id= $this->params()->fromQuery('id');
+     $valor = IndexController::headerAction($id);
+
+      return array('grupo'=>$valor);
     }
-     
-    public function detalleAction(){
-            return array();
+     public function getUsuarioTable() {
+        if (!$this->usuarioTable) {
+            $sm = $this->getServiceLocator();
+            $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
         }
+        return $this->usuarioTable;
+    } 
+    public function detalleAction(){
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:-12.254819706378063,lng:-76.90810561180115,address:"Museo de Sitio Pachacámac",addressRef:"Puerta del museo"}});});')
+                            ->prependFile($this->_options->host->base .'/js/main.js')
+                            ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
+                            ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
+                            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                            ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
+      
+    $id= $this->params()->fromQuery('id');
+    $evento=$this->getEventoTable()->Evento($id);
+  return array('eventos'=>$evento);
+    }
      
      
     public function fooAction()
