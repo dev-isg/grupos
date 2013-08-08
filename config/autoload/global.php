@@ -29,7 +29,7 @@ return array(
         'static' => 'http://192.168.1.45:82',
         'images' => 'http://192.168.1.45:82/imagenes',
         'img'=>'http://192.168.1.45:82/img',
-        'ruta' => 'http://192.168.45:82',
+        'ruta' => 'http://192.168.1.45:82',
         'version'=>1,
     ),
     
