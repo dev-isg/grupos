@@ -114,14 +114,13 @@ class IndexController extends AbstractActionController
         return array('form'=>$form);
 //         return array();
     }
-
     public function editarusuarioAction(){
-      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+          $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
                               ->prependFile($this->_options->host->base .'/js/main.js')                              
                               ->prependFile($this->_options->host->base .'/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                               ->prependFile($this->_options->host->base .'/js/jquery.validate.min.js');
-
+      
        $id = (int) $this->params()->fromRoute('in_id', 0);    
         if (!$id) {
             return $this->redirect()->toRoute('usuario', array(
@@ -131,32 +130,18 @@ class IndexController extends AbstractActionController
         
         try {
             $usuario = $this->getUsuarioTable()->getUsuario($id);
-            }
+        }
         catch (\Exception $ex) {
             
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'index'
             ));
         }
-
-        
-//        var_dump($usuario);
-//        exit;
-//        
-
-
         $valor = $this->headerAction($id);
-
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
         
-//        $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
-//        $aux = array();
-//        foreach($var as $y){
-//            $aux[]=$y['ta_notificacion_in_id'];
-//        }
-//        $form->get('tipo_notificacion')->setValue($aux);
         
         $form->get('submit')->setAttribute('value', 'Editar');
         
@@ -171,14 +156,11 @@ class IndexController extends AbstractActionController
             $this->getRequest()->getFiles()->toArray()
             ); 
             $form->setInputFilter($usuario->getInputFilter());
-//            var_dump($data);
             $form->setData($data);
+//            $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
 //            var_dump($form->setData($data));
             
             if ($form->isValid()) {
-                
-//                var_dump($data);
-//                exit;
                 if($this->redimensionarFoto($File,$nonFile)){
                     $this->getUsuarioTable()->guardarUsuario($usuario);
                     return $this->redirect()->toRoute('usuario');
@@ -194,20 +176,18 @@ class IndexController extends AbstractActionController
                     }
             }
         }
-//        else{
-//            echo "may";
-//            exit;
-//        }
 
         return array(
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
-            'valor'=>$valor
+            'valor'=>$valor,
         );
         
     }
+
     public function headerAction($id)
+
     {
         //$ruta =  $this->host('ruta');
          $usuario = $this->getUsuarioTable()->getUsuario($id);
@@ -217,11 +197,12 @@ class IndexController extends AbstractActionController
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido '.$nombre.'</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos?id='.$id.'">Mis Grupos</a></li>
-            <li><i class="icon-cuenta"></i> <a href="#" class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/grupoparticipo">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href=" '.$this->url.' " class="activomenu">Mi cuenta</a></li>
+
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
           </div>                            

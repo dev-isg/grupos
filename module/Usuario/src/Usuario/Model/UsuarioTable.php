@@ -47,6 +47,7 @@ class UsuarioTable
         return $row;
     }
 
+
     public function getUsuarioxEmail($email)
     {
         $row = $this->tableGateway->select(array(
@@ -77,7 +78,7 @@ class UsuarioTable
         $data = array(
             'va_nombre' => $usuario->va_nombre,
             'va_email' => $usuario->va_email,
-            'va_contrasena' => $usuario->va_contrasena,
+            'va_contrasena' => sha1($usuario->va_contrasena),
             'va_dni' => $usuario->va_dni,
             'va_foto' => $usuario->va_foto['name'],
             'va_genero' => $usuario->va_genero,
