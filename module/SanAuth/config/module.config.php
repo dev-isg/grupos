@@ -4,7 +4,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'SanAuth\Controller\Auth' => 'SanAuth\Controller\AuthController',
-            'SanAuth\Controller\Success' => 'SanAuth\Controller\SuccessController'
+            'SanAuth\Controller\Success' => 'SanAuth\Controller\SuccessController',
+            'SanAuth\Controller\Prueba' => 'SanAuth\Controller\PruebaController'
         ),
     ),
     'router' => array(
@@ -46,7 +47,40 @@ return array(
                         'action' => 'changeemail'
                     )
                 )
-            ),           
+            ),  
+            'prueba' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/prueba',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Prueba',
+                        'action' => 'index'
+                    )
+                )
+            ), 
+            'prueba-login' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/prueba-login',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Prueba',
+                        'action' => 'login'
+                    )
+                )
+            ), 
+            'prueba-validar' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/prueba-validar',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Prueba',
+                        'action' => 'validar'
+                    )
+                )
+            ),
 
             'success' => array(
                 'type'    => 'Literal',

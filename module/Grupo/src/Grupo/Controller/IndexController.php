@@ -27,6 +27,8 @@ use Zend\Session\Container;
 class IndexController extends AbstractActionController
 {
     protected $grupoTable;
+    protected $usuarioTable;
+    protected $authservice;
     protected $_options;
     public function __construct()
 	{
@@ -86,6 +88,12 @@ class IndexController extends AbstractActionController
     }
     
     public function agregargrupoAction(){
+       $storage=new \Zend\Authentication\Storage\Session('Auth');
+       if(!$storage){
+           return $this->redirect()->toRoute('grupo');
+       }
+//        print_r($storage->read()->in_id);exit;
+      
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
@@ -128,7 +136,8 @@ class IndexController extends AbstractActionController
                
                 $grupo->exchangeArray($form->getData());
                 if($this->redimensionarImagen($File,$nonFile)){
-                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                    //obtiene el identity y consulta el
+                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion,$storage->read()->in_id);
                     return $this->redirect()->toRoute('grupo');
                 }
                 else{
@@ -295,11 +304,6 @@ class IndexController extends AbstractActionController
         $this->redirect()->toUrl('/grupo');
       } 
     }
-     public function uploadAction(){
-         
-         
-     }
-
 
     public function fooAction()
     {
@@ -308,12 +312,28 @@ class IndexController extends AbstractActionController
         return array();
     }
     
-        public function getGrupoTable() {
+    public function getGrupoTable() {
         if (!$this->grupoTable) {
             $sm = $this->getServiceLocator();
             $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
         }
         return $this->grupoTable;
+    }
+    public function getUsuarioTable() {
+        if (!$this->usuarioTable) {
+            $sm = $this->getServiceLocator();
+            $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+        }
+        return $this->usuarioTable;
+    }
+    
+ public function getAuthService()
+    {
+        if (! $this->authservice) {
+            $this->authservice = $this->getServiceLocator()
+                                      ->get('AuthService');
+        }
+        return $this->authservice;
     }
     
     private function redimensionarImagen($File,$nonFile){
