@@ -27,6 +27,8 @@ use Zend\Session\Container;
 class IndexController extends AbstractActionController
 {
     protected $grupoTable;
+    protected $usuarioTable;
+    protected $authservice;
     protected $_options;
     public function __construct()
 	{
@@ -45,33 +47,43 @@ class IndexController extends AbstractActionController
 
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
-      $listaEventos =$this->getEventoTable()->listadoEvento();
+      //$listaEventos =$this->getEventoTable()->listadoEvento();
+     
       $categorias=$this->getGrupoTable()->tipoCategoria();
-      $this->layout->categoria=$categorias;
+      $this->layout()->categoria=$categorias;
       $nombre = $this->params()->fromPost('dato');
       $submit=$this->params()->fromPost('submit');
       $valor = $this->params()->fromQuery('tipo');
+      $tipo=$this->params()->fromQuery('categoria');
     
       //$container = new \Zend\Session\Container('Grupo\Controller');
       //$container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
      // $listagrupos=$this->getGrupoTable()->fetchAll();     
      //$this->_helper->layout->disableLayout();
        // $submit=$this->params()->fromPost('submit');
-        $tipo=$this->params()->fromQuery('categoria');
+     
         //var_dump($tipo);exit;
-      //  $nombre=$this->params()->fromPost('nombre');
+      //  $nombre=$this->params()->fromPost('nombre');s
+    
         $request = $this->getRequest();
+          if(empty($valor) and empty($tipo) and !$request->isPost())  
+          { $listaEventos=$this->getEventoTable()->listadoEvento();} 
         if($request->isPost()){          
-             if($tipo){
-                $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);
-            }else if($nombre){ 
-                $listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);
-            }   
-        }
-           if($valor){
-                if($valor=='Eventos')
-                { $listaEventos =$this->getEventoTable()->listadoEvento();}
+            if($nombre){
+           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                if(count($grupo)>0){$listagrupos=$this->getGrupoTable()->buscarGrupo($nombre);}
+                else{ 
+                 $listaEventos=$this->getEventoTable()->listado2Evento($nombre);
+                }}  }
+            if($tipo){
+                if($tipo)
+                { $listagrupos=$this->getGrupoTable()->buscarGrupo(null,$tipo);}
               else {$listagrupos=$this->getGrupoTable()->fetchAll();}
+            }
+           if($valor){
+                if($valor=='Grupos')
+                { $listagrupos=$this->getGrupoTable()->fetchAll();}
+              else {$listaEventos =$this->getEventoTable()->listadoEvento();}
             }
 
         return array('grupos'=>$listagrupos,'eventos'=>$listaEventos,'dato'=>$valor);
@@ -86,6 +98,12 @@ class IndexController extends AbstractActionController
     }
     
     public function agregargrupoAction(){
+       $storage=new \Zend\Authentication\Storage\Session('Auth');
+       if(!$storage){
+           return $this->redirect()->toRoute('grupo');
+       }
+//        print_r($storage->read()->in_id);exit;
+      
       //AGREGAR CSS
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $renderer->headLink()->prependStylesheet($this->_options->host->base .'/css/datetimepicker.css');
@@ -128,7 +146,8 @@ class IndexController extends AbstractActionController
                
                 $grupo->exchangeArray($form->getData());
                 if($this->redimensionarImagen($File,$nonFile)){
-                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion);
+                    //obtiene el identity y consulta el
+                    $this->getGrupoTable()->guardarGrupo($grupo,$notificacion,$storage->read()->in_id);
                     return $this->redirect()->toRoute('grupo');
                 }
                 else{
@@ -260,6 +279,11 @@ class IndexController extends AbstractActionController
         $this->redirect()->toUrl('/grupo');
       } 
     }
+    public function detallegrupoAction()
+    {
+    return new ViewModel;
+    }
+    
     
     public function dejarAction(){
         $iduser=1;
@@ -295,10 +319,6 @@ class IndexController extends AbstractActionController
         $this->redirect()->toUrl('/grupo');
       } 
     }
-     public function uploadAction(){
-         
-         
-     }
 
     public function fooAction()
     {
@@ -307,12 +327,28 @@ class IndexController extends AbstractActionController
         return array();
     }
     
-        public function getGrupoTable() {
+    public function getGrupoTable() {
         if (!$this->grupoTable) {
             $sm = $this->getServiceLocator();
             $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
         }
         return $this->grupoTable;
+    }
+    public function getUsuarioTable() {
+        if (!$this->usuarioTable) {
+            $sm = $this->getServiceLocator();
+            $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+        }
+        return $this->usuarioTable;
+    }
+    
+ public function getAuthService()
+    {
+        if (! $this->authservice) {
+            $this->authservice = $this->getServiceLocator()
+                                      ->get('AuthService');
+        }
+        return $this->authservice;
     }
     
     private function redimensionarImagen($File,$nonFile){

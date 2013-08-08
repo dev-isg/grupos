@@ -1,7 +1,6 @@
-    <?php echo $this->partial("layout/header.phtml",array('categorias'=>'categoria')); ?>
-    
-    <?php echo $this->content; ?>
+ <?php echo $this->partial("layout/header.phtml",array('categorias'=>$this->categoria,'formlogeo'=>$this->form)); //,'formlogeo'=>$this->form?>
 
-
-    <?php echo $this->partial("layout/footer.phtml"); ?>
+<?php echo $this->content; ?>
+ 
+<?php echo $this->partial("layout/footer.phtml"); ?>
 

@@ -43,17 +43,20 @@ class IndexController extends AbstractActionController
     
       public function grupoparticipoAction()
     {
-    return new ViewModel;
+      $id= $this->params()->fromQuery('id');
+      $valor = $this->headerAction($id);
+    
+      return array('grupo'=>$valor);
     }
     
     public function misgruposAction()
     {
-      $valor = $this->headerAction();
-
+      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      $renderer->inlineScript()->prependFile($this->_options->host->base .'/js/main.js');
+      $id= $this->params()->fromQuery('id');
+      $valor = $this->headerAction($id);
+    
       return array('grupo'=>$valor);
-      /*return new ViewModel(
-        array('grupo'=>$valor);
-      );*/
     }
     
     
@@ -183,8 +186,8 @@ class IndexController extends AbstractActionController
         
     }
 
-    
-    private function headerAction($id)
+    public function headerAction($id)
+
     {
         //$ruta =  $this->host('ruta');
          $usuario = $this->getUsuarioTable()->getUsuario($id);
@@ -199,6 +202,7 @@ class IndexController extends AbstractActionController
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/grupo/evento/miseventos">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta .'/usuario/index/misgrupos">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href=" '.$this->url.' " class="activomenu">Mi cuenta</a></li>
+
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
           </div>                            

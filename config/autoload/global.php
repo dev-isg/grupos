@@ -25,13 +25,11 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
    'host' => array(
-
-        'base' => 'http://192.168.1.41:8080',
-        'static' => 'http://192.168.1.41:8080',
-        'images' => 'http://192.168.1.41:8080/imagenes',
-        'img'=>'http://192.168.1.41:8080/img',
-        'ruta' => 'http://192.168.1.41:8080',
-
+        'base' => 'http://192.168.1.48:8081',
+        'static' => 'http://192.168.1.48:8081',
+        'images' => 'http://192.168.1.48:8081/imagenes',
+        'img'=>'http://192.168.1.48:8081/img',
+        'ruta' => 'http://192.168.1.48:8081',
         'version'=>1,
     ),
     
@@ -48,10 +46,29 @@ return array(
             ),
         ),
     ),
-        'service_manager' => array(
-        'factories' => array(
-            'Zend\Db\Adapter\Adapter'
-                    => 'Zend\Db\Adapter\AdapterServiceFactory',
-        ),
+    'translator' => array(
+         'locale' => 'es_ES'
+     ),
+     'service_manager' => array(
+            'factories' => array(
+                'Zend\Db\Adapter\Adapter'
+                        => 'Zend\Db\Adapter\AdapterServiceFactory',
+            ),
+             'aliases' => array(
+                'translator' => 'MvcTranslator',
+            ),
     ),
+//       'session' => array(
+//        'config' => array(
+//            'class' => 'Zend\Session\Config\SessionConfig',
+//            'options' => array(
+//                'name' => 'myapp',
+//            ),
+//        ),
+//        'storage' => 'Zend\Session\Storage\SessionArrayStorage',
+//        'validators' => array(
+//            'Zend\Session\Validator\RemoteAddr',
+//            'Zend\Session\Validator\HttpUserAgent',
+//        ),
+//    ),
 );

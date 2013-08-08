@@ -65,28 +65,75 @@
                             <input type="text" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
                             <ul class="dropdown-menu" id="menu-categoria">
                                 <li class="man-dev">
-                                    <ul>  <?php 
-                    foreach ($this->categorias  as $categorias) :
-                        ?>
-                         <li><a href="#"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                    <?php endforeach; ?>  
+                                    <ul>  
+                                        <?php 
+                                        foreach ($this->categorias  as $categorias) :
+                                        ?>
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <?php endforeach; ?>  
                                     </ul>
                                 </li>       
                             </ul>
-                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
+                            <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
                         </form>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
                         <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
                     </div>
                     <div class="span3 btn-evento">
-                        <div class="btn-group group-right" data-toggle="buttons-radio">                             
-                                <button type="button" name="evento" class="btn btn-primary active"><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a></li></button>
-                                <button type="button" name="grupo" class="btn btn-primary "><li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a></li></button>
+                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
+                            <a class="btn btn-primary active " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
+                            <a class="btn btn-primary  " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <!--Login-->
+        <div style='display:none'>
+            <div id='inline_evento' style='padding:10px; background:#fff;'>
+                <h3>Iniciar sesión</h3>
+                <?php
+                   $form = $this->formlogeo;
+                   $form->setAttributes(array(
+                       'action'=> $this->url(
+                       'login/process',
+                       array(
+                           'action'     => 'authenticate',
+                       )
+                   ),
+                   'class'=>'bs-docs-example form-horizontal'));
+                   $form->prepare();
+                   echo $this->form()->openTag($form);
+                 ?>
+                <!--<form class="bs-docs-example form-horizontal" action="<?php echo $this->basePath();?>/grupo/index/agregargrupo">-->
+                    <div class="control-group">
+                      <label class="control-label" for="inputEmail">Email:</label>
+                      <div class="controls">
+                          <?php  echo $this->formRow($form->get('va_nombre'));?>
+                        <!--<input type="text" id="inputEmail" placeholder="Email">-->
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label" for="inputPassword">Contraseña:</label>
+                      <div class="controls">
+                          <?php  echo $this->formRow($form->get('va_contrasena'));?>
+                        <!--<input type="password" id="inputPassword" placeholder="Password">-->
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <div class="controls">
+                          <?php  echo $this->formSubmit($form->get('submit'));?>
+                        <!--<button type="submit" class="btn btn-primary">Ingresar</button>-->
+                      </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <a href="/cambio">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+                    <?php  echo $this->form()->closeTag(); ?>
+                  <!--</form>-->
+            </div>
+        </div>     
         
         

@@ -21,11 +21,11 @@ class UserForm extends Form
             'name' => 'va_nombre',
             'type' => 'Text',
           
-            'options' => array(
-                'label' => 'Nombre de usario:',          
-            ),
+//            'options' => array(
+//                'label' => 'Nombre de usario:',          
+//            ),
             'attributes' => array(               
-                'class' => 'span12',
+//                'class' => 'span12',
                 'placeholder'=>'Ingrese el nombre de usario…'
             ),
         ));  
@@ -34,11 +34,12 @@ class UserForm extends Form
             'name' => 'va_contrasena',
             'type' => 'Password',
           
-            'options' => array(
-                'label' => 'Password:',          
-            ),
-            'attributes' => array(               
-                'class' => 'span12',
+//            'options' => array(
+//                'label' => 'Password:',          
+//            ),
+            'attributes' => array(
+                'id'=>'inputPassword',
+//                'class' => 'span12',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
         ));
@@ -63,8 +64,8 @@ class UserForm extends Form
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(
-                'value' => 'Guardar',
-                'class' => 'btn btn-info btn-large',
+                'value' => 'Ingresar',
+                'class' => 'btn btn-primary'//'btn btn-info btn-large',
 //                'id' => 'submitbutton',
             ),
         ));
