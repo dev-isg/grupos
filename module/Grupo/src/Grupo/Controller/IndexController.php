@@ -270,6 +270,11 @@ class IndexController extends AbstractActionController
         $this->redirect()->toUrl('/grupo');
       } 
     }
+    public function detallegrupoAction()
+    {
+    return new ViewModel;
+    }
+    
     
     public function dejarAction(){
         $iduser=1;
