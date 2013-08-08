@@ -50,9 +50,10 @@ class UsuarioTable
     public function getUsuarioxEmail($email)
     {
         $row = $this->tableGateway->select(array(
-            'va_nombre' => $email
+            'va_email' => $email
         ));
         $row = $row->current();
+
         if (! $row) {
             throw new \Exception("Could not find row $email");
         }

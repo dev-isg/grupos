@@ -134,14 +134,15 @@ class AuthController extends AbstractActionController
 //          $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');    
 //          $results = $dbAdapter->query('SELECT * FROM ta_usuario WHERE va_email="'.$mail.'"')->execute()->current();
          if($results){
-                   
+             $config = $this->getServiceLocator()->get('Config');
                   $bodyHtml='<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Su clave es: <strong style="color:#133088; font-weight: bold;">'.utf8_decode($results).'</strong><br />
+                                                     Su clave es: <a href="'.$config['host']['base'].'/recuperar?contrasena='.utf8_decode($results).'">
+                                                     <strong style="color:#133088; font-weight: bold;">'.utf8_decode($results).'</strong></a><br />
                                               
                                                      </div>
                                                </body>
@@ -168,6 +169,12 @@ class AuthController extends AbstractActionController
         }
         
         return array('form'=>$form,'mensaje'  => $this->flashmessenger()->getMessages());
+    }
+    
+    public function recuperarAction(){
+//         $password=$this->params()->fromQuery('contrasena');
+        return array();
+        
     }
     
 
