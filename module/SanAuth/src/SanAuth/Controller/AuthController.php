@@ -6,7 +6,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
 use SanAuth\Form\UserForm;
+use SanAuth\Form\PasswordForm;
+use Zend\Session\SessionManager;
 use Zend\Session\Container;
+use Zend\Mail\Message;
 
 //use SanAuth\Model\User;
 
@@ -15,6 +18,7 @@ class AuthController extends AbstractActionController
     protected $form;
     protected $storage;
     protected $authservice;
+    protected $usuarioTable;
     
     public function getAuthService()
     {
@@ -76,11 +80,11 @@ class AuthController extends AbstractActionController
             if (true){//$form->isValid()
 //                echo 'entro';exit;
                 //check authentication...
-//                var_dump($request->getPost('va_nombre'));
-//                var_dump($request->getPost('va_contrasena'));
+                $nombre=$request->getPost('va_nombre');
+                $contrasena=$request->getPost('va_contrasena');
                 $this->getAuthService()->getAdapter()
-                                       ->setIdentity($request->getPost('va_nombre'))
-                                       ->setCredential($request->getPost('va_contrasena'));
+                                       ->setIdentity($nombre)
+                                       ->setCredential($contrasena);
                                        
                 $result = $this->getAuthService()->authenticate();
                 foreach($result->getMessages() as $message)
@@ -91,17 +95,18 @@ class AuthController extends AbstractActionController
                 
                 if ($result->isValid()) {
                     $redirect = 'success';
+
                     //check if it has rememberMe :
-                    if ($request->getPost('rememberme') == 1 ) {
-                        $this->getSessionStorage()
-                             ->setRememberMe(1);
-                        //set storage again
-                  $user_session = new Container('user');
-                   $user_session->username = 'andy124';
-                        $this->getAuthService()->setStorage($this->getSessionStorage());
-                    }
-                    $this->getAuthService()->setStorage($this->getSessionStorage());
-                    $this->getAuthService()->getStorage()->write($request->getPost('va_nombre'));
+//                     if ($request->getPost('rememberme') == 1 ) {
+//                         $this->getSessionStorage()
+//                              ->setRememberMe(1);
+//                         //set storage again
+//                         $this->getAuthService()->setStorage($this->getSessionStorage());
+//                     }
+//                     $this->getAuthService()->setStorage(new \Zend\Authentication\Storage\Session('Auth'));
+                    $storage =  $this->getAuthService()->getStorage();
+                    $storage->write($this->getServiceLocator()->get('TableAuthService')->getResultRowObject(array('in_id','va_nombre', 'va_contrasena','va_email')));
+
                 }
             }
         }
@@ -121,6 +126,56 @@ class AuthController extends AbstractActionController
     }
     
     public function changeemailAction(){
-        return array();
+        $request=$this->getRequest();
+        $form=new PasswordForm();
+        if($request->isPost()){
+         $mail=$this->params()->fromPost('va_email');
+         $results=$this->getUsuarioTable()->generarPassword($mail);
+//          $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');    
+//          $results = $dbAdapter->query('SELECT * FROM ta_usuario WHERE va_email="'.$mail.'"')->execute()->current();
+         if($results){
+                   
+                  $bodyHtml='<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Su clave es: <strong style="color:#133088; font-weight: bold;">'.utf8_decode($results).'</strong><br />
+                                              
+                                                     </div>
+                                               </body>
+                                               </html>';
+    
+        $message = new Message();
+        $message->addTo($mail)
+        ->addFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
+        ->setSubject('Recuperación de contraseña');
+        //->setBody($bodyHtml);
+            $bodyPart = new \Zend\Mime\Message();
+            $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+            $bodyMessage->type = 'text/html';
+            $bodyPart->setParts(array($bodyMessage));
+            $message->setBody($bodyPart);
+            $message->setEncoding('UTF-8');
+            
+        $transport = $this->getServiceLocator()->get('mail.transport');//new SendmailTransport();//$this->getServiceLocator('mail.transport')
+        $transport->send($message);
+        $this->redirect()->toUrl('/grupo');
+         }else{
+             $this->flashmessenger()->addMessage('Este correo no esta registrado...');
+         }
+        }
+        
+        return array('form'=>$form,'mensaje'  => $this->flashmessenger()->getMessages());
+    }
+    
+
+    public function getUsuarioTable() {
+        if (!$this->usuarioTable) {
+            $sm = $this->getServiceLocator();
+            $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+        }
+        return $this->usuarioTable;
     }
 }
