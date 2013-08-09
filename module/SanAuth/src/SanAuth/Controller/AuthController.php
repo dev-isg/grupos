@@ -78,7 +78,7 @@ class AuthController extends AbstractActionController
             
             $form->setData($request->getPost());
             if (true){//$form->isValid()
-//                echo 'entro';exit;
+
                 //check authentication...
                 $nombre=$request->getPost('va_nombre');
                 $contrasena=$request->getPost('va_contrasena');
@@ -131,8 +131,6 @@ class AuthController extends AbstractActionController
         if($request->isPost()){
          $mail=$this->params()->fromPost('va_email');
          $results=$this->getUsuarioTable()->generarPassword($mail);
-//          $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');    
-//          $results = $dbAdapter->query('SELECT * FROM ta_usuario WHERE va_email="'.$mail.'"')->execute()->current();
          if($results){
              $config = $this->getServiceLocator()->get('Config');
                   $bodyHtml='<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
@@ -172,7 +170,8 @@ class AuthController extends AbstractActionController
     }
     
     public function recuperarAction(){
-//         $password=$this->params()->fromQuery('contrasena');
+        $password=$this->params()->fromQuery('contrasena');
+        
         return array();
         
     }

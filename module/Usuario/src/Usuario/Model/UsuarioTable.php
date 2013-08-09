@@ -63,9 +63,14 @@ class UsuarioTable
 
     public function generarPassword($correo)
     {
-        $mail = $this->getUsuarioxEmail($correo);
+            $mail = $this->getUsuarioxEmail($correo);
  
             $idgenerada = uniqid($mail->in_id.substr($mail->va_nombre,0,8).substr($mail->va_email,0,8),0);
+            $data = array(
+            'va_recupera_contrasena' => $idgenerada,
+                );
+        $this->tableGateway->update($data, array('in_id' => $mail->in_id));
+            
         if (!$idgenerada) {
             throw new \Exception("No se puede generar password $idgenerada");
         }
