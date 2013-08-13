@@ -140,7 +140,8 @@
                             </div>
                         </div>
                         <div class="row-fluid unio">
-                           <p class="span12">Se unio hace 3 dias</p>
+                           <p class="span12">Se unio el <?php  $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
                         </div>
                           <?php endforeach;  ?>
                       </div>
