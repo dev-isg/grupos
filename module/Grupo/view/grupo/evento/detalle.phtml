@@ -3,17 +3,17 @@
         <div class="row-fluid">
             <div class="span3 group-sidebar">
                 <div class="img-grupo">
-                    <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['va_imagen'], ENT_QUOTES, 'utf-8');  ?>">
+                    <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
                 </div>
-                <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_categoria']; ?>  </a></h2>
+                <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
                 <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']);
                                          echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
                 <p class="desc gh">
                   <?php echo $this->eventos[0]['descripcion']; ?> <br> <a href="#">Ver mas...</a>
                 </p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm">4521</span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm">21</span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm">201</span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span></a></p>
             </div>
             <div class="span6">
                 <div class="event-group">
@@ -129,21 +129,23 @@
                   <ul>
                     <li>
                       <div class="users">
+                         <?php  foreach ($this->usuarios  as $usuarios) :?>
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
-                               <img src="../../img/perf.jpg" alt="">
+                               <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">
                             </div>
                             <div class="span8 desc-user">
-                                <h3><a href="#">Juan almenara</a></h3>
+                                <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>
                                <p>Esto es una descripcion corta del usuario que pertenece a este grupo...</p>
                             </div>
                         </div>
                         <div class="row-fluid unio">
                            <p class="span12">Se unio hace 3 dias</p>
                         </div>
+                          <?php endforeach;  ?>
                       </div>
                     </li>
-                    <li>
+<!--                    <li>
                        <div class="users">
                             <div class="row-fluid">
                                 <div class="span4 img-user-ev">
@@ -238,7 +240,7 @@
                                <p class="span12">Se unio hace 3 dias</p>
                             </div>
                        </div>
-                    </li>
+                    </li>-->
                   </ul>
                </div>
             </div>
