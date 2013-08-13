@@ -1431,6 +1431,63 @@ p.pp{
   color: #333;
   padding-bottom: 5px;
 }
+.event-comentario{
+  border-top: 1px solid #cbcbcb;
+}
+.login-comentario {
+  background: #eee;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+.login-comentario p{
+  margin-bottom: 0;
+}
+.login-comentario p a{
+  color: #3E94D2;
+}
+.cometarios-detalle{
+  overflow: hidden;
+}
+.cometarios-detalle ul{
+  list-style: none;
+  margin-left: 0;
+}
+.cometarios-detalle ul li{
+  overflow: hidden;
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.ti-coment h4{
+  margin: 0;
+}
+.ti-coment h4 a{
+  color: #3E94D2;
+  font-size: 12px;
+}
+.ti-coment p{
+  line-height: 16px;
+  font-size: 12px;
+}
+.ti-coment p.small{
+  margin-bottom: 0;
+}
+.fn-form p{
+  text-align: right;
+  margin-bottom: 0;
+}
+.fn-form p input{
+  width: 80px;
+  color: white!important;
+  margin: 0;
+  margin-right: 5px;
+}
+.fn-form textarea{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
 /* ==========================================================================
    Estilo de icono styles
    ========================================================================== */

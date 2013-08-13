@@ -202,19 +202,30 @@ class EventoController extends AbstractActionController
         }
         return $this->usuarioTable;
     } 
+    public function 
+            getGrupoTable() {
+        if (!$this->grupoTable) {
+            $sm = $this->getServiceLocator();
+            $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+        }
+        return $this->grupoTable;
+    }
     public function detalleAction(){
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-      $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:-12.254819706378063,lng:-76.90810561180115,address:"Museo de Sitio Pachacámac",addressRef:"Puerta del museo"}});});')
-                            ->prependFile($this->_options->host->base .'/js/main.js')
+      $id= $this->params()->fromQuery('id');
+      $evento=$this->getEventoTable()->Evento($id);
+      $id_grupo=$evento[0]['id_grupo'];
+      $grupo=$this->getEventoTable()->grupoid($id_grupo);
+      $eventospasados=$this->getEventoTable()->eventospasados($id_grupo);
+      $eventosfuturos=$this->getEventoTable()->eventosfuturos($id_grupo);
+      $usuarios=$this->getEventoTable()->usuariosevento($id);
+      $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:'.$evento[0]['va_latitud'].',lng:'.$evento[0]['va_longitud'].',address:"'.$evento[0]['va_direccion'].'",addressRef:"'.$evento[0]['va_referencia'].'"}});});')
                             ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
                             ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
                             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
                             ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
-      
-    $id= $this->params()->fromQuery('id');
-    $evento=$this->getEventoTable()->Evento($id);
-  return array('eventos'=>$evento);
-    }
+      return array('eventos'=>$evento,'grupo'=>$grupo,'eventosfuturos'=>$eventosfuturos,'eventospasados'=>$eventospasados,'usuarios'=>$usuarios);
+      }
      
      
     public function fooAction()
