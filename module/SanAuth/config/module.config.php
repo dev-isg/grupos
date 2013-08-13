@@ -81,7 +81,7 @@ return array(
                     )
                 )
             ),
-            'recupera-contrasena' => array(
+            'cambio-contrasena' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/cambio-contrasena',

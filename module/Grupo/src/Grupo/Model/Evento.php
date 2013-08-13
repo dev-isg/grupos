@@ -55,18 +55,16 @@ class Evento implements InputFilterAwareInterface
             $this->va_min= (!empty($data['va_min'])) ? $data['va_min'] : null;
             $this->va_duracion=(!empty($data['va_duracion'])) ? $data['va_duracion'] : null;
             
-            $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
+            $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : null;//1
 //            $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
-            $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : 2;
+            $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : 2;//
 
 //            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
 //            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
 //            $this->provincia = (!empty($data['provincia'])) ? $data['provincia'] : null;
 //            $this->distrito = (!empty($data['distrito'])) ? $data['distrito'] : null;
-            
-
-
+           
          }
     
     public function setInputFilter(InputFilterInterface $inputFilter)

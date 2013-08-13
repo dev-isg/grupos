@@ -26,6 +26,10 @@ class UsuarioTable
 
         ;
         
+        ;
+        
+        ;
+        
         $selecttot->user('ta_usuario.in_id')->order('ta_usuario.in_id desc');
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
@@ -47,14 +51,13 @@ class UsuarioTable
         return $row;
     }
 
-
     public function getUsuarioxEmail($email)
     {
         $row = $this->tableGateway->select(array(
             'va_email' => $email
         ));
         $row = $row->current();
-
+        
         if (! $row) {
             throw new \Exception("Could not find row $email");
         }
@@ -63,18 +66,56 @@ class UsuarioTable
 
     public function generarPassword($correo)
     {
-            $mail = $this->getUsuarioxEmail($correo);
- 
-            $idgenerada = uniqid($mail->in_id.substr($mail->va_nombre,0,8).substr($mail->va_email,0,8),0);
-            $data = array(
+        $mail = $this->getUsuarioxEmail($correo);
+        $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 3, date("Y"));
+        $expDate = date("Y-m-d H:i:s", $expFormat);
+        $idgenerada = uniqid($mail->in_id . substr($mail->va_nombre, 0, 8) . substr($mail->va_email, 0, 8), 0);
+        $data = array(
             'va_recupera_contrasena' => $idgenerada,
-                );
-        $this->tableGateway->update($data, array('in_id' => $mail->in_id));
-            
-        if (!$idgenerada) {
+            'va_fecha_exp'=>$expDate
+        );
+        $this->tableGateway->update($data, array(
+            'in_id' => $mail->in_id
+        ));
+        
+        if (! $idgenerada) {
             throw new \Exception("No se puede generar password $idgenerada");
         }
         return $idgenerada;
+    }
+
+    public function cambiarPassword($password, $iduser)
+    {
+        $data = array(
+            'va_contrasena' => $password
+        );
+        $this->tableGateway->update($data, array(
+            'in_id' => $iduser
+        ));
+        $this->eliminaPass($iduser);
+    }
+
+    public function consultarPassword($password)
+    {
+        $curDate = date("Y-m-d H:i:s");
+        $row = $this->tableGateway->select(array(
+            'va_recupera_contrasena' => $password,
+//             'va_fecha_exp'=>$curDate
+        ));
+        $row = $row->current();
+        
+        if (! $row) {
+            throw new \Exception("Could not find row $password");
+        }
+        return $row;
+    }
+
+    public function eliminaPass($iduser)
+    {
+        $data = array(
+            'va_recupera_contrasena' => null
+        );
+        $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
     public function guardarUsuario(Usuario $usuario)
