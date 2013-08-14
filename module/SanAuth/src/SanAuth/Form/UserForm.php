@@ -2,12 +2,8 @@
 namespace SanAuth\Form;
 
 use Zend\Form\Form;
-use Zend\Db\Sql\Sql;
-use Zend\Db\Adapter\AdapterInterface;
-
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
-
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilter;
 
 class UserForm extends Form
 {
@@ -20,12 +16,7 @@ class UserForm extends Form
          $this->add(array(
             'name' => 'va_nombre',
             'type' => 'Text',
-          
-//            'options' => array(
-//                'label' => 'Nombre de usario:',          
-//            ),
             'attributes' => array(               
-//                'class' => 'span12',
                 'placeholder'=>'Ingrese el nombre de usario…'
             ),
         ));  
@@ -33,13 +24,8 @@ class UserForm extends Form
          $this->add(array(
             'name' => 'va_contrasena',
             'type' => 'Password',
-          
-//            'options' => array(
-//                'label' => 'Password:',          
-//            ),
             'attributes' => array(
                 'id'=>'inputPassword',
-//                'class' => 'span12',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
         ));
@@ -65,10 +51,33 @@ class UserForm extends Form
             'type' => 'Submit',
             'attributes' => array(
                 'value' => 'Ingresar',
-                'class' => 'btn btn-primary'//'btn btn-info btn-large',
-//                'id' => 'submitbutton',
+                'class' => 'btn btn-primary'
             ),
         ));
+        
+        $this->setInputFilter($this->validadores());
+    }
+    
+    public function validadores(){
+        $inputFilter = new InputFilter();
+        
+        $inputFilter->add(array(
+            'name' => 'va_nombre',
+            'required' => true,
+        ));
+        
+        $inputFilter->add(array(
+            'name' => 'va_contrasena',
+            'required' => true,
+        ));
+        
+        $inputFilter->add(array(
+            'name' => 'Remenber',
+            'required' => false,
+        ));
+        
+        return $inputFilter;
+        
     }
 }
 
