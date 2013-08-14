@@ -302,9 +302,7 @@ class IndexController extends AbstractActionController
 
     public function detallegrupoAction()
     {
-<<<<<<< HEAD
-        return new ViewModel();
-=======
+
         
         $id= $this->params()->fromQuery('id');
         $grupo=$this->getEventoTable()->grupoid($id);
@@ -320,7 +318,6 @@ class IndexController extends AbstractActionController
                   'usuarios'=> $usuarios,
                   'proximos_eventos' =>$proximos_eventos,
          );
->>>>>>> 3dbca8335d703d33794f773764b0462d8fef7428
     }
 
     public function dejarAction()

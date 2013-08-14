@@ -231,36 +231,7 @@ class EventoController extends AbstractActionController
         }
         return $this->grupoTable;
     }
-<<<<<<< HEAD
 
-    public function detalleAction()
-    {
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $id = $this->params()->fromQuery('id');
-        $evento = $this->getEventoTable()->Evento($id);
-        $id_grupo = $evento[0]['id_grupo'];
-        $grupo = $this->getEventoTable()->grupoid($id_grupo);
-        $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
-        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-        $usuarios = $this->getEventoTable()->usuariosevento($id);
-        $comentarios = $this->getEventoTable()->comentariosevento($id);
-        $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});')
-            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
-            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
-        return array(
-            'eventos' => $evento,
-            'grupo' => $grupo,
-            'eventosfuturos' => $eventosfuturos,
-            'eventospasados' => $eventospasados,
-            'usuarios' => $usuarios,
-            'comentarios' => $comentarios
-        );
-    }
-
-=======
     public function detalleeventoAction(){
       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
       $id= $this->params()->fromQuery('id');
@@ -285,7 +256,6 @@ class EventoController extends AbstractActionController
       }
      
      
->>>>>>> 3dbca8335d703d33794f773764b0462d8fef7428
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route
