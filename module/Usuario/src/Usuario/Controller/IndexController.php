@@ -44,9 +44,11 @@ class IndexController extends AbstractActionController
     {
         $id = $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
-        
+        $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
+      //  var_dump($usuariosgrupos);exit;
         return array(
-            'grupo' => $valor
+            'grupo' => $valor,
+                'grupospertenece'  =>$usuariosgrupos
         );
     }
 
@@ -239,7 +241,7 @@ class IndexController extends AbstractActionController
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos">Mis Grupos</a></li>
