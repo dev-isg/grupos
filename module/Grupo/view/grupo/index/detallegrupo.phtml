@@ -3,16 +3,17 @@
 		<div class="row-fluid">
 		  	<div class="span3 group-sidebar">
                 <div class="img-grupo">
-                    <img src="http://192.168.1.48:8081/imagenes/grupos/general/pruerer-51fc30826b5a2.jpg">
+                    <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->grupo[0]['va_imagen'], ENT_QUOTES, 'utf-8');  ?>">
                 </div>
-                <h2 class="gh"><a href="#">Deportes  </a></h2>
-                <p class="fund gh"><em>Fundado el 20-marzo-2013</em></p>
+                <h2 class="gh"><a href="#"><?php echo $this->grupo[0]['va_nombre']; ?></a></h2>
+                <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->grupo[0]['va_fecha']);
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
                 <p class="desc gh">
-                  Juntar figurita de Pikachu&nbsp; <br> <a href="#">Ver mas...</a>
+                 <?php echo $this->grupo[0]['va_descripcion']; ?> Juntar figurita de Pikachu&nbsp; <br> <a href="#">Ver mas...</a>
                 </p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm">4521</span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm">21</span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm">201</span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
+                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span></a></p>
 		  	</div>
 		  <div class="span6 group-sidebar list-event">
 		    <h4>Eventos recientes</h4>
