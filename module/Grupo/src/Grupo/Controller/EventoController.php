@@ -211,12 +211,13 @@ class EventoController extends AbstractActionController
       $eventospasados=$this->getEventoTable()->eventospasados($id_grupo);
       $eventosfuturos=$this->getEventoTable()->eventosfuturos($id_grupo);
       $usuarios=$this->getEventoTable()->usuariosevento($id);
+      $comentarios=$this->getEventoTable()->comentariosevento($id);
       $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:'.$evento[0]['va_latitud'].',lng:'.$evento[0]['va_longitud'].',address:"'.$evento[0]['va_direccion'].'",addressRef:"'.$evento[0]['va_referencia'].'"}});});')
                             ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
                             ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
                             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
                             ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
-      return array('eventos'=>$evento,'grupo'=>$grupo,'eventosfuturos'=>$eventosfuturos,'eventospasados'=>$eventospasados,'usuarios'=>$usuarios);
+      return array('eventos'=>$evento,'grupo'=>$grupo,'eventosfuturos'=>$eventosfuturos,'eventospasados'=>$eventospasados,'usuarios'=>$usuarios,'comentarios'=>$comentarios);
       }
      
      

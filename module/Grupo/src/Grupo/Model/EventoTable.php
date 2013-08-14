@@ -321,16 +321,27 @@ class EventoTable{
             $sql = new Sql($adapter);
             $select = $sql->select();
                  $select->from('ta_usuario_has_ta_evento')
-              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto'),'left')
-           ->join('ta_comentario','ta_comentario.ta_usuario_in_id=ta_usuario.in_id',array('descripcion'=>'va_descripcion'),'left')
-                            
-                         
+              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
+          // ->join('ta_comentario','ta_comentario.ta_usuario_in_id=ta_usuario.in_id',array('descripcion'=>'va_descripcion','fecha_cometario'=>'va_fecha'),'left')           
              ->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
     
+    
+      public function comentariosevento($id)
+    {  
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+                 $select->from('ta_comentario')
+              ->join('ta_usuario','ta_usuario.in_id=ta_comentario.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
+            ->where(array('ta_comentario.ta_evento_in_id' => $id));
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
 }
 
     
