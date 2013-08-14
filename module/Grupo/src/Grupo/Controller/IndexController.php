@@ -286,11 +286,13 @@ class IndexController extends AbstractActionController
         $grupo=$this->getEventoTable()->grupoid($id);
         $eventospasados=$this->getEventoTable()->eventospasados($id);
         $eventosfuturos=$this->getEventoTable()->eventosfuturos($id);
+        $usuarios=$this->getGrupoTable()->usuariosgrupo($id);
       
        return array(
                      'grupo'=>$grupo,
             'eventosfuturos'=>$eventosfuturos,
             'eventospasados'=>$eventospasados,
+                  'usuarios'=> $usuarios,
          );
     }
     
