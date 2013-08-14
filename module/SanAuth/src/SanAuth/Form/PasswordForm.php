@@ -2,11 +2,9 @@
 namespace SanAuth\Form;
 
 use Zend\Form\Form;
-use Zend\Db\Sql\Sql;
-use Zend\Db\Adapter\AdapterInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilter;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 
 
 class PasswordForm extends Form
@@ -15,16 +13,11 @@ class PasswordForm extends Form
     {
         parent::__construct('cambio');
         $this->setAttribute('method', 'post');
-        $this->setAttribute('endtype', 'multipart/form-data');
-   
+        
          $this->add(array(
             'name' => 'va_email',
             'type' => 'Text',
-//            'options' => array(
-//                'label' => 'Nombre de usario:',          
-//            ),
             'attributes' => array(               
-//                'class' => 'span12',
                 'placeholder'=>'yourmail@email.com'
             ),
         ));  
@@ -38,6 +31,24 @@ class PasswordForm extends Form
                 'class' => 'btn btn-primary'
             ),
         ));
+        
+       $this->setInputFilter($this->validadores());
+    }
+    public function validadores(){
+        
+        $inputFilter = new InputFilter();
+        
+        $inputFilter->add(array(
+            'name' => 'va_email',
+            'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'EmailAddress'
+                )
+            ),
+        ));
+        
+        return $inputFilter;
     }
 }
 

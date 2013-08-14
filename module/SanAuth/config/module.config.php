@@ -81,6 +81,17 @@ return array(
                     )
                 )
             ),
+            'cambio-contrasena' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cambio-contrasena',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'recuperar'
+                    )
+                )
+            ),
 
             'success' => array(
                 'type'    => 'Literal',

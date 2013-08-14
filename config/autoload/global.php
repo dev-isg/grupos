@@ -25,11 +25,13 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
    'host' => array(
+
         'base' => 'http://192.168.1.41:8080',
         'static' => 'http://192.168.1.41:8080',
         'images' => 'http://192.168.1.41:8080/imagenes',
         'img'=>'http://192.168.1.41:8080/img',
         'ruta' => 'http://192.168.1.41:8080',
+
         'version'=>1,
     ),
     
@@ -46,9 +48,9 @@ return array(
             ),
         ),
     ),
-    'translator' => array(
-         'locale' => 'es_ES'
-     ),
+//     'translator' => array(
+//          'locale' => 'es_ES'
+//      ),
      'service_manager' => array(
             'factories' => array(
                 'Zend\Db\Adapter\Adapter'

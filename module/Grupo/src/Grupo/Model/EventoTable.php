@@ -261,15 +261,76 @@ class EventoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_evento')
-          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
+          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id','descripcion'=>'va_descripcion','fecha_creacion'=>'va_fecha','imagen'=>'va_imagen','nombre_grupo'=>'va_nombre','id_grupo'=>'in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
           ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
-           
+          ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('cantidad' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_evento_in_id)')), 'left')         
           ->where(array('ta_evento.in_id'=>$id));
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);           
             return $resultSet->toArray();
     }
+    
+    
+    
+    public function grupoid($id)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_grupo')
+          ->join('ta_usuario_has_ta_grupo','ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id', array('cantidad' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_grupo.ta_grupo_in_id)')), 'left')         
+          ->where(array('ta_grupo.in_id'=>$id));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);           
+            return $resultSet->toArray();
+    }
+    
+    public function eventosfuturos($id)
+    { 
+      $fecha = date("Y-m-d h:m:s");  
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+                 $select->from('ta_evento')
+          ->columns(array('eventosfuturos' => new \Zend\Db\Sql\Expression('COUNT(in_id)')))
+                 ->where(array('ta_grupo_in_id' => $id,'va_fecha>=?'=>$fecha));
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
+    public function eventospasados($id)
+    { 
+      $fecha = date("Y-m-d h:m:s");  
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+                 $select->from('ta_evento')
+          ->columns(array('eventospasados' => new \Zend\Db\Sql\Expression('COUNT(in_id)')))
+                 ->where(array('ta_grupo_in_id' => $id,'va_fecha<?'=>$fecha));
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
+    
+    
+    
+     public function usuariosevento($id)
+    {  
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+                 $select->from('ta_usuario_has_ta_evento')
+              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto'),'left')
+           ->join('ta_comentario','ta_comentario.ta_usuario_in_id=ta_usuario.in_id',array('descripcion'=>'va_descripcion'),'left')
+                            
+                         
+             ->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id));
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
 }
 
-
+    

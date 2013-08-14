@@ -9,13 +9,15 @@
             'action' => $this->url.'/grupo/evento/agregarevento',
             'method' => 'post',
             'class'=>'span12 form-crear-grupo',
-            'id'=>'crearEventosadasd'
+            'id'=>'crearEventos'
         ));
 
         $form->prepare();
         echo $this->form()->openTag($form);
         ?>
     <?php echo $this->formHidden($form->get('in_id'));?>
+    <?php echo $this->formHidden($form->get('ta_usuario_in_id'));?>
+
         <div class="row-fluid">
             <div class="span12 crear-evento event">
                 <h1>Crear un nuevo evento</h1>

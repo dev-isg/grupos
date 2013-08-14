@@ -11,24 +11,22 @@
                             $form->setAttributes(array(
                                 'action' => $this->url.'/cambio', 
                                 'method' => 'post',
-//                                'class'=>'span12 form-crear-grupo',
-//                                'id'=>'crear-group'
+                                'id' => 'recuperacion'
                             ));
 
                             $form->prepare();
                             echo $this->form()->openTag($form);
                     ?>
-	            <!--<form action="" id="recuperacion">-->
 	                <p>
 	                <label for="">Correo Electrónico</label>
                          <?php echo $this->formRow($form->get('va_email'));?>
-	                <!--<input type="email" id="va_email" name="va_email" placeholder="yourmail@email.com">-->
 	                </p> 
-                          <?php echo $this->formSubmit($form->get('submit'));?>
-	                <!--<input type="submit" value="Enviar">-->                       
+                          <?php echo $this->formSubmit($form->get('submit'));?>                 
 	            </form>
-	        </div>
-                    <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
+	        </div>      
 		</div>
 	</div>
+	<?php if($this->mensaje[0]){?>
+	 <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
+	 <?php }?>
 </div> <!-- #main-container -->
