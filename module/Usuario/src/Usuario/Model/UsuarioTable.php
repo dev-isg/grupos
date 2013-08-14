@@ -118,7 +118,7 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario)
+    public function guardarUsuario(Usuario $usuario, $imagen)
     {
         // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
@@ -126,21 +126,23 @@ class UsuarioTable
             'va_email' => $usuario->va_email,
             'va_contrasena' => sha1($usuario->va_contrasena),
             'va_dni' => $usuario->va_dni,
-            'va_foto' => $usuario->va_foto['name'],
+//            'va_foto' => $usuario->va_foto['name'],
+            'va_foto' => $imagen,
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion
         // 'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
                 );
-        // var_dump($data);
-        // exit;
+//         print_r($imagen);
+//            exit;
+//         var_dump($data);
+//         exit;
         $id = (int) $usuario->in_id;
         
-        // foreach($data as $key=>$value){
-        // if(empty($value)){
-        // $data[$key]=0;
-        // }
-        // }
-        //
+        foreach($data as $key=>$value){
+           if(empty($value)){
+               $data[$key]=0;
+           }
+       }
         // var_dump($data);
         // exit();
         
