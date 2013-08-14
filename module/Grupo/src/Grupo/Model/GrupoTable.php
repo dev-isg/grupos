@@ -281,5 +281,18 @@ class GrupoTable{
         return $resultSet;
     }
      
+    
+      public function eventosgrupo($id)
+    {  
+         $fecha = date("Y-m-d h:m:s"); 
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+                 $select->from('ta_evento')
+           ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
      
 }
