@@ -20,7 +20,7 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
-use Usuario\Controller\IndexController;
+// use Usuario\Controller\IndexController;
 
 class EventoController extends AbstractActionController
 {
@@ -39,7 +39,11 @@ class EventoController extends AbstractActionController
     }
     
     public function agregareventoAction(){
-           
+        $storage=new \Zend\Authentication\Storage\Session('Auth');
+        if(!$storage){
+            return $this->redirect()->toRoute('grupo');
+        }
+//                print_r($storage->read()->in_id);exit;
 
         //AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -59,6 +63,9 @@ class EventoController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
         $form->get('submit')->setValue('Crear Evento');
+//         var_dump($storage->read());
+        $form->get('ta_usuario_in_id')->setValue($storage->read()->in_id);
+//         $form->get('ta_grupo_in_id')->setValue($storage->read()->in_id);
         $request = $this->getRequest();
         
         if ($request->isPost()) {
@@ -68,12 +75,13 @@ class EventoController extends AbstractActionController
                         $this->getRequest()->getPost()->toArray(),          
                         $this->getRequest()->getFiles()->toArray()
                         ); 
+//         
             $evento = new Evento();
             $form->setInputFilter($evento->getInputFilter());
             $form->setData($data);//$request->getPost()
             
             if ($form->isValid()) {
-               
+//                 var_dump($data);Exit;
                 $evento->exchangeArray($form->getData());
                  if($this->redimensionarImagen($File,$nonFile)){
                 $this->getEventoTable()->guardarEvento($evento);

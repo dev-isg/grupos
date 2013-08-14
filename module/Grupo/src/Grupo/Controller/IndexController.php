@@ -123,7 +123,7 @@ class IndexController extends AbstractActionController
 
 
 //      $local = (int) $this->params()->fromQuery('id');
-        $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
+        $user_info = $this->getGrupoTable()->usuarioxGrupo($storage->read()->in_id);
 //        var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
