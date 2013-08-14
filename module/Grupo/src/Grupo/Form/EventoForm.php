@@ -166,6 +166,7 @@ class EventoForm extends Form
                 'size'=>16,
                 'readonly' => 'true',
                 'class' => 'span10',
+                'id'=>'fechaId'
             ),
         ));
           

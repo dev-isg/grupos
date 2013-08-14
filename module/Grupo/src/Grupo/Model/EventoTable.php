@@ -78,7 +78,7 @@ class EventoTable{
         return $row;
     }
     
-  public function guardarEvento(Evento $evento){
+  public function guardarEvento(Evento $evento,$idgrupo=null){
       
 //      $pais=$grupo->pais;
 //      $departamento=$grupo->departamento;
@@ -130,7 +130,7 @@ class EventoTable{
           
       }else {
           
-            if ($this->getGrupo($id)) {
+            if ($this->getEvento($id)) {
                 $this->tableGateway->update($data, array('in_id' => $id));
                 
             } else {

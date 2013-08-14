@@ -99,7 +99,7 @@ function crearevento(){
             }
         });
 
-        $("#crearEventoG").validate({
+        $("#crearEventos").validate({
             rules: {
                 va_nombre: "required",
                 va_direccion: "required",

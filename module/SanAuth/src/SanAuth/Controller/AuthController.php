@@ -77,7 +77,7 @@ class AuthController extends AbstractActionController
         if ($request->isPost()) {
             
             $form->setData($request->getPost());
-            if (true) { // $form->isValid()
+            if ( $form->isValid()) { //
                        
                 // check authentication...
                 $nombre = $request->getPost('va_nombre');
@@ -114,6 +114,7 @@ class AuthController extends AbstractActionController
                         'va_email'
                     )));
                 }
+                
             }
         }
         
