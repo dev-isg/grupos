@@ -289,10 +289,14 @@ class GrupoTable{
             $sql = new Sql($adapter);
             $select = $sql->select();
                  $select->from('ta_evento')
-           ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
+      //    ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_evento_in_id)')),'left')                
+          ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+    
+
      
 }
+

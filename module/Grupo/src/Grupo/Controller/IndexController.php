@@ -288,6 +288,7 @@ class IndexController extends AbstractActionController
         $eventosfuturos=$this->getEventoTable()->eventosfuturos($id);
         $usuarios=$this->getGrupoTable()->usuariosgrupo($id);
         $proximos_eventos=$this->getGrupoTable()->eventosgrupo($id);
+      //  $miembros=$this->getGrupoTable()->miembros($id);
         //var_dump($eventos);exit;
        return array(
                      'grupo'=>$grupo,
