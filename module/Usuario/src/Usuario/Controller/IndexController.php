@@ -250,7 +250,7 @@ class IndexController extends AbstractActionController
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos?id='.$id.'  ">Mis Grupos</a></li>
-            <li><i class="icon-cuenta"></i> <a href=" ' . $this->url . ' " class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-cuenta"></i> <a href=" ' . $ruta . '/usuario/index/editarusuario/'.$id.' "  class="activomenu">Mi cuenta</a></li>
 
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
