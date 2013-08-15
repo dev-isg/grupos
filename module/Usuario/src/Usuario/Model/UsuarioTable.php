@@ -198,7 +198,7 @@ class UsuarioTable
           ->from('ta_grupo')
           ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria_similar' =>'va_nombre'), 'left')
        //  ->join('ta_usuario_has_ta_grupo','ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id')                 
-           ->where(array('ta_grupo.ta_categoria_in_id'=>$idcategoria));
+           ->where(array('ta_grupo.ta_categoria_in_id'=>$idcategoria,'ta_grupo.in_id<>?'=>$id));
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
             return $resultSet;

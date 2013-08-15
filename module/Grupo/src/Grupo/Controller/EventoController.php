@@ -189,15 +189,20 @@ class EventoController extends AbstractActionController
     public function uploadAction()
     {}
 
+    
+    
+
     public function miseventosAction()
     {
         $id = $this->params()->fromQuery('id');
-
+        $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = IndexController::headerAction($id);
         
-        return array(
-            'grupo' => $valor
-        );
+        return array
+      (
+            'grupo' => $valor,
+        'miseventos'=> $miseventos,
+       );
     }
 
     public function misgruposAction()

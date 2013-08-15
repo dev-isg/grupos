@@ -47,7 +47,7 @@ class IndexController extends AbstractActionController
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         $categorias = $this->getUsuarioTable()->categoriasunicas($id)->toArray();
         for($i=0;$i<count($categorias);$i++)
-        {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$id=null);}
+        {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$categorias[$i]['id']);}
         return array(
             'grupo' => $valor,
  'grupospertenece'  =>$usuariosgrupos,
@@ -246,7 +246,7 @@ class IndexController extends AbstractActionController
           <ul>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href=" ' . $this->url . ' " class="activomenu">Mi cuenta</a></li>
 

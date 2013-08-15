@@ -359,6 +359,22 @@ class EventoTable{
             return $resultSet;
     }
     
+    public function miseventos($id)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+          ->from('ta_evento')      
+          //->join('ta_evento','ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
+          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
+          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
+         ->where(array('ta_evento.ta_usuario_in_id'=>$id));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+         //   var_dump($selectString);exit;
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+            return $resultSet;
+    }
+    
 }
 
     
