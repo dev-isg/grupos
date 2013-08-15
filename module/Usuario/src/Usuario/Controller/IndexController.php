@@ -15,6 +15,7 @@ use Zend\Json\Json;
 use Usuario\Model\Usuario;
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
+use Usuario\Form\NotificacionForm;
 use Zend\Form\Element;
 use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
@@ -122,6 +123,8 @@ class IndexController extends AbstractActionController
 
     public function editarusuarioAction()
     {
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+ 
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
             ->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
@@ -148,8 +151,20 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
-        
         $form->get('submit')->setAttribute('value', 'Editar');
+        
+        //formulario para la notificacion
+        $formNotif=new NotificacionForm();
+        $formNotif->get('submit')->setAttribute('value', 'Editar');
+        //populate elementos del check
+        $not=$this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
+//         var_dump($not);Exit;
+        $aux = array();
+        foreach($not as $y){
+                $aux[]=$y['ta_notificacion_in_id'];
+           }
+        $formNotif->get('tipo_notificacion')->setValue($aux);
+        
         
         $request = $this->getRequest();
         
@@ -187,8 +202,22 @@ class IndexController extends AbstractActionController
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
-            'valor' => $valor
+            'valor' => $valor,
+            'formnotif'=>$formNotif
         );
+    }
+    
+    public function notificarAction(){
+           
+        $request=$this->getRequest();
+        if($request->isPost()){
+            $form->setData($this->getRequest()->getPost());
+            if($form->isValid()){
+                
+            }
+        }
+        
+        return array();
     }
 
     public function headerAction($id)
@@ -229,6 +258,15 @@ class IndexController extends AbstractActionController
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
         }
         return $this->usuarioTable;
+    }
+    
+    public function getGrupoTable()
+    {
+        if (! $this->grupoTable) {
+            $sm = $this->getServiceLocator();
+            $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+        }
+        return $this->grupoTable;
     }
 
     private function redimensionarFoto($File, $nonFile)

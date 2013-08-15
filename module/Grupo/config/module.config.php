@@ -8,11 +8,11 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'grupo' => array(
+            'grupos' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/grupo',
+                    'route'    => '/grupo',//
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
@@ -43,6 +43,17 @@ return array(
                     ),
                 ),
             ),
+            'grupo' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/grupo[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Index',
+                        'action' => 'detallegrupo'
+                    )
+                ),
+               ),
+               
         ),
     ),
     'view_manager' => array(

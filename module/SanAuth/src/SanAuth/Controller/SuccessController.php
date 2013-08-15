@@ -18,7 +18,7 @@ class SuccessController extends AbstractActionController
 //        var_dump($this->getAuthService()->getIdentity());exit;
         $storage = $this->getAuthService()->getStorage();
         $data = $storage->read();
-        var_dump($data);exit;
+//         var_dump($data);exit;
 
         return new ViewModel();
     }

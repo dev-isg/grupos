@@ -1,11 +1,11 @@
 <?php
 namespace Grupo\Model;
+
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
 use Platos\Model\Platos;
-
 class GrupoTable{
     protected $tableGateway;
     
@@ -151,13 +151,12 @@ class GrupoTable{
           
             if ($this->getGrupo($id)) {
                 $this->tableGateway->update($data, array('in_id' => $id));
-                    if($notificacion!=null){
-//                        print_r($notificacion);exit();
-                           $delete=$this->tableGateway->getSql()->delete()->from('ta_grupo_has_ta_notificacion')
-                                   ->where(array('ta_grupo_in_id'=>$id));
-                           $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
-                           $adapter1=$this->tableGateway->getAdapter();
-                           $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
+//                     if($notificacion!=null){
+//                            $delete=$this->tableGateway->getSql()->delete()->from('ta_grupo_has_ta_notificacion')
+//                                    ->where(array('ta_grupo_in_id'=>$id));
+//                            $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
+//                            $adapter1=$this->tableGateway->getAdapter();
+//                            $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
 //                        foreach($notificacion as $key=>$value){
 ////                            $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
 ////                                    ->set(array('ta_notificacion_in_id'=>$value))
@@ -169,7 +168,7 @@ class GrupoTable{
 //                           $adapter2=$this->tableGateway->getAdapter();
 //                           $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
 //                        }
-                    }
+//                     }
                 
             } else {
                 throw new \Exception('no existe el usuario');
@@ -197,7 +196,37 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 
         return $resultSet;
-         
+     }
+     
+     public function getNotifiacionesxUsuario($iduser){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+         $selecttot = $sql->select()
+         ->from('ta_notificacion_has_ta_usuario')
+         ->join('ta_usuario','ta_usuario.in_id=ta_notificacion_has_ta_usuario.ta_usuario_in_id',array(),'left')
+         ->where(array('ta_usuario.in_id'=>$iduser));
+         //->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
+//          ->where(array('ta_grupo.ta_usuario_in_id'=>$iduser));
+         $selectString = $sql->getSqlStringForSqlObject($selecttot);
+//          var_dump($selectString);Exit;
+         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+     
+         return $resultSet;
+     }
+     
+     public function updateNotificacion($notificacion,$id){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+                foreach($notificacion as $key=>$value){
+                   $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
+                      ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
+                      ->set(array('ta_grupo_has_ta_notificacion.ta_notificacion_in_id'=>$value))
+                      ->where(array('ta_grupo.ta_usuario_in_id'=>$id));
+                   $selectString = $sql->getSqlStringForSqlObject($update);
+                   $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//                    var_dump($selectString);Exit;
+                }
+                
      }
      
      public function unirseGrupo($idgrup,$iduser){
