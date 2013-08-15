@@ -90,13 +90,13 @@
                             <img src="http://static.wix.com/media/63ce3d_af2d42b6f3828b3d53767f1093c42cc3.png_srz_949_506_75_22_0.50_1.20_0.00_png_srz" style="max-width:100%;margin:5px">
                         </p>
                         <p>Pictures of the circuit:</p>
-                        <p>
+<!--                        <p>
                             <img src="http://static.wix.com/media/63ce3d_b83d2d3eb3b28bc72f204c569de69943.jpg_srz_460_287_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
                             <img src="http://static.wix.com/media/63ce3d_f75aa780a3182c65014c8c3cadd99a61.jpg_srz_695_525_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
                             <img src="http://static.wix.com/media/63ce3d_b39f7e64a8d0cdeddcc41ed9271075f5.jpg_srz_635_490_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
                             <img src="http://static.wix.com/media/63ce3d_0e11fc78c2f0df36af448cb3914c2600.jpg_srz_335_525_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
                             <img src="http://static.wix.com/media/63ce3d_f806e135f715622d60865cedc00f9bc0.jpg_srz_480_375_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px">
-                        </p>
+                        </p>-->
 
                         </div>
                     </div>
@@ -125,104 +125,23 @@
                   </div>
                   <div class="row-fluid cometarios-detalle">
                     <ul>
-                      <li>
+                        <?php  foreach ($this->comentarios  as $comentarios) :?>
+                      <li> 
                         <div class="content-comentario">
                           <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
+                            <img src="<?php   echo $this->host('images') . '/usuario/principal/' . $this->escapeHtml($comentarios->imagen)  ?>" alt="">
                           </div>
                           <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
+                            <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
+                            <p><?php echo  $this->escapeHtml($comentarios->va_descripcion);?></p>
                             <p class="small muted">
-                              13-abr-2013 3:32:20
+                             <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?>
                             </p>
                           </div>
                         </div>
                       </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="content-comentario">
-                          <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
-                          </div>
-                          <div class="span10 ti-coment">
-                            <h4><a href="#">Jose maria fernandez</a></h4>
-                            <p>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu</p>
-                            <p class="small muted">
-                              13-abr-2013 3:32:20
-                            </p>
-                          </div>
-                        </div>
-                      </li>
+                       <?php endforeach;  ?>
                     </ul>
                   </div>
                 </div>
@@ -261,7 +180,7 @@
                             </div>
                             <div class="span8 desc-user">
                                 <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>
-                               <p><?php echo  $this->escapeHtml($usuarios->descripcion);?></p>
+                               <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
                             </div>
                         </div>
                         <div class="row-fluid unio">

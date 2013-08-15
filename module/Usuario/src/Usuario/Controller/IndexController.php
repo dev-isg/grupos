@@ -44,9 +44,14 @@ class IndexController extends AbstractActionController
     {
         $id = $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
-        
+        $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
+        $categorias = $this->getUsuarioTable()->categoriasunicas($id)->toArray();
+        for($i=0;$i<count($categorias);$i++)
+        {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$categorias[$i]['id']);}
         return array(
-            'grupo' => $valor
+            'grupo' => $valor,
+ 'grupospertenece'  =>$usuariosgrupos,
+       'otrosgrupos'=>$otrosgrupos,
         );
     }
 
@@ -55,10 +60,12 @@ class IndexController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
         $id = $this->params()->fromQuery('id');
+        $misgrupos = $this->getGrupoTable()->misgrupos($id);
         $valor = $this->headerAction($id);
         
         return array(
-            'grupo' => $valor
+            'grupo' => $valor,
+            'misgrupos'=>$misgrupos,
         );
     }
 
@@ -89,6 +96,28 @@ class IndexController extends AbstractActionController
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
             
+//            codigo de guardar imagen con apodo
+            require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            
+            $info = pathinfo($File['name']);
+            
+            $valor = uniqid();
+            $nom = $nonFile;
+            
+            $imf2 = $valor . '.' . $info['extension'];
+            
+            
+            $filter = new \Filter_Alnum();
+                      
+            $filtered = $filter->filter($nom);
+//            print_r($filtered);
+//            exit;
+            $imagen = $filtered . '-' . $imf2;
+//            print_r($imagen);
+//            exit;
+            
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -98,10 +127,9 @@ class IndexController extends AbstractActionController
             $form->setInputFilter($usuario->getInputFilter());
             $form->setData($data); // $request->getPost()
             if ($form->isValid()) {
-                
                 $usuario->exchangeArray($form->getData());
-                if ($this->redimensionarFoto($File, $nonFile)) {
-                    $this->getUsuarioTable()->guardarUsuario($usuario);
+                if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
+                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
                     return $this->redirect()->toRoute('usuario');
                 } else {
                     echo 'problemas con el redimensionamiento';
@@ -157,26 +185,42 @@ class IndexController extends AbstractActionController
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
             
+            
+             require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            $info = pathinfo($File['name']);
+            $valor = uniqid();
+            $nom = $nonFile;
+            $imf2 = $valor . '.' . $info['extension'];
+            $filter = new \Filter_Alnum();
+            $filtered = $filter->filter($nom);
+            $imagen = $filtered . '-' . $imf2;
+
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
                 ->getFiles()
                 ->toArray());
-            $form->setInputFilter($usuario->getInputFilter());
+            $form->setInputFilter($usuario->getInputFilter2());
             $form->setData($data);
             // $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            // var_dump($form->setData($data));
+//             var_dump($data);
+//            exit;
             
             if ($form->isValid()) {
-                if ($this->redimensionarFoto($File, $nonFile)) {
-                    $this->getUsuarioTable()->guardarUsuario($usuario);
+                if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
+//                    echo "ver";
+//                    exit;
+                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+//                    var_dump($data);
+//                    exit;
                     return $this->redirect()->toRoute('usuario');
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
             } else {
-                // var_dump($form->isValid());
+//                 var_dump($form->isValid());exit;
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
                 }
@@ -202,11 +246,11 @@ class IndexController extends AbstractActionController
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo">Grupos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos">Mis Grupos</a></li>
-            <li><i class="icon-cuenta"></i> <a href=" ' . $this->url . ' " class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos?id='.$id.'  ">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href=" ' . $ruta . '/usuario/index/editarusuario/'.$id.' "  class="activomenu">Mi cuenta</a></li>
 
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
@@ -230,8 +274,15 @@ class IndexController extends AbstractActionController
         }
         return $this->usuarioTable;
     }
-
-    private function redimensionarFoto($File, $nonFile)
+ public function getGrupoTable()
+    {
+        if (! $this->grupoTable) {
+            $sm = $this->getServiceLocator();
+            $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+        }
+        return $this->grupoTable;
+    }
+    private function redimensionarFoto($File, $nonFile, $imagen, $id=null)
     {
         try {
             
@@ -244,19 +295,43 @@ class IndexController extends AbstractActionController
             $tamanio = getimagesize($File['tmp_name']);
             $ancho = $tamanio[0];
             $alto = $tamanio[1];
+            
+            
+            if ($id != null){
+                $idusuario = $this->getUsuarioTable()->getUsuario($id);
+                $imog = $idusuario->va_foto;
+                
+                $eliminar1 = $this->_options->upload->images . '/usuario/general/' . $imog;
+//                print_r($eliminar1);
+//                exit;
+                $eliminar2 = $this->_options->upload->images . '/usuario/original/' . $imog;
+                $eliminar3 = $this->_options->upload->images . '/usuario/principal/' . $imog;
+                
+                  unlink($eliminar1);
+                  unlink($eliminar2);
+                  unlink($eliminar3);
+                
+            }
+                
+            
+            
+//            print_r($imagen);
+//            exit;
             // $altura=$tamanio[1];
-            $valor = uniqid();
+//            $valor = uniqid();
             if ($ancho > $alto) { // echo 'ddd';exit;
-                require './vendor/Classes/Filter/Alnum.php';
+                
+                
+//                require './vendor/Classes/Filter/Alnum.php';
                 // $altura =(int)($alto*$anchura/$ancho); //($alto*$anchura/$ancho);
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//
+                    $name = $imagen;
+//                    print_r($name);
+//                    exit;
+                    
                     
                     // $contenido = new \Zend\Session\Container('contenido');
                     
@@ -289,15 +364,16 @@ class IndexController extends AbstractActionController
                 }
             }
             if ($ancho < $alto) {
-                require './vendor/Classes/Filter/Alnum.php';
+//                require './vendor/Classes/Filter/Alnum.php';
                 // $anchura =(int)($ancho*$altura/$alto);
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//                    $nom = $nonFile;
+//                    $imf2 = $valor . '.' . $info['extension'];
+//                    $filter = new \Filter_Alnum();
+//                    $filtered = $filter->filter($nom);
+//                    $name = $filtered . '-' . $imf2;
+                    $name = $imagen;
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejafoto = imagecreatefromjpeg($File['tmp_name']);

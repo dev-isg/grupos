@@ -11,55 +11,29 @@
 				<div class="row-fluid">
 					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
 	                    <ul>
-	                        <!-- ITEM -->
-	                        <li data-category="web">
-	                            <a href="detalle-grupo.html" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/1.jpg" alt=""/>
-	                            </a>
-	                            <div class="content">
-	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Web</a></span>
-	                                </div>
-	                                <h2><a href="#">Tumidei Spa</a></h2>
-	                                <p>
-	                                    Corporate web site. Html5. Responsive.
-	                                </p>
-	                            </div>
-	                        </li>
-	                        <!-- ITEM -->
-
-	                        <li data-category="art">
-	                            <a href="#" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/2.jpg" alt=""/>
-	                            </a>
-	                            <div class="content">
-	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Art</a></span>
-	                                </div>
-	                                <h2><a href="#">Crazy Home</a></h2>
-	                                <p>
-	                                    Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
-	                                </p>
-	                            </div>
-	                        </li>  
-	                         <!-- ITEM -->
-	                        <li data-category="foto">
-	                             <a href="#" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/3.jpg" alt=""/>
-	                            </a>
-	                            <div class="content">
-	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Lo Studio</a></span>
-	                                </div>
-	                                <h2><a href="#">Overdrive</a></h2>
-	                                <p>
-	                                    I nostro Quartier Generale. Lissone. Piazzale Giotto 1.
-	                                </p>
-	                            </div>
-	                        </li> 
+	                  <?php  foreach ($this->eventos  as $eventos) :?>
+                            <li data-category="web">
+                                <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
+                               <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
+                                </a>
+                                <div class="content">
+                                    <div class="info">
+                                        <span><?php  $fecha = date_create($eventos->fecha);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
+                                        <span class="category">
+                                            <a href="#"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+                                        </span>
+                                        </span>
+                                    </div>
+                                    <h2>
+                                        <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->id); ?>"><?php echo $this->escapeHtml($eventos->nombre); ?></a>
+                                    </h2>
+                                    <p>
+                                       <?php echo  $this->escapeHtml($eventos->descripcion);?>
+                                    </p>
+                                </div>
+                            </li>
+                            <?php endforeach;?>
 
 	                    </ul>               
 	                </div> 

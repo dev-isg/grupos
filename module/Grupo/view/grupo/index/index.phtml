@@ -10,7 +10,7 @@
                    
                             foreach ($this->eventos  as $eventos) :?>
                             <li data-category="web">
-                                <a href="ficha-producto.html" class="preview" data-ui-lightbox>
+                                <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
                                 </a>
                                 <div class="content">
@@ -23,7 +23,7 @@
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="/grupo/evento/detalle?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
+                                        <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
@@ -32,7 +32,7 @@
                             </li>
                             <?php endforeach; } else  { foreach ($this->grupos  as $grupos) :?>
                             <li data-category="web">
-                                <a href="ficha-producto.html" class="preview" data-ui-lightbox>
+                                <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
                                 </a>
                                 <div class="content">
@@ -45,7 +45,7 @@
                                         </span>
                                     </div>
                                     <h2>
-                                        <a href="/grupo/index/detallegrupo"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
+                                        <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($grupos->va_descripcion);?>
