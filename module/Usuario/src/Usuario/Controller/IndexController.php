@@ -240,10 +240,11 @@ class IndexController extends AbstractActionController
                 }
             }
             
-            
+            echo 'aka';exit;
             $formNotif->setData($request->getPost());
             if($formNotif->isValid()){
                 $data=$formNotif->getData();
+                var_dump($data);exit;
                 $this->getGrupoTable()->updateNotificacion($data,$storage->read()->in_id); 
                 
             }
