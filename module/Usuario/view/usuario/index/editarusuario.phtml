@@ -38,7 +38,7 @@
                          	<div class="actualizar">
                                     <?php echo $this->formHidden($form->get('in_id'));?>
 		                        <h1>Actualizar Cuenta</h1>		                        
-		                        <form action="" id="actualizar">
+<!-- 		                        <form action="" id="actualizar"> -->
 		                        	<h5>Cambiar mi imagen de perfil</h5>
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -116,7 +116,8 @@
 <!--		                            	<input type="submit" class="btn btn-primary" value="Actualizar">-->
 
 		                            </p>
-		                        </form>
+		                             <?php echo $this->form()->closeTag();?> 
+<!-- 		                        </form> -->
                     		    
                                 </div> 
                         
@@ -133,7 +134,7 @@
                             $formnotif = $this->formnotif;
                             
                             $formnotif->setAttributes(array(
-                                'action' => $this->url.'/usuario/index/editarusuario',
+                                'action' => $this->url.'/usuario/index/editarusuario/'.$this->in_id,
                                 'method' => 'post',
                                 'class'=>'form-horizontal'
                             ));
@@ -154,7 +155,8 @@
 <!-- 	                            </label>  -->
 <!-- 	                        <input type="submit" value="Enviar">                            -->
 	                        <?php echo $this->formSubmit($formnotif->get('submit'));?>
-	                        </form>
+	                         <?php echo $this->form()->closeTag();?> 
+<!-- 	                        </form> -->
 	                    </div>                   
 	                </div>
                 <!--<div class="span6 cuenta mifoto">
@@ -181,7 +183,7 @@
             </div>                                   
            </div>
     	</div>  
-           <?php echo $this->form()->closeTag();?>  
+           
         </div>
     </div> <!-- #main -->
 </div> <!-- #main-container -->

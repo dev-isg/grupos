@@ -170,7 +170,6 @@ class IndexController extends AbstractActionController
         try {
             $usuario = $this->getUsuarioTable()->getUsuario($id);
         } catch (\Exception $ex) {
-            
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'index'
             ));
@@ -240,11 +239,12 @@ class IndexController extends AbstractActionController
                 }
             }
             
-            echo 'aka';exit;
+            
+            var_dump($request->getPost());exit;
             $formNotif->setData($request->getPost());
             if($formNotif->isValid()){
                 $data=$formNotif->getData();
-                var_dump($data);exit;
+               
                 $this->getGrupoTable()->updateNotificacion($data,$storage->read()->in_id); 
                 
             }
