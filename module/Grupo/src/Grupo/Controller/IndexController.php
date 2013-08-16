@@ -42,67 +42,49 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        
-        // if (! $this->getServiceLocator()->get('AuthService')->hasIdentity()){
-        // return $this->redirect()->toRoute('login');
-        // }
-        // Agregando script en el index
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categoria = $categorias;
-        $nombre = $this->params()->fromPost('dato');
+        $buscar = $this->params()->fromPost('dato');
+        $filter = new \Zend\I18n\Filter\Alnum(true);
+        $nombre = trim($filter->filter($buscar));
+        setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
         $valor = $this->params()->fromQuery('tipo');
         $tipo = $this->params()->fromQuery('categoria');
         $request = $this->getRequest();
         if (empty($valor) and empty($tipo) and ! $request->isPost()) {
-            $listaEventos = $this->getEventoTable()->listadoEvento();
-        }
+            $listaEventos = $this->getEventoTable()->listadoEvento();}
         if ($request->isPost()) {
             if ($nombre) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-            //    if(count($grupo)
-                if (count($grupo) > 0) {
+                $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+                if(count($grupo)===0 and count($listaEventos)===0)
+                { return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }
+                if (count($grupo)>0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
- 
-                } else {
-                    $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-                }
-            }
-        }
+               } else { $listaEventos = $this->getEventoTable()->listado2Evento($nombre); }} }
         if ($tipo) {
             if ($tipo) {
                 $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-            } else {
-                $listagrupos = $this->getGrupoTable()->fetchAll();
-                
-            }
-        }
+            } else { $listagrupos = $this->getGrupoTable()->fetchAll();  }  }
         if ($valor) {
             if ($valor == 'Grupos') {
                 $listagrupos = $this->getGrupoTable()->fetchAll();
-            } else {
-                $listaEventos = $this->getEventoTable()->listadoEvento();
-            }
-        }
-        
-         
+            } else {  $listaEventos = $this->getEventoTable()->listadoEvento(); } }
         if(count($listaEventos)>0)
         { $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator->setItemCountPerPage(8);}
+        $paginator->setItemCountPerPage(12);}
         else{
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(8);}
-
-        
+        $paginator2->setItemCountPerPage(12);}
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
-            'dato' => $valor
-        );
+            'dato' => $valor );
     }
 
     public function getEventoTable()
