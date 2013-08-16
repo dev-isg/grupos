@@ -254,13 +254,16 @@ class IndexController extends AbstractActionController
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
+        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
+        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator2->setItemCountPerPage(4);
         // var_dump($eventos);exit;
         return array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
-            'proximos_eventos' => $proximos_eventos,
+            'proximos_eventos' => $paginator2,
             'in_id'=>$id
         );
     }

@@ -44,7 +44,7 @@
                 <ul>
                     <?php foreach ($this->grupos  as $grupos) :?>
                     <li data-category="web">
-                        <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
+                        <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
                        <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
                         </a>
                         <div class="content">

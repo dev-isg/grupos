@@ -20,7 +20,8 @@ class GrupoTable{
             $selecttot = $sql->select()
                     ->from('ta_grupo')
                     ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
-                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
+                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
+             ->where(array('ta_grupo.va_estado'=>'activo'));
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
@@ -38,7 +39,8 @@ class GrupoTable{
                 $selecttot->where(array('ta_grupo.ta_categoria_in_id'=>$tipo));
             }
             if($nombre!=null){
-                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%'));
+                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%'))
+                         ->where(array('ta_grupo.va_estado'=>'activo'));
                 
             }
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
@@ -332,20 +334,19 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
-     
-    
       public function eventosgrupo($id)
     {  
-         $fecha = date("Y-m-d h:m:s"); 
+         //$fecha = date("Y-m-d h:m:s"); 
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $select = $sql->select();
                  $select->from('ta_evento')
-      //    ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_evento_in_id)')),'left')                
-          ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
+        // ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_usuario_in_id=ta_evento.ta_usuario_in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_in_id)')),'left')                
+       //  ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array(),'left')                
+         ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        return $resultSet;
+        return $resultSet->buffer();
     }
     
 public function misgrupos($id)

@@ -215,19 +215,19 @@ class EventoTable{
      
        public function listadoEvento()
     {
+              $fecha = date("Y-m-d h:m:s"); 
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_evento')
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
+         ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha))           
           ->order('in_id desc');  
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
         return $resultSet->buffer();
-    }
-    
+    }    
        public function listadocategoriasEvento($categoria)
     {
          $adapter = $this->tableGateway->getAdapter();
@@ -243,14 +243,14 @@ class EventoTable{
             return $resultSet;
     }
       public function listado2Evento($consulta)
-    {    
+    {    $fecha = date("Y-m-d h:m:s");
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_evento')
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')   
-          ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%'))
+          ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha)) 
           ->order('in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
@@ -295,7 +295,7 @@ class EventoTable{
             $select = $sql->select();
                  $select->from('ta_evento')
           ->columns(array('eventosfuturos' => new \Zend\Db\Sql\Expression('COUNT(in_id)')))
-                 ->where(array('ta_grupo_in_id' => $id,'va_fecha>=?'=>$fecha));
+                 ->where(array('ta_grupo_in_id' => $id,'va_fecha>=?'=>$fecha,'va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->toArray();
@@ -308,7 +308,7 @@ class EventoTable{
             $select = $sql->select();
                  $select->from('ta_evento')
           ->columns(array('eventospasados' => new \Zend\Db\Sql\Expression('COUNT(in_id)')))
-                 ->where(array('ta_grupo_in_id' => $id,'va_fecha<?'=>$fecha));
+                 ->where(array('ta_grupo_in_id' => $id,'va_fecha<?'=>$fecha,'va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->toArray();
