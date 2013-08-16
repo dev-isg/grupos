@@ -334,6 +334,22 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+
+    
+    public function compruebarUsuarioxGrupo($iduser,$idgrupo){
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario_has_ta_grupo')
+        ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrupo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+    
+        return $resultSet->current();
+    
+    }
+    
+    
       public function eventosgrupo($id)
     {  
          //$fecha = date("Y-m-d h:m:s"); 

@@ -256,15 +256,21 @@ class IndexController extends AbstractActionController
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(4);
-        // var_dump($eventos);exit;
+        $paginator2->setItemCountPerPage(4); 
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        if ($session) {            
+            $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
+            $activo=$participa->va_estado=='activo'?true:false;
+        }
         return array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
             'proximos_eventos' => $paginator2,
-            'in_id'=>$id
+            'session'=>$session,
+            'participa'=>$activo
         );
     }
 
