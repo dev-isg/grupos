@@ -92,20 +92,19 @@
 
 <script type="text/javascript">
 	
-	$(document).on('ready', function(){
-		alert('hola');
+	$(document).on('ready', function(){		
 		enviarDatos();
 	});
 
 	function enviarDatos(){
-		
+		var group = <?php echo $this->in_id; ?>;
 		$("#unete-grupo").on('click', function(e){
 			e.preventDefault();
 			var activo = 1;
 			$.ajax({
 	            url: '/grupo/index/unir',
 	            type: 'get',
-	            data: 'act=' + activo,
+	            data: 'act=' + activo +'&idG='+group,
 	            dataType: "json",
 	            success: function(data){
 	               alert('Te envie  el dato');
