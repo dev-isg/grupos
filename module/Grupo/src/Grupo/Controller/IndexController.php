@@ -272,12 +272,11 @@ class IndexController extends AbstractActionController
         }
         
         $iduser = $storage->read()->in_id; // 1;
-        $idgrup = $this->params()->fromRoute('in_id'); // 48;
-        $unir = $this->params()->fromQuery('atc');
-//         var_dump($unir);exit;
+        $idgrup = $this->params()->fromQuery('idG'); // 48;
+        $unir = $this->params()->fromQuery('act');
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
-                // $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
+                    // $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
                 $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -291,26 +290,26 @@ class IndexController extends AbstractActionController
                                                </body>
                                                </html>';
                 
-                $message = new Message();
-                $message->addTo('ola@yopmail.com', $nombre)
-                    ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
-                    ->setSubject('Se ha unido al grupo');
-                // ->setBody($bodyHtml);
-                $bodyPart = new \Zend\Mime\Message();
-                $bodyMessage = new \Zend\Mime\Part($bodyHtml);
-                $bodyMessage->type = 'text/html';
-                $bodyPart->setParts(array(
-                    $bodyMessage
-                ));
-                $message->setBody($bodyPart);
-                $message->setEncoding('UTF-8');
-                
-                $transport = $this->getServiceLocator()->get('mail.transport'); // new SendmailTransport();//$this->getServiceLocator('mail.transport')
-                $transport->send($message);
-                $this->redirect()->toUrl('/grupo');
+                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al grupo');
+                $usuario = $this->getGrupoTable()
+                    ->grupoxUsuario($idgrup)
+                    ->toArray();
+                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     El siguiente usuario se ha unido a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+    
+                                                     </div>
+                                               </body>
+                                               </html>';
+                if ($usuario) {
+                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
+                }
             }
-        } else 
-            if ($unir == 0) {
+        } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
@@ -324,47 +323,66 @@ class IndexController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
+                    $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
+                    $usuario = $this->getGrupoTable()
+                    ->grupoxUsuario($idgrup)
+                    ->toArray();
+                    $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
                     
-                    $message = new Message();
-                    $message->addTo('ola@yopmail.com', $nombre)
-                        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
-                        ->setSubject('Ha dejado un grupo');
-                    // ->setBody($bodyHtml);
-                    $bodyPart = new \Zend\Mime\Message();
-                    $bodyMessage = new \Zend\Mime\Part($bodyHtml);
-                    $bodyMessage->type = 'text/html';
-                    $bodyPart->setParts(array(
-                        $bodyMessage
-                    ));
-                    $message->setBody($bodyPart);
-                    $message->setEncoding('UTF-8');
+                                                     </div>
+                                               </body>
+                                               </html>';
+                    if ($usuario) {
+                        $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
+                    }
+//                     $message = new Message();
+//                     $message->addTo('ola@yopmail.com', $nombre)
+//                         ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+//                         ->setSubject('Ha dejado un grupo');
+//                     // ->setBody($bodyHtml);
+//                     $bodyPart = new \Zend\Mime\Message();
+//                     $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+//                     $bodyMessage->type = 'text/html';
+//                     $bodyPart->setParts(array(
+//                         $bodyMessage
+//                     ));
+//                     $message->setBody($bodyPart);
+//                     $message->setEncoding('UTF-8');
                     
-                    $transport = $this->getServiceLocator()->get('mail.transport');
-                    $transport->send($message);
-                    $this->redirect()->toUrl('/grupo');
+//                     $transport = $this->getServiceLocator()->get('mail.transport');
+//                     $transport->send($message);
+//                     $this->redirect()->toUrl('/grupo');
                 }
             }
+       return array();
     }
     
-    // public function detallegrupoAction()
-    // {
     
-    // $id= $this->params()->fromQuery('id');
-    // $grupo=$this->getEventoTable()->grupoid($id);
-    // $eventospasados=$this->getEventoTable()->eventospasados($id);
-    // $eventosfuturos=$this->getEventoTable()->eventosfuturos($id);
-    // $usuarios=$this->getGrupoTable()->usuariosgrupo($id);
-    // $proximos_eventos=$this->getGrupoTable()->eventosgrupo($id);
-    // // $miembros=$this->getGrupoTable()->miembros($id);
-    // //var_dump($eventos);exit;
-    // return array(
-    // 'grupo'=>$grupo,
-    // 'eventosfuturos'=>$eventosfuturos,
-    // 'eventospasados'=>$eventospasados,
-    // 'usuarios'=> $usuarios,
-    // 'proximos_eventos' =>$proximos_eventos,
-    // );
-    // }
+    public function mensaje($mail,$bodyHtml,$subject){
+        $message = new Message();
+        $message->addTo($mail, $nombre)
+        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setSubject($subject);
+        // ->setBody($bodyHtml);
+        $bodyPart = new \Zend\Mime\Message();
+        $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+        $bodyMessage->type = 'text/html';
+        $bodyPart->setParts(array(
+            $bodyMessage
+        ));
+        $message->setBody($bodyPart);
+        $message->setEncoding('UTF-8');
+        
+        $transport = $this->getServiceLocator()->get('mail.transport');
+        $transport->send($message);     
+    }
+
     public function dejarAction()
     {
         // $iduser = 1;

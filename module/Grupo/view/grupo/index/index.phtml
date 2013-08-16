@@ -1,84 +1,80 @@
-        <div class="main-container">
-            <div class="container">
-                <?php if(count($this->grupos)<=0) { ?>
 
-                <div class="row-fluid">
-                    <div class="span12 main wrapper" id="content" data-ui-scrollbar>
-                        <ul>
-                            <div><?php echo $this->dato;?></div>        
-                            
-                            <?php foreach ($this->eventos  as $eventos) :?>
-                            <li data-category="web">
-                                <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>" class="preview" data-ui-lightbox>
-                               <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
-                                </a>
-                                <div class="content">
-                                    <div class="info">
-                                        <span><?php  $fecha = date_create($eventos->va_fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
-                                        <span class="category">
-                                            <a href="#"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
-                                        </span>
-                                        </span>
-                                    </div>
-                                    <h2>
-                                        <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
-                                    </h2>
-                                    <p>
-                                       <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
-                                    </p>
-                                </div>
-                            </li>
-                            <?php endforeach; ?>
-                        
-                        </ul>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span12" id="pagina">
-                        <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?')):""; ?>
-                    </div>
-                </div>  
-                <?php } else { ?>
-                <div class="row-fluid">
-                    <div class="span12 main wrapper" id="content" data-ui-scrollbar>
-                        <ul>
-
-                            <?php foreach ($this->grupos  as $grupos) :?>
-                            <li data-category="web">
-                                <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
-                               <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
-                                </a>
-                                <div class="content">
-                                    <div class="info">
-                                        <span><?php  $fecha = date_create($grupos->va_fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
-                                        <span class="category">
-                                            <a href="#"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
-                                        </span>
-                                        </span>
-                                    </div>
-                                    <h2>
-                                        <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
-                                    </h2>
-                                    <p>
-                                       <?php echo  $this->escapeHtml($grupos->va_descripcion);?>
-                                    </p>
-                                </div>
-                            </li>
-                            
-                            <?php endforeach;?>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span12" id="pagina">
-                        <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?tipo=Grupos&')):""; ?>
-                    </div>
-                </div>
-                <?php }?>
+<div class="main-container">
+    <div class="container">
+        <?php if(count($this->grupos)<=0) { ?>
+        <div class="row-fluid">
+            <div class="span12 main wrapper" id="content" data-ui-scrollbar>
+                <ul>
+                    <div><?php echo $this->dato;?></div>        
+                    
+                    <?php foreach ($this->eventos  as $eventos) :?>
+                    <li data-category="web">
+                        <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>" class="preview" data-ui-lightbox>
+                       <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
+                        </a>
+                        <div class="content">
+                            <div class="info">
+                                <span><?php  $fecha = date_create($eventos->va_fecha);
+                                 echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
+                                <span class="category">
+                                    <a href="#"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+                                </span>
+                                </span>
+                            </div>
+                            <h2>
+                                <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
+                            </h2>
+                            <p>
+                               <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
+                            </p>
+                        </div>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
-        </div> <!-- #main-container -->
+        </div>
+        <div class="row-fluid">
+            <div class="span12" id="pagina">
+                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?')):""; ?>
+            </div>
+        </div>  
+        <?php } else { ?>
+        <div class="row-fluid">
+            <div class="span12 main wrapper" id="content" data-ui-scrollbar>
+                <ul>
+                    <?php foreach ($this->grupos  as $grupos) :?>
+                    <li data-category="web">
+                        <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
+                       <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
+                        </a>
+                        <div class="content">
+                            <div class="info">
+                                <span><?php  $fecha = date_create($grupos->va_fecha);
+                                 echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
+                                <span class="category">
+                                    <a href="#"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
+                                </span>
+                                </span>
+                            </div>
+                            <h2>
+                                <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
+                            </h2>
+                            <p>
+                               <?php echo  $this->escapeHtml($grupos->va_descripcion);?>
+                            </p>
+                        </div>
+                    </li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12" id="pagina">
+                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?tipo=Grupos&')):""; ?>
+            </div>
+        </div>
+        <?php }?>
+    </div>
+</div> <!-- #main-container -->
 
 

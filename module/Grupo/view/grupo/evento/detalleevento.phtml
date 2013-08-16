@@ -165,24 +165,16 @@
             <div class="span3">
               <div class="asistir-event">
                 <div class="row-fluid">
-                  <form action="" class="span12 form-asistir">
+                  <div class="span12">
                     <div class="row-fluid">
                       <h4>¿Asistiras?</h4>
-                      <label class="radio inline">
-                        <input type="radio" name="asistirGrupo" id="asistirGrupo1" value="option1" checked="">
-                          Si
-                      </label>
-                      <label class="radio inline">
-                        <input type="radio" name="asistirGrupo" id="asistirGrupo2" value="option1">
-                          No
-                      </label>
                     </div>
                     <div class="row-fluid">
                       <div class="span12 btn-unete">
-                        <button type="submit" class="btn btn-success">Unete al evento</button>
+                        <a href="#" class="btn btn-success" id="uneteEvent">Unete al evento</a>                        
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
                </div>
                <div class="lista-usuario">
@@ -212,3 +204,31 @@
         </div>
     </div>
 </div> <!-- #main-container -->
+
+<script type="text/javascript">
+  
+  $(document).on('ready', function(){   
+    enviarDatos();
+  });
+
+  function enviarDatos(){
+    var even = <?php echo $this->idevento; ?>;
+    $("#uneteEvent").on('click', function(e){
+      e.preventDefault();
+      var activo = 1;
+      $.ajax({
+              url: '/grupo/evento/unir',
+              type: 'get',
+              data: 'act=' + activo +'&idE='+even,
+              dataType: "json",
+              success: function(data){
+                 alert('Te envie  el dato');
+              },
+              error: function(){
+                  console.log('Fallo conectando con el servidor')
+              }
+          });
+    });
+  }
+
+</script>
