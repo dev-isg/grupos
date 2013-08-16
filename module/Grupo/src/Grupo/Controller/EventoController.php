@@ -284,6 +284,7 @@ class EventoController extends AbstractActionController
         if ($session) {
             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
+//             var_dump($activo);Exit;
         }
         $request = $this->getRequest();
         if ($request->isPost()) {
