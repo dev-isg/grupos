@@ -330,6 +330,32 @@ class EventoTable{
         return $resultSet;
     }
     
+    public function eventoxUsuario($idevent)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario')
+        ->join('ta_evento','ta_usuario.in_id=ta_evento.ta_usuario_in_id',array('*'), 'left')
+        ->where(array('ta_evento.in_id'=>$idevent));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+    public function compruebarUsuarioxEvento($iduser,$idevent){
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario_has_ta_evento')
+        ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        
+        return $resultSet;
+    
+    }
+    
     
       public function comentariosevento($id)
     {  
@@ -381,6 +407,8 @@ class EventoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
             return $resultSet;
     }
+    
+
     
     public function miseventos($id)
     {
