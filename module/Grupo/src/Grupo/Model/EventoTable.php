@@ -149,7 +149,7 @@ class EventoTable{
      
      
      public function unirseEvento($idgrup,$iduser){
-           $insert = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
+           $insert = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
                    ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo'));
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
            $adapter=$this->tableGateway->getAdapter();
@@ -162,7 +162,7 @@ class EventoTable{
      }
      
      public function retiraEvento($idgrup,$iduser){
-            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
                     ->set(array('va_estado'=>'desactivo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
            $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
@@ -341,8 +341,30 @@ class EventoTable{
             ->where(array('ta_comentario.ta_evento_in_id' => $id));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            $resultSet->buffer();
+//             var_dump($resultSet->toArray());Exit;
         return $resultSet;
     }
+
+    
+    public function guardarComentario($data,$iduser,$idevento){
+        $values=array(
+            'va_descripcion'=>$data['va_descripcion'],
+            'en_estado'=>1,
+            'va_fecha'=>date('c'),
+            'ta_usuario_in_id'=>$iduser,
+            'ta_evento_in_id'=>$idevento
+        );
+        
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $insert=$sql->insert()->into('ta_comentario')->values($values);
+        $selectString = $sql->getSqlStringForSqlObject($insert);
+        $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+                
+        
+    }
+
 
  
       public function usuarioseventos($id)
@@ -376,6 +398,7 @@ class EventoTable{
             return $resultSet;
     }
     
+
 }
 
     

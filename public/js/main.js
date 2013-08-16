@@ -20,19 +20,6 @@ function crearevento(){
             maxFileSize:'4M'
         });
         
-        
-        $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
-            var e = event;
-            if ((e.keyCode || e.which || e.charCode || 0) !== 13)
-                return true;
-            else
-            {
-                var nextInput = $(":input:eq(" + ($(":input").index(this) + 1) + ")").first();
-                nextInput.focus();
-                event.preventDefault();
-                return false;
-            }
-        });
 
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
@@ -72,8 +59,21 @@ function crearevento(){
                     addressRef:'#addressReference'
                 },
                 center:{lat:-12.047816, lng:-77.062203},
-                zoom:8  
+                zoom:8
             });
+
+
+        $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
+            var e = event;
+            if ((e.keyCode || e.which || e.charCode || 0) !== 13)
+                return true;
+            else{
+                var nextInput = $(":input:eq(" + ($(":input").index(this) + 1) + ")").first();
+                nextInput.focus();
+                event.preventDefault();
+                return false;
+            }
+        });
 
         $(".btn-agregar").click(function(){
             $(".elige-crea").hide();
@@ -112,6 +112,13 @@ function crearevento(){
                 va_referencia : "Ingrese dirección de referencia",
                 editor1 : "Ingrese una descripción del evento"
             }
+        });
+
+        $("#submitbutton").click(function(){
+            var lat = $("#mapLocationLat").val();
+            var log = $("#mapLocationLon").val();
+            var direc = $("#address").val();
+            alert(lat +" -- " + log + " -- "+ direc);
         });
     });
 }

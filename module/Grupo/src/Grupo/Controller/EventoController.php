@@ -20,6 +20,8 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+
+use Grupo\Form\ComentarioForm;
  use Usuario\Controller\IndexController;
 class EventoController extends AbstractActionController
 {
@@ -91,7 +93,7 @@ class EventoController extends AbstractActionController
                 // var_dump($data);Exit;
                 $evento->exchangeArray($form->getData());
                 if ($this->redimensionarImagen($File, $nonFile)) {
-                    $this->getEventoTable()->guardarEvento($evento,$idgrupo);
+                    $this->getEventoTable()->guardarEvento($evento, $idgrupo);
                     
                     return $this->redirect()->toRoute('grupo');
                 } else {
@@ -118,17 +120,17 @@ class EventoController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->inlineScript()
-        ->setScript('crearevento();')
-        ->prependFile($this->_options->host->base . '/js/main.js')
-        ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-        ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-        ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
-        ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-        ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
-        ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
-        ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-        ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
-        ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
+            ->setScript('crearevento();')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
+            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
+            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+            ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
+            ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
+            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
+            ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
         
         $id = (int) $this->params()->fromRoute('in_id', 0);
         if (! $id) {
@@ -149,10 +151,10 @@ class EventoController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
         $form->bind($evento);
-//         $value=$form->get('va_fecha')->getValue();
-//         var_dump($value);
-//         $value2=$form->get('va_fecha')->setAttribute('value', '');
-//         var_dump($value2);exit;
+        // $value=$form->get('va_fecha')->getValue();
+        // var_dump($value);
+        // $value2=$form->get('va_fecha')->setAttribute('value', '');
+        // var_dump($value2);exit;
         $form->get('submit')->setAttribute('value', 'Editar');
         
         $request = $this->getRequest();
@@ -168,7 +170,7 @@ class EventoController extends AbstractActionController
             $form->setData($data);
             
             if ($form->isValid()) {
-                $this->$this->getEventoTable()->guardarEvento($evento,$idgrupo);
+                $this->$this->getEventoTable()->guardarEvento($evento, $idgrupo);
                 return $this->redirect()->toRoute('grupo');
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
@@ -190,7 +192,22 @@ class EventoController extends AbstractActionController
     {}
 
     
-    
+    // public function comentariosAction(){
+    // $storage = new \Zend\Authentication\Storage\Session('Auth');
+    // if (! $storage) {
+    // return $this->redirect()->toRoute('grupo');
+    // }
+    // $idevento = $this->params()->fromQuery('id');
+    // // print_r($storage->read()->in_id);exit;
+    // $request=$this->getRequest();
+    // if($request->isPost()){
+    // $form->setData($request->getPost());
+    // if ($form->isValid()) {
+    // $comentarios=$this->getEventoTable()->guardarComentario($form->getData(),$storage->read()->in_id,$idevento);
+    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl());
+    // }
+    // }
+    // }
 
     public function miseventosAction()
     {
@@ -241,30 +258,59 @@ class EventoController extends AbstractActionController
         return $this->grupoTable;
     }
 
-    public function detalleeventoAction(){
-      $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-      $id= $this->params()->fromQuery('id');
-      $evento=$this->getEventoTable()->Evento($id);
-      $id_grupo=$evento[0]['id_grupo'];
-      $grupo=$this->getEventoTable()->grupoid($id_grupo);
-      $eventospasados=$this->getEventoTable()->eventospasados($id_grupo);
-      $eventosfuturos=$this->getEventoTable()->eventosfuturos($id_grupo);
-      $usuarios=$this->getEventoTable()->usuariosevento($id);
-      $comentarios=$this->getEventoTable()->comentariosevento($id);
-      $renderer->inlineScript()->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:'.$evento[0]['va_latitud'].',lng:'.$evento[0]['va_longitud'].',address:"'.$evento[0]['va_direccion'].'",addressRef:"'.$evento[0]['va_referencia'].'"}});});')
-                            ->prependFile($this->_options->host->base .'/js/map/locale-es.js')
-                            ->prependFile($this->_options->host->base .'/js/map/ju.google.map.js')
-                            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
-                            ->prependFile($this->_options->host->base .'/js/map/ju.img.picker.js');
-      return array('eventos'=>$evento,
-                     'grupo'=>$grupo,
-            'eventosfuturos'=>$eventosfuturos,
-            'eventospasados'=>$eventospasados,
-                  'usuarios'=>$usuarios,
-               'comentarios'=>$comentarios);
-      }
-     
-     
+    public function detalleeventoAction()
+    {
+        $form = new ComentarioForm();
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $id = $this->params()->fromQuery('id');
+        $evento = $this->getEventoTable()->Evento($id);
+        $id_grupo = $evento[0]['id_grupo'];
+        $grupo = $this->getEventoTable()->grupoid($id_grupo);
+        $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
+        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
+        $usuarios = $this->getEventoTable()->usuariosevento($id);
+        $comentarios = $this->getEventoTable()->comentariosevento($id);
+        
+        $renderer->inlineScript()
+            ->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});')
+            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
+            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
+            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
+            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
+        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+//         if (! $storage) {
+//             return $this->redirect()->toRoute('grupo');
+//         }
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
+                return $this->redirect()->toUrl('/grupo/evento/detalleevento?id=' . $id);
+            }
+        }
+        
+        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
+        $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
+        $paginator->setItemCountPerPage(10);
+        
+        return array(
+            'eventos' => $evento,
+            'grupo' => $grupo,
+            'eventosfuturos' => $eventosfuturos,
+            'eventospasados' => $eventospasados,
+            'usuarios' => $usuarios,
+            'comentarios' => $comentarios,
+            'comentarioform' => $form,
+            'idevento' => $id,
+            'session'=>$session
+        )
+        ;
+    }
+
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route

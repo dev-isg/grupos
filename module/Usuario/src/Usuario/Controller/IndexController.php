@@ -15,6 +15,7 @@ use Zend\Json\Json;
 use Usuario\Model\Usuario;
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
+use Usuario\Form\NotificacionForm;
 use Zend\Form\Element;
 use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
@@ -150,6 +151,8 @@ class IndexController extends AbstractActionController
 
     public function editarusuarioAction()
     {
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+ 
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
             ->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
@@ -167,7 +170,6 @@ class IndexController extends AbstractActionController
         try {
             $usuario = $this->getUsuarioTable()->getUsuario($id);
         } catch (\Exception $ex) {
-            
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'index'
             ));
@@ -176,9 +178,20 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
-        
         $form->get('submit')->setAttribute('value', 'Editar');
         
+        //formulario para la notificacion
+        $formNotif=new NotificacionForm();
+        $formNotif->get('submit')->setAttribute('value', 'Editar');
+        //populate elementos del check
+        $not=$this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
+        $aux = array();
+        foreach($not as $value){
+            $aux[$value['ta_notificacion_in_id']]=$value['ta_notificacion_in_id'];
+            $formNotif->get('tipo_notificacion')->setAttribute('value', $aux);
+        }
+
+
         $request = $this->getRequest();
         
         if ($request->isPost()) {
@@ -225,14 +238,32 @@ class IndexController extends AbstractActionController
                     print_r($error->getMessages());
                 }
             }
+            
+         
         }
         
         return array(
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
-            'valor' => $valor
+            'valor' => $valor,
+            'formnotif'=>$formNotif
         );
+    }
+    
+    public function notificarAction(){
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $request=$this->getRequest();
+        if($request->isPost()){
+//             $formNotif->setData($request->getPost());
+//             if($formNotif->isValid()){
+                $data=$request->getPost('tipo_notificacion');
+                $this->getGrupoTable()->updateNotificacion($data,$storage->read()->in_id); 
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
+//             }
+        }
+        
+        return array();
     }
 
     public function headerAction($id)
@@ -274,7 +305,9 @@ class IndexController extends AbstractActionController
         }
         return $this->usuarioTable;
     }
- public function getGrupoTable()
+
+    
+    public function getGrupoTable()
     {
         if (! $this->grupoTable) {
             $sm = $this->getServiceLocator();
@@ -282,6 +315,7 @@ class IndexController extends AbstractActionController
         }
         return $this->grupoTable;
     }
+
     private function redimensionarFoto($File, $nonFile, $imagen, $id=null)
     {
         try {
