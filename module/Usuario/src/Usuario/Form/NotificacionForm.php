@@ -18,15 +18,15 @@ class NotificacionForm extends Form
                    'name' => 'tipo_notificacion',
                    'type' => 'MultiCheckbox',
                     'attributes' => array(
-                        'value' => array('0', '1'),
+                        'value' => array('1', '2'),
                        'class' => 'checkbox inline',
                        'id'   => 'en_destaque',
                         'placeholder'=>'Ingrese su destaque'
                    ),
                    'options' => array(
                          'value_options' => array(
-                            '0'=>'Recibir avisos por email cuando ingresa al Grupo ',
-                            '1'=>'Recibir avisos por email cuando sale del Grupo',
+                            '1'=>'Recibir avisos por email cuando ingresa al Grupo ',
+                            '2'=>'Recibir avisos por email cuando sale del Grupo',
                          ),
                        ),
                    

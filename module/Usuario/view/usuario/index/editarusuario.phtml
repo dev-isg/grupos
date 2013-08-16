@@ -1,18 +1,6 @@
 <div class="main-container">
     <div class="container">
         <div class="row-fluid">
-            <?php
-                            $usuario = $this->usuario;
-                            $form = $this->form;
-                            $form->setAttributes(array(
-                                'action' => $this->url.'/usuario/index/editarusuario/'.$this->in_id,
-                                'method' => 'post',
-                                'class'=>'form-horizontal'
-                            ));
-
-                            $form->prepare();
-                            echo $this->form()->openTag($form);
-                            ?>
 <!--            <div class="span12 menu-login">
                 <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido <?php echo $this->usuario->va_nombre?></span>
                 <div class="logincuenta">
@@ -30,15 +18,26 @@
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
                         	<i class="icon-datos"></i>
-                        	<p id="datos">ACTUALIZAR MI DATOS</p>
+                        	<p id="datos">ACTUALIZAR MIS DATOS</p>
                         </div>
                         <span>x</span>
                     	<div class="modificardatos">
-                            
+                                        <?php
+                            $usuario = $this->usuario;
+                            $form = $this->form;
+                            $form->setAttributes(array(
+                                'action' => $this->url.'/usuario/index/editarusuario/'.$this->in_id,
+                                'method' => 'post',
+                                'class'=>'form-horizontal'
+                            ));
+
+                            $form->prepare();
+                            echo $this->form()->openTag($form);
+                            ?>
                          	<div class="actualizar">
                                     <?php echo $this->formHidden($form->get('in_id'));?>
 		                        <h1>Actualizar Cuenta</h1>		                        
-		                        <form action="" id="actualizar">
+<!-- 		                        <form action="" id="actualizar"> -->
 		                        	<h5>Cambiar mi imagen de perfil</h5>
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -65,18 +64,14 @@
 		                            	<label for="">Nombre Completo</label>
                                                 
                                                 <?php echo $this->formRow($form->get('va_nombre'));?>
-                                                
-<!--		                            	<input type="text" id="va_nombre" name="va_nombre" >-->
 		                            </p>                         
 		                            <p>
 		                            	<label for="">Correo Electrónico</label>
                                                 <?php echo $this->formRow($form->get('va_email'));?>
-<!--		                            	<input type="email" id="va_email" name="va_email" >-->
 		                            </p>                                  
 		                             <p>
 		                            	<label for="">Documento de Identidad</label>
                                                 <?php echo $this->formRow($form->get('va_dni'));?>
-<!--		                            	<input type="text" id="dni" name="dni" >-->
 		                            </p>
 		                            <p>
                                                 <label for="">Género</label>
@@ -93,30 +88,16 @@
 			                           
 			                            
 		                            </p>
-<!--		                            <p>
-			                            <label for="">Ciudad</label>
-			                            <select name="" id="">
-			                                <option value="">Barranco</option>
-			                                <option value="">Miraflores</option>
-			                            </select>
-		                            </p>-->
 		                            <h5>Mis Intereses </h5>
 		                            <div class="int">
 		                              	<label for="">Ingresar Intereses</label>
 		                              	<?php echo $this->formRow($form->get('va_descripcion'));?>
-<!--                                                <textarea name="" id="" cols="20" rows="4">
-                                                
-                                                </textarea>-->
 	                              	</div>                               
 		                            <p>
-
-<!--		                            	<input type="submit" value="Actualizar">-->
                                                 <?php echo $this->formSubmit($form->get('submit'));?>
-
-<!--		                            	<input type="submit" class="btn btn-primary" value="Actualizar">-->
-
 		                            </p>
-		                        </form>
+		                             <?php echo $this->form()->closeTag();?> 
+<!-- 		                        </form> -->
                     		    
                                 </div> 
                         
@@ -133,7 +114,7 @@
                             $formnotif = $this->formnotif;
                             
                             $formnotif->setAttributes(array(
-                                'action' => $this->url.'/usuario/index/editarusuario',
+                                'action' => $this->url.'/usuario/index/notificar',
                                 'method' => 'post',
                                 'class'=>'form-horizontal'
                             ));
@@ -154,7 +135,8 @@
 <!-- 	                            </label>  -->
 <!-- 	                        <input type="submit" value="Enviar">                            -->
 	                        <?php echo $this->formSubmit($formnotif->get('submit'));?>
-	                        </form>
+	                         <?php echo $this->form()->closeTag();?> 
+<!-- 	                        </form> -->
 	                    </div>                   
 	                </div>
                 <!--<div class="span6 cuenta mifoto">
@@ -181,7 +163,7 @@
             </div>                                   
            </div>
     	</div>  
-           <?php echo $this->form()->closeTag();?>  
+           
         </div>
     </div> <!-- #main -->
 </div> <!-- #main-container -->

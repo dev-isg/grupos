@@ -212,23 +212,39 @@ class GrupoTable{
          $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //          var_dump($selectString);Exit;
          $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-     
-         return $resultSet;
-     }
-     
-     public function updateNotificacion($notificacion,$id){
-         $adapter = $this->tableGateway->getAdapter();
-         $sql = new Sql($adapter);
-                foreach($notificacion as $key=>$value){
-                   $update = $this->tableGateway->getSql()->update()->table('ta_notificacion_has_ta_usuario')
-//                       ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
-                      ->set(array('ta_notificacion_has_ta_usuario.ta_notificacion_in_id'=>$value))
-                      ->where(array('ta_notificacion_has_ta_usuario.ta_usuario_in_id'=>$id));
-                   $selectString = $sql->getSqlStringForSqlObject($update);
-                   $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-//                    var_dump($selectString);Exit;
-                }
+        
+        return $resultSet;
+    }
+
+    public function updateNotificacion($notificacion, $id)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        
+        if ($notificacion != null) {
+            $delete = $this->tableGateway->getSql()
+                ->delete()
+                ->from('ta_notificacion_has_ta_usuario')
+                ->where(array(
+                'ta_usuario_in_id' => $id
+            ));
+            $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
+            $adapter1 = $this->tableGateway->getAdapter();
+            $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
+            foreach ($notificacion as $key => $value) {
+                $update = $this->tableGateway->getSql()
+                    ->insert()
+                    ->into('ta_notificacion_has_ta_usuario')
+                    ->values(array(
+                    'ta_usuario_in_id' => $id,
+                    'ta_notificacion_in_id' => $value
+                ));
                 
+                $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+                $adapter2 = $this->tableGateway->getAdapter();
+                $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
+                                       }
+                                    }
      }
      
      public function unirseGrupo($idgrup,$iduser){
