@@ -310,6 +310,10 @@ class EventoController extends AbstractActionController
         )
         ;
     }
+    
+    public function unirAction(){
+        return array();
+    }
 
     public function fooAction()
     {
