@@ -148,23 +148,23 @@ class EventoTable{
      }
      
      
-     public function unirseEvento($idgrup,$iduser){
+     public function unirseEvento($idevent,$iduser){
            $insert = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo'));
+                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo'));
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($insert);
            $adapter=$this->tableGateway->getAdapter();
            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$row) {
-            throw new \Exception("No se puede unir al grupo");
+            throw new \Exception("No se puede unir al evento");
             }
           return true;
 
      }
      
-     public function retiraEvento($idgrup,$iduser){
+     public function retiraEvento($idevent,$iduser){
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
                     ->set(array('va_estado'=>'desactivo'))
-                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
+                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));  
            $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
            $adapter=$this->tableGateway->getAdapter();
            $row=$adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);  

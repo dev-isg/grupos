@@ -86,6 +86,33 @@ class GrupoTable{
         return $row;
     }
     
+    public function grupoxUsuario($idgrupo)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario')
+        ->join('ta_grupo','ta_usuario.in_id=ta_grupo.ta_usuario_in_id',array('*'), 'left')
+        ->where(array('ta_grupo.in_id'=>$idgrupo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+    public function usuariosUnidosGrupo($idgrupo)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario_has_ta_grupo')
+        ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('*'), 'left')
+        ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id'=>$idgrupo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+    
   public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null){
       
 //      $pais=$grupo->pais;
