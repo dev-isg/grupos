@@ -253,14 +253,21 @@ class IndexController extends AbstractActionController
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
-        // var_dump($eventos);exit;
+        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        if ($session) {            
+            $activo=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
+        }
         return array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
             'proximos_eventos' => $proximos_eventos,
-            'in_id'=>$id
+            'in_id'=>$id,
+            'session'=>$session,
+            'participa'=>$activo
         );
     }
 
