@@ -281,9 +281,9 @@ class EventoController extends AbstractActionController
         
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
-//         if (! $storage) {
-//             return $this->redirect()->toRoute('grupo');
-//         }
+        if ($session) {
+            $activo=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
+        }
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
@@ -306,9 +306,114 @@ class EventoController extends AbstractActionController
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'idevento' => $id,
-            'session'=>$session
+            'session'=>$session,
+            'participa'=>$activo
         )
         ;
+    }
+    
+    public function unirAction(){
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        if (! $storage) {
+            return $this->redirect()->toRoute('grupo');
+        }
+           
+        $iduser = $storage->read()->in_id; 
+        $idevent = $this->params()->fromQuery('idE');
+        $unir = $this->params()->fromQuery('act');
+        if ($unir == 1) {
+            if ($this->getEventoTable()->unirseEvento($idevent, $iduser)) {
+                $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
+                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Uds. se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
+                
+                                                     </div>
+                                               </body>
+                                               </html>';
+                
+                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al evento');
+                $usuario = $this->getEventoTable()
+                ->eventoxUsuario($idgrup)
+                ->toArray();
+                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     El siguiente usuario se ha unido a tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
+                
+                                                     </div>
+                                               </body>
+                                               </html>';
+                if ($usuario) {
+                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
+                }
+                        
+            }
+            
+        }elseif ($unir==0){
+            if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
+                $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
+                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Uds. se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
+                
+                                                     </div>
+                                               </body>
+                                               </html>';
+                
+                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Has abandonado un evento');
+                $usuario = $this->getEventoTable()
+                ->eventoxUsuario($idgrup)
+                ->toArray();
+                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     El siguiente usuario ha dejado tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
+                
+                                                     </div>
+                                               </body>
+                                               </html>';
+                if ($usuario) {
+                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Abandonaron tu evento');
+                }
+            
+            }
+            
+        }
+        return array();
+    }
+    
+    public function mensaje($mail,$bodyHtml,$subject){
+        $message = new Message();
+        $message->addTo($mail, $nombre)
+        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setSubject($subject);
+        // ->setBody($bodyHtml);
+        $bodyPart = new \Zend\Mime\Message();
+        $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+        $bodyMessage->type = 'text/html';
+        $bodyPart->setParts(array(
+            $bodyMessage
+        ));
+        $message->setBody($bodyPart);
+        $message->setEncoding('UTF-8');
+    
+        $transport = $this->getServiceLocator()->get('mail.transport');
+        $transport->send($message);
     }
 
     public function fooAction()

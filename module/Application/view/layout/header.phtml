@@ -62,17 +62,20 @@
                 <div class="row-fluid">
                     <div class="span9 form-search">
                         <form METHOD="post" class="form-search span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/grupo/index/index">
-                            <input type="text" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
+                            <input type="text" value="<?php  if($_POST['dato']){  
+                                $filter = new \Zend\I18n\Filter\Alnum(true);
+                                $nombre = trim($filter->filter($_POST['dato']));
+                                echo $nombre;} else{echo $_COOKIE['dato'];} ?>" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
                             <ul class="dropdown-menu" id="menu-categoria">
+                                <?php 
+                                       foreach ($this->categorias  as $categorias) :
+                                 ?>
                                 <li class="man-dev">
                                     <ul>  
-                                        <?php 
-//                                         foreach ($this->categorias  as $categorias) :
-//                                         ?>
-                                        <li><a href="<?php //echo $this->host('ruta')?>/grupo/index/index?categoria=<?php //echo $this->escapeHtml($categorias->in_id); ?>"><?php //echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                                        <?php //endforeach; ?>  
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                     </ul>
-                                </li>       
+                                </li> 
+                                 <?php endforeach; ?>  
                             </ul>
                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
                         </form>
