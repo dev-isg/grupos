@@ -270,6 +270,7 @@ class IndexController extends AbstractActionController
             'usuarios' => $usuarios,
             'proximos_eventos' => $paginator2,
             'session'=>$session,
+            'in_id'=>$id,
             'participa'=>$activo
         );
     }
