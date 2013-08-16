@@ -48,25 +48,13 @@ class IndexController extends AbstractActionController
         // }
         // Agregando script en el index
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
-        // $listaEventos =$this->getEventoTable()->listadoEvento();
-        
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categoria = $categorias;
         $nombre = $this->params()->fromPost('dato');
         $submit = $this->params()->fromPost('submit');
         $valor = $this->params()->fromQuery('tipo');
         $tipo = $this->params()->fromQuery('categoria');
-        
-        // $container = new \Zend\Session\Container('Grupo\Controller');
-        // $container->idgrupo = $this->getGrupoTable()->usuarioxGrupo(1);
-        // $listagrupos=$this->getGrupoTable()->fetchAll();
-        // $this->_helper->layout->disableLayout();
-        // $submit=$this->params()->fromPost('submit');
-        
-        // var_dump($tipo);exit;
-        // $nombre=$this->params()->fromPost('nombre');s
-        
         $request = $this->getRequest();
         if (empty($valor) and empty($tipo) and ! $request->isPost()) {
             $listaEventos = $this->getEventoTable()->listadoEvento();
@@ -74,8 +62,10 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             if ($nombre) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+            //    if(count($grupo)
                 if (count($grupo) > 0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+ 
                 } else {
                     $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                 }
@@ -86,6 +76,7 @@ class IndexController extends AbstractActionController
                 $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
             } else {
                 $listagrupos = $this->getGrupoTable()->fetchAll();
+                
             }
         }
         if ($valor) {
@@ -96,9 +87,20 @@ class IndexController extends AbstractActionController
             }
         }
         
+         
+        if(count($listaEventos)>0)
+        { $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator->setItemCountPerPage(8);}
+        else{
+        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
+        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator2->setItemCountPerPage(8);}
+
+        
         return array(
-            'grupos' => $listagrupos,
-            'eventos' => $listaEventos,
+            'grupos' => $paginator2,
+            'eventos' => $paginator,
             'dato' => $valor
         );
     }
