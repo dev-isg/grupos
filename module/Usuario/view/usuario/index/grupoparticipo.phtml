@@ -11,56 +11,24 @@
 				<div class="row-fluid">
 					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
 	                    <ul>
-	                        <!-- ITEM -->
+                               <?php  foreach ($this->grupospertenece  as $grupospertenece) :?>
 	                        <li data-category="web">
-	                            <a href="detalle-grupo.html" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/1.jpg" alt=""/>
+	                            <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupospertenece->id); ?>" class="preview" data-ui-lightbox>
+	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupospertenece->imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
 	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Web</a></span>
+	                                    <span><?php  $fecha = date_create($this->escapeHtml($grupospertenece->fecha));
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></span>
+	                                    <span class="category"><a href="#"><?php echo  $this->escapeHtml($grupospertenece->nombre_categoria);?></a></span>
 	                                </div>
-	                                <h2><a href="#">Tumidei Spa</a></h2>
+	                                <h2><a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupospertenece->id); ?>"><?php echo  $this->escapeHtml($grupospertenece->nombre);?></a></h2>
 	                                <p>
-	                                    Corporate web site. Html5. Responsive.
+	                          <?php echo $this->escapeHtml($grupospertenece->descripcion); ?>
 	                                </p>
 	                            </div>
 	                        </li>
-	                        <!-- ITEM -->
-
-	                        <li data-category="art">
-	                            <a href="#" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/2.jpg" alt=""/>
-	                            </a>
-	                            <div class="content">
-	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Art</a></span>
-	                                </div>
-	                                <h2><a href="#">Crazy Home</a></h2>
-	                                <p>
-	                                    Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
-	                                </p>
-	                            </div>
-	                        </li>  
-	                         <!-- ITEM -->
-	                        <li data-category="foto">
-	                             <a href="#" class="preview" data-ui-lightbox>
-	                                <img src="../../img/eventos/3.jpg" alt=""/>
-	                            </a>
-	                            <div class="content">
-	                                <div class="info">
-	                                    <span>2013</span>
-	                                    <span class="category"><a href="#">Lo Studio</a></span>
-	                                </div>
-	                                <h2><a href="#">Overdrive</a></h2>
-	                                <p>
-	                                    I nostro Quartier Generale. Lissone. Piazzale Giotto 1.
-	                                </p>
-	                            </div>
-	                        </li> 
-
+	                    <?php endforeach;  ?>
 	                    </ul>               
 	                </div> 
 				</div>
@@ -70,56 +38,26 @@
 				<div class="row-fluid">
 					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
 		                <ul>
-		                    <!-- ITEM -->
-		                    <li data-category="web">
-		                        <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/1.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Web</a></span>
-		                            </div>
-		                            <h2><a href="#">Tumidei Spa</a></h2>
-		                            <p>
-		                                Corporate web site. Html5. Responsive.
-		                            </p>
-		                        </div>
-		                    </li>
-		                    <!-- ITEM -->
+		                     <?php  foreach ($this->otrosgrupos  as $otrosgrupos) :?>
+	                        <li data-category="web">
+	                            <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($otrosgrupos->id); ?>" class="preview" data-ui-lightbox>
+	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($otrosgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
+	                            </a>
+	                            <div class="content">
+	                                <div class="info">
+	                                    <span><?php  $fecha = date_create($this->escapeHtml($otrosgrupos->fecha));
+                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></span>
+	                                    <span class="category"><a href="#"><?php echo  $this->escapeHtml($otrosgrupos->nombre_categoria_similar);?></a></span>
+	                                </div>
+	                                <h2><a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($otrosgrupos->in_id); ?>"><?php echo  $this->escapeHtml($otrosgrupos->va_nombre);?></a></h2>
+	                                <p>
+	                          <?php echo $this->escapeHtml($otrosgrupos->va_descripcion); ?>
+	                                </p>
+	                            </div>
+	                        </li>
+	                    <?php endforeach;  ?>
+		             
 
-		                    <li data-category="art">
-		                        <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/2.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Art</a></span>
-		                            </div>
-		                            <h2><a href="#">Crazy Home</a></h2>
-		                            <p>
-		                                Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
-		                            </p>
-		                        </div>
-		                    </li>  
-
-		                     <!-- ITEM -->
-		                    <li data-category="foto">
-		                         <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/3.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Lo Studio</a></span>
-		                            </div>
-		                            <h2><a href="#">Overdrive</a></h2>
-		                            <p>
-		                                I nostro Quartier Generale. Lissone. Piazzale Giotto 1.
-		                            </p>
-		                        </div>
-		                    </li> 
 		            	</ul>               
 		    		</div>
 				</div>

@@ -26,6 +26,7 @@ return array(
     ),
    'host' => array(
 
+
         'base' => 'http://192.168.1.35:82',
         'static' => 'http://192.168.1.35:82',
         'images' => 'http://192.168.1.35:82/imagenes',

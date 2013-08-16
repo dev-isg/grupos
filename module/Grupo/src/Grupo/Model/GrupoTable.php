@@ -202,10 +202,12 @@ class GrupoTable{
          $adapter = $this->tableGateway->getAdapter();
          $sql = new Sql($adapter);
          $selecttot = $sql->select()
+//          ->from('ta_grupo_has_ta_notificacion')
          ->from('ta_notificacion_has_ta_usuario')
          ->join('ta_usuario','ta_usuario.in_id=ta_notificacion_has_ta_usuario.ta_usuario_in_id',array(),'left')
+         ->join('ta_notificacion','ta_notificacion.in_id=ta_notificacion_has_ta_usuario.ta_notificacion_in_id',array('va_nombre'),'left')
          ->where(array('ta_usuario.in_id'=>$iduser));
-         //->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
+//          ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
 //          ->where(array('ta_grupo.ta_usuario_in_id'=>$iduser));
          $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //          var_dump($selectString);Exit;
@@ -218,10 +220,10 @@ class GrupoTable{
          $adapter = $this->tableGateway->getAdapter();
          $sql = new Sql($adapter);
                 foreach($notificacion as $key=>$value){
-                   $update = $this->tableGateway->getSql()->update()->table('ta_grupo_has_ta_notificacion')
-                      ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
-                      ->set(array('ta_grupo_has_ta_notificacion.ta_notificacion_in_id'=>$value))
-                      ->where(array('ta_grupo.ta_usuario_in_id'=>$id));
+                   $update = $this->tableGateway->getSql()->update()->table('ta_notificacion_has_ta_usuario')
+//                       ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
+                      ->set(array('ta_notificacion_has_ta_usuario.ta_notificacion_in_id'=>$value))
+                      ->where(array('ta_notificacion_has_ta_usuario.ta_usuario_in_id'=>$id));
                    $selectString = $sql->getSqlStringForSqlObject($update);
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 //                    var_dump($selectString);Exit;
@@ -318,10 +320,27 @@ class GrupoTable{
             $sql = new Sql($adapter);
             $select = $sql->select();
                  $select->from('ta_evento')
-           ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
+      //    ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_evento_in_id)')),'left')                
+          ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+    
+public function misgrupos($id)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+          ->from('ta_grupo')      
+      //   ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
+          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
+         ->where(array('ta_grupo.ta_usuario_in_id'=>$id));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        //   var_dump($selectString);exit;
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+            return $resultSet;
+    }
      
 }
+

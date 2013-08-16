@@ -118,7 +118,7 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario)
+    public function guardarUsuario(Usuario $usuario, $imagen)
     {
         // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
@@ -126,21 +126,23 @@ class UsuarioTable
             'va_email' => $usuario->va_email,
             'va_contrasena' => sha1($usuario->va_contrasena),
             'va_dni' => $usuario->va_dni,
-            'va_foto' => $usuario->va_foto['name'],
+//            'va_foto' => $usuario->va_foto['name'],
+            'va_foto' => $imagen,
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion
         // 'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
                 );
-        // var_dump($data);
-        // exit;
+//         print_r($imagen);
+//            exit;
+//         var_dump($data);
+//         exit;
         $id = (int) $usuario->in_id;
         
-        // foreach($data as $key=>$value){
-        // if(empty($value)){
-        // $data[$key]=0;
-        // }
-        // }
-        //
+        foreach($data as $key=>$value){
+           if(empty($value)){
+               $data[$key]=0;
+           }
+       }
         // var_dump($data);
         // exit();
         
@@ -158,4 +160,65 @@ class UsuarioTable
             }
         }
     }
+
+    
+        public function usuariosgrupos($id)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+          ->from('ta_usuario_has_ta_grupo')
+          ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
+          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
+          ->where(array('ta_usuario_has_ta_grupo.ta_usuario_in_id'=>$id));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+            return $resultSet;
+    }
+         public function categoriasunicas($id)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+          ->from('ta_usuario_has_ta_grupo')
+          ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
+          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' => 'va_nombre','idcategoria' =>'in_id'), 'left')              
+          ->where(array('ta_usuario_has_ta_grupo.ta_usuario_in_id'=>$id))
+           ->group('ta_categoria.va_nombre');         
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+            return $resultSet;
+    }
+    
+    public function grupossimilares($idcategoria,$id =null)
+    {
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+          ->from('ta_grupo')
+          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria_similar' =>'va_nombre'), 'left')
+       //  ->join('ta_usuario_has_ta_grupo','ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id')                 
+           ->where(array('ta_grupo.ta_categoria_in_id'=>$idcategoria,'ta_grupo.in_id<>?'=>$id));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
+            return $resultSet;
+    }
+    
+     public function updateNotificacion($notificacion,$id){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+                foreach($notificacion as $key=>$value){
+                   $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_notificacion')
+                      ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
+                      ->set(array('ta_grupo_has_ta_notificacion.ta_notificacion_in_id'=>$value))
+                      ->where(array('ta_grupo.ta_usuario_in_id'=>$id));
+                   $selectString = $sql->getSqlStringForSqlObject($update);
+                   $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//                    var_dump($selectString);Exit;
+                }
+                
+     }
+    
 }
+
+//,'ta_usuario_has_ta_grupo.ta_usuario_in_id<>?'=>$id

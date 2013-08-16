@@ -207,5 +207,165 @@ class Usuario implements InputFilterAwareInterface{
     }
     
     
+    public function getInputFilter2()
+    {
+         
+         if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory = new InputFactory();
+         
+            $inputFilter->add($factory->createInput(array(
+                        'name' => 'in_id',
+                        'required' => false,
+                        'filters' => array(
+                            array('name' => 'Int'),
+                        ),
+                    )));
+            
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_nombre',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 3,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+            
+            $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_email', 
+                'required' => false, 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ), 
+                'validators' => array( 
+                    array( 
+                        'name' => 'EmailAddress', 
+                        'options' => array( 
+                            'encoding' => 'UTF-8', 
+                            'min'      => 5, 
+                            'max'      => 255, 
+                            'messages' => array( 
+                                \Zend\Validator\EmailAddress::INVALID_FORMAT => 'Formato de Email Inválido' 
+                            ) 
+                        ), 
+                    ), 
+                ), 
+            ))); 
+            
+             $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_contrasena', 
+                'required' => false, 
+                'filters' => array( array('name' => 'StringTrim'), ), 
+                'validators' => array( 
+                    array( 
+                        'name' => 'StringLength', 
+                        'options' => array( 
+                            'encoding' => 'UTF-8', 
+                            'min'      => 6, 
+                            'max'      => 128, 
+                        ), 
+                    ), 
+                ), 
+            )));
+             
+            $inputFilter->add($factory->createInput(array( 
+                'name' => 'verificar_contrasena', 
+                'required' => false, 
+                'filters' => array ( array('name' => 'StringTrim'), ), 
+                'validators' => array( 
+                    array( 
+                        'name'    => 'StringLength', 
+                        'options' => array( 'min' => 6 ), 
+                    ), 
+                    array( 
+                        'name' => 'identical', 
+                        'options' => array('token' => 'va_contrasena' ) 
+                    ), 
+                ), 
+            )));
+             
+             $inputFilter->add($factory->createInput(array(
+                        'name' => 'va_dni',
+                        'required' => false,
+                        'filters' => array(
+                            array('name' => 'Int'),
+                        ),
+                    )));
+             
+            $inputFilter->add(
+                $factory->createInput(array(
+                    'name'     => 'va_foto',
+                    'required' => false,
+                     'validators' => array(
+//                    array(
+//                        'name'    => 'filemimetype',
+//                      //  'options' =>  array('mimeType' => 'image/png,image/x-png,image/jpg,image/gif,image/jpeg'),
+//                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
+//                    ),
+                    array(
+                        'name'    => 'filesize',
+                        'options' =>  array('max' => 204800),
+                    ),
+                  ),
+               ))
+            );
+            
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_genero',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 200,
+                        ),
+                    ),
+                ),
+            )));
+             
+              $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_descripcion',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 3,
+                            'max'      => 200,
+                        ),
+                    ),
+                ),
+            )));
+              
+              
+             $this->inputFilter = $inputFilter;
+         }
+        
+         return $this->inputFilter;
+         
+    }
+    
     
 }

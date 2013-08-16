@@ -325,6 +325,28 @@ class IndexController extends AbstractActionController
         }
     }
 
+
+//     public function detallegrupoAction()
+//     {
+
+        
+//         $id= $this->params()->fromQuery('id');
+//         $grupo=$this->getEventoTable()->grupoid($id);
+//         $eventospasados=$this->getEventoTable()->eventospasados($id);
+//         $eventosfuturos=$this->getEventoTable()->eventosfuturos($id);
+//         $usuarios=$this->getGrupoTable()->usuariosgrupo($id);
+//         $proximos_eventos=$this->getGrupoTable()->eventosgrupo($id);
+//       //  $miembros=$this->getGrupoTable()->miembros($id);
+//         //var_dump($eventos);exit;
+//        return array(
+//                      'grupo'=>$grupo,
+//             'eventosfuturos'=>$eventosfuturos,
+//             'eventospasados'=>$eventospasados,
+//                   'usuarios'=> $usuarios,
+//                   'proximos_eventos' =>$proximos_eventos,
+//          );
+//     }
+
     public function dejarAction()
     {
 //         $iduser = 1;

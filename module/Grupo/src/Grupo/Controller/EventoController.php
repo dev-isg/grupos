@@ -20,8 +20,9 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+
 use Grupo\Form\ComentarioForm;
-// use Usuario\Controller\IndexController;
+ use Usuario\Controller\IndexController;
 class EventoController extends AbstractActionController
 {
 
@@ -189,6 +190,7 @@ class EventoController extends AbstractActionController
 
     public function uploadAction()
     {}
+
     
     // public function comentariosAction(){
     // $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -206,14 +208,18 @@ class EventoController extends AbstractActionController
     // }
     // }
     // }
+
     public function miseventosAction()
     {
         $id = $this->params()->fromQuery('id');
+        $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = IndexController::headerAction($id);
         
-        return array(
-            'grupo' => $valor
-        );
+        return array
+      (
+            'grupo' => $valor,
+        'miseventos'=> $miseventos,
+       );
     }
 
     public function misgruposAction()
@@ -224,10 +230,13 @@ class EventoController extends AbstractActionController
     public function eventosparticipoAction()
     {
         $id = $this->params()->fromQuery('id');
+         $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
+   
         $valor = IndexController::headerAction($id);
         
         return array(
-            'grupo' => $valor
+            'grupo' => $valor,
+            'eventos'=>$eventosusuario
         );
     }
 
