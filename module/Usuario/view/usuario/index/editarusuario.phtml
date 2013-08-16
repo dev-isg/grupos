@@ -129,17 +129,31 @@
 	                    </div>
 	                    <span>x</span>
 	                    <div class="notificaciones">
-	                        <form action="" id="notificaciones"> 
-	                        <h3>Notificaciones</h3>                           
-	                            <label for="">
-	                            <input type="checkbox" name="noti" id="noti">
-	                            Recibir avisos por email cuando ingresa al Grupo 
-	                            </label>
-	                             <label for="">
-	                            <input type="checkbox" name="noti" id="noti">
-	                            Recibir avisos por email cuando sale del Grupo 
-	                            </label> 
-	                        <input type="submit" value="Enviar">                           
+	                                <?php
+                            $formnotif = $this->formnotif;
+                            
+                            $formnotif->setAttributes(array(
+                                'action' => $this->url.'/usuario/index/editarusuario',
+                                'method' => 'post',
+                                'class'=>'form-horizontal'
+                            ));
+
+                            $formnotif->prepare();
+                            echo $this->form()->openTag($formnotif);
+                            ?>
+<!-- 	                        <form action="" id="notificaciones">  -->
+	                        <h3>Notificaciones</h3>
+	                        <?php echo $this->formRow($formnotif->get('tipo_notificacion'));?>                           
+<!-- 	                            <label for=""> -->
+<!-- 	                            <input type="checkbox" name="noti" id="noti"> -->
+<!-- 	                            Recibir avisos por email cuando ingresa al Grupo  -->
+<!-- 	                            </label> -->
+<!-- 	                             <label for=""> -->
+<!-- 	                            <input type="checkbox" name="noti" id="noti"> -->
+<!-- 	                            Recibir avisos por email cuando sale del Grupo  -->
+<!-- 	                            </label>  -->
+<!-- 	                        <input type="submit" value="Enviar">                            -->
+	                        <?php echo $this->formSubmit($formnotif->get('submit'));?>
 	                        </form>
 	                    </div>                   
 	                </div>
