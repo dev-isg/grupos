@@ -217,17 +217,17 @@
       e.preventDefault();
       var activo = 1;
       $.ajax({
-              url: '/grupo/evento/unir',
-              type: 'get',
-              data: 'act=' + activo +'&idE='+even,
-              dataType: "json",
-              success: function(data){
-                 alert('Te envie  el dato');
-              },
-              error: function(){
-                  console.log('Fallo conectando con el servidor')
-              }
-          });
+        url: '/grupo/evento/unir',
+        type: 'get',
+        data: 'act=' + activo +'&idE='+even,
+        dataType: "json",
+        success: function(data){
+           alert('Te envie  el dato');
+        },
+        error: function(){
+            console.log('Fallo conectando con el servidor')
+        }
+      });
     });
   }
 
