@@ -62,6 +62,7 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             if ($nombre) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+            //    if(count($grupo)
                 if (count($grupo) > 0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
  
