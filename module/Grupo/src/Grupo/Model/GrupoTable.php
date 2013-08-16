@@ -42,7 +42,7 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 
 //            var_dump($resultSet->toArray());exit;
-        return $resultSet;
+        return $resultSet->buffer();
     }
     
     
@@ -60,7 +60,7 @@ class GrupoTable{
                 $selecttot->where(array('ta_grupo.ta_categoria_in_id'=>$tipo));
             }
             if($nombre!=null){
-                $selecttot->where(array('ta_grupo.va_nombre'=>$nombre));
+                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%'));
                 
             }
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
@@ -69,7 +69,7 @@ class GrupoTable{
            // var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             
-            return $resultSet;
+            return $resultSet->buffer();
         
     }
     public function getGrupo($id)

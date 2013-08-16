@@ -6,8 +6,7 @@
                     <div class="span12 main wrapper" id="content" data-ui-scrollbar>
                         <ul>
                             <div><?php echo $this->dato;?></div>        
-                            <?php if($this->grupos =='' ) { 
-                   
+                            <?php if(count($this->grupos)<=0) { 
                             foreach ($this->eventos  as $eventos) :?>
                             <li data-category="web">
                                 <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->in_id); ?>" class="preview" data-ui-lightbox>
@@ -30,7 +29,15 @@
                                     </p>
                                 </div>
                             </li>
-                            <?php endforeach; } else  { foreach ($this->grupos  as $grupos) :?>
+                            <?php endforeach; ?>
+                            
+                            <div id="pagina">
+        <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?')):""; ?>
+      </div>  
+                    <?php        } 
+                            
+                            
+                            else  { foreach ($this->grupos  as $grupos) :?>
                             <li data-category="web">
                                 <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupos->in_id); ?>" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>">
@@ -52,7 +59,18 @@
                                     </p>
                                 </div>
                             </li>
-                            <?php endforeach;} ?> 
+                            <?php endforeach;
+                            
+                            
+                            ?>
+                            
+                                          <div id="pagina">
+        <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?tipo=Grupos&')):""; ?>
+      </div>  
+                            <?php
+                            }
+                            
+                            ?> 
                                     
                             </li>
                         </ul>
