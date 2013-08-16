@@ -172,13 +172,13 @@
                     <div class="row-fluid">
                       <div class="span12 btn-unete">
                       <?php if($session){?>
-                                <?php if($participa){?>
-                                <a href="#" class="btn btn-success" id="uneteEvent">Unete al evento</a> 
-                                <?php }else{?>
-                                <a href="#" class="btn btn-danger" id="uneteEvent">Unete al evento</a> 
-                                <?php }?>
+                          <?php if($participa){?>
+                          <a href="#" class="btn btn-danger" id="uneteAbEvent">Abandona el evento</a> 
+                          <?php }else{?>
+                          <a href="#" class="btn btn-success" id="uneteEvent">Unete al evento</a> 
+                          <?php }?>
                         <?php }else{?>
-                        <a href="#" class="btn btn-danger" id="uneteEvent">Unete al evento</a> 
+                          <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al evento</a> 
                         <?php }?>                       
                       </div>
                     </div>
@@ -217,6 +217,7 @@
   
   $(document).on('ready', function(){   
     enviarDatos();
+    abandonarDatos();
   });
 
   function enviarDatos(){
@@ -225,17 +226,37 @@
       e.preventDefault();
       var activo = 1;
       $.ajax({
-              url: '/grupo/evento/unir',
-              type: 'get',
-              data: 'act=' + activo +'&idE='+even,
-              dataType: "json",
-              success: function(data){
-                 alert('Te envie  el dato');
-              },
-              error: function(){
-                  console.log('Fallo conectando con el servidor')
-              }
-          });
+        url: '/grupo/evento/unir',
+        type: 'get',
+        data: 'act=' + activo +'&idE='+even,
+        dataType: "json",
+        success: function(data){
+           alert('Te envie  el dato');
+        },
+        error: function(){
+            console.log('Fallo conectando con el servidor')
+        }
+      });
+    });
+  }
+
+  function abandonarDatos(){
+    var even = <?php echo $this->idevento; ?>;
+    $("#uneteAbEvent").on('click', function(e){
+      e.preventDefault();
+      var activo = 0;
+      $.ajax({
+        url: '/grupo/evento/unir',
+        type: 'get',
+        data: 'act=' + activo +'&idE='+even,
+        dataType: "json",
+        success: function(data){
+           alert('Te envie  el dato');
+        },
+        error: function(){
+            console.log('Fallo conectando con el servidor')
+        }
+      });
     });
   }
 
