@@ -275,7 +275,8 @@ class IndexController extends AbstractActionController
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
-            'proximos_eventos' => $proximos_eventos
+            'proximos_eventos' => $proximos_eventos,
+            'in_id'=>$id
         );
     }
 
@@ -288,8 +289,8 @@ class IndexController extends AbstractActionController
         
         $iduser = $storage->read()->in_id; // 1;
         $idgrup = $this->params()->fromRoute('in_id'); // 48;
-        $unir = $this->params()->fromPost();
-        
+        $unir = $this->params()->fromQuery('atc');
+//         var_dump($unir);exit;
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
                 // $user_info = $this->getGrupoTable()->usuarioxGrupo(1);

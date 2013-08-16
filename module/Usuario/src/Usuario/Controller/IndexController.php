@@ -185,12 +185,12 @@ class IndexController extends AbstractActionController
         $formNotif->get('submit')->setAttribute('value', 'Editar');
         //populate elementos del check
         $not=$this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
-//         var_dump($not);Exit;
         $aux = array();
-        foreach($not as $key=>$value){
-                $aux[$key]=$key;
-                $formNotif->get('tipo_notificacion')->setAttribute('value', $aux);
-           }
+        foreach($not as $value){
+            $aux[$value['ta_notificacion_in_id']]=$value['ta_notificacion_in_id'];
+            $formNotif->get('tipo_notificacion')->setAttribute('value', $aux);
+        }
+
 
         $request = $this->getRequest();
         
@@ -239,15 +239,7 @@ class IndexController extends AbstractActionController
                 }
             }
             
-            
-            var_dump($request->getPost());exit;
-            $formNotif->setData($request->getPost());
-            if($formNotif->isValid()){
-                $data=$formNotif->getData();
-               
-                $this->getGrupoTable()->updateNotificacion($data,$storage->read()->in_id); 
-                
-            }
+         
         }
         
         return array(
@@ -260,13 +252,15 @@ class IndexController extends AbstractActionController
     }
     
     public function notificarAction(){
-           
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
         $request=$this->getRequest();
         if($request->isPost()){
-            $form->setData($this->getRequest()->getPost());
-            if($form->isValid()){
-                
-            }
+//             $formNotif->setData($request->getPost());
+//             if($formNotif->isValid()){
+                $data=$request->getPost('tipo_notificacion');
+                $this->getGrupoTable()->updateNotificacion($data,$storage->read()->in_id); 
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
+//             }
         }
         
         return array();
