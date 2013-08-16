@@ -82,6 +82,7 @@ class AuthController extends AbstractActionController
                 // check authentication...
                 $nombre = $request->getPost('va_nombre');
                 $contrasena = $request->getPost('va_contrasena');
+//                 var_dump($contrasena);Exit;
                 $this->getAuthService()
                     ->getAdapter()
                     ->setIdentity($nombre)

@@ -282,7 +282,8 @@ class EventoController extends AbstractActionController
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if ($session) {
-            $activo=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
+            $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
+            $activo=$participa->va_estado=='activo'?true:false;
         }
         $request = $this->getRequest();
         if ($request->isPost()) {

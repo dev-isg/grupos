@@ -365,7 +365,7 @@ class GrupoTable{
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     
-        return $resultSet;
+        return $resultSet->current();
     
     }
     
