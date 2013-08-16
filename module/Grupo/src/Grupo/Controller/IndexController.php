@@ -84,7 +84,8 @@ class IndexController extends AbstractActionController
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
-            'dato' => $valor );
+             'dato' => $valor 
+          );
     }
 
     public function getEventoTable()
