@@ -76,6 +76,7 @@ class AuthController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             
+//             var_dump($request->getPost('accion'));exit;
             $form->setData($request->getPost());
             if ( $form->isValid()) { //
                        
@@ -95,7 +96,14 @@ class AuthController extends AbstractActionController
                 }
                 
                 if ($result->isValid()) {
-                    $redirect = 'success';
+//                     $redirect = 'success';
+                    $accion=$request->getPost('accion');
+                    if($accion=='detalleevento'){
+                        $redirect = 'evento';
+                    }elseif($accion=='detallegrupo'){
+                        $redirect = 'grupo';
+                    }
+                    
                     
                     // check if it has rememberMe :
                     // if ($request->getPost('rememberme') == 1 ) {
@@ -119,7 +127,7 @@ class AuthController extends AbstractActionController
             }
         }
         
-        return $this->redirect()->toRoute($redirect);
+        return $this->redirect()->toRoute($redirect);//$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
 
     public function logoutAction()

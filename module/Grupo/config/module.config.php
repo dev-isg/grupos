@@ -53,6 +53,17 @@ return array(
                     )
                 ),
                ),
+            'evento' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/evento[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Evento',
+                        'action' => 'detalleevento'
+                    )
+                ),
+            ),
+            
                
         ),
     ),
@@ -73,6 +84,9 @@ return array(
         ),
         'template_path_stack' => array(
             'grupo' => __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 
