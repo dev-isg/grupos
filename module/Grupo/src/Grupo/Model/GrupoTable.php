@@ -13,42 +13,21 @@ class GrupoTable{
         $this->tableGateway=$tableGateway;
     }
     
-    public function fetchAll($id=null){
-//        primera forma: tienes q poner los alias en el modelo sino no funciona
-//        $sqlSelect = $this->tableGateway->getSql()->select()
-//            ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array(),'left')
-//            ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
-//            ->join(array('u'=>'ta_ubigeo'),'ta_ubigeo_in_id=u.in_id',array('va_pais','va_departamento','va_provincia','va_distrito'),'left')
-//            ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
-//        
-//       $resultSet = $this->tableGateway->selectWith($sqlSelect);
-
+    public function fetchAll($id=null)
+       {
             $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_grupo')
                     ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
-                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
-//                    ->join(array('u'=>'ta_ubigeo'),'ta_ubigeo_in_id=u.in_id',array('va_pais','va_departamento','va_provincia','va_distrito'),'left');
-                    
-//            if($id!=null){
-//                $selecttot->join(array('gn'=>'ta_grupo_has_ta_notificacion'),'ta_grupo.in_id=gn.ta_grupo_in_id',array(),'left');
-////                $selecttot->join(array('tn'=>'ta_notificacion'),'gn.ta_notificacion_in_id=tn.in_id',array('tipo_notificacion'=>'in_id'),'left');
-//                $selecttot->where(array('ta_grupo.in_id'=>$id));
-//            }
+                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
+             ->where(array('ta_grupo.va_estado'=>'activo'));
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-         //   var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-
-//            var_dump($resultSet->toArray());exit;
         return $resultSet->buffer();
-    }
-    
-    
-  
-    
-    
+       }
+
     public function buscarGrupo($nombre=null,$tipo=null){
             $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
@@ -60,7 +39,8 @@ class GrupoTable{
                 $selecttot->where(array('ta_grupo.ta_categoria_in_id'=>$tipo));
             }
             if($nombre!=null){
-                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%'));
+                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%'))
+                         ->where(array('ta_grupo.va_estado'=>'activo'));
                 
             }
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
@@ -361,6 +341,7 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+
     
     public function getGrupoUsuario($idgrupo,$iduser){
         $adapter = $this->tableGateway->getAdapter();
@@ -376,6 +357,7 @@ class GrupoTable{
         }
         return $row;
     }
+
     
     public function compruebarUsuarioxGrupo($iduser,$idgrupo){
         
@@ -394,16 +376,17 @@ class GrupoTable{
     
       public function eventosgrupo($id)
     {  
-         $fecha = date("Y-m-d h:m:s"); 
+         //$fecha = date("Y-m-d h:m:s"); 
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $select = $sql->select();
                  $select->from('ta_evento')
-      //    ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_evento_in_id)')),'left')                
-          ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_fecha>?'=>$fecha));
+        // ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_usuario_in_id=ta_evento.ta_usuario_in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_in_id)')),'left')                
+       //  ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array(),'left')                
+         ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        return $resultSet;
+        return $resultSet->buffer();
     }
     
 public function misgrupos($id)

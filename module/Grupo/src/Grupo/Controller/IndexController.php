@@ -84,7 +84,8 @@ class IndexController extends AbstractActionController
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
-            'dato' => $valor );
+             'dato' => $valor 
+          );
     }
 
     public function getEventoTable()
@@ -253,7 +254,9 @@ class IndexController extends AbstractActionController
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
-        
+        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
+        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator2->setItemCountPerPage(4); 
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if ($session) {            
@@ -265,9 +268,9 @@ class IndexController extends AbstractActionController
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
-            'proximos_eventos' => $proximos_eventos,
-            'in_id'=>$id,
+            'proximos_eventos' => $paginator2,
             'session'=>$session,
+            'in_id'=>$id,
             'participa'=>$activo
         );
     }
