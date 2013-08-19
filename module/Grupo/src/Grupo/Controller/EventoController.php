@@ -221,6 +221,9 @@ class EventoController extends AbstractActionController
 
     public function miseventosAction()
     {   
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
@@ -243,6 +246,9 @@ class EventoController extends AbstractActionController
 
     public function eventosparticipoAction()
     {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
