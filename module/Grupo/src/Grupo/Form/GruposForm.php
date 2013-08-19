@@ -92,7 +92,7 @@ class GruposForm extends Form
                 'label' => 'Nombre del Grupo :',          
             ),
             'attributes' => array(               
-                'class' => 'span12',
+                'class' => 'span12 gg',
                 'placeholder'=>'Ingrese el nombre del grupo…'
             ),
         ));  
@@ -171,7 +171,7 @@ class GruposForm extends Form
             'type' => 'Select',  
             
              'attributes' => array(               
-                'class' => 'span12 categoria-evento',
+                'class' => 'span12 categoria-evento gg',
 
             ),
            'options' => array('label' => 'Categoria del Grupo : ',

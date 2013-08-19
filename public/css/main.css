@@ -1241,8 +1241,15 @@ span.nm{
 #inline_evento{
   padding-bottom: 0!important;
 }
+.nmb1{
+  background: white;
+}
 .nmb{
   background: white;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
 }
 .space-group{
   padding: 10px 0px 10px 10px;
@@ -1313,6 +1320,17 @@ span.nm{
 .btn-unete{
   margin-top: 10px;
   text-align: center;
+}
+.space-group label span{
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.space-group label{
+  font-weight: bold;
+  margin-bottom: 5px;  
+}
+.gg{
+  margin-top: 7px;
 }
 /*Eventos*/
 

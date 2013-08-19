@@ -83,7 +83,8 @@
                          <?php  foreach ($this->usuarios  as $usuarios) :?>
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
-                               <img src="<?php   echo $this->host('images') . '/usuario/principal/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">
+                            	<img src="/img/foto-carnet.jpg">
+                               <!--<img src="<?php   echo $this->host('images') . '/usuario/principal/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">-->
                             </div>
                             <div class="span8 desc-user">
                                 <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>
