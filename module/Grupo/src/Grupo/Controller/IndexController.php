@@ -126,6 +126,8 @@ class IndexController extends AbstractActionController
 
     public function agregargrupoAction()
     {
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         if (! $storage) {
             return $this->redirect()->toRoute('grupo');
@@ -202,7 +204,9 @@ class IndexController extends AbstractActionController
     }
 
     public function editargrupoAction()
-    {
+    {   
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $id = (int) $this->params()->fromRoute('in_id', 0);
         if (! $id) {
             return $this->redirect()->toRoute('grupo', array(

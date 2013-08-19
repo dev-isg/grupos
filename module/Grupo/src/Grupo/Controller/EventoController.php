@@ -12,7 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
-// use Grupo\Controller\IndexController;
+//use Grupo\Controller\IndexController;
 use Grupo\Model\Evento;
 use Grupo\Model\EventoTable;
 use Grupo\Form\EventoForm;
@@ -49,7 +49,9 @@ class EventoController extends AbstractActionController
     }
 
     public function agregareventoAction()
-    {
+    {   
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $idgrupo = $this->params()->fromRoute('in_id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         if (! $storage) {
@@ -123,6 +125,8 @@ class EventoController extends AbstractActionController
         $idgrupo = $this->params()->fromRoute('in_id');
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->inlineScript()
             ->setScript('crearevento();')
@@ -215,7 +219,9 @@ class EventoController extends AbstractActionController
     // }
 
     public function miseventosAction()
-    {
+    {   
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
         $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = IndexController::headerAction($id);
@@ -234,6 +240,8 @@ class EventoController extends AbstractActionController
 
     public function eventosparticipoAction()
     {
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
    
@@ -266,9 +274,8 @@ class EventoController extends AbstractActionController
     public function detalleeventoAction()
     {
         $form = new ComentarioForm();
-        // $categor = IndexController::categorias();
-         //var_dump($categor);exit;
-    //  $this->layout()->categorias = $categor;
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $id = $this->params()->fromRoute('in_id');
         $evento = $this->getEventoTable()->Evento($id);

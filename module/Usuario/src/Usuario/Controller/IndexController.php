@@ -43,6 +43,8 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
@@ -58,6 +60,8 @@ class IndexController extends AbstractActionController
 
     public function misgruposAction()
     {
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
         $id = $this->params()->fromQuery('id');
@@ -75,7 +79,8 @@ class IndexController extends AbstractActionController
         // AGREGAR CSS
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
-        
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
             ->setScript('if( $("#registro").length){valregistro("#registro");};')
@@ -152,7 +157,8 @@ class IndexController extends AbstractActionController
     public function editarusuarioAction()
     {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
- 
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
             ->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
