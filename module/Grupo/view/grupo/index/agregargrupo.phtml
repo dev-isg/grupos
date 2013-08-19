@@ -15,7 +15,7 @@
                                  <select name="grupos" class="span11 nm-crear-grupo" id="crearGrupo">
                                     <option value="" label="..Elige un grupo..">..Elige un grupo..</option>
                                 <?php foreach($this->grupos as $grupo): ?>
-                                    <option value="<?php echo $grupo['ta_grupo_in_id'];?>" label="<?php echo $grupo['nom_grup'];?>"><?php echo $grupo['nom_grup'];?></option>
+                                    <option value="<?php echo $grupo->ta_grupo_in_id;?>" label="<?php echo $grupo->va_nombre;?>"><?php echo $grupo->va_nombre;?></option>
                                 <?php endforeach; ?>
                                </select>
                             </div>

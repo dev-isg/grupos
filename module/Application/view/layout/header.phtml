@@ -91,9 +91,11 @@
                             </ul>
                             <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
                         </form>
+                        <?php if(!$this->session){?>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
-                        <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
-                  <!-- $_COOKIE['tipo']=='Grupos' or-->
+                         <?php }else{?>
+                        <a href="<?php ?>" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <?php }?>
                     </div>
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio"> 

@@ -153,7 +153,7 @@ class IndexController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
         
         // $local = (int) $this->params()->fromQuery('id');
-        $user_info = $this->getGrupoTable()->usuarioxGrupo($storage->read()->in_id);
+        $user_info = $this->getGrupoTable()->misgrupos($storage->read()->in_id);//usuarioxGrupo($storage->read()->in_id);
         // var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
@@ -178,8 +178,8 @@ class IndexController extends AbstractActionController
                 $grupo->exchangeArray($form->getData());
                 if ($this->redimensionarImagen($File, $nonFile)) {
                     // obtiene el identity y consulta el
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id);
-                    return $this->redirect()->toRoute('grupo');
+                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id);
+                    return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -279,6 +279,9 @@ class IndexController extends AbstractActionController
 
     public function detallegrupoAction()
     {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();
