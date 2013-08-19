@@ -87,7 +87,11 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-      //  $categoria->layout()->categoria = new \Grupo\Controller\IndexController;
+     
+        
+        
+         //   $categorias->layout()->categorias = new \Grupo\Controller\IndexController();
+            //$categorias->layout()->categorias =$actionName;
 
 
     }

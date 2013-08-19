@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
 {
 
     protected $grupoTable;
-
+   // protected $categorias;
     protected $usuarioTable;
 
     protected $authservice;
@@ -45,7 +45,7 @@ class IndexController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categoria = $categorias;
+        $this->layout()->categorias = $categorias;
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
@@ -66,10 +66,11 @@ class IndexController extends AbstractActionController
                 { return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }
                 if (count($grupo)>0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-               } else { $listaEventos = $this->getEventoTable()->listado2Evento($nombre); }} }
-             
-               
-               
+               } else { $listaEventos = $this->getEventoTable()->listado2Evento($nombre); }}
+               else
+               {return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }   
+               }
+  
         if ($tipo) {//var_dump($rango);exit;
             if (!empty($rango)) {      
                 if($rango=='Grupos'){ $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
@@ -108,12 +109,14 @@ class IndexController extends AbstractActionController
           );
     }
 
-     public function categorias()
-    {
-      $this->getGrupoTable()->tipoCategoria();
-   
-    }
-    
+//     public function categorias()
+//    {        
+//        $this->categorias = $this->getGrupoTable()->tipoCategoria();
+//        $this->layout()->categoria = $this->categorias;
+//        return $this->categorias;
+//   
+//    }
+//     
     public function getEventoTable()
     {
         if (! $this->eventoTable) {
@@ -276,6 +279,8 @@ class IndexController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
