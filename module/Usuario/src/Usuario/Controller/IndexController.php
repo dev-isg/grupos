@@ -293,8 +293,6 @@ class IndexController extends AbstractActionController
             <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/misgrupos ">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href=" '.$ruta . '/usuario/index/editarusuario "  class="activomenu">Mi cuenta</a></li>
 
- 
-
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
           </div>                            
