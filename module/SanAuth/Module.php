@@ -85,12 +85,7 @@ class Module implements AutoloaderProviderInterface
             $actionName = $routeMatch->getParam('action', 'not-found');
             
             $controller->layout()->form = new \SanAuth\Form\UserForm();
-<<<<<<< HEAD
-      
-=======
             $controller->layout()->accion=$actionName;
-            
->>>>>>> 31ef8c00026ed2a4740e8b2876fa22b5f770cb15
             
             if ($actionName == 'login') {
                 if ($authAdapter->hasIdentity() === true) {
