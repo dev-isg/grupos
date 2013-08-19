@@ -89,36 +89,31 @@ if ($_POST['dato']) {
                                 foreach ($this->categorias as $categorias) :
                                     ?>
                                 <li class="man-dev">
-								<ul>
-									<li><a
-										href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-								</ul>
-							</li> 
+                                    <ul>  
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                    </ul>
+                                </li> 
                                  <?php endforeach; ?>  
                             </ul>
-						<input type="submit" class="btn btn-primary btn-evento-i"
-							value="Buscar" />
-					</form>
-					<a href="#inline_evento"
-						class="btn btn-success btn-home-evnt inlineEvento"><i
-						class="icon-white icon-ok"></i> Crear un evento</a>
-					<!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
-				</div>
-				<div class="span3 btn-evento">
-					<div class="btn-group group-right" data-toggle="buttons-radio">
-						<a class="btn btn-primary active "
-							href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
-						<a class="btn btn-primary  "
-							href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--Login-->
-	<div style='display: none'>
-		<div id='inline_evento' style='padding: 10px; background: #fff;'>
-			<h3>Iniciar sesión</h3>
+                            <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
+                        </form>
+                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
+                  <!-- $_COOKIE['tipo']=='Grupos' or-->
+                    </div>
+                    <div class="span3 btn-evento">
+                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
+                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?>" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
+                            <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?>"  href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Login-->
+        <div style='display:none'>
+            <div id='inline_evento' style='padding:10px; background:#fff;'>
+                <h3>Iniciar sesión</h3>
                 <?php
                 $form = $this->formlogeo;
                 $form->setAttributes(array(
