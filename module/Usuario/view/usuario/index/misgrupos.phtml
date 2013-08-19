@@ -13,7 +13,7 @@
 	                    <ul>
 	                      <?php  foreach ($this->misgrupos  as $misgrupos) :?>
 	                        <li data-category="web">
-	                            <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($misgrupos->in_id); ?>" class="preview" data-ui-lightbox>
+	                            <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($misgrupos->in_id); ?>" class="preview" data-ui-lightbox>
 	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($misgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
@@ -22,7 +22,7 @@
                                          echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
 	                                    <span class="category"><a href="#"> <?php echo  $this->escapeHtml($misgrupos->nombre_categoria);?></a></span>
 	                                </div>
-	                                <h2><a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($misgrupos->in_id); ?>"><?php echo  $this->escapeHtml($misgrupos->va_nombre);?></a></h2>
+	                                <h2><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($misgrupos->in_id); ?>"><?php echo  $this->escapeHtml($misgrupos->va_nombre);?></a></h2>
 	                                <p>
 	                                    <?php echo  $this->escapeHtml($misgrupos->va_descripcion);?>
 	                                </p>

@@ -26,7 +26,8 @@ use Zend\View\Model\JsonModel;
 
 
 use Grupo\Form\ComentarioForm;
- use Usuario\Controller\IndexController;
+
+//   use Usuario\Controller\IndexController;
 
 class EventoController extends AbstractActionController
 {
@@ -223,6 +224,8 @@ class EventoController extends AbstractActionController
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = IndexController::headerAction($id);
         
@@ -243,6 +246,8 @@ class EventoController extends AbstractActionController
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
    
         $valor = IndexController::headerAction($id);
@@ -313,6 +318,9 @@ class EventoController extends AbstractActionController
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
         
+
+
+         
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -327,6 +335,12 @@ class EventoController extends AbstractActionController
         )
         ;
     }
+    
+//     public function listauserAction(){
+//         $usuarios = $this->getEventoTable()->usuariosevento($id);
+//         $result = new JsonModel(array('usuarios'=>$usuarios));
+//         return $result;
+//     }
     
     
     public function unirAction(){
@@ -414,13 +428,24 @@ class EventoController extends AbstractActionController
         
 //             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
 //             $activo=$participa->va_estado=='activo'?true:false;
-
         $result = new JsonModel(array(
-            'estado' =>$activo
+            'estado' =>$activo,
         ));
         
         return $result;
     }
+    
+//     public function eventouserAction(){
+//         $id=$this->params()->fromQuery('id');
+//         $usuarios = $this->getEventoTable()->usuariosevento($id);
+// //         var_dump($usuarios->toArray());Exit;
+//         $result = new JsonModel(
+//            $usuarios->toArray()
+//         );
+//         return $result;
+        
+//     }
+    
     
     public function mensaje($mail,$bodyHtml,$subject){
         $message = new Message();

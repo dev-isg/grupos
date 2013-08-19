@@ -43,16 +43,26 @@ return array(
                     ),
                 ),
             ),
-            'grupo' => array(
+//             'detalle-grupo' => array(
+//                 'type' => 'Segment',
+//                 'options' => array(
+//                     'route' => '/grupo[/:in_id]',
+//                     'defaults' => array(
+//                         'controller' => 'Grupo\Controller\Index',
+//                         'action' => 'detallegrupo'
+//                     )
+//                 ),
+//                ),
+            'agregar-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route' => '/grupo[/:in_id]',
                     'defaults' => array(
                         'controller' => 'Grupo\Controller\Index',
-                        'action' => 'detallegrupo'
+                        'action' => 'agregargrupo'
                     )
                 ),
-               ),
+            ),
             'evento' => array(
                 'type' => 'Segment',
                 'options' => array(

@@ -43,9 +43,12 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
+
+        $categoria = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;//$this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         $categorias = $this->getUsuarioTable()->categoriasunicas($id)->toArray();
@@ -53,7 +56,7 @@ class IndexController extends AbstractActionController
         {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$categorias[$i]['id']);}
         return array(
             'grupo' => $valor,
- 'grupospertenece'  =>$usuariosgrupos,
+        'grupospertenece'  =>$usuariosgrupos,
        'otrosgrupos'=>$otrosgrupos,
         );
     }
@@ -64,7 +67,8 @@ class IndexController extends AbstractActionController
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
-        $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
         $misgrupos = $this->getGrupoTable()->misgrupos($id);
         $valor = $this->headerAction($id);
         
@@ -166,7 +170,7 @@ class IndexController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         
-        $id = (int) $this->params()->fromRoute('in_id', 0);
+        $id = $storage->read()->in_id;//(int) $this->params()->fromRoute('in_id', 0);
         if (! $id) {
             return $this->redirect()->toRoute('usuario', array(
                 'action' => 'agregarusuario'
@@ -278,16 +282,18 @@ class IndexController extends AbstractActionController
         // $ruta = $this->host('ruta');
         $usuario = $this->getUsuarioTable()->getUsuario($id);
         $nombre = $usuario->va_nombre;
-        
+//         '.$this->redirect()->toRoute("login/process",array("action"=> "authenticate")).'
         $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/grupoparticipo?id='.$id.'">Grupos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/eventosparticipo?id='.$id.'">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/grupo/evento/miseventos?id='.$id.'">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" ' . $ruta . '/usuario/index/misgrupos?id='.$id.'  ">Mis Grupos</a></li>
-            <li><i class="icon-cuenta"></i> <a href=" ' . $ruta . '/usuario/index/editarusuario/'.$id.' "  class="activomenu">Mi cuenta</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/grupoparticipo ">Grupos donde participo</a></li>  
+            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/grupo/evento/eventosparticipo ">Eventos donde participo</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/grupo/evento/miseventos ">Mis Eventos</a></li>
+            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/misgrupos ">Mis Grupos</a></li>
+            <li><i class="icon-cuenta"></i> <a href=" '.$ruta . '/usuario/index/editarusuario "  class="activomenu">Mi cuenta</a></li>
+
+ 
 
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 

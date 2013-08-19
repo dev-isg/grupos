@@ -102,6 +102,10 @@ class AuthController extends AbstractActionController
                     }elseif($accion=='detallegrupo'){
                         $redirect = 'grupo';
                     }
+                    elseif($accion=='index'){
+//                         var_dump($accion);exit;
+                        $redirect = 'agregar-grupo';
+                    }
                     
                     
                     // check if it has rememberMe :
@@ -125,8 +129,8 @@ class AuthController extends AbstractActionController
                 
             }
         }
-        
-        return $this->redirect()->toRoute($redirect);//$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+       
+        return $this->redirect()->toRoute($redirect, array('action'=>'agregargrupo'));//$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
 
     public function logoutAction()

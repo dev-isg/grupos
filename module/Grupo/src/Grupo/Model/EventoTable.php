@@ -339,6 +339,7 @@ class EventoTable{
     
      public function usuariosevento($id)
     {  
+//         $id=(int)$id;
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $select = $sql->select();

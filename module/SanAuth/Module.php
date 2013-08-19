@@ -46,7 +46,7 @@ class Module implements AutoloaderProviderInterface
                 
                 'AuthService' => function ($sm)
                 {
-                    $dbTableAuthAdapter = $sm->get('TableAuthService'); 
+                    $dbTableAuthAdapter = $sm->get('TableAuthService');
                     
                     $authService = new AuthenticationService();
                     $authService->setStorage(new \Zend\Authentication\Storage\Session('Auth')); // $authService->setStorage($sm->get('SanAuth\Model\MyAuthStorage')); //
@@ -60,8 +60,8 @@ class Module implements AutoloaderProviderInterface
                     return $dbTableAuthAdapter;
                 }
             )
-            
-        );
+        )
+        ;
     }
 
     public function onBootstrap(MvcEvent $e)
@@ -85,39 +85,61 @@ class Module implements AutoloaderProviderInterface
             $actionName = $routeMatch->getParam('action', 'not-found');
             
             $controller->layout()->form = new \SanAuth\Form\UserForm();
-            $controller->layout()->accion=$actionName;
+            $controller->layout()->accion = $actionName;
             
-            if ($actionName == 'login') {
-                if ($authAdapter->hasIdentity() === true) {
-                    return $controller->redirect()
-                        ->toRoute('grupo');
-                } else {
-                    return;
-                }
-            } else if ($actionName == 'agregargrupo') {
-                    if ($authAdapter->hasIdentity() === false) {
-                        return $controller->redirect()
-                            ->toRoute('login');
-                    } else {}
-                }
+            if ($authAdapter->hasIdentity() === true) {
+                $storage = new \Zend\Authentication\Storage\Session('Auth');
+                $session = $storage->read();
+                $controller->layout()->session = $session;
+                
+                    if ($actionName == 'login') {
+                            return $controller->redirect()
+                            ->toRoute('grupos');
+                    }else{
+                        return;
+                    }
+                
+            } else {
+                if ($actionName == 'agregargrupo') {
+                                return $controller->redirect()
+                                ->toRoute('login');
+                        }else{
+                            return;
+                        }
+           
+            }
+
         }, 100);
-
     }
-
+//     if ($actionName == 'login') {
+//         if ($authAdapter->hasIdentity() === true) {
+//             return $controller->redirect()
+//             ->toRoute('grupo');
+//         } else {
+//             return;
+//         }
+//     } else
+//     if ($actionName == 'agregargrupo') {
+//         if ($authAdapter->hasIdentity() === false) {
+//             return $controller->redirect()
+//             ->toRoute('login');
+//         } else {}
+//     }
+//     }
 //     public function GetData($e)
 //     {
-//         $columnsToReturn = array(
-//             'in_id',
-//             'va_nombre',
-//             'va_contrasena'
-//         );
-//         $locator = $e->getApplication()->getServiceManager();
-//         $authAdapter = $locator->get('TableAuthService');
-//         $auth = $locator->get('AuthService');
-//         $storage = $auth->getStorage();
-//         $storage->write($return = $authAdapter->getResultRowObject($columnsToReturn));
-//         var_dump($storage->read());
-//         Exit();
+//     $columnsToReturn = array(
+//     'in_id',
+//     'va_nombre',
+//     'va_contrasena'
+//     );
+//     $locator = $e->getApplication()->getServiceManager();
+//     $authAdapter = $locator->get('TableAuthService');
+//     $auth = $locator->get('AuthService');
+//     $storage = $auth->getStorage();
+//     $storage->write($return = $authAdapter->getResultRowObject($columnsToReturn));
+//     var_dump($storage->read());
+//     Exit();
 //     }
     // public function bootstrapSession($e)
     // {
@@ -134,14 +156,14 @@ class Module implements AutoloaderProviderInterface
     // var_dump($container->init);exit;
     // }
     //
-    // public function getDbDatos(MvcEvent $e){
-    // $locator = $e->getApplication()->getServiceManager();
-    // $authAdapter = $locator->get('AuthService');
-    // $correo=$authAdapter->getIdentity();
-    //
-    // $dbAdapter = $e->getApplication()->getServiceManager()->get('Zend\Db\Adapter\Adapter');
-    // $results = $dbAdapter->query('SELECT * FROM ta_usuario WHERE va_nombre="'.$correo.'"')->execute();
-    // var_dump($results->current());exit;
-    // return $results->current();
-    // }
+//     public function getDbDatos(MvcEvent $e){
+//     $locator = $e->getApplication()->getServiceManager();
+//     $authAdapter = $locator->get('AuthService');
+//     $correo=$authAdapter->getIdentity();
+    
+//     $dbAdapter = $e->getApplication()->getServiceManager()->get('Zend\Db\Adapter\Adapter');
+//     $results = $dbAdapter->query('SELECT * FROM ta_usuario WHERE va_nombre="'.$correo.'"')->execute();
+//     var_dump($results->current());exit;
+//     return $results->current();
+//     }
 }
