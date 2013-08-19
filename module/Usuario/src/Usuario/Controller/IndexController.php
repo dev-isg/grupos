@@ -43,6 +43,10 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
+
+        $categoria = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categoria;
+        $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;//$this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
@@ -59,6 +63,8 @@ class IndexController extends AbstractActionController
 
     public function misgruposAction()
     {
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -77,7 +83,8 @@ class IndexController extends AbstractActionController
         // AGREGAR CSS
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
-        
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
             ->setScript('if( $("#registro").length){valregistro("#registro");};')
@@ -154,7 +161,8 @@ class IndexController extends AbstractActionController
     public function editarusuarioAction()
     {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
- 
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
             ->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')

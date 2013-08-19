@@ -73,7 +73,7 @@ textarea {
 }
 body {
     font: 12px/26px Helvetica, Helvetica Neue, Arial;
-    background: #f4f4f4;
+    background: #3b3f41;
 }
 
 .wrapper {
@@ -1069,30 +1069,33 @@ p.crear-evento{
 }
 .img-grupo{
   padding: 10px;
-  border-bottom:1px solid #ddd;
   margin-bottom: 10px;
 }
 .img-grupo img{
   width: 100%;
 }
 .group-sidebar{
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
+  background: #fff;
+  margin-bottom: 20px;  
   margin-top: 10px;
   padding-bottom: 20px;
+  -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
 }
 .group-sidebar h2{
   line-height: 16px;
   margin-top: 0;
-  margin-bottom: 2px;
+  margin-bottom: 8px;
 }
 .group-sidebar h2 a{
-  color: #333;
-  font-size: 14px;
+  color: #363636;
+  font-size: 16px;
+  text-transform: uppercase; 
 }
 p.fund em{
   color: #666;
-  font-size: 10px;
+  font-size: 11px;
 }
 p.fund{
   line-height: 10px;
@@ -1103,18 +1106,18 @@ p.desc{
 }
 p.desc a{
   color: #4C9C76;
-  margin-top: 3px;
+  line-height: 30px;
 }
 .gh{
   padding: 0 10px;
 }
 p a.dp{
-  color: #4C9C76;
+  color: #c2374c;
   font-size: 13px;
   display: block;
 }
 p.ft{
-  line-height: 16px;
+  line-height: 20px;
   margin-bottom: 0;
 }
 span.ab{
@@ -1125,7 +1128,11 @@ span.nm{
   display: block;
   text-align: right;
 }
+.event-group{
+  padding: 10px;
+}
 .event-group h1{
+  margin: 0;
   font-size: 24px;
   color: #333;
   text-transform: uppercase;
@@ -1238,11 +1245,18 @@ span.nm{
 }
 .lista-usuario ul{
   list-style: none;
-  margin-top: 20px;
+  margin-top: 0px;
   margin-left: 0;
+  margin-bottom: 0;
 }
 .lista-usuario ul li{
   border-top: 1px dotted #cbcbcb;
+}
+.grupo-right-sidebar{
+  padding-bottom: 0!important;
+}
+.title-side h4{
+  margin: 0;
 }
 .unio p.span12{
   font-size: 11px;
@@ -1433,6 +1447,7 @@ p.pp{
   padding-bottom: 5px;
 }
 .event-comentario{
+  padding: 10px;
   border-top: 1px solid #cbcbcb;
 }
 .login-comentario {
@@ -1492,6 +1507,59 @@ p.pp{
 .pagination{
   text-align: center;
 }
+.entry-post-date {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  display: block;
+  border-top: 5px solid #000;
+}
+.entry-post-date > .date-month {
+  position: absolute;
+  display: block;
+  height: 20px;
+  font-size: 10px;
+  background-color: #FFF;
+  right: 0px;
+  top: -13px;
+  text-align: right;
+  padding: 0 0 0 10px;
+  color: #333;
+  text-transform: uppercase;
+  line-height: 20px;
+}
+.entry-extra {
+  padding: 5px 0px 15px 0;
+  line-height: 11px;
+}
+.entry-meta,
+.entry-extra {
+  font-size: 11px;
+  color: #aaa;
+}
+.meta-comments {
+  margin-right: 10px;
+}
+.meta-comments a {
+  color: #aaa;
+  text-decoration: none!important;
+}
+.meta-comments a:hover{
+  text-decoration: underline!important;
+}
+.meta-views a{
+  color: #aaa;
+  text-decoration: none!important;
+}
+.meta-views a:hover{
+  text-decoration: underline!important;
+}
+.asistir-event{
+  padding: 10px;
+}
+.lista-usuario{
+  padding: 10px;
+}
 /* ==========================================================================
    Estilo de icono styles
    ========================================================================== */
@@ -1509,7 +1577,7 @@ p.pp{
 
 }
 
-[data-icon]:before {
+/*[data-icon]:before {
   font-family: "untitled-font-1";
   content: attr(data-icon);
   font-style: normal;
@@ -1522,9 +1590,9 @@ p.pp{
   width: 1em;
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
-}
+}*/
 
-[class^="icon-"]:before,
+/*[class^="icon-"]:before,
 [class*=" icon-"]:before {
   font-family: "untitled-font-1";
   font-style: normal;
@@ -1538,7 +1606,7 @@ p.pp{
   width: 1em;
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
-}
+}*/
 .icon-group:before {
   content: "a";
 }
