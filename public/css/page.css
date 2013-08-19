@@ -387,7 +387,7 @@
 /* -----[ CONTENT BAR ]-------------------------------------------------------------------------- */
 
 #blog #content li .content {
-    padding: 18px 18px 22px;
+    padding: 18px 18px 0px 18px;
 }
 
 #blog #content li a {
