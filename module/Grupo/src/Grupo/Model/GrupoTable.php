@@ -397,7 +397,7 @@ public function misgrupos($id)
           ->from('ta_grupo')      
       //   ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
           ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
-         ->where(array('ta_grupo.ta_usuario_in_id'=>$id));
+         ->where(array('ta_grupo.ta_usuario_in_id'=>$id,'ta_grupo.va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
         //   var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  

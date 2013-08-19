@@ -87,7 +87,6 @@ class Module implements AutoloaderProviderInterface
             $controller->layout()->form = new \SanAuth\Form\UserForm();
             $controller->layout()->accion=$actionName;
             
-            
             if ($actionName == 'login') {
                 if ($authAdapter->hasIdentity() === true) {
                     return $controller->redirect()
