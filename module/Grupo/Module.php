@@ -71,7 +71,6 @@ class Module implements AutoloaderProviderInterface
                 $config = $sm->get('config'); 
                 $transport = new \Zend\Mail\Transport\Smtp();   
                 $transport->setOptions(new \Zend\Mail\Transport\SmtpOptions($config['mail']['transport']['options']));
-
                 return $transport;
             },
                      
@@ -87,7 +86,31 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        
+//         $locator = $e->getApplication()
+//                ->getServiceManager();
+//            $authAdapter = $locator->get('Grupo');
+//            $controller = $e->getTarget();
+//            $routeMatch = $e->getRouteMatch();
+            
+        $dbAdapter = $e->getApplication()->getServiceManager()->get('Zend\Db\Adapter\Adapter');
+        $results = $dbAdapter->query('SELECT * FROM ta_categoria')->execute();
+        return $results->current();
+        $valor = $results->current();
+        $controller->layout()->categoriasa=$valor;
     }
+    
+
+//     public function getDbDatos(MvcEvent $e){
+//     $locator = $e->getApplication()->getServiceManager();
+//     $authAdapter = $locator->get('Grupo');
+//     $dbAdapter = $e->getApplication()->getServiceManager()->get('Zend\Db\Adapter\Adapter');
+//     $results = $dbAdapter->query('SELECT * FROM ta_categoria')->execute();
+//     return $results->current();
+//     }
+//    
+    
+    
 }
 
 

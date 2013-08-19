@@ -44,7 +44,7 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
-        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
@@ -109,14 +109,12 @@ class IndexController extends AbstractActionController
           );
     }
 
-//     public function categorias()
-//    {        
-//        $this->categorias = $this->getGrupoTable()->tipoCategoria();
-//        $this->layout()->categoria = $this->categorias;
-//        return $this->categorias;
-//   
-//    }
-//     
+     public function categorias()
+    {        
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        return $categorias;
+    }
+     
     public function getEventoTable()
     {
         if (! $this->eventoTable) {
@@ -279,7 +277,7 @@ class IndexController extends AbstractActionController
     {
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
-        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
