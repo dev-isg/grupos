@@ -1638,9 +1638,9 @@ ul.score-list li:first-child {
   width: 1em;
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
-}*/
+}
 
-/*[class^="icon-"]:before,
+[class^="icon-"]:before,
 [class*=" icon-"]:before {
   font-family: "untitled-font-1";
   font-style: normal;
