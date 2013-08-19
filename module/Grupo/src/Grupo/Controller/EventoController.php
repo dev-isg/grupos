@@ -281,7 +281,7 @@ class EventoController extends AbstractActionController
         $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+      
         $id = $this->params()->fromRoute('in_id');
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
@@ -290,8 +290,9 @@ class EventoController extends AbstractActionController
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id);
         $comentarios = $this->getEventoTable()->comentariosevento($id);
-        
+          $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js')
             ->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});')
             ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
             ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
