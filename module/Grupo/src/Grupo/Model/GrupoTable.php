@@ -355,7 +355,7 @@ class GrupoTable{
         if (!$row) {
             throw new \Exception("No se encontro evento");
         }
-        return $row;
+        return $row->current();
     }
 
     

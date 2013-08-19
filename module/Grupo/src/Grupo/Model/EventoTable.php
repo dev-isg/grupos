@@ -159,7 +159,6 @@ class EventoTable{
          if (!$row) {
              throw new \Exception("No se encontro evento");
          }
-//          var_dump($row->current());exit;
          return $row->current();
      }
      public function unirseEvento($idevent,$iduser){
@@ -174,8 +173,7 @@ class EventoTable{
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
-           $adapter=$this->tableGateway->getAdapter();
-//            var_dump($selectString);exit; 
+           $adapter=$this->tableGateway->getAdapter(); 
            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$row) {
             throw new \Exception("No se puede unir al evento");
