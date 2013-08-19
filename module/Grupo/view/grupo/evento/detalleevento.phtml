@@ -126,7 +126,7 @@
                   <div class="row-fluid">
                   <?php if($this->session){?>
                     <div class="span12 comentar-form">
-                      <h4>Jesser, ¡Comente aqui!</h4>
+                      <h4><?php echo ucwords($this->session->va_nombre);?>, ¡Comente aqui!</h4>
                 <?php
                     $form = $this->comentarioform;
             

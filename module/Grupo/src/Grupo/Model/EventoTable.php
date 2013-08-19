@@ -127,6 +127,8 @@ class EventoTable{
      
       if ($id == 0) {
           $this->tableGateway->insert($data);
+          $idevento=$this->tableGateway->getLastInsertValue();
+          return $idevento;
           
       }else {
           
