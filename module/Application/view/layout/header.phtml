@@ -2,32 +2,28 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Grupos</title>
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--<link rel="stylesheet" href="css/normalize.min.css">-->
-<link rel="stylesheet"
-	href="<?php echo $this->host('ruta')?>/css/bootstrap.css">
-<link rel="stylesheet"
-	href="<?php echo $this->host('ruta')?>/css/bootstrap-responsive.css">
-<link rel="stylesheet"
-	href="<?php echo $this->host('ruta')?>/css/main.css">
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Grupos</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<link rel="stylesheet" href="css/normalize.min.css">-->
+        <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/bootstrap.css">
+        <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/bootstrap-responsive.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->host('ruta')?>/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/main.css">
 
-<link href="<?php echo $this->host('ruta')?>/css/page.css"
-	rel="stylesheet" />
-<link href="<?php echo $this->host('ruta')?>/css/theme.css"
-	rel="stylesheet" />
-      <?php echo $this->headLink(); ?>
-		
-      <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
-<script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
-<script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>
+        <link href="<?php echo $this->host('ruta')?>/css/page.css"
+        	rel="stylesheet" />
+        <link href="<?php echo $this->host('ruta')?>/css/theme.css"
+        	rel="stylesheet" />
+              <?php echo $this->headLink(); ?>
+        		
+              <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>
 
 </head>
 <body id="blog">
@@ -40,24 +36,23 @@
 				</a> <a class="brand" href="/">Grupos</a>
 				<div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
-                    <?php if(!$this->session){?>
-                        <li class="top-ini"><a href="Login.html">Iniciar
-								sesion</a></li>
+            <?php if(!$this->session){?>
+            <li class="top-ini"><a href="#inline_evento" class="inlineEvento">Iniciar sesion</a></li>
 						<li class="divider-vertical divider-one"></li>
 						<li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
-                      <?php }else{?>
-                        <li class="dropdown"><a href="#"
-							class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="img/user-avatar.jpg" alt="">
-						</a>
+            <?php }else{?>
+            <li class="dropdown">
+              <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="img/user-avatar.jpg" alt=""></a>
 							<ul class="dropdown-menu">
 								<li><a href="/usuario/index/editarusuario">Mi perfil</a></li>
 								<li><a href="/grupo/evento/miseventos">Mis eventos</a></li>
 								<li><a href="/usuario/index/misgrupos">Mis grupos</a></li>
 								<li class="divider"></li>
 								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
-							</ul></li>
-                        <?php }?>
-                    </ul>
+							</ul>
+            </li>
+            <?php }?>
+          </ul>
 				</div>
 				<!-- /.nav-collapse -->
 			</div>
@@ -67,20 +62,19 @@
 		<div class="container">
 			<div class="row-fluid">
 				<div class="span9 form-search">
-					<form METHOD="post" class="form-search span8 dropdown"
+					<form method="post" class="form-search span8 dropdown"
 						name="search"
 						action="<?php echo $this->host('ruta')?>/grupo/index/index">
 						<input type="text"
 							value="<?php
-    
-if ($_POST['dato']) {
-        $filter = new \Zend\I18n\Filter\Alnum(true);
-        $nombre = trim($filter->filter($_POST['dato']));
-        echo $nombre;
-    } else {
-        echo $_COOKIE['dato'];
-    }
-    ?>"
+        if ($_POST['dato']) {
+                $filter = new \Zend\I18n\Filter\Alnum(true);
+                $nombre = trim($filter->filter($_POST['dato']));
+                echo $nombre;
+            } else {
+                echo $_COOKIE['dato'];
+            }
+            ?>"
 							name="dato"
 							class="input-medium search-query span10 dropdown-toggle"
 							data-toggle="dropdown">
