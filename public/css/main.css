@@ -1133,11 +1133,12 @@ span.nm{
 }
 .event-group h1{
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
   color: #333;
   text-transform: uppercase;
-  line-height: 27px;
-  margin-bottom: 15px;
+  line-height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .asig-evento ul{
   list-style: none;
@@ -1154,13 +1155,13 @@ span.nm{
   width: 130px;
   float: left;
   width: 130px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   color: #666;
 }
 .ficha-desc p{
   color: #272727;
-  font-size: 20px;
+  font-size: 13px;
   margin-bottom: 0;
 }
 .ficha-desc{
@@ -1168,16 +1169,17 @@ span.nm{
   float: left;
   width: 65%;
   color: #272727;
-  font-size: 20px;
+  font-size: 13px;
 }
 .ficha-desc em{
   color: #666;
-  font-size: 14px;
+  font-size: 12px;
 }
 #event-description-wrap p{
   font-family: arial;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
+  color: #363636;
 }
 #map_canvas{
   width: 100%;
@@ -1582,6 +1584,7 @@ p.pp{
   border: 1px solid #DDD;
   border-bottom: none;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 .overall_score {
   font-size: 17.5px;
@@ -1598,12 +1601,12 @@ ul.score-list, ul.score-list li {
 ul.score-list li {
   font-size: 14px;
   font-weight: bold;
-  padding: 10px 10px;
+  padding: 5px 10px;
   border-bottom: 1px solid #DDD;
 }
 ul.score-list li:first-child {
   border-top: 1px solid #DDD;
-  padding-top: 10px;
+  padding-top: 5px;
 }
 /* ==========================================================================
    Estilo de icono styles
