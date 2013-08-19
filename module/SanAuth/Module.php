@@ -100,12 +100,12 @@ class Module implements AutoloaderProviderInterface
                     }
                 
             } else {
-                if ($actionName == 'agregargrupo') {
-                                return $controller->redirect()
-                                ->toRoute('login');
-                        }else{
-                            return;
-                        }
+//                 if ($actionName == 'agregargrupo') {
+//                                 return $controller->redirect()
+//                                 ->toRoute('login');
+//                         }else{
+//                             return;
+//                         }
            
             }
 

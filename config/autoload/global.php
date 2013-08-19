@@ -25,11 +25,11 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
    'host' => array(
-        'base' => 'http://192.168.1.39:8081',
-        'static' => 'http://192.168.1.39:8081',
-        'images' => 'http://192.168.1.39:8081/imagenes',
-        'img'=>'http://192.168.1.39:8081/img',
-        'ruta' => 'http://192.168.1.39:8081',
+        'base' => 'http://192.168.1.50:82',
+        'static' => 'http://192.168.1.50:82',
+        'images' => 'http://192.168.1.50:82/imagenes',
+        'img'=>'http://192.168.1.50:82/img',
+        'ruta' => 'http://192.168.1.50:82',
         'version'=>1,
     ),
     
