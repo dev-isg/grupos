@@ -83,6 +83,7 @@ class Module implements AutoloaderProviderInterface
             $controller = $e->getTarget();
             $routeMatch = $e->getRouteMatch();
             $controller->layout()->form = new \SanAuth\Form\UserForm();
+      
             
             $actionName = $routeMatch->getParam('action', 'not-found');
             if ($actionName == 'login') {

@@ -88,6 +88,12 @@ class IndexController extends AbstractActionController
           );
     }
 
+     public function categorias()
+    {
+      $this->getGrupoTable()->tipoCategoria();
+   
+    }
+    
     public function getEventoTable()
     {
         if (! $this->eventoTable) {
