@@ -279,6 +279,9 @@ class IndexController extends AbstractActionController
 
     public function detallegrupoAction()
     {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();

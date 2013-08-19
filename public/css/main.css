@@ -1560,6 +1560,51 @@ p.pp{
 .lista-usuario{
   padding: 10px;
 }
+.title-si{  
+  background: #FBFBFB;
+  border-top: 3px solid #a3a6a8;
+  border-bottom: 3px solid #a3a6a8;
+  font-size: 16px;
+  color: #363636;
+  font-style: normal;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 15px;
+  line-height: 35px; 
+}
+.content-img-det{
+  text-align: center;
+}
+.review-block {
+  display: block;
+  background: #f7f8f9;
+  min-width: 160px;
+  border: 1px solid #DDD;
+  border-bottom: none;
+  margin-bottom: 15px;
+}
+.overall_score {
+  font-size: 17.5px;
+  font-weight: bold;
+}
+ul.score-list {
+  margin-top: -1px;
+  background-color: #fff;
+}
+ul.score-list, ul.score-list li {
+  list-style-type: none;
+  margin: 0;
+}
+ul.score-list li {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 10px;
+  border-bottom: 1px solid #DDD;
+}
+ul.score-list li:first-child {
+  border-top: 1px solid #DDD;
+  padding-top: 10px;
+}
 /* ==========================================================================
    Estilo de icono styles
    ========================================================================== */

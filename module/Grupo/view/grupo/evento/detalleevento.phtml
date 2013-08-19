@@ -2,87 +2,104 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span3 group-sidebar">
-                <div class="img-grupo">
-                    <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
-                </div>
-                <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
-                <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']);
+              <div class="img-grupo">
+                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
+              </div>
+              <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
+              <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']);
                                          echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
-                <p class="desc gh">
-                  <?php echo $this->eventos[0]['descripcion']; ?> <br> <a href="#">Ver mas...</a>
-                </p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
-                <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span></a></p>
+              <p class="desc gh">
+                <?php echo $this->eventos[0]['descripcion']; ?> <br> <a href="#">Ver mas...</a>
+              </p>
+              <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
+              <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
+              <p class="gh ft">
+                <a class="dp" href="#">
+                  <span class="cant-evento-p ab">Evento pasados</span> 
+                  <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span>
+                </a>
+              </p>
+              <!--<h3 class="title-si">Organizador</h3>
+              <ul>
+                <li><a href="#">Jesser pariona</a></li>
+              </ul>-->
             </div>
             <div class="span6 group-sidebar">
                 <div class="event-group">
+                  <div class="content-img-det">
+                    <img src="http://192.168.1.39:8081/imagenes/eventos/general/pruerer-51fc30826b5a2.jpg" title="Evto macabro" target="Evento macabro">
+                  </div>
                    <?php $fecha_actual = date("Y-m-d h:m:s"); 
                     if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
                     {}
                    else{?> <h2>EVENTO CADUCADO</h2> <?php } ?> 
-                    <h1><?php echo $this->eventos[0]['va_nombre']; ?></h1>
-                    <div class="asig-evento">
-                        <ul>
-                            <li>
-                                <div class="ficha-dep">
-                                    Organizador:  
-                                </div>
-                                <div class="ficha-desc">
-                                   <?php echo $this->eventos[0]['nombre_user']; ?>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ficha-dep">
-                                    Fecha y hora:  
-                                </div>
-                                <div class="ficha-desc">
-                                    <p><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
-                                    <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
-                                          $hora = date_format($fecha, 'h:m');
-                                                  if($hora<12)
-                                                  { echo $hora.' AM'; }
-                                                  else
-                                                      { echo $hora.' PM'; }
-                                         ?></em>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ficha-dep">
-                                    Duración:  
-                                </div>
-                                <div class="ficha-desc">
-                                   <?php echo $this->eventos[0]['va_duracion']; ?> Horas
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ficha-dep">
-                                    Precio:  
-                                </div>
-                                <div class="ficha-desc">
-                                    S/. <?php echo $this->eventos[0]['va_costo']; ?>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ficha-dep">
-                                    Categoría:  
-                                </div>
-                                <div class="ficha-desc">
-                                    <?php echo $this->eventos[0]['nombre_categoria']; ?>  
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ficha-dep">
-                                    Dirección:  
-                                </div>
-                                <div class="ficha-desc">
-                                    <p>   <?php echo $this->eventos[0]['va_direccion']; ?> </p>
-                                    <em>Lima, Lima (<a href="#">Mapa</a>)</em>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <div class="review-block">
+                      <div class="overall_score">
+                        <h1><?php echo $this->eventos[0]['va_nombre']; ?></h1>
+                        <ul class="score-list">
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Organizador:  
+                            </div>
+                            <div class="ficha-desc">
+                               <?php echo $this->eventos[0]['nombre_user']; ?>
+                            </div>
+                          </li>
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Fecha y hora:  
+                            </div>
+                            <div class="ficha-desc">
+                              <p><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
+                                   echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
+                              <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
+                                    $hora = date_format($fecha, 'h:m');
+                                            if($hora<12)
+                                            { echo $hora.' AM'; }
+                                            else
+                                                { echo $hora.' PM'; }
+                                   ?></em>
+                            </div>
+                          </li>
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Duración:  
+                            </div>
+                            <div class="ficha-desc">
+                             <?php echo $this->eventos[0]['va_duracion']; ?> Horas
+                            </div>
+                          </li>
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Precio:  
+                            </div>
+                            <div class="ficha-desc">
+                              S/. <?php echo $this->eventos[0]['va_costo']; ?>
+                            </div>
+                          </li>
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Categoría:  
+                            </div>
+                            <div class="ficha-desc">
+                              <?php echo $this->eventos[0]['nombre_categoria']; ?>  
+                            </div>
+                          </li>
+                          <li class="clearfix">
+                            <div class="ficha-dep">
+                              Dirección:  
+                            </div>
+                            <div class="ficha-desc">
+                              <p><?php echo $this->eventos[0]['va_direccion']; ?></p>
+                              <em>Lima, Lima (<a href="#">Mapa</a>)</em>
+                            </div>
+                          </li>
+                        </ul> <!-- /score-list -->
+                      <div class="clear"></div>
+                    </div>  <!-- /overall_score -->  
+                  </div>
+
+
                     <div class="mapa-group map-wrapper">
                         <div id="map_canvas"></div>
                     </div>
