@@ -43,16 +43,16 @@ return array(
                     ),
                 ),
             ),
-//             'detalle-grupo' => array(
-//                 'type' => 'Segment',
-//                 'options' => array(
-//                     'route' => '/grupo[/:in_id]',
-//                     'defaults' => array(
-//                         'controller' => 'Grupo\Controller\Index',
-//                         'action' => 'detallegrupo'
-//                     )
-//                 ),
-//                ),
+            'detalle-grupo' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/detalle-grupo[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Index',
+                        'action' => 'detallegrupo'
+                    )
+                ),
+               ),
             'agregar-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(

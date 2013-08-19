@@ -106,8 +106,7 @@ class AuthController extends AbstractActionController
 //                         var_dump($accion);exit;
                         $redirect = 'agregar-grupo';
                     }
-                    
-                    
+ 
                     // check if it has rememberMe :
                     // if ($request->getPost('rememberme') == 1 ) {
                     // $this->getSessionStorage()
@@ -140,8 +139,8 @@ class AuthController extends AbstractActionController
             $this->getAuthService()->clearIdentity();
             $this->flashmessenger()->addMessage("You've been logged out");
         }
-        
-        return $this->redirect()->toRoute('login');
+        return $this->redirect()->toRoute('home');
+//         return $this->redirect()->toRoute('login');
     }
 
     public function changeemailAction()
