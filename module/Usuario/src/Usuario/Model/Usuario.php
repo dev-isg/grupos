@@ -110,7 +110,7 @@ class Usuario implements InputFilterAwareInterface{
                     array( 
                         'name' => 'StringLength', 
                         'options' => array( 
-                            'encoding' => 'UTF-8', 
+//                             'encoding' => 'UTF-8', 
                             'min'      => 6, 
                             'max'      => 128, 
                         ), 

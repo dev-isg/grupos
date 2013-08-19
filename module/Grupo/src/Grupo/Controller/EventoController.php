@@ -265,7 +265,7 @@ class EventoController extends AbstractActionController
     {
         $form = new ComentarioForm();
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $id = $this->params()->fromQuery('id');
+        $id = $this->params()->fromRoute('in_id');
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);

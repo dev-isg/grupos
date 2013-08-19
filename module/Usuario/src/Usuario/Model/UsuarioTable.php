@@ -87,7 +87,7 @@ class UsuarioTable
     public function cambiarPassword($password, $iduser)
     {
         $data = array(
-            'va_contrasena' => $password
+            'va_contrasena' => sha1($password)
         );
         $this->tableGateway->update($data, array(
             'in_id' => $iduser
