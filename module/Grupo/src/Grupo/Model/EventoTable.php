@@ -159,7 +159,6 @@ class EventoTable{
          if (!$row) {
              throw new \Exception("No se encontro evento");
          }
-//          var_dump($row->current());exit;
          return $row->current();
      }
      public function unirseEvento($idevent,$iduser){
@@ -174,8 +173,7 @@ class EventoTable{
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
-           $adapter=$this->tableGateway->getAdapter();
-//            var_dump($selectString);exit; 
+           $adapter=$this->tableGateway->getAdapter(); 
            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$row) {
             throw new \Exception("No se puede unir al evento");
@@ -341,6 +339,7 @@ class EventoTable{
     
      public function usuariosevento($id)
     {  
+//         $id=(int)$id;
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $select = $sql->select();
@@ -449,6 +448,23 @@ class EventoTable{
             return $resultSet;
     }
     
+    
+    public function eventocategoria($id)
+    {
+            $fecha = date("Y-m-d h:m:s"); 
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_evento')
+          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
+          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
+         ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha,'ta_categoria.in_id'=>$id))           
+          ->order('in_id desc');  
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
+        return $resultSet->buffer();
+    } 
+     
 
 }
 

@@ -15,65 +15,76 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $this->host('ruta')?>/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/main.css">
 
-      <link href="<?php echo $this->host('ruta')?>/css/page.css" rel="stylesheet"/>
-      <link href="<?php echo $this->host('ruta')?>/css/theme.css" rel="stylesheet"/>
-      <?php echo $this->headLink(); ?>
-		
-      <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
-      <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
-      <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>
+        <link href="<?php echo $this->host('ruta')?>/css/page.css"
+        	rel="stylesheet" />
+        <link href="<?php echo $this->host('ruta')?>/css/theme.css"
+        	rel="stylesheet" />
+              <?php echo $this->headLink(); ?>
+        		
+              <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>
 
-    </head>
-    <body id="blog">
-        <div class="navbar navbar-inverse navbar-fixed-top menu-grup">
-            <div class="navbar-inner">
-                <div class="container">
-                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </a>
-                  <a class="brand" href="/">Grupos</a>
-                  <div class="nav-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav pull-right menu-dev">
-                        <li class="top-ini"><a href="Login.html">Iniciar sesion</a></li>
-                        <li class="divider-vertical divider-one"></li>
-                        <li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
-                        
-                        <!--<li class="dropdown">
-                            <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown">
-                                jesser pariona
-                                <img src="img/user-avatar.jpg" alt="">
-                            </a>
-                            <ul class="dropdown-menu">
-                              <li><a href="#">Mi perfil</a></li>
-                              <li><a href="#">Mis eventos</a></li>
-                              <li><a href="#">Mis grupos</a></li>
-                              <li class="divider"></li>
-                              <li><a href="#">Cerrar sesión</a></li>
-                            </ul>
-                        </li>-->
-                    </ul>
-                  </div><!-- /.nav-collapse -->
-                </div>
-            </div>
-        </div>
-        <div class="search">
-            <div class="container">
-                <div class="row-fluid">
-                    <div class="span9 form-search">
-                        <form METHOD="post" class="form-search span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/grupo/index/index">
-                            <input type="text" value="<?php  if($_POST['dato']){  
-                                $filter = new \Zend\I18n\Filter\Alnum(true);
-                                $nombre = trim($filter->filter($_POST['dato']));
-                                echo $nombre;} else{echo $_COOKIE['dato'];} ?>" name="dato" class="input-medium search-query span10 dropdown-toggle" data-toggle="dropdown">
-                            <ul class="dropdown-menu" id="menu-categoria">
-                                <?php 
-                                       foreach ($this->categorias  as $categorias) :
-                                 ?>
+</head>
+<body id="blog">
+	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="/">Grupos</a>
+				<div class="nav-collapse collapse navbar-responsive-collapse">
+					<ul class="nav pull-right menu-dev">
+            <?php if(!$this->session){?>
+            <li class="top-ini"><a href="#inline_evento" class="inlineEvento">Iniciar sesion</a></li>
+						<li class="divider-vertical divider-one"></li>
+						<li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
+            <?php }else{?>
+            <li class="dropdown">
+              <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="img/user-avatar.jpg" alt=""></a>
+							<ul class="dropdown-menu">
+								<li><a href="/usuario/index/editarusuario">Mi perfil</a></li>
+								<li><a href="/grupo/evento/miseventos">Mis eventos</a></li>
+								<li><a href="/usuario/index/misgrupos">Mis grupos</a></li>
+								<li class="divider"></li>
+								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
+							</ul>
+            </li>
+            <?php }?>
+          </ul>
+				</div>
+				<!-- /.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div class="search">
+		<div class="container">
+			<div class="row-fluid">
+				<div class="span9 form-search">
+					<form method="post" class="form-search span8 dropdown"
+						name="search"
+						action="<?php echo $this->host('ruta')?>/grupo/index/index">
+						<input type="text"
+							value="<?php
+        if ($_POST['dato']) {
+                $filter = new \Zend\I18n\Filter\Alnum(true);
+                $nombre = trim($filter->filter($_POST['dato']));
+                echo $nombre;
+            } else {
+                echo $_COOKIE['dato'];
+            }
+            ?>"
+							name="dato"
+							class="input-medium search-query span10 dropdown-toggle"
+							data-toggle="dropdown">
+						<ul class="dropdown-menu" id="menu-categoria">
+                                <?php
+                                foreach ($this->categorias as $categorias) :
+                                    ?>
                                 <li class="man-dev">
                                     <ul>  
-                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                     </ul>
                                 </li> 
                                  <?php endforeach; ?>  
@@ -82,11 +93,12 @@
                         </form>
                         <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
                         <!--<a href="crear-evento.html" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>-->
+                  <!-- $_COOKIE['tipo']=='Grupos' or-->
                     </div>
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                            <a class="btn btn-primary active " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
-                            <a class="btn btn-primary  " href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
+                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?>" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
+                            <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?>"  href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
                         </div>
                     </div>
                 </div>
@@ -97,43 +109,40 @@
             <div id='inline_evento' style='padding:10px; background:#fff;'>
                 <h3>Iniciar sesión</h3>
                 <?php
-                   $form = $this->formlogeo;
-                   $form->setAttributes(array(
-                       'action'=> $this->url(
-                       'login/process',
-                       array(
-                           'action'     => 'authenticate',
-                       )
-                   ),
-                   'class'=>'bs-docs-example form-horizontal'));
-                   $form->prepare();
-                   echo $this->form()->openTag($form);
-                 ?>
-                 <input type="hidden" name="accion" value="<?php echo $this->accion;?>"/> 
-                    <div class="control-group">
-                      <label class="control-label" for="inputEmail">Email:</label>
-                      <div class="controls">
+                $form = $this->formlogeo;
+                $form->setAttributes(array(
+                    'action' => $this->url('login/process', array(
+                        'action' => 'authenticate'
+                    )),
+                    'class' => 'bs-docs-example form-horizontal'
+                ));
+                $form->prepare();
+                echo $this->form()->openTag($form);
+                ?>
+                 <input type="hidden" name="accion"
+				value="<?php echo $this->accion;?>" />
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Email:</label>
+				<div class="controls">
                           <?php  echo $this->formRow($form->get('va_nombre'));?>
                       </div>
-                    </div>
-                    <div class="control-group">
-                      <label class="control-label" for="inputPassword">Contraseña:</label>
-                      <div class="controls">
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Contraseña:</label>
+				<div class="controls">
                           <?php  echo $this->formRow($form->get('va_contrasena'));?>
                       </div>
-                    </div>
-                    <div class="control-group">
-                      <div class="controls">
+			</div>
+			<div class="control-group">
+				<div class="controls">
                           <?php  echo $this->formSubmit($form->get('submit'));?>
                       </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <a href="/cambio">¿Olvidaste tu contraseña?</a>
-                        </div>
-                    </div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<a href="/cambio">¿Olvidaste tu contraseña?</a>
+				</div>
+			</div>
                     <?php  echo $this->form()->closeTag(); ?>
             </div>
-        </div>     
-        
-        
+	</div>

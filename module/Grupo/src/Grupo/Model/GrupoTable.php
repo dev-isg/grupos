@@ -317,11 +317,6 @@ class GrupoTable{
             ->from('ta_categoria'); 
             $selectString = $sql->getSqlStringForSqlObject($select);
             $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-//            $tipocateg=$results->toArray();
-//        $auxtipo=array();
-//        foreach($tipocateg as $tipo){
-//            $auxtipo[$tipo['in_id']] = $tipo['va_nombre'];      
-//        }
             return $results;
             
      }
@@ -355,7 +350,7 @@ class GrupoTable{
         if (!$row) {
             throw new \Exception("No se encontro evento");
         }
-        return $row;
+        return $row->current();
     }
 
     

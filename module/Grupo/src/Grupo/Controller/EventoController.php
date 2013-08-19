@@ -12,6 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
+// use Grupo\Controller\IndexController;
 use Grupo\Model\Evento;
 use Grupo\Model\EventoTable;
 use Grupo\Form\EventoForm;
@@ -25,7 +26,9 @@ use Zend\View\Model\JsonModel;
 
 
 use Grupo\Form\ComentarioForm;
- use Usuario\Controller\IndexController;
+
+//   use Usuario\Controller\IndexController;
+
 class EventoController extends AbstractActionController
 {
 
@@ -214,7 +217,8 @@ class EventoController extends AbstractActionController
 
     public function miseventosAction()
     {
-        $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = IndexController::headerAction($id);
         
@@ -232,7 +236,8 @@ class EventoController extends AbstractActionController
 
     public function eventosparticipoAction()
     {
-        $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
    
         $valor = IndexController::headerAction($id);
@@ -264,6 +269,9 @@ class EventoController extends AbstractActionController
     public function detalleeventoAction()
     {
         $form = new ComentarioForm();
+        // $categor = IndexController::categorias();
+         //var_dump($categor);exit;
+    //  $this->layout()->categorias = $categor;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $id = $this->params()->fromRoute('in_id');
         $evento = $this->getEventoTable()->Evento($id);
@@ -281,7 +289,7 @@ class EventoController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
-        
+       
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if ($session) {
@@ -301,6 +309,9 @@ class EventoController extends AbstractActionController
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
         
+
+
+         
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -315,6 +326,12 @@ class EventoController extends AbstractActionController
         )
         ;
     }
+    
+//     public function listauserAction(){
+//         $usuarios = $this->getEventoTable()->usuariosevento($id);
+//         $result = new JsonModel(array('usuarios'=>$usuarios));
+//         return $result;
+//     }
     
     
     public function unirAction(){
@@ -402,13 +419,24 @@ class EventoController extends AbstractActionController
         
 //             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
 //             $activo=$participa->va_estado=='activo'?true:false;
-
         $result = new JsonModel(array(
-            'estado' =>$activo
+            'estado' =>$activo,
         ));
         
         return $result;
     }
+    
+//     public function eventouserAction(){
+//         $id=$this->params()->fromQuery('id');
+//         $usuarios = $this->getEventoTable()->usuariosevento($id);
+// //         var_dump($usuarios->toArray());Exit;
+//         $result = new JsonModel(
+//            $usuarios->toArray()
+//         );
+//         return $result;
+        
+//     }
+    
     
     public function mensaje($mail,$bodyHtml,$subject){
         $message = new Message();
