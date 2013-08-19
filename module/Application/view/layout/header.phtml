@@ -72,7 +72,7 @@
                                  ?>
                                 <li class="man-dev">
                                     <ul>  
-                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                     </ul>
                                 </li> 
                                  <?php endforeach; ?>  
