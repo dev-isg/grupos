@@ -20,6 +20,9 @@ use Zend\Validator\File\Size;
 use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
+use Zend\Mail\Message;
+use Zend\View\Model\JsonModel;
+
 
 use Grupo\Form\ComentarioForm;
  use Usuario\Controller\IndexController;
@@ -284,7 +287,6 @@ class EventoController extends AbstractActionController
         if ($session) {
             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
-//             var_dump($activo);Exit;
         }
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -313,6 +315,7 @@ class EventoController extends AbstractActionController
         )
         ;
     }
+    
     
     public function unirAction(){
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -356,7 +359,7 @@ class EventoController extends AbstractActionController
                 if ($usuario) {
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                 }
-                        
+                $activo=1;
             }
             
         }elseif ($unir==0){
@@ -394,9 +397,17 @@ class EventoController extends AbstractActionController
                 }
             
             }
-            
+            $activo=0;
         }
-        return array();
+        
+//             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
+//             $activo=$participa->va_estado=='activo'?true:false;
+
+        $result = new JsonModel(array(
+            'estado' =>$activo
+        ));
+        
+        return $result;
     }
     
     public function mensaje($mail,$bodyHtml,$subject){

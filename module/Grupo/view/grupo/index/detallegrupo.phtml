@@ -29,10 +29,14 @@
 						</div>
 						<div class="row-fluid">
 							<div class="span4">
-								<a href=""><img src="<?php   echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen)  ?>" alt=""></a>
+								<a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><img src="<?php   echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen)  ?>" alt=""></a>
 							</div>
 							<div class="span8">
 								<div class="cont-eve">
+                                                                   <?php $fecha_actual = date("Y-m-d h:m:s"); 
+                                                                   if ( $this->escapeHtml($proximos_eventos->va_fecha) >= $fecha_actual)
+                                                                     {}
+                                                                   else{?> <h2>EVENTO CADUCADO</h2> <?php } ?>          
 					              	<h3><a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><?php echo  $this->escapeHtml($proximos_eventos->va_nombre);?></a></h3>
 					              	<p><?php echo  $this->escapeHtml($proximos_eventos->va_descripcion);?></p>
 					            </div>		
@@ -47,7 +51,12 @@
 		        </li> 
                         <?php endforeach;  ?>
 		    </ul>
-		  </div>
+                    <div class="row-fluid">
+            <div class="span12" id="pagina">
+                <?php echo (count($this->proximos_eventos)> 0)?$this->paginationControl($this->proximos_eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/detallegrupo/'.$this->in_id.'?')):""; ?>
+            </div>
+                    </div>
+	 </div>
 		  <div class="span3 group-sidebar">
 		  	<div class="row-fluid">
 		  		<div class="span12 unete-grupo">
