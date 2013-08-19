@@ -12,7 +12,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
-//use Grupo\Controller\IndexController;
 use Grupo\Model\Evento;
 use Grupo\Model\EventoTable;
 use Grupo\Form\EventoForm;
@@ -298,9 +297,8 @@ class EventoController extends AbstractActionController
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js')
-            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
-            ->setScript('$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
+            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')

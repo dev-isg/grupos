@@ -24,12 +24,12 @@ function crearevento(){
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
             if($("#crearGrupo").val()===""){
-                    $(".activar-agregar").show();
-                    $(".next-space").hide();
-                }else{
-                    $(".activar-agregar").hide();
-                    $(".next-space").show();
-                }
+                $(".activar-agregar").show();
+                $(".next-space").hide();
+            }else{
+                $(".activar-agregar").hide();
+                $(".next-space").show();
+            }
         });
 
 //        $(".next-grupo").click(function(){

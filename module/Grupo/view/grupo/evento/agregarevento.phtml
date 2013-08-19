@@ -19,12 +19,12 @@
     <?php echo $this->formHidden($form->get('ta_usuario_in_id'));?>
 
         <div class="row-fluid">
-            <div class="span12 crear-evento event">
+            <div class="span12 crear-evento event box">
                 <h1>Crear un nuevo evento</h1>
                 <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
             </div>
         </div>
-        <div class="row-fluid crear-evento-1 event">
+        <div class="row-fluid crear-evento-1 event box">
             <h2>Describe tu evento</h2>
             <div class="span8 desc-evento">
                 <?php echo $this->formRow($form->get('va_nombre'));?>
@@ -52,8 +52,8 @@
                 </div>
             </div>
         </div>
-        <div class="row-fluid crear-evento-2 event">
-            <h2>Cuando? y Cuanto sera el precio.</h2>
+        <div class="row-fluid crear-evento-2 event cu box">
+            <h2>¿Cuando y Cuanto sera el precio?</h2>
             <div class="span3 fecha event-padding">
                 <div class="form_row">
                     <label class="field_name">Fecha y hora:</label>
@@ -103,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="row-fluid crear-evento-3 event">
+        <div class="row-fluid crear-evento-3 event button-agregar box">
             <h2>Elige el lugar del evento</h2>
             <div class="span12 event-padding dev-padd">
                 <div id="map" style="border:1px solid #eee;"></div>
@@ -145,7 +145,7 @@
                 <?php echo $this->formRow($form->get('va_longitud'));?>       
             </div>
         </div>
-        <p class="crear-evento">
+        <p class="crear-evento box">
             <?php echo $this->formSubmit($form->get('submit'));?>
         </p>
             <?php echo $this->form()->closeTag();?>
