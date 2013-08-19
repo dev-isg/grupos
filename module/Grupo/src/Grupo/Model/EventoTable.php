@@ -159,10 +159,10 @@ class EventoTable{
          if (!$row) {
              throw new \Exception("No se encontro evento");
          }
-         return $row;
+         return $row->current();
      }
      public function unirseEvento($idevent,$iduser){
-         if($this->getEventoUsuario($idevent,$iduser)>0){
+         if($this->getEventoUsuario($idevent,$iduser)){
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
              ->set(array('va_estado'=>'activo'))
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
@@ -173,7 +173,7 @@ class EventoTable{
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
-           $adapter=$this->tableGateway->getAdapter();
+           $adapter=$this->tableGateway->getAdapter(); 
            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$row) {
             throw new \Exception("No se puede unir al evento");
