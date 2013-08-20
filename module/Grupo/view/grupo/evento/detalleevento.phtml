@@ -107,25 +107,12 @@
                     <div class="desc-evento-g">
                         <div id="event-description-wrap" itemprop="description" class="line">
                             <p><?php echo $this->eventos[0]['va_descripcion']; ?></p>
-                         <p>The circuit from above:</p>
-                        <p>
-                            <img src="http://static.wix.com/media/63ce3d_af2d42b6f3828b3d53767f1093c42cc3.png_srz_949_506_75_22_0.50_1.20_0.00_png_srz" style="max-width:100%;">
-                        </p>
-                        <p>Pictures of the circuit:</p>
-<!--                        <p>
-                            <img src="http://static.wix.com/media/63ce3d_b83d2d3eb3b28bc72f204c569de69943.jpg_srz_460_287_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
-                            <img src="http://static.wix.com/media/63ce3d_f75aa780a3182c65014c8c3cadd99a61.jpg_srz_695_525_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
-                            <img src="http://static.wix.com/media/63ce3d_b39f7e64a8d0cdeddcc41ed9271075f5.jpg_srz_635_490_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
-                            <img src="http://static.wix.com/media/63ce3d_0e11fc78c2f0df36af448cb3914c2600.jpg_srz_335_525_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px"> 
-                            <img src="http://static.wix.com/media/63ce3d_f806e135f715622d60865cedc00f9bc0.jpg_srz_480_375_75_22_0.50_1.20_0.00_jpg_srz" style="max-width:100%;margin:5px">
-                        </p>-->
-
                         </div>
                     </div>
                 </div>
                 <div class="event-comentario">
                   <div class="row-fluid">
-                  <?php if($this->session){?>
+                  <?php if($this->session && $this->grupocomprueba){?>
                     <div class="span12 comentar-form">
                       <h4><?php echo ucwords($this->session->va_nombre);?>, ¡Comente aqui!</h4>
                 <?php
@@ -154,7 +141,12 @@
                             <?php echo $this->form()->closeTag();?>
 
                     </div>
-                     <?php }else{?>
+                     <?php }elseif(!$this->grupocomprueba){?>
+                     <div class="span12 login-comentario">
+                      <p><a href="#" class="inlineEventoDet">Debes de unirte al evento</a> para comentar.</p>
+                    </div>
+                     
+                    <?php }else{?>
                     <div class="span12 login-comentario">
                       <p><a href="#inline_evento" class="inlineEventoDet">Iniciar session</a> para comentar.</p>
                     </div>
