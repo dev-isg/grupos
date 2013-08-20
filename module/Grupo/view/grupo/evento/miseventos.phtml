@@ -17,20 +17,32 @@
 	                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($miseventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
-	                                <div class="info">
-	                                    <span><?php  $fecha = date_create($miseventos->va_fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
-	                                    <span class="category"><a href="#"><?php echo  $this->escapeHtml($miseventos->nombre_categoria);?></a></span>
-	                                </div>
-	                                <h2><a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a></h2>
+	                            	<div class="entry-post-date" style="border-top-color: #2999b5">
+		                                <div class="date-month">
+		                                    <?php  $fecha = date_create($miseventos->va_fecha);
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>
+		                                </div>
+		                            </div>
+	                                <h2>
+	                                	<a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a>
+	                                </h2>
 	                                <p>
 	                               <?php echo  $this->escapeHtml($miseventos->va_descripcion);?>
 	                                </p>
+	                                <div class="divider-1px-meta"></div>
+		                            <footer class="entry-extra clearfix">
+		                                <span class="meta-comments">
+		                                    <i class="icon-comment"></i>
+		                                    <a href="#" title="comentarios">1</a>
+		                                </span><!-- .meta-comments -->
+		                                <span class="meta-views" title="Views">
+		                                    <i class="icon-tag"></i>
+		                                    <a href="#" title="Categoría"><?php echo  $this->escapeHtml($miseventos->nombre_categoria);?></a>
+		                                </span><!-- .meta-views -->
+		                            </footer>
 	                            </div>
 	                        </li>
-	                         <?php endforeach;  ?>
-	                       
-
+	                        <?php endforeach;  ?>
 	                    </ul>               
 	                </div> 
 				</div>
