@@ -27,7 +27,7 @@ class IndexController extends AbstractActionController
 {
 
     protected $usuarioTable;
-   
+
     static $usuarioTableStatic;
 
     protected $_options;
@@ -45,26 +45,32 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
-
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $id = $storage->read()->in_id;//$this->params()->fromQuery('id');
+        $id = $storage->read()->in_id; // $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
-        $categorias = $this->getUsuarioTable()->categoriasunicas($id)->toArray();
-        for($i=0;$i<count($categorias);$i++)
-        {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$categorias[$i]['id']);}
+        $categorias = $this->getUsuarioTable()
+            ->categoriasunicas($id)->toArray();
+        for ($i = 0; $i < count($categorias); $i ++) {
+            $otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'], $categorias[$i]['id']);
+        }
+             
         return array(
             'grupo' => $valor,
-        'grupospertenece'  =>$usuariosgrupos,
-       'otrosgrupos'=>$otrosgrupos,
+            'grupospertenece' => $usuariosgrupos,
+            'otrosgrupos' => $otrosgrupos,
         );
     }
 
     public function misgruposAction()
     {
+//         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+//         $renderer->inlineScript()
+//         ->setScript()
+//         ->prependFile($this->_options->host->base . '/js/main.js')
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
