@@ -26,7 +26,7 @@ use Zend\View\Model\JsonModel;
 
 use Grupo\Form\ComentarioForm;
 
-//   use Usuario\Controller\IndexController;
+  use Usuario\Controller\IndexController;
 
 class EventoController extends AbstractActionController
 {
