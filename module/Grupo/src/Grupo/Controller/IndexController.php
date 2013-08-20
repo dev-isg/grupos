@@ -52,11 +52,13 @@ class IndexController extends AbstractActionController
         $nombre = trim($filter->filter($buscar));
         setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
+
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo',$valor);
         $tipo = $this->params()->fromQuery('categoria');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
+
         if (empty($valor) and empty($tipo) and ! $request->isPost()) {
             $listaEventos = $this->getEventoTable()->listadoEvento();}
         if ($request->isPost()) {
@@ -85,10 +87,7 @@ class IndexController extends AbstractActionController
                 }
          } else { $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
 
-         } }
-            
-            
-            
+         } }    
         if ($valor) {
             if ($valor == 'Grupos') {
                 $listagrupos = $this->getGrupoTable()->fetchAll();
@@ -173,6 +172,7 @@ class IndexController extends AbstractActionController
           require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
+         //   var_dump($info);exit;
             $valor = uniqid();
             $nom = $nonFile;
             $imf2 = $valor . '.' . $info['extension'];

@@ -56,14 +56,12 @@ class AuthController extends AbstractActionController
 
     public function loginAction()
     {
-        // if already login, redirect to success page
-        // if ($this->getAuthService()->hasIdentity()){
-        // return $this->redirect()->toRoute('success');
-        // }
+        $token = $this->params()->fromQuery('token');
         $form = $this->getForm();
-        
+        $form->get('va_token')->setValue($token);
         return array(
             'form' => $form,
+            'token'=>$token,
             'messages' => $this->flashmessenger()->getMessages()
         );
     }
@@ -72,21 +70,59 @@ class AuthController extends AbstractActionController
     {
         $form = $this->getForm();
         $redirect = 'login';
-        
         $request = $this->getRequest();
         if ($request->isPost()) {
-            
-//             var_dump($request->getPost('accion'));exit;
             $form->setData($request->getPost());
             if ( $form->isValid()) { //
-                       
-                // check authentication...
-                $nombre = $request->getPost('va_nombre');
+                 $token = $request->getPost('va_token');
+                 $nombre = $request->getPost('va_nombre');
                 $contrasena = $request->getPost('va_contrasena');
-                $this->getAuthService()
-                    ->getAdapter()
+                 $this->getAuthService()
+                     ->getAdapter()
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
+                 if($token)
+             {               
+               $usuario = $this->getUsuarioTable()->usuario($token);
+               if(count($usuario)>0){ 
+                       
+                $result = $this->getAuthService()->authenticate();
+                foreach ($result->getMessages() as $message) {
+                    $this->flashmessenger()->addMessage($message);
+                }
+                
+                if ($result->isValid()) {
+//                     $redirect = 'success';
+                    $accion=$request->getPost('accion');
+                    if($accion=='detalleevento'){
+                        $redirect = 'evento';
+                    }elseif($accion=='detallegrupo'){
+                        $redirect = 'grupo';
+                    }
+                    elseif($accion=='index'){
+//                         var_dump($accion);exit;
+                        $redirect = 'agregar-grupo';
+                    }
+                    $storage = $this->getAuthService()->getStorage();
+                    $storage->write($this->getServiceLocator()
+                        ->get('TableAuthService')
+                        ->getResultRowObject(array(
+                        'in_id',
+                        'va_nombre',
+                        'va_contrasena',
+                        'va_email'
+                    )));
+                     $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);  
+                          }
+                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+                  
+                  }
+                else
+                {
+                 
+                  $usuario = $this->getUsuarioTable()->usuario1($nombre);
+                  if($usuario[0]['va_estado']=='activo'){
+                   
                 
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
@@ -106,15 +142,6 @@ class AuthController extends AbstractActionController
 //                         var_dump($accion);exit;
                         $redirect = 'agregar-grupo';
                     }
- 
-                    // check if it has rememberMe :
-                    // if ($request->getPost('rememberme') == 1 ) {
-                    // $this->getSessionStorage()
-                    // ->setRememberMe(1);
-                    // //set storage again
-                    // $this->getAuthService()->setStorage($this->getSessionStorage());
-                    // }
-                    // $this->getAuthService()->setStorage(new \Zend\Authentication\Storage\Session('Auth'));
                     $storage = $this->getAuthService()->getStorage();
                     $storage->write($this->getServiceLocator()
                         ->get('TableAuthService')
@@ -124,8 +151,13 @@ class AuthController extends AbstractActionController
                         'va_contrasena',
                         'va_email'
                     )));
-                }
+                }  
+                      
+                      
+                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+
                 
+                }
             }
         }
        
@@ -211,7 +243,7 @@ class AuthController extends AbstractActionController
             $results = $this->getUsuarioTable()->consultarPassword($password);
         } catch (\Exception $e) {
 //             echo 'aka es';exit;
-            $this->flashMessenger()->addMessage('Este contraseña temporal no existe...');
+            $this->flashMessenger()->addMessage('Este contraseï¿½a temporal no existe...');
         }
 
         if ($results) {
@@ -227,9 +259,9 @@ class AuthController extends AbstractActionController
             
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
-                        // $this->flashmessenger()->addMessage('La contraseña se actualizo correctamente...');
+                        // $this->flashmessenger()->addMessage('La contraseï¿½a se actualizo correctamente...');
                     } else {
-                        // $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar correctamente...');
+                        // $this->flashmessenger()->addMessage('La contraseï¿½a se no se pudo actualizar correctamente...');
                     }
                 }
             }

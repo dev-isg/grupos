@@ -115,7 +115,8 @@ class EventoController extends AbstractActionController
                     var_dump($data["va_fecha"]);
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
-                } else {
+                } else 
+                    {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }

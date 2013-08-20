@@ -22,7 +22,6 @@ use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
-
 class IndexController extends AbstractActionController
 {
 
@@ -88,9 +87,40 @@ class IndexController extends AbstractActionController
         );
     }
 
+     public function correo($correo,$usuario,$valor)
+                
+       {
+        $message = new Message();
+        $message->addTo($correo, $usuario)
+        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setSubject('REGISTRO A GRUPOS');
+         $bodyHtml= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
+          usted se a registrado a grupos, acceda al siguiente link para comenzar a crear sus eventos <a href="'.$this->_options->host->ruta.'/auth?token='.$valor.' ">grupos.pe</a>
+                                                     </div>
+                                               </body>
+                                               </html>';
+        $bodyPart = new \Zend\Mime\Message();
+        $bodyMessage = new \Zend\Mime\Part($bodyHtml);
+        $bodyMessage->type = 'text/html';
+        $bodyPart->setParts(array(
+            $bodyMessage
+        ));
+        $message->setBody($bodyPart);
+        $message->setEncoding('UTF-8');
+    
+        $transport = $this->getServiceLocator()->get('mail.transport');
+        $transport->send($message);
+    }
     public function agregarusuarioAction()
     {
         // AGREGAR CSS
+    
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -137,9 +167,10 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
-                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                    return $this->redirect()->toRoute('usuario');
-                } else {
+                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
+                    $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
+                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
@@ -151,7 +182,8 @@ class IndexController extends AbstractActionController
         }
         
         return array(
-            'form' => $form
+            'form' => $form,
+            'mensaje'=>$mensaje
         );
         // return array();
     }

@@ -5,7 +5,7 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
-
+use Usuario\Controller\IndexController ;
 class UsuarioTable
 {
 
@@ -118,7 +118,7 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario, $imagen)
+    public function guardarUsuario(Usuario $usuario, $imagen,$valor)
     {
         // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
@@ -129,7 +129,9 @@ class UsuarioTable
 //            'va_foto' => $usuario->va_foto['name'],
             'va_foto' => $imagen,
             'va_genero' => $usuario->va_genero,
-            'va_descripcion' => $usuario->va_descripcion
+            'va_descripcion' => $usuario->va_descripcion,
+            'va_verificacion' => $valor,
+            'va_estado' =>'desactivo'
         // 'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
                 );
 //         print_r($imagen);
@@ -148,10 +150,12 @@ class UsuarioTable
         
         if ($id == 0) {
             $this->tableGateway->insert($data);
-            // $idusuario=$this->tableGateway->getLastInsertValue();
+            //$idusuario=$this->tableGateway->getLastInsertValue();
+           /// $correoconfirmacion=IndexController::correo($usuario->va_nombre,$usuario->va_email);
         } else {
             
             if ($this->getUsuario($id)) {
+                $data['va_estado'] = 'activo';
                 $this->tableGateway->update($data, array(
                     'in_id' => $id
                 ));
@@ -218,6 +222,41 @@ class UsuarioTable
                 }
                 
      }
+     
+     
+      public function usuario($token)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()->from('ta_usuario')
+                ->where(array('va_verificacion'=>$token,'va_estado'=>'desactivo'));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
+    
+    public function usuario1($correo)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()->from('ta_usuario')
+                ->where(array('va_email'=>$correo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
+     public function cambiarestado($id)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->update('ta_usuario')
+                ->set(array('va_verificacion'=>'','va_estado'=>'activo'))
+                ->where(array('in_id'=>$id));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
+
     
 }
 
