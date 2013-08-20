@@ -13,7 +13,7 @@
 	                    <ul>
 	                       <?php  foreach ($this->miseventos  as $miseventos) :?>
 	                        <li data-category="web">
-	                            <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($miseventos->in_id); ?>" class="preview" data-ui-lightbox>
+	                            <a href="/evento/<?php echo $this->escapeHtml($miseventos->in_id); ?>" class="preview" data-ui-lightbox>
 	                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($miseventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
@@ -22,7 +22,7 @@
                                          echo $fecha = date_format($fecha, 'd/m/Y'); ?></span>
 	                                    <span class="category"><a href="#"><?php echo  $this->escapeHtml($miseventos->nombre_categoria);?></a></span>
 	                                </div>
-	                                <h2><a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a></h2>
+	                                <h2><a href="/evento/<?php echo $this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a></h2>
 	                                <p>
 	                               <?php echo  $this->escapeHtml($miseventos->va_descripcion);?>
 	                                </p>

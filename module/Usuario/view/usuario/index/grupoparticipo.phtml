@@ -13,7 +13,7 @@
 	                    <ul>
                                <?php  foreach ($this->grupospertenece  as $grupospertenece) :?>
 	                        <li data-category="web">
-	                            <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupospertenece->id); ?>" class="preview" data-ui-lightbox>
+	                            <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupospertenece->id); ?>" class="preview" data-ui-lightbox>
 	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupospertenece->imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
@@ -23,7 +23,7 @@
                                          	echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?>                     
 		                                </div>
 		                            </div>
-	                                <h2><a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($grupospertenece->id); ?>"><?php echo  $this->escapeHtml($grupospertenece->nombre);?></a></h2>
+	                                <h2><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupospertenece->id); ?>"><?php echo  $this->escapeHtml($grupospertenece->nombre);?></a></h2>
 	                                <p>
 	                          <?php echo $this->escapeHtml($grupospertenece->descripcion); ?>
 	                                </p>
@@ -52,7 +52,7 @@
 		                <ul>
 		                     <?php  foreach ($this->otrosgrupos  as $otrosgrupos) :?>
 	                        <li data-category="web">
-	                            <a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($otrosgrupos->id); ?>" class="preview" data-ui-lightbox>
+	                            <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($otrosgrupos->in_id); ?>" class="preview" data-ui-lightbox>
 	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($otrosgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
 	                            <div class="content">
@@ -62,7 +62,7 @@
                                          	echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?>                    
 		                                </div>
 		                            </div>
-	                                <h2><a href="/grupo/index/detallegrupo?id=<?php echo $this->escapeHtml($otrosgrupos->in_id); ?>"><?php echo  $this->escapeHtml($otrosgrupos->va_nombre);?></a></h2>
+	                                <h2><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($otrosgrupos->in_id); ?>"><?php echo  $this->escapeHtml($otrosgrupos->va_nombre);?></a></h2>
 	                                <p>
 	                          <?php echo $this->escapeHtml($otrosgrupos->va_descripcion); ?>
 	                                </p>
