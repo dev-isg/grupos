@@ -3,11 +3,12 @@
         <div class="row-fluid">
             <div class="span3 group-sidebar">
               <div class="img-grupo">
-                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
+                <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
               </div>
               <h2 class="gh"><a href="#"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
-              <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']);
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
+              <p class="fund gh">
+                <em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']); echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em>
+              </p>
               <p class="desc gh">
                 <?php echo $this->eventos[0]['descripcion']; ?> <br> <a href="#">Ver mas...</a>
               </p>
@@ -91,7 +92,7 @@
                             </div>
                             <div class="ficha-desc">
                               <p><?php echo $this->eventos[0]['va_direccion']; ?></p>
-                              <em>Lima, Lima (<a href="#">Mapa</a>)</em>
+                              <em>Lima, Lima</em>
                             </div>
                           </li>
                         </ul> <!-- /score-list -->
@@ -108,7 +109,7 @@
                             <p><?php echo $this->eventos[0]['va_descripcion']; ?></p>
                          <p>The circuit from above:</p>
                         <p>
-                            <img src="http://static.wix.com/media/63ce3d_af2d42b6f3828b3d53767f1093c42cc3.png_srz_949_506_75_22_0.50_1.20_0.00_png_srz" style="max-width:100%;margin:5px">
+                            <img src="http://static.wix.com/media/63ce3d_af2d42b6f3828b3d53767f1093c42cc3.png_srz_949_506_75_22_0.50_1.20_0.00_png_srz" style="max-width:100%;">
                         </p>
                         <p>Pictures of the circuit:</p>
 <!--                        <p>
@@ -165,7 +166,8 @@
                       <li> 
                         <div class="content-comentario">
                           <div class="span2">
-                            <img src="<?php   echo $this->host('images') . '/usuario/principal/' . $this->escapeHtml($comentarios->imagen)  ?>" alt="">
+                            <!--<img src="<?php   echo $this->host('images') . '/usuario/principal/' . $this->escapeHtml($comentarios->imagen)  ?>jpg" alt="">-->
+                            <img src="/img/foto-carnet.jpg">
                           </div>
                           <div class="span10 ti-coment">
                             <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
@@ -216,7 +218,8 @@
                          <?php  foreach ($this->usuarios  as $usuarios) :?>
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
-                               <img src="<?php   echo $this->host('images') . '/usuario/principal/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">
+                              <!--<img src="<?php   echo $this->host('images') . '/usuario/principal/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">-->
+                              <img src="/img/foto-carnet.jpg">
                             </div>
                             <div class="span8 desc-user">
                                 <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>

@@ -877,11 +877,22 @@ vertical-align: middle;
   -moz-border-radius: 0 5px 5px 0;
 }
 .event{
-  border: 1px solid #ddd;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   margin-top: 30px;
+}
+.box{
+  -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+.event h2{
+  line-height: 25px;
+  font-size: 22px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0;
 }
 .crear-evento{
   padding: 40px;
@@ -1133,11 +1144,12 @@ span.nm{
 }
 .event-group h1{
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
   color: #333;
   text-transform: uppercase;
-  line-height: 27px;
-  margin-bottom: 15px;
+  line-height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .asig-evento ul{
   list-style: none;
@@ -1154,13 +1166,13 @@ span.nm{
   width: 130px;
   float: left;
   width: 130px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   color: #666;
 }
 .ficha-desc p{
   color: #272727;
-  font-size: 20px;
+  font-size: 13px;
   margin-bottom: 0;
 }
 .ficha-desc{
@@ -1168,21 +1180,34 @@ span.nm{
   float: left;
   width: 65%;
   color: #272727;
-  font-size: 20px;
+  font-size: 13px;
 }
 .ficha-desc em{
   color: #666;
-  font-size: 14px;
+  font-size: 12px;
 }
 #event-description-wrap p{
   font-family: arial;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
+  color: #363636;
+}
+#map{
+  margin-top: 10px;
+}
+.cu h2{
+  margin-bottom: 10px;
 }
 #map_canvas{
   width: 100%;
   height: 350px;
   margin-bottom: 20px;
+}
+.button-agregar{
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
 }
 .group-right{
   float: right;
@@ -1216,8 +1241,15 @@ span.nm{
 #inline_evento{
   padding-bottom: 0!important;
 }
+.nmb1{
+  background: white;
+}
 .nmb{
   background: white;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
 }
 .space-group{
   padding: 10px 0px 10px 10px;
@@ -1288,6 +1320,17 @@ span.nm{
 .btn-unete{
   margin-top: 10px;
   text-align: center;
+}
+.space-group label span{
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.space-group label{
+  font-weight: bold;
+  margin-bottom: 5px;  
+}
+.gg{
+  margin-top: 7px;
 }
 /*Eventos*/
 
@@ -1582,6 +1625,7 @@ p.pp{
   border: 1px solid #DDD;
   border-bottom: none;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 .overall_score {
   font-size: 17.5px;
@@ -1598,12 +1642,12 @@ ul.score-list, ul.score-list li {
 ul.score-list li {
   font-size: 14px;
   font-weight: bold;
-  padding: 10px 10px;
+  padding: 5px 10px;
   border-bottom: 1px solid #DDD;
 }
 ul.score-list li:first-child {
   border-top: 1px solid #DDD;
-  padding-top: 10px;
+  padding-top: 5px;
 }
 /* ==========================================================================
    Estilo de icono styles
@@ -1635,9 +1679,9 @@ ul.score-list li:first-child {
   width: 1em;
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
-}*/
+}
 
-/*[class^="icon-"]:before,
+[class^="icon-"]:before,
 [class*=" icon-"]:before {
   font-family: "untitled-font-1";
   font-style: normal;

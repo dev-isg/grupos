@@ -321,7 +321,7 @@ class IndexController extends AbstractActionController
         }
         
         $iduser = $storage->read()->in_id; // 1;
-        $idgrup = $this->params()->fromQuery('idG'); // 48;
+        $idgrup = $this->params()->fromQuery('idE'); // 48;
         $unir = $this->params()->fromQuery('act');
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {

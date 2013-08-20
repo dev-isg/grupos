@@ -9,7 +9,7 @@
                                 <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
                             </div>
                         </div>
-                        <div class="row-fluid event nmb">
+                        <div class="row-fluid event nmb1">
                             <div class="span12 space-group">
                                 <label>Elige tu grupo:</label>
                                  <select name="grupos" class="span11 nm-crear-grupo" id="crearGrupo">
@@ -31,7 +31,6 @@
                 <div class="row-fluid crear-grupos" style="display:none;">
                     <?php
                     $form = $this->form;
-
                     $form->setAttributes(array(
                         'action' => $this->url.'/grupo/index/agregargrupo', 
                         'method' => 'post',
@@ -44,12 +43,12 @@
                     ?>
                     <!--<form action="" class="span12 form-crear-grupo" id="crear-group">-->
                         <div class="row-fluid">
-                            <div class="span12 crear-evento event">
+                            <div class="span12 crear-evento event box">
                                 <h1>Crear tu grupo</h1>
                                 <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
                             </div>
                         </div>
-                        <div class="row-fluid event nmb">
+                        <div class="row-fluid event nmb box">
                             <div class="span8 space-group">
                                 <?php echo $this->formHidden($form->get('in_id'));?>
                                 <?php echo $this->formRow($form->get('va_nombre'));?>
@@ -78,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="crear-evento">
+                        <p class="crear-evento box">
                             <?php echo $this->formSubmit($form->get('submit'));?>
                             <a href="" class="btn btn-inverse btn-cancelar">Cancelar</a>
                         </p>

@@ -256,14 +256,14 @@ class GrupoTable{
      }
      
      public function unirseGrupo($idgrup,$iduser){
-         if($this->getGrupoUsuario($idgrup,$iduser)>0){
+         if($this->getGrupoUsuario($idgrup,$iduser)){
             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
                     ->set(array('va_estado'=>'activo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup)); 
               
          }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
-                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo'));
+                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo','va_fecha'=>date('c')));
          }
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
            $adapter=$this->tableGateway->getAdapter();
