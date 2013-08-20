@@ -17,7 +17,7 @@
                     <div class="row-fluid">
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
-                        	<i class="icon-datos"></i>
+                        	<i class="icon-datos ico-noti"></i>
                         	<p id="datos">ACTUALIZAR MIS DATOS</p>
                         </div>
                         <span>x</span>
@@ -42,11 +42,11 @@
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
-                                                                                <?php if(($this->usuario->va_foto)!=""){?>
-                                                                                    <img src="/imagenes/usuario/general/<?php echo $this->usuario->va_foto?>" style="width:130px;height:130px;">
-                                                                                <?php }else{?>
-                                                                                    <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
-                                                                                <?php }?>
+                                                <?php if(($this->usuario->va_foto)!=""){?>
+                                                    <img src="/imagenes/usuario/general/<?php echo $this->usuario->va_foto?>" style="width:130px;height:130px;">
+                                                <?php }else{?>
+                                                    <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
+                                                <?php }?>
 								            </div>
 							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
 								            <div class="detalle-img">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="span6 cuenta noti">
 	                    <div class="ocultarnoti">
-	                    <i class="icon-noti"></i>
+	                    <i class="icon-noti ico-noti"></i>
 	                    <p id="inoti">NOTIFICACIONES</p> 
 	                    </div>
 	                    <span>x</span>

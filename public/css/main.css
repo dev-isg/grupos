@@ -1673,7 +1673,7 @@ ul.score-list li:first-child {
 
 }
 
-/*[data-icon]:before {
+.logincuenta ul li [data-icon]:before {
   font-family: "untitled-font-1";
   content: attr(data-icon);
   font-style: normal;
@@ -1688,21 +1688,50 @@ ul.score-list li:first-child {
   -webkit-font-smoothing: antialiased;
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+.logincuenta ul li [class^="icon-"]:before,
+.logincuenta ul li [class*=" icon-"]:before {
   font-family: "untitled-font-1";
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none !important;
   speak: none;
-
   display: inline-block;
   text-decoration: none;
   width: 1em;
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
-}*/
+}
+
+.ico-noti:before {
+  font-family: "untitled-font-1";
+  content: attr(data-icon);
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none !important;
+  speak: none;
+  display: inline-block;
+  text-decoration: none;
+  width: 1em;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ico-noti:before,
+.ico-noti:before {
+  font-family: "untitled-font-1";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none !important;
+  speak: none;
+  display: inline-block;
+  text-decoration: none;
+  width: 1em;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+}
 .icon-group:before {
   content: "a";
 }

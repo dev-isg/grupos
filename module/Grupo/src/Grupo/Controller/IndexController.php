@@ -164,7 +164,17 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
-            
+  
+          require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            $info = pathinfo($File['name']);
+            $valor = uniqid();
+            $nom = $nonFile;
+            $imf2 = $valor . '.' . $info['extension'];
+            $filter = new \Filter_Alnum();        
+            $filtered = $filter->filter($nom);
+            $imagen = $filtered . '-' . $imf2; 
+    
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -177,9 +187,9 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 
                 $grupo->exchangeArray($form->getData());
-                if ($this->redimensionarImagen($File, $nonFile)) {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     // obtiene el identity y consulta el
-                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id);
+                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                 } else {
                     echo 'problemas con el redimensionamiento';
@@ -245,6 +255,18 @@ class IndexController extends AbstractActionController
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
             
+            
+             require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            $info = pathinfo($File['name']);
+            $valor = uniqid();
+            $nom = $nonFile;
+            $imf2 = $valor . '.' . $info['extension'];
+            $filter = new \Filter_Alnum();
+            $filtered = $filter->filter($nom);
+            $imagen = $filtered . '-' . $imf2;
+            
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -256,8 +278,8 @@ class IndexController extends AbstractActionController
             // var_dump($form->setData($data));
             
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile)) {
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion);
+                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$imagen);
                     return $this->redirect()->toRoute('grupo');
                 } else {
                     echo 'problemas con el redimensionamiento';
@@ -512,8 +534,8 @@ class IndexController extends AbstractActionController
         return $this->authservice;
     }
 
-    private function redimensionarImagen($File, $nonFile)
-    {
+    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
+    { 
         try {
             
             $anchura = 248;
@@ -525,19 +547,25 @@ class IndexController extends AbstractActionController
             $tamanio = getimagesize($File['tmp_name']);
             $ancho = $tamanio[0];
             $alto = $tamanio[1];
+              $name =$imagen;
+              
+
+              
             // $altura=$tamanio[1];
-            $valor = uniqid();
+          //  $valor = uniqid();
             if ($ancho > $alto) { // echo 'ddd';exit;
-                require './vendor/Classes/Filter/Alnum.php';
+              //  require './vendor/Classes/Filter/Alnum.php';
                 // $altura =(int)($alto*$anchura/$ancho); //($alto*$anchura/$ancho);
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//                    $nom = $nonFile;
+//                    $imf2 = $valor . '.' . $info['extension'];
+//                    $filter = new \Filter_Alnum();
+//                    $filtered = $filter->filter($nom);
+//                    $name = $filtered . '-' . $imf2;
+                 
+                  
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
@@ -568,15 +596,15 @@ class IndexController extends AbstractActionController
                 }
             }
             if ($ancho < $alto) {
-                require './vendor/Classes/Filter/Alnum.php';
+               // require './vendor/Classes/Filter/Alnum.php';
                 // $anchura =(int)($ancho*$altura/$alto);
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//                    $nom = $nonFile;
+//                    $imf2 = $valor . '.' . $info['extension'];
+//                    $filter = new \Filter_Alnum();
+//                    $filtered = $filter->filter($nom);
+//                    $name = $filtered . '-' . $imf2;
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);

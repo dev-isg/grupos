@@ -84,6 +84,20 @@ class EventoController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
+            
+            require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            $info = pathinfo($File['name']);
+            $valor = uniqid();
+            $nom = $nonFile;
+            $imf2 = $valor . '.' . $info['extension'];
+            $filter = new \Filter_Alnum();
+            $filtered = $filter->filter($nom);
+            $imagen = $filtered . '-' . $imf2;
+            
+            
+            
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -96,10 +110,10 @@ class EventoController extends AbstractActionController
             
             if ($form->isValid()) {
                 $evento->exchangeArray($form->getData());
-                if ($this->redimensionarImagen($File, $nonFile)) {
-                   $idevento= $this->getEventoTable()->guardarEvento($evento, $idgrupo);
+   
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
+                 $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
-//                     return $this->redirect()->toRoute('grupo');
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -486,7 +500,7 @@ class EventoController extends AbstractActionController
         return $this->eventoTable;
     }
 
-    private function redimensionarImagen($File, $nonFile)
+    private function redimensionarImagen($File, $nonFile,$imagen)
     {
         try {
             
@@ -500,18 +514,19 @@ class EventoController extends AbstractActionController
             $ancho = $tamanio[0];
             $alto = $tamanio[1];
             // $altura=$tamanio[1];
-            $valor = uniqid();
+          //  $valor = uniqid();
+            $name=$imagen;
             if ($ancho > $alto) { // echo 'ddd';exit;
-                require './vendor/Classes/Filter/Alnum.php';
+              //  require './vendor/Classes/Filter/Alnum.php';
                 // $altura =(int)($alto*$anchura/$ancho); //($alto*$anchura/$ancho);
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//                    $nom = $nonFile;
+//                    $imf2 = $valor . '.' . $info['extension'];
+//                    $filter = new \Filter_Alnum();
+//                    $filtered = $filter->filter($nom);
+//                    $name = $filtered . '-' . $imf2;
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
@@ -542,15 +557,15 @@ class EventoController extends AbstractActionController
                 }
             }
             if ($ancho < $alto) {
-                require './vendor/Classes/Filter/Alnum.php';
+              //  require './vendor/Classes/Filter/Alnum.php';
                 // $anchura =(int)($ancho*$altura/$alto);
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-                    $nom = $nonFile;
-                    $imf2 = $valor . '.' . $info['extension'];
-                    $filter = new \Filter_Alnum();
-                    $filtered = $filter->filter($nom);
-                    $name = $filtered . '-' . $imf2;
+//                    $nom = $nonFile;
+//                    $imf2 = $valor . '.' . $info['extension'];
+//                    $filter = new \Filter_Alnum();
+//                    $filtered = $filter->filter($nom);
+//                    $name = $filtered . '-' . $imf2;
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
