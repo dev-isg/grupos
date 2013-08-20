@@ -126,7 +126,7 @@
       $(".btn-unete").html(addLoading);
       var activo = 1;
       $.ajax({
-        url: '/grupo/evento/unir',
+        url: '/grupo/index/unir',
         type: 'get',
         data: 'act=' + activo +'&idE='+even,
         dataType: "json",
@@ -151,7 +151,7 @@
       $(".btn-unete").html(addLoading);
       var activo = 0;
       $.ajax({
-        url: '/grupo/evento/unir',
+        url: '/grupo/index/unir',
         type: 'get',
         data: 'act=' + activo +'&idE='+even,
         dataType: "json",
