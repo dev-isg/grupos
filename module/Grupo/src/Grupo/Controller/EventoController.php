@@ -114,7 +114,8 @@ class EventoController extends AbstractActionController
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
-                } else {
+                } else 
+                    {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
