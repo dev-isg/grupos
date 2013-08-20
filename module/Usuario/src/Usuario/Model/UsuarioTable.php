@@ -253,8 +253,8 @@ class UsuarioTable
                 ->set(array('va_verificacion'=>'','va_estado'=>'activo'))
                 ->where(array('in_id'=>$id));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        return $resultSet->toArray();
+        //$resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        //return $resultSet->toArray();
     }
 
     
