@@ -61,7 +61,6 @@ class AuthController extends AbstractActionController
         $form->get('va_token')->setValue($token);
         return array(
             'form' => $form,
-            'token'=>$token,
             'messages' => $this->flashmessenger()->getMessages()
         );
     }
@@ -81,16 +80,17 @@ class AuthController extends AbstractActionController
                      ->getAdapter()
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
-                 if($token)
-             {               
+             if($token)
+                {               
                $usuario = $this->getUsuarioTable()->usuario($token);
+              
                if(count($usuario)>0){ 
-                       
+                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);       
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
                     $this->flashmessenger()->addMessage($message);
                 }
-                
+                  
                 if ($result->isValid()) {
 //                     $redirect = 'success';
                     $accion=$request->getPost('accion');
@@ -112,7 +112,7 @@ class AuthController extends AbstractActionController
                         'va_contrasena',
                         'va_email'
                     )));
-                     $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);  
+                     
                           }
                   }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
                   
