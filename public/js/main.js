@@ -12,7 +12,8 @@ function crearevento(){
             startDate: fecha_actual,
             minuteStep: 10,
             pickerPosition: "bottom-left",
-            todayHighlight:true
+            todayHighlight:true,
+            language: 'es'
         });
 
         $("[data-toggle='tooltip']").tooltip();
@@ -35,8 +36,6 @@ function crearevento(){
         $("#map").juGoogleMap({
             editable:true,
             dataBound:{
-                lat:'#mapLocationLat',
-                lng:'#mapLocationLon',
                 city:'#cityId',
                 address:'#address',
                 addressRef:'#addressReference'
@@ -102,7 +101,7 @@ function crearevento(){
             var lat = $("#mapLocationLat").val();
             var log = $("#mapLocationLon").val();
             var direc = $("#address").val();
-            alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
+            //alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
         });
     });
 }
@@ -110,16 +109,16 @@ function crearevento(){
 function actualizarDatos(){
     $(document).ready(function(){
         $("#datos").on("click",function(){
-                 $(".mifoto").slideUp();
-                  $(".cface").slideUp();              
-                   $(".noti").slideUp();
-                 $(".ocultar").hide();
-                 $(".misdatos").animate({
-                 'width': "100%",
-                 'height': "100%"
-                  });
-                 $(".modificardatos").slideDown();
-                 $(".misdatos span").slideDown();
+         $(".mifoto").slideUp();
+          $(".cface").slideUp();              
+           $(".noti").slideUp();
+         $(".ocultar").hide();
+         $(".misdatos").animate({
+         'width': "100%",
+         'height': "100%"
+          });
+         $(".modificardatos").slideDown();
+         $(".misdatos span").slideDown();
         });
 
         $(".misdatos").delegate("span","click",function(){

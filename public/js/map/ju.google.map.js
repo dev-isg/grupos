@@ -485,10 +485,14 @@
 			this.marker.setMap(this.map);
 			this.markerTooltip = this.getMarkerTooltip();
 
-			google.maps.event.addListener(this.marker, 'dragend', function(){
-                
+			google.maps.event.addListener(this.marker, 'dragend', function(event){
+                //alert('dra');
+                var NewLat = event.latLng.lat();
+                var NewLng = event.latLng.lng();
+                $("#mapLocationLat").val(NewLat);
+                $("#mapLocationLon").val(NewLng);
 			    self.setMarker(self.marker.position.jb, self.marker.position.kb, null, self.marker.addressRef);
-
+                //alert(self.marker.addressRef);
 			});
 			
 			if (this.options.editable)
@@ -499,9 +503,11 @@
 		else
 		{
 			if (this.marker.position.jb != lat || this.marker.position.kb != lng)
-				this.marker.setPosition(new google.maps.LatLng(lat, lng));            
-		}
-    	
+				this.marker.setPosition(new google.maps.LatLng(lat, lng));
+                /*$("#mapLocationLat").val(lat);
+                $("#mapLocationLon").val(lng);
+                alert('enter');  */        
+		}        
     	this.marker.address = address;
     	this.marker.addressRef = addressRef;
     	
@@ -669,7 +675,7 @@
      * sets the address correctly
      */
     JuGoogleMap.prototype.updateMarkerAddress = function()
-    {
+    {        
     	if (!this.marker)
     		return;
     	
@@ -681,6 +687,7 @@
 				self.setMarker(self.marker.position.jb, self.marker.position.kb, 
 						results[0].formatted_address, self.marker.addressRef);
 		    }
+            //alert(self.marker.position.jb);
 		});
     }
     
@@ -689,6 +696,7 @@
      */
     JuGoogleMap.prototype.initDataBound = function()
     {
+
     	if (!this.options.dataBound) return;
     	var self = this;
     	
@@ -758,10 +766,12 @@
     {
     	if (!this.options.dataBound) return;	
     	if (this.options.dataBound.lat)
-    		var hol = $(this.options.dataBound.lat).val(this.marker?this.marker.position.jb:"");            
+            //alert(this.marker?this.marker.position.jb:"");
+    		$(this.options.dataBound.lat).val(this.marker?this.marker.position.jb:"");            
     	if (this.options.dataBound.lng)
     		$(this.options.dataBound.lng).val(this.marker?this.marker.position.kb:"");
     	if (this.options.dataBound.address)
+            
     		$(this.options.dataBound.address).val(this.marker?this.marker.address:"");
     	if (this.options.dataBound.addressRef)
     		$(this.options.dataBound.addressRef).val(this.marker?this.marker.addressRef:"");
