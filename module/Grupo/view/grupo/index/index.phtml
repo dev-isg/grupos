@@ -16,7 +16,7 @@
                                 <div class="date-month">
                                     <?php  $fecha = date_create($eventos->va_fecha);
                                     echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
-                                </div>
+                                  </div>
                             </div>
                             
                             <h2>
@@ -29,7 +29,7 @@
                             <footer class="entry-extra clearfix">
                                 <span class="meta-comments">
                                     <i class="icon-comment"></i>
-                                    <a href="#" title="comentarios">1</a>
+                                    <a href="#" title="<?php echo  $this->escapeHtml($eventos->comentarios);?> comentarios"> <?php echo  $this->escapeHtml($eventos->comentarios);?></a>
                                 </span><!-- .meta-comments -->
                                 <span class="meta-views" title="Views">
                                     <i class="icon-tag"></i>
@@ -63,7 +63,6 @@
                                  echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
                                 </div>
                             </div>
-                            
                             <h2>
                                 <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                             </h2>

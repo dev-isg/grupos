@@ -27,6 +27,8 @@ class IndexController extends AbstractActionController
 {
 
     protected $usuarioTable;
+   
+    static $usuarioTableStatic;
 
     protected $_options;
 
@@ -184,7 +186,7 @@ class IndexController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-        $valor = $this->headerAction($id);
+        $valor = $this->header($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);
@@ -276,13 +278,10 @@ class IndexController extends AbstractActionController
         return array();
     }
 
-    public function headerAction($id)
-    
+    public static function headerAction($id)
     {
-        // $ruta = $this->host('ruta');
-        $usuario = $this->getUsuarioTable()->getUsuario($id);
-        $nombre = $usuario->va_nombre;
-//         '.$this->redirect()->toRoute("login/process",array("action"=> "authenticate")).'
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
         $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
@@ -292,8 +291,6 @@ class IndexController extends AbstractActionController
             <li><i class="icon-group"> </i> <a href=" '.$ruta . '/grupo/evento/miseventos ">Mis Eventos</a></li>
             <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/misgrupos ">Mis Grupos</a></li>
             <li><i class="icon-cuenta"></i> <a href=" '.$ruta . '/usuario/index/editarusuario "  class="activomenu">Mi cuenta</a></li>
-
- 
 
             <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
           </ul> 
@@ -314,6 +311,7 @@ class IndexController extends AbstractActionController
         if (! $this->usuarioTable) {
             $sm = $this->getServiceLocator();
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+            self::$usuarioTableStatic=$this->usuarioTable;
         }
         return $this->usuarioTable;
     }
