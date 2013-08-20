@@ -73,8 +73,17 @@ return array(
                     )
                 ),
             ),
-            
-               
+            'agregar-evento' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/agregar-evento[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Evento',
+                        'action' => 'agregarevento'
+                    )
+                ),
+            ),
+        
         ),
     ),
     'view_manager' => array(
