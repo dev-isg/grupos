@@ -186,7 +186,7 @@ class IndexController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-        $valor = $this->header($id);
+        $valor = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm($adpter);
         $form->bind($usuario);

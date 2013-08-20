@@ -24,7 +24,7 @@ use Zend\Mail\Message;
 use Zend\View\Model\JsonModel;
 use Grupo\Form\ComentarioForm;
 
-use Usuario\Controller\IndexController;
+use Usuario\Controller\IndexController as metodo;
 
 class EventoController extends AbstractActionController
 {

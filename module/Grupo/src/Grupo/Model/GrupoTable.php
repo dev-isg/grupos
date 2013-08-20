@@ -255,12 +255,28 @@ class GrupoTable{
                                     }
      }
      
+     public function getGrupoUsuario($idgrupo,$iduser){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+         $selecttot = $sql->select()
+         ->from('ta_usuario_has_ta_grupo')
+         ->where(array('ta_grupo_in_id'=>$idgrupo,'ta_usuario_in_id'=>$iduser));
+         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+
+         $adapter=$this->tableGateway->getAdapter();
+         $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+         if (!$row) {
+             throw new \Exception("No se encontro evento");
+         }
+         return $row->current();
+     }
+     
      public function unirseGrupo($idgrup,$iduser){
          if($this->getGrupoUsuario($idgrup,$iduser)){
             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
                     ->set(array('va_estado'=>'activo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup)); 
-              
+
          }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
                    ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo','va_fecha'=>date('c')));
@@ -339,20 +355,7 @@ class GrupoTable{
     }
 
     
-    public function getGrupoUsuario($idgrupo,$iduser){
-        $adapter = $this->tableGateway->getAdapter();
-        $sql = new Sql($adapter);
-        $selecttot = $sql->select()
-        ->from('ta_usuario_has_ta_grupo')
-        ->where(array('ta_grupo_in_id'=>$idevent,'ta_usuario_in_id'=>$iduser));
-        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
-        $adapter=$this->tableGateway->getAdapter();
-        $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        if (!$row) {
-            throw new \Exception("No se encontro evento");
-        }
-        return $row->current();
-    }
+
 
     
     public function compruebarUsuarioxGrupo($iduser,$idgrupo){
