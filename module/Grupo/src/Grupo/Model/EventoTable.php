@@ -137,28 +137,37 @@ class EventoTable{
         ));
     }
     
-    public function comprobarGrupo(){
-        $adapter = $this->tableGateway->getAdapter();
-        $sql = new Sql($adapter);
-        $selecttot = $sql->select()
-        ->from('ta_usuario_has_ta_grupo')
-        ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array(), 'LEFT')
-        // ->join('ta_grupo','ta_evento.ta_grupo_in_id=ta_grupo_in_id',array(),'LEFT')
-        ->where(array(
-            'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
-            'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
-            'ta_evento.ta_grupo_in_id is not null'
-        ));
-        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+//     public function comprobarGrupo($iduser){
+// //         try{
+// //             $row=$this->getEventoUsuario($idevent, $iduser);
+// //         }catch (\Exception $e){
+            
+// //         }
+//         $adapter = $this->tableGateway->getAdapter();
+//         $sql = new Sql($adapter);
+//         $selecttot = $sql->select()
+//         ->from('ta_usuario_has_ta_grupo')
+//         ->join('ta_grupo', 'ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id', array(), 'LEFT')
+//         ->join('ta_evento', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('id_grupo'=>'ta_grupo_in_id'), 'LEFT')
+//         ->where(array(
+//             'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
+//             'ta_usuario_has_ta_grupo.va_estado'=>'activo',
+//             'ta_evento.ta_grupo_in_id is not null'
+//         ));
+//         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
         
-        $adapter = $this->tableGateway->getAdapter();
-        $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        if (! $row) {
-            throw new \Exception("No se encontro evento");
-        }
-        return $row->current();
+//         $adapter = $this->tableGateway->getAdapter();
+//         $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//         if (! $row) {
+//             throw new \Exception("No se encontro evento");
+//         }
+//        $row=$row->current();
+       
+//        if($row->id_grupo==){
+           
+//        }
         
-    }
+//     }
 
     public function getEventoUsuario($idevent, $iduser)
     {
