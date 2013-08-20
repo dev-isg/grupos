@@ -253,7 +253,7 @@ class EventoController extends AbstractActionController
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
 //         $index=new \Usuario\Controller\IndexController();
-        $valor = IndexController::headerAction($id);
+        $valor = metodo::headerAction($id);
                
         return array(
             'grupo' => $valor,
