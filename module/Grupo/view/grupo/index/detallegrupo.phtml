@@ -60,20 +60,15 @@
 		  <div class="span3 group-sidebar">
 		  	<div class="row-fluid">
 		  		<div class="span12 unete-grupo">
-		  			<p>
 		  			  <?php if($session){?>
-                          <?php if($participa){?>
-                          <a href="#" class="btn btn-danger" id="uneteAbEvent">Abandona el Grupo</a> 
-                          <?php }else{?>
-                          <a href="#" class="btn btn-success" id="uneteEvent">Unete al Grupo</a> 
-                          <?php }?>
-                        <?php }else{?>
-                          <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al Grupo</a> 
-                       <?php }?>          
-                          
-<!-- 		  				<a href="#" id="unete-grupo" class="btn btn-danger"><i class="icon-foto"></i> Unete al Grupo</a> -->
-						<!--<a href="#" class="btn btn-danger"><i class="icon-foto"></i> Abandonar el Grupo</a> -->
-		  			</p>
+                <?php if($participa){?>
+                <a href="#" class="btn btn-danger" id="uneteAbEvent">Abandona el Grupo</a> 
+                <?php }else{?>
+                <a href="#" class="btn btn-success" id="uneteEvent">Unete al Grupo</a> 
+                <?php }?>
+              <?php }else{?>
+                <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al Grupo</a> 
+             <?php }?>          
 		  		</div>
 		  	</div>
 		 <div class="lista-usuario">
@@ -121,9 +116,9 @@
     var even = <?php echo $this->in_id; ?>;
     $("#uneteEvent").on('click', function(e){
       e.preventDefault();
-      $(".btn-unete").empty();
+      $(".unete-grupo").empty();
       var addLoading = '<img src="/img/cargando.gif" />';
-      $(".btn-unete").html(addLoading);
+      $(".unete-grupo").html(addLoading);
       var activo = 1;
       $.ajax({
         url: '/grupo/index/unir',
@@ -132,8 +127,8 @@
         dataType: "json",
         success: function(data){
           var agregarButton = '<a href="#" class="btn btn-danger" id="uneteAbEvent">Abandona el evento</a>';
-          $(".btn-unete").empty();
-          $(".btn-unete").html(agregarButton);
+          $(".unete-grupo").empty();
+          $(".unete-grupo").html(agregarButton);
         },
         error: function(){
             console.log('Fallo conectando con el servidor')
@@ -146,9 +141,9 @@
     var even = <?php echo $this->in_id; ?>;
     $("#uneteAbEvent").on('click', function(e){
       e.preventDefault();
-      $(".btn-unete").empty();
+      $(".unete-grupo").empty();
       var addLoading = '<img src="/img/cargando.gif" />';
-      $(".btn-unete").html(addLoading);
+      $(".unete-grupo").html(addLoading);
       var activo = 0;
       $.ajax({
         url: '/grupo/index/unir',
@@ -157,8 +152,8 @@
         dataType: "json",
         success: function(data){
           var agregarButton = '<a href="#" class="btn btn-success" id="uneteEvent">Unete al evento</a>';
-          $(".btn-unete").empty();
-          $(".btn-unete").html(agregarButton);
+          $(".unete-grupo").empty();
+          $(".unete-grupo").html(agregarButton);
         },
         error: function(){
             console.log('Fallo conectando con el servidor')

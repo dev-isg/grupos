@@ -1717,7 +1717,9 @@ ul.score-list li:first-child {
   line-height: 1em;
   -webkit-font-smoothing: antialiased;
 }
-
+.unete-grupo{
+  text-align: center;
+}
 .ico-noti:before,
 .ico-noti:before {
   font-family: "untitled-font-1";
