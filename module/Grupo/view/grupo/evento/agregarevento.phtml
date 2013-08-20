@@ -1,3 +1,8 @@
+<script type="text/javascript">
+<!--
+var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
+//-->
+</script>
 <div class="main-container">
     <div class="container">
         <div class="row-fluid">
@@ -6,7 +11,7 @@
         $form = $this->formevento;
 
         $form->setAttributes(array(
-            'action' => $this->url.'/grupo/evento/agregarevento',
+            'action' => $this->url.'/grupo/evento/agregarevento/'.$this->idgrupo,
             'method' => 'post',
             'class'=>'span12 form-crear-grupo',
             'id'=>'crearEventos'

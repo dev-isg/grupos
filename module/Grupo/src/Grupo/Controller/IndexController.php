@@ -123,11 +123,16 @@ class IndexController extends AbstractActionController
         }
         return $this->eventoTable;
     }
+    
+    public function elegirgrupoAction(){
+        
+    }
 
     public function agregargrupoAction()
     {
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         if (! $storage) {
             return $this->redirect()->toRoute('grupo');
@@ -190,7 +195,12 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
-                    return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
+                    return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
+//                    $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
+//                                'action' => 'agregarevento'
+//                            ));
+//                     $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
+                    
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -202,11 +212,7 @@ class IndexController extends AbstractActionController
             }
         }
         $mainViewModel = new ViewModel();
-//         $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
-//             'action' => 'agregarevento'
-//         ));
-        
-//         $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
+
         return $mainViewModel->setVariables(array(
             'form' => $form,
             'grupos' => $user_info

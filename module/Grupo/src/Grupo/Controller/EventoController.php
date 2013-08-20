@@ -107,7 +107,7 @@ class EventoController extends AbstractActionController
             $evento = new Evento();
             $form->setInputFilter($evento->getInputFilter());
             $form->setData($data); // $request->getPost()
-            
+//             var_dump($data);exit;
             if ($form->isValid()) {
                 $evento->exchangeArray($form->getData());
    
@@ -128,7 +128,8 @@ class EventoController extends AbstractActionController
             }
         }
         return array(
-            'formevento' => $form
+            'formevento' => $form,
+            'idgrupo'=>$idgrupo
         );
     }
 
@@ -202,7 +203,8 @@ class EventoController extends AbstractActionController
         
         return array(
             'in_id' => $id,
-            'formevento' => $form
+            'formevento' => $form,
+            'idgrupo'=>$idgrupo
         );
     }
 

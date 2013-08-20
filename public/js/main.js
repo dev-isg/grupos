@@ -9,58 +9,40 @@ function crearevento(){
             format: "dd MM yyyy - hh:ii",
             autoclose: true,
             todayBtn: false,
-            startDate: "2013-07-25 10:00",
+            startDate: fecha_actual,
             minuteStep: 10,
             pickerPosition: "bottom-left",
-            todayHighlight:true
+            todayHighlight:true,
+            language: 'es'
         });
 
         $("[data-toggle='tooltip']").tooltip();
         $("#imageUrl").juImgPicker({
             maxFileSize:'4M'
         });
-        
-
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
+            var valueGrupo = $("#crearGrupo").val();
             if($("#crearGrupo").val()===""){
                 $(".activar-agregar").show();
                 $(".next-space").hide();
             }else{
+                $(".next-grupo").attr("href", "/agregar-evento/"+valueGrupo);                
                 $(".activar-agregar").hide();
                 $(".next-space").show();
             }
         });
 
-//        $(".next-grupo").click(function(){
-//            $(".next-space").hide();
-//            $(".crear-evento-grupos").show();
-//            $("#map").juGoogleMap({
-//                editable:true,
-//                dataBound:{
-//                    lat:'#mapLocationLat',
-//                    lng:'#mapLocationLon',
-//                    city:'#cityId',
-//                    address:'#address',
-//                    addressRef:'#addressReference'
-//                },
-//                center:{lat:-12.047816, lng:-77.062203},
-//                zoom:8  
-//            });
-//        });
-
-            $("#map").juGoogleMap({
-                editable:true,
-                dataBound:{
-                    lat:'#mapLocationLat',
-                    lng:'#mapLocationLon',
-                    city:'#cityId',
-                    address:'#address',
-                    addressRef:'#addressReference'
-                },
-                center:{lat:-12.047816, lng:-77.062203},
-                zoom:8
-            });
+        $("#map").juGoogleMap({
+            editable:true,
+            dataBound:{
+                city:'#cityId',
+                address:'#address',
+                addressRef:'#addressReference'
+            },
+            center:{lat:-12.047816, lng:-77.062203},
+            zoom:8
+        });
 
 
         $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
@@ -115,10 +97,11 @@ function crearevento(){
         });
 
         $("#submitbutton").click(function(){
+            var fechaPrin = $("#fechaId").val();
             var lat = $("#mapLocationLat").val();
             var log = $("#mapLocationLon").val();
             var direc = $("#address").val();
-            alert(lat +" -- " + log + " -- "+ direc);
+            //alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
         });
     });
 }
@@ -126,16 +109,16 @@ function crearevento(){
 function actualizarDatos(){
     $(document).ready(function(){
         $("#datos").on("click",function(){
-                 $(".mifoto").slideUp();
-                  $(".cface").slideUp();              
-                   $(".noti").slideUp();
-                 $(".ocultar").hide();
-                 $(".misdatos").animate({
-                 'width': "100%",
-                 'height': "100%"
-                  });
-                 $(".modificardatos").slideDown();
-                 $(".misdatos span").slideDown();
+         $(".mifoto").slideUp();
+          $(".cface").slideUp();              
+           $(".noti").slideUp();
+         $(".ocultar").hide();
+         $(".misdatos").animate({
+         'width': "100%",
+         'height': "100%"
+          });
+         $(".modificardatos").slideDown();
+         $(".misdatos span").slideDown();
         });
 
         $(".misdatos").delegate("span","click",function(){
