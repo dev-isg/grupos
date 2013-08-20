@@ -144,22 +144,55 @@ class EventoTable{
   
      public function eliminarGrupo($id, $estado) {
         $data = array(
-            'va_estado' => $estado,
+            'va_estado' => $estado
         );
-        $this->tableGateway->update($data, array('in_id' => $id));
-     }
-     
-     public function getEventoUsuario($idevent,$iduser){
-         $adapter = $this->tableGateway->getAdapter();
-         $sql = new Sql($adapter);
-         $selecttot = $sql->select()
-         ->from('ta_usuario_has_ta_evento')
-         ->where(array('ta_evento_in_id'=>$idevent,'ta_usuario_in_id'=>$iduser));
-         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
-         $adapter=$this->tableGateway->getAdapter();
-         $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-         if (!$row) {
-             throw new \Exception("No se encontro evento");
+        $this->tableGateway->update($data, array(
+            'in_id' => $id
+        ));
+    }
+    
+    public function comprobarGrupo(){
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->from('ta_usuario_has_ta_grupo')
+        ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array(), 'LEFT')
+        // ->join('ta_grupo','ta_evento.ta_grupo_in_id=ta_grupo_in_id',array(),'LEFT')
+        ->where(array(
+            'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
+            'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+            'ta_evento.ta_grupo_in_id is not null'
+        ));
+        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+        
+        $adapter = $this->tableGateway->getAdapter();
+        $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        if (! $row) {
+            throw new \Exception("No se encontro evento");
+        }
+        return $row->current();
+        
+    }
+
+    public function getEventoUsuario($idevent, $iduser)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+            ->from('ta_usuario_has_ta_evento')
+            ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array(), 'LEFT')
+        // ->join('ta_grupo','ta_evento.ta_grupo_in_id=ta_grupo_in_id',array(),'LEFT')
+            ->where(array(
+                'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
+                'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+                'ta_evento.ta_grupo_in_id is not null'
+                    ));
+        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+        
+        $adapter = $this->tableGateway->getAdapter();
+        $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        if (! $row) {
+            throw new \Exception("No se encontro evento");
          }
          return $row->current();
      }
@@ -169,7 +202,7 @@ class EventoTable{
              ->set(array('va_estado'=>'activo'))
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
              
-         }else{
+         }else{             
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
              ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));
          }

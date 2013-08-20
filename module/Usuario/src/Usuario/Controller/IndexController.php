@@ -45,6 +45,9 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
@@ -67,10 +70,9 @@ class IndexController extends AbstractActionController
 
     public function misgruposAction()
     {
-//         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-//         $renderer->inlineScript()
-//         ->setScript()
-//         ->prependFile($this->_options->host->base . '/js/main.js')
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
