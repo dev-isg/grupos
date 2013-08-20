@@ -19,7 +19,7 @@ class GrupoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_grupo')
-                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
+                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre','idcategoria'=>'in_id'),'left')
                     ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
              ->where(array('ta_grupo.va_estado'=>'activo'));
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
