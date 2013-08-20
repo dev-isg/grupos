@@ -484,8 +484,10 @@
 			this.marker = new google.maps.Marker(options);
 			this.marker.setMap(this.map);
 			this.markerTooltip = this.getMarkerTooltip();
+
 			google.maps.event.addListener(this.marker, 'dragend', function(){
-				self.setMarker(self.marker.position.jb, self.marker.position.kb, null, self.marker.addressRef);
+			    self.setMarker(self.marker.position.jb, self.marker.position.kb, null, self.marker.addressRef);
+                
 			});
 			
 			if (this.options.editable)
@@ -496,7 +498,7 @@
 		else
 		{
 			if (this.marker.position.jb != lat || this.marker.position.kb != lng)
-				this.marker.setPosition(new google.maps.LatLng(lat, lng));
+				this.marker.setPosition(new google.maps.LatLng(lat, lng));            
 		}
     	
     	this.marker.address = address;
@@ -755,7 +757,7 @@
     {
     	if (!this.options.dataBound) return;	
     	if (this.options.dataBound.lat)
-    		$(this.options.dataBound.lat).val(this.marker?this.marker.position.jb:"");
+    		var hol = $(this.options.dataBound.lat).val(this.marker?this.marker.position.jb:"");            
     	if (this.options.dataBound.lng)
     		$(this.options.dataBound.lng).val(this.marker?this.marker.position.kb:"");
     	if (this.options.dataBound.address)
