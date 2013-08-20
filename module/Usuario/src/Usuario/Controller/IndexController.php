@@ -28,6 +28,8 @@ class IndexController extends AbstractActionController
 
     protected $usuarioTable;
 
+    static $usuarioTableStatic;
+
     protected $_options;
 
     public function __construct()
@@ -43,26 +45,32 @@ class IndexController extends AbstractActionController
 
     public function grupoparticipoAction()
     {
-
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $id = $storage->read()->in_id;//$this->params()->fromQuery('id');
+        $id = $storage->read()->in_id; // $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
-        $categorias = $this->getUsuarioTable()->categoriasunicas($id)->toArray();
-        for($i=0;$i<count($categorias);$i++)
-        {$otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'],$categorias[$i]['id']);}
+        $categorias = $this->getUsuarioTable()
+            ->categoriasunicas($id)->toArray();
+        for ($i = 0; $i < count($categorias); $i ++) {
+            $otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'], $categorias[$i]['id']);
+        }
+             
         return array(
             'grupo' => $valor,
-        'grupospertenece'  =>$usuariosgrupos,
-       'otrosgrupos'=>$otrosgrupos,
+            'grupospertenece' => $usuariosgrupos,
+            'otrosgrupos' => $otrosgrupos,
         );
     }
 
     public function misgruposAction()
     {
+//         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+//         $renderer->inlineScript()
+//         ->setScript()
+//         ->prependFile($this->_options->host->base . '/js/main.js')
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -264,13 +272,10 @@ class IndexController extends AbstractActionController
         return array();
     }
 
-    public function headerAction($id)
-    
+    public static function headerAction($id)
     {
-        // $ruta = $this->host('ruta');
-        $usuario = $this->getUsuarioTable()->getUsuario($id);
-        $nombre = $usuario->va_nombre;
-//         '.$this->redirect()->toRoute("login/process",array("action"=> "authenticate")).'
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
         $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
@@ -300,6 +305,7 @@ class IndexController extends AbstractActionController
         if (! $this->usuarioTable) {
             $sm = $this->getServiceLocator();
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+            self::$usuarioTableStatic=$this->usuarioTable;
         }
         return $this->usuarioTable;
     }

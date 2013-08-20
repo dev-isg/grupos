@@ -23,6 +23,7 @@ use Zend\Db\Sql\Sql;
 use Application\Model\EventoTable;
 use Zend\Mail\Message;
 use Zend\Session\Container;
+use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractActionController
 {
@@ -201,16 +202,16 @@ class IndexController extends AbstractActionController
             }
         }
         $mainViewModel = new ViewModel();
-        $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
-            'action' => 'agregarevento'
-        ));
+//         $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
+//             'action' => 'agregarevento'
+//         ));
         
-        $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
+//         $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
         return $mainViewModel->setVariables(array(
             'form' => $form,
             'grupos' => $user_info
         ));
-        // return array('form'=>$form,'grupos'=>$user_info);
+
     }
 
     public function editargrupoAction()
@@ -343,7 +344,7 @@ class IndexController extends AbstractActionController
         }
         
         $iduser = $storage->read()->in_id; // 1;
-        $idgrup = $this->params()->fromQuery('idG'); // 48;
+        $idgrup = $this->params()->fromQuery('idE'); // 48;
         $unir = $this->params()->fromQuery('act');
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
@@ -379,6 +380,7 @@ class IndexController extends AbstractActionController
                 if ($usuario) {
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
                 }
+                $activo=1;
             }
         } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
@@ -430,8 +432,13 @@ class IndexController extends AbstractActionController
 //                     $transport->send($message);
 //                     $this->redirect()->toUrl('/grupo');
                 }
+                $activo=0;
             }
-       return array();
+            $result = new JsonModel(array(
+                'estado' =>$activo,
+            ));
+            
+            return $result;
     }
     
     

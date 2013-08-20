@@ -24,7 +24,7 @@ use Zend\Mail\Message;
 use Zend\View\Model\JsonModel;
 use Grupo\Form\ComentarioForm;
 
-  use Usuario\Controller\IndexController;
+use Usuario\Controller\IndexController as metodo;
 
 class EventoController extends AbstractActionController
 {
@@ -109,12 +109,13 @@ class EventoController extends AbstractActionController
             $form->setData($data); // $request->getPost()
             
             if ($form->isValid()) {
-                // var_dump($data);Exit;
                 $evento->exchangeArray($form->getData());
-                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                    $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
-                    
-                    return $this->redirect()->toRoute('grupo');
+
+                if ($this->redimensionarImagen($File, $nonFile)) {
+                   $idevento= $this->getEventoTable()->guardarEvento($evento, $idgrupo);
+                    return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
+//                     return $this->redirect()->toRoute('grupo');
+
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -241,7 +242,7 @@ class EventoController extends AbstractActionController
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
-        $valor = IndexController::headerAction($id);
+        $valor = metodo::headerAction($id);
         
         return array
       (
@@ -267,8 +268,8 @@ class EventoController extends AbstractActionController
         $id = $storage->read()->in_id;
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
-   
-        $valor = IndexController::headerAction($id);
+//         $index=new \Usuario\Controller\IndexController();
+        $valor = metodo::headerAction($id);
                
         return array(
             'grupo' => $valor,
@@ -309,6 +310,7 @@ class EventoController extends AbstractActionController
         $usuarios = $this->getEventoTable()->usuariosevento($id);
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+
         $renderer->inlineScript()
             ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
             ->prependFile($this->_options->host->base . '/js/main.js')
@@ -328,7 +330,7 @@ class EventoController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
-                return $this->redirect()->toUrl('/grupo/evento/detalleevento?id=' . $id);
+                return $this->redirect()->toUrl('/evento/' . $id);
             }
         }
         
