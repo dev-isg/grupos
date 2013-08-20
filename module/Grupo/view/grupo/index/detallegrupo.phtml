@@ -114,26 +114,57 @@
 	
 	$(document).on('ready', function(){		
 		enviarDatos();
+    	abandonarDatos();
 	});
 
 	function enviarDatos(){
-		var group = <?php echo $this->in_id; ?>;
-		$("#unete-grupo").on('click', function(e){
-			e.preventDefault();
-			var activo = 1;
-			$.ajax({
-	            url: '/grupo/index/unir',
-	            type: 'get',
-	            data: 'act=' + activo +'&idG='+group,
-	            dataType: "json",
-	            success: function(data){
-	               alert('Te envie  el dato');
-	            },
-	            error: function(){
-	                console.log('Fallo conectando con el servidor')
-	            }
-	        });
-		});
-	}
+    var even = <?php echo $this->idevento; ?>;
+    $("#uneteEvent").on('click', function(e){
+      e.preventDefault();
+      $(".btn-unete").empty();
+      var addLoading = '<img src="/img/cargando.gif" />';
+      $(".btn-unete").html(addLoading);
+      var activo = 1;
+      $.ajax({
+        url: '/grupo/evento/unir',
+        type: 'get',
+        data: 'act=' + activo +'&idE='+even,
+        dataType: "json",
+        success: function(data){
+          var agregarButton = '<a href="#" class="btn btn-danger" id="uneteAbEvent">Abandona el evento</a>';
+          $(".btn-unete").empty();
+          $(".btn-unete").html(agregarButton);
+        },
+        error: function(){
+            console.log('Fallo conectando con el servidor')
+        }
+      });
+    });
+  }
+
+  function abandonarDatos(){
+    var even = <?php echo $this->idevento; ?>;
+    $("#uneteAbEvent").on('click', function(e){
+      e.preventDefault();
+      $(".btn-unete").empty();
+      var addLoading = '<img src="/img/cargando.gif" />';
+      $(".btn-unete").html(addLoading);
+      var activo = 0;
+      $.ajax({
+        url: '/grupo/evento/unir',
+        type: 'get',
+        data: 'act=' + activo +'&idE='+even,
+        dataType: "json",
+        success: function(data){
+          var agregarButton = '<a href="#" class="btn btn-success" id="uneteEvent">Unete al evento</a>';
+          $(".btn-unete").empty();
+          $(".btn-unete").html(agregarButton);
+        },
+        error: function(){
+            console.log('Fallo conectando con el servidor')
+        }
+      });
+    });
+  }
 
 </script>
