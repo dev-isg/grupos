@@ -144,6 +144,7 @@ class GrupoTable{
       if ($id == 0) {
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
+          $this->unirseGrupo($idgrup,$iduser);
           return $idgrupo;
           
 //             if($notificacion!=null){

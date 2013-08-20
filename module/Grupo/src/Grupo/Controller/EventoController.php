@@ -226,7 +226,7 @@ class EventoController extends AbstractActionController
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
-        $valor = IndexController::headerAction($id);
+        $valor = metodo::headerAction($id);
         
         return array
       (
