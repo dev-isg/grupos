@@ -481,7 +481,6 @@
 		{
 			var options = $.extend(true, {}, {}, this.options.markerOptions);
 			options.position = new google.maps.LatLng(lat, lng);
-			
 			this.marker = new google.maps.Marker(options);
 			this.marker.setMap(this.map);
 			this.markerTooltip = this.getMarkerTooltip();
@@ -708,7 +707,7 @@
     JuGoogleMap.prototype._populateFromDataBound = function()
     {
     	if (!this.options.dataBound) return;
-    	var lat = (this.marker) ? this.marker.position.jb : null;
+    	var lat = (this.marker) ? this.marker.position.jb : null;        
     	var lng = (this.marker) ? this.marker.position.kb : null;
     	var address = (this.marker) ? this.marker.address : null;
     	var addressRef = (this.marker) ? this.marker.addressRef : null;

@@ -30,18 +30,18 @@ function crearevento(){
             }
         });
 
-            $("#map").juGoogleMap({
-                editable:true,
-                dataBound:{
-                    lat:'#mapLocationLat',
-                    lng:'#mapLocationLon',
-                    city:'#cityId',
-                    address:'#address',
-                    addressRef:'#addressReference'
-                },
-                center:{lat:-12.047816, lng:-77.062203},
-                zoom:8
-            });
+        $("#map").juGoogleMap({
+            editable:true,
+            dataBound:{
+                lat:'#mapLocationLat',
+                lng:'#mapLocationLon',
+                city:'#cityId',
+                address:'#address',
+                addressRef:'#addressReference'
+            },
+            center:{lat:-12.047816, lng:-77.062203},
+            zoom:8
+        });
 
 
         $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
