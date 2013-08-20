@@ -79,14 +79,16 @@ class EventoTable{
     }
     
   public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
-//       $fecha_esp = str_replace("/", "-", $evento->va_fecha);
-//       $timestamp = strtotime($evento->va_fecha);
-//         var_dump($timestamp);Exit;
+//       $fecha_esp=preg_replace('/\s+/','', $texto);
+      //       $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
+      //       $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
+      $fecha_esp = str_replace("-", " ", $evento->va_fecha);
+      $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>$evento->va_descripcion,
          'va_costo'=>$evento->va_costo,
-          'va_fecha'=>$evento->va_fecha,
+          'va_fecha'=>$fecha,//$evento->va_fecha,
          'va_latitud'=>$evento->va_latitud,
           'va_longitud'=>$evento->va_longitud,
           'va_direccion'=>$evento->va_direccion,
@@ -137,42 +139,6 @@ class EventoTable{
         ));
     }
     
-    
-    /////////////////////////////////////////////EMPIEZA///////////////////////////////////////////////////
-    
-//     public function comprobarGrupo($iduser){
-//         try{
-//             $row=$this->getEventoUsuario($idevent, $iduser);
-//         }catch (\Exception $e){
-            
-//         }
-//         $adapter = $this->tableGateway->getAdapter();
-//         $sql = new Sql($adapter);
-//         $selecttot = $sql->select()
-//         ->from('ta_usuario_has_ta_grupo')
-//         ->join('ta_grupo', 'ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id', array(), 'LEFT')
-//         ->join('ta_evento', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('id_grupo'=>'ta_grupo_in_id'), 'LEFT')
-//         ->where(array(
-//             'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
-//             'ta_usuario_has_ta_grupo.va_estado'=>'activo',
-//             'ta_evento.ta_grupo_in_id is not null'
-//         ));
-//         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
-        
-//         $adapter = $this->tableGateway->getAdapter();
-//         $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-//         if (! $row) {
-//             throw new \Exception("No se encontro evento");
-//         }
-//        $row=$row->current();
-//        $Grupoevent=$this->getEventoUsuario($idevent, $iduser);
-//        if($row->id_grupo==$Grupoevent->idgrup){
-//            return true;
-//        }else{
-//            $this->unirseGrupo($idgrup,$iduser)
-//        }
-        
-//     }
 
         public function getGrupoUsuario($idgrupo,$iduser){
             $adapter = $this->tableGateway->getAdapter();

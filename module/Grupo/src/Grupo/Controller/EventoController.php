@@ -112,6 +112,7 @@ class EventoController extends AbstractActionController
                 $evento->exchangeArray($form->getData());
    
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
+                    var_dump($data["va_fecha"]);
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else {
@@ -321,10 +322,13 @@ class EventoController extends AbstractActionController
        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
+        $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
+      
         if ($session) {
             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
         }
+        
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
@@ -333,7 +337,7 @@ class EventoController extends AbstractActionController
                 return $this->redirect()->toUrl('/evento/' . $id);
             }
         }
-        
+       
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
@@ -351,6 +355,7 @@ class EventoController extends AbstractActionController
             'comentarioform' => $form,
             'idevento' => $id,
             'session'=>$session,
+            'grupocomprueba'=>$grupocompr,
             'participa'=>$activo
         )
         ;
