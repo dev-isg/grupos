@@ -93,30 +93,8 @@ class GrupoTable{
     }
     
     
-  public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null){
-      
-//      $pais=$grupo->pais;
-//      $departamento=$grupo->departamento;
-//      $provincia=$grupo->provincia;
-//      $distrito=$grupo->distrito;
-//        
-//        $adapter = $this->tableGateway->getAdapter();
-//        $sql = new Sql($adapter);
-//        $idubigeo = $sql->select()->from('ta_ubigeo')
-//                ->columns(array('in_id'))
-//                ->where(array('in_idpais' => $pais, 'in_iddep' => $departamento, 'in_idprov' => $provincia, 'in_iddis' => $distrito));
-//        $selectString0 = $this->tableGateway->getSql()->getSqlStringForSqlObject($idubigeo);
-//
-//        $result = $adapter->query($selectString0, $adapter::QUERY_MODE_EXECUTE);
-//        $convertir = $result->toArray();
-//        $adapter = $this->tableGateway->getAdapter();
-//        $sql = new Sql($adapter);
-//        $usuario = $sql->select()->from('ta_usuario')
-//                ->columns(array('in_id'))
-//                ->where(array('va_email' =>$iduser));
-//        $selectString0 = $this->tableGateway->getSql()->getSqlStringForSqlObject($usuario);
-//        $result = $adapter->query($selectString0, $adapter::QUERY_MODE_EXECUTE);
-//        $idusuario = $result->toArray();
+  public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null,$imagen){
+
           
       $data=array(
          'va_nombre'=>$grupo->va_nombre,
@@ -126,13 +104,14 @@ class GrupoTable{
 //          'va_longitud'=>$grupo->va_longitud,
 //          'va_direccion'=>$grupo->va_direccion,
 //          'va_referencia'=>$grupo->va_referencia,
-          'va_imagen'=>$grupo->va_imagen['name'],
+          'va_imagen'=>$imagen,
           'va_estado'=>$grupo->va_estado,
 //          'va_dirigido'=>$grupo->va_dirigido,
           'ta_usuario_in_id'=>$iduser,//$idusuario['in_id'],//$grupo->ta_usuario_in_id,
           'ta_categoria_in_id'=>$grupo->ta_categoria_in_id,
 //          'ta_ubigeo_in_id'=>$grupo->ta_ubigeo_in_id//distrito,//$convertir[0]['in_id']            
       );
+      //var_dump($imagen);exit;
       $id = (int) $grupo->in_id;
   
       foreach($data as $key=>$value){

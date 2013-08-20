@@ -109,25 +109,13 @@ class IndexController extends AbstractActionController
 //            codigo de guardar imagen con apodo
             require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
-            
             $info = pathinfo($File['name']);
-            
             $valor = uniqid();
             $nom = $nonFile;
-            
             $imf2 = $valor . '.' . $info['extension'];
-            
-            
-            $filter = new \Filter_Alnum();
-                      
+            $filter = new \Filter_Alnum();        
             $filtered = $filter->filter($nom);
-//            print_r($filtered);
-//            exit;
             $imagen = $filtered . '-' . $imf2;
-//            print_r($imagen);
-//            exit;
-            
-            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()

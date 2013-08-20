@@ -78,23 +78,9 @@ class EventoTable{
         return $row;
     }
     
-  public function guardarEvento(Evento $evento,$idgrupo=null){
+  public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
       
-//      $pais=$grupo->pais;
-//      $departamento=$grupo->departamento;
-//      $provincia=$grupo->provincia;
-//      $distrito=$grupo->distrito;
-//        
-//        $adapter = $this->tableGateway->getAdapter();
-//        $sql = new Sql($adapter);
-//        $idubigeo = $sql->select()->from('ta_ubigeo')
-//                ->columns(array('in_id'))
-//                ->where(array('in_idpais' => $pais, 'in_iddep' => $departamento, 'in_idprov' => $provincia, 'in_iddis' => $distrito));
-//        $selectString0 = $this->tableGateway->getSql()->getSqlStringForSqlObject($idubigeo);
-//
-//        $result = $adapter->query($selectString0, $adapter::QUERY_MODE_EXECUTE);
-//        $convertir = $result->toArray();
-          
+
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>$evento->va_descripcion,
@@ -104,7 +90,7 @@ class EventoTable{
           'va_longitud'=>$evento->va_longitud,
           'va_direccion'=>$evento->va_direccion,
           'va_referencia'=>$evento->va_referencia,
-          'va_imagen'=>$evento->va_imagen['name'],
+          'va_imagen'=>$imagen,
           'va_estado'=>$evento->va_estado,
           'va_max'=>$evento->va_max,
           'va_min'=>$evento->va_min,
