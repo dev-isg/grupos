@@ -253,10 +253,11 @@ class EventoController extends AbstractActionController
         $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;
+
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
    
         $valor = IndexController::headerAction($id);
-        
+               
         return array(
             'grupo' => $valor,
             'eventos'=>$eventosusuario
