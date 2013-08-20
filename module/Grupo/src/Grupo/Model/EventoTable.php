@@ -127,6 +127,8 @@ class EventoTable{
      
       if ($id == 0) {
           $this->tableGateway->insert($data);
+          $idevento=$this->tableGateway->getLastInsertValue();
+          return $idevento;
           
       }else {
           
@@ -169,7 +171,7 @@ class EventoTable{
              
          }else{
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo'));
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);

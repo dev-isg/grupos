@@ -32,7 +32,6 @@ return array(
         'img'=>'http://192.168.1.39:8081/img',
         'ruta' => 'http://192.168.1.39:8081',
 
-
         'version'=>1,
     ),
     

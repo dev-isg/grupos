@@ -13,7 +13,7 @@
 	                    <ul>
 	                  <?php  foreach ($this->eventos  as $eventos) :?>
                             <li data-category="web">
-                                <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
+                                <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
                                <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
                                 </a>
                                 <div class="content">
@@ -24,7 +24,7 @@
 		                                </div>
 		                            </div>
                                     <h2>
-                                        <a href="/grupo/evento/detalleevento?id=<?php echo $this->escapeHtml($eventos->id); ?>"><?php echo $this->escapeHtml($eventos->nombre); ?></a>
+                                        <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>"><?php echo $this->escapeHtml($eventos->nombre); ?></a>
                                     </h2>
                                     <p>
                                        <?php echo  $this->escapeHtml($eventos->descripcion);?>

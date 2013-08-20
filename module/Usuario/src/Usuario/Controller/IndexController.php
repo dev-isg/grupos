@@ -27,6 +27,8 @@ class IndexController extends AbstractActionController
 {
 
     protected $usuarioTable;
+   
+    static $usuarioTableStatic;
 
     protected $_options;
 
@@ -276,13 +278,10 @@ class IndexController extends AbstractActionController
         return array();
     }
 
-    public function headerAction($id)
-    
+    public static function headerAction($id)
     {
-        // $ruta = $this->host('ruta');
-        $usuario = $this->getUsuarioTable()->getUsuario($id);
-        $nombre = $usuario->va_nombre;
-//         '.$this->redirect()->toRoute("login/process",array("action"=> "authenticate")).'
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
         $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
@@ -312,6 +311,7 @@ class IndexController extends AbstractActionController
         if (! $this->usuarioTable) {
             $sm = $this->getServiceLocator();
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
+            self::$usuarioTableStatic=$this->usuarioTable;
         }
         return $this->usuarioTable;
     }
