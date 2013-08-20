@@ -107,7 +107,7 @@ class EventoController extends AbstractActionController
             $evento = new Evento();
             $form->setInputFilter($evento->getInputFilter());
             $form->setData($data); // $request->getPost()
-            
+//             var_dump($data);exit;
             if ($form->isValid()) {
                 $evento->exchangeArray($form->getData());
    
