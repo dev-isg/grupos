@@ -251,6 +251,7 @@
     var even = <?php echo $this->idevento; ?>;
     $("#uneteEvent").on('click', function(e){
       e.preventDefault();
+      alert('evento agregar');
       $(".btn-unete").empty();
       var addLoading = '<img src="/img/cargando.gif" />';
       $(".btn-unete").html(addLoading);
@@ -276,6 +277,7 @@
     var even = <?php echo $this->idevento; ?>;
     $("#uneteAbEvent").on('click', function(e){
       e.preventDefault();
+      alert('evento abandonar');
       $(".btn-unete").empty();
       var addLoading = '<img src="/img/cargando.gif" />';
       $(".btn-unete").html(addLoading);
