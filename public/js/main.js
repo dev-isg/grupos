@@ -21,10 +21,12 @@ function crearevento(){
         });
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){
+            var valueGrupo = $("#crearGrupo").val();
             if($("#crearGrupo").val()===""){
                 $(".activar-agregar").show();
                 $(".next-space").hide();
             }else{
+                $(".next-grupo").attr("href", "/agregar-evento/"+valueGrupo);                
                 $(".activar-agregar").hide();
                 $(".next-space").show();
             }

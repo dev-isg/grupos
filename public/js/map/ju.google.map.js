@@ -486,8 +486,9 @@
 			this.markerTooltip = this.getMarkerTooltip();
 
 			google.maps.event.addListener(this.marker, 'dragend', function(){
-			    self.setMarker(self.marker.position.jb, self.marker.position.kb, null, self.marker.addressRef);
                 
+			    self.setMarker(self.marker.position.jb, self.marker.position.kb, null, self.marker.addressRef);
+
 			});
 			
 			if (this.options.editable)
