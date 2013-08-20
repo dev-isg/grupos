@@ -79,7 +79,6 @@ class EventoTable{
     }
     
   public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
-//       var_dump($evento->va_fecha);
 //       $fecha_esp = str_replace("/", "-", $evento->va_fecha);
 //       $timestamp = strtotime($evento->va_fecha);
 //         var_dump($timestamp);Exit;
@@ -99,10 +98,9 @@ class EventoTable{
           'va_duracion'=>$evento->va_duracion,
           'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
 //          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
-          'ta_grupo_in_id'=>$evento->ta_grupo_in_id
+          'ta_grupo_in_id'=>$idgrupo//$evento->ta_grupo_in_id
       );
       
-//  var_dump($data);exit;
     
       $id = (int) $evento->in_id;
   

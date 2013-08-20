@@ -123,9 +123,9 @@ class GrupoTable{
       if ($id == 0) {
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
-          $this->unirseGrupo($idgrup,$iduser);
-          return $idgrupo;
-          
+          if($this->unirseGrupo($idgrupo,$iduser)){
+              return $idgrupo;
+          }        
 //             if($notificacion!=null){
 //                foreach($notificacion as $key=>$value){
 //                    $insert = $this->tableGateway->getSql()->insert()->into('ta_grupo_has_ta_notificacion')

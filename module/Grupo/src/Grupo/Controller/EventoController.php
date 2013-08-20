@@ -127,7 +127,8 @@ class EventoController extends AbstractActionController
             }
         }
         return array(
-            'formevento' => $form
+            'formevento' => $form,
+            'idgrupo'=>$idgrupo
         );
     }
 
@@ -201,7 +202,8 @@ class EventoController extends AbstractActionController
         
         return array(
             'in_id' => $id,
-            'formevento' => $form
+            'formevento' => $form,
+            'idgrupo'=>$idgrupo
         );
     }
 
