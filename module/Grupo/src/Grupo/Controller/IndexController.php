@@ -100,13 +100,14 @@ class IndexController extends AbstractActionController
         if(count($listaEventos)>0)
             
         { 
-            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
+        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(12);}
-        else{ //echo 'we';exit;
+        elseif(count($listagrupos)>0){ //echo 'we';exit;
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator2->setItemCountPerPage(12);}
+        else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
         
         return array(
             'grupos' => $paginator2,
