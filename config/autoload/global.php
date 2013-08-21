@@ -26,11 +26,11 @@ return array(
     ),
    'host' => array(
 
-        'base' => 'http://192.168.1.37:82',
-        'static' => 'http://192.168.1.37:82',
+        'base' => 'http://192.168.1.39:8081',
+        'static' => 'http://192.168.1.39:8081',
         'images' => 'http://192.168.1.37:82/imagenes',
         'img'=>'http://192.168.1.37:82/img',
-        'ruta' => 'http://192.168.1.37:82',
+        'ruta' => 'http://192.168.1.39:8081',
 
         'version'=>1,
     ),

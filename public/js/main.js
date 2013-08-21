@@ -37,7 +37,7 @@ function crearevento(){
             editable:true,
             dataBound:{
                 city:'#cityId',
-                address:'#address',
+                //address:'#address',
                 addressRef:'#addressReference'
             },
             center:{lat:-12.047816, lng:-77.062203},
@@ -101,7 +101,7 @@ function crearevento(){
             var lat = $("#mapLocationLat").val();
             var log = $("#mapLocationLon").val();
             var direc = $("#address").val();
-            //alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
+            alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
         });
     });
 }
