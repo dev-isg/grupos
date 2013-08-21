@@ -5,8 +5,6 @@ return array(
         'Application',
         'Usuario',
         'Grupo',
-        'ZfcBase',
-        'ZfcUser',
         'SanAuth'
     ),
 

@@ -90,7 +90,7 @@ class UsuarioForm extends Form{
 //            ),
             'attributes' => array(
                 'id'=>'inputPassword',
-//                'class' => 'span12',
+                //'class' => 'span12',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
         ));
@@ -103,7 +103,7 @@ class UsuarioForm extends Form{
                 'label' => '',          
             ),
             'attributes' => array(               
-                'class' => 'span12',
+                //'class' => 'span12',
                 'placeholder'=>'Confirme la contraseña…'
             ),
         ));

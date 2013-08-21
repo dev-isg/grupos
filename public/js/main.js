@@ -189,9 +189,9 @@ var valregistro=function(elemento){
                 required : true,
                 minlength:8             
             },
-            va_contrasena2:{
+            verificar_contrasena:{
                 required : true,
-                equalTo: "#va_contrasena",
+                equalTo: "#inputPassword",
                 minlength:8               
             }
         },
@@ -206,7 +206,7 @@ var valregistro=function(elemento){
                 required : "Ingrese la clave",
                 minlength:"Ingresa un password de 8 caracteres a mas"
             },
-            va_contrasena2: {
+            verificar_contrasena: {
                 required : "Repita la clave",            
                 minlength:"Ingresa un password de 8 caracteres a mas",
                 equalTo : "Ingrese el mismo valor de Clave"
