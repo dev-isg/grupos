@@ -66,7 +66,7 @@ class AuthController extends AbstractActionController
     }
 
     public function authenticateAction()
-    {
+    {  
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
@@ -81,18 +81,18 @@ class AuthController extends AbstractActionController
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
              if($token)
-                {               
+                {      
                $usuario = $this->getUsuarioTable()->usuario($token);
               
                if(count($usuario)>0){ 
-                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);       
+                      
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
                     $this->flashmessenger()->addMessage($message);
                 }
                   
                 if ($result->isValid()) {
-//                     $redirect = 'success';
+                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']); 
                     $accion=$request->getPost('accion');
                     if($accion=='detalleevento'){
                         $redirect = 'evento';
@@ -113,7 +113,7 @@ class AuthController extends AbstractActionController
                         'va_email'
                     )));
                      
-                          }
+                          } 
                   }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
                   
                   }

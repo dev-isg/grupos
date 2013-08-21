@@ -277,7 +277,7 @@ class EventoTable{
      }
      
        public function listadoEvento()
-    {
+    {    
               $fecha = date("Y-m-d h:m:s"); 
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
@@ -292,6 +292,7 @@ class EventoTable{
           ->order('in_id desc');  
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
+        
         return $resultSet->buffer();
     }    
        public function listadocategoriasEvento($categoria)
