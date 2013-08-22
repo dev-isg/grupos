@@ -234,6 +234,16 @@ class UsuarioTable
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->toArray();
     }
+      public function usuariocorreo($correo)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()->from('ta_usuario')
+                ->where(array('va_email'=>$correo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->toArray();
+    }
     
     public function usuario1($correo)
     {
