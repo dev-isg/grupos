@@ -9,7 +9,7 @@
                 <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->grupo[0]['va_fecha']);
                                          echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
                 <p class="desc gh">
-                 <?php echo $this->grupo[0]['va_descripcion']; ?> Juntar figurita de Pikachu&nbsp; <br> <a href="#">Ver mas...</a>
+                 <?php echo $this->grupo[0]['va_descripcion']; ?><br> <a href="#">Ver mas...</a>
                 </p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
@@ -38,7 +38,7 @@
                                      {}
                                    else{?> <h2>EVENTO CADUCADO</h2> <?php } ?>          
 					              	<h3><a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><?php echo  $this->escapeHtml($proximos_eventos->va_nombre);?></a></h3>
-					              	<p><?php echo  $this->escapeHtml($proximos_eventos->va_descripcion);?></p>
+					              	<p><?php echo $proximos_eventos->va_descripcion;?></p>
 					            </div>		
 							</div>
 						</div>

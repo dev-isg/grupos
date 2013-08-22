@@ -46,7 +46,6 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
-        
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
@@ -93,7 +92,7 @@ class IndexController extends AbstractActionController
         $message = new Message();
         $message->addTo($correo, $usuario)
         ->setFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
-        ->setSubject('REGISTRO A GRUPOS');
+        ->setSubject('Confirmación de Registro en Juntate.pe');
          $bodyHtml= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
@@ -142,7 +141,7 @@ class IndexController extends AbstractActionController
         $form->get('submit')->setValue('Crear Usuario');
         $request = $this->getRequest();
         
-        if ($request->isPost()) {
+        if ($request->isPost()) {echo 'aa';exit;
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
             
@@ -167,6 +166,8 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
+                 //   md5($nom);
+                  //  var_dump(md5($nom));exit;
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
                     $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
                     $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
