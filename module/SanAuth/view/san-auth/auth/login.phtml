@@ -1,29 +1,68 @@
 <div class="main-container">
-    <div class="container">            
-<?php
-$form = $this->form;
-$form->setAttribute('action', $this->url(
-    'login/process',
-    array(
-        'action'     => 'authenticate',
-    )
-));
-$form->prepare();
+    <div class="container">
+        <?php if($this->mensaje){ ?>
+        <div class="row-fluid">
+            <div class="alert alert-success alert-margin">
+                <?php  echo $this->mensaje;?>
+            </div>
+        </div><?php } ?>
+        <div class="row-fluid">
+            <div class="span12 group-sidebar login-secundario">
+                <h3>Iniciar sesion</h3>
+                <?php
+                $form = $this->form;
+                $form->setAttribute('action', $this->url(
+                    'login/process',
+                    array(
+                        'action'     => 'authenticate',
+                    )
+                ));         
+                $form->setAttribute('class','for-ji form-horizontal');
+//                        $this->url('login/process', array(
+//                        'action' => 'authenticate'
+//                    )),
+//                    'class' => 'for-ji form-horizontal'
+//                ));
+                $form->prepare();
+                echo $this->form()->openTag($form);?>
 
-echo $this->form()->openTag($form);
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email:</label>
+                    <div class="controls">
+                        <?php  echo $this->formRow($form->get('va_email'));?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Contraseña:</label>
+                    <div class="controls">
+                        <?php echo $this->formRow($form->get('va_contrasena'));?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <?php  echo $this->formsubmit($form->get('submit'));?>
+                    </div>
+                </div>
+
+
+<!--echo $this->form()->openTag($form);
 //echo $this->formCollection($form);
  echo $this->formRow($form->get('va_nombre'));
  echo $this->formRow($form->get('va_contrasena'));
  echo $this->formsubmit($form->get('submit'));
-echo $this->form()->closeTag();
+echo $this->form()->closeTag();-->
 
-if ($this->messages){
-    echo '<ul>';
-    foreach($this->messages as $message)
-    {
-        echo '<li>'.$message.'</li>';
-    }
-    echo '</ul>';
-} ?>
-</div>
+                <?php echo $this->form()->closeTag();
+
+                if ($this->messages){
+                    echo '<ul>';
+                    foreach($this->messages as $message)
+                    {
+                        echo '<li>'.$message.'</li>';
+                    }
+                    echo '</ul>';
+                } ?>
+            </div>
+        </div>          
     </div>
+</div>

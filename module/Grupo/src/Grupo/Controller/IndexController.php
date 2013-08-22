@@ -52,6 +52,7 @@ class IndexController extends AbstractActionController
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
+
         setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
 
@@ -67,7 +68,7 @@ class IndexController extends AbstractActionController
            
             }
         if ($request->isPost()) {
-            if ($nombre) {
+            if ($nombre) {   
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                 $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                 if(count($grupo)===0 and count($listaEventos)===0)

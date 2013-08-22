@@ -107,7 +107,7 @@ class UsuarioForm extends Form{
                 'placeholder'=>'Confirme la contraseña…'
             ),
         ));
-//          
+////          
 //        $this->add(array(
 //            'name' => 'Remenber',
 //            'type' => 'MultiCheckbox',

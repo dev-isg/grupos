@@ -23,7 +23,7 @@
                                 <a href="/evento/<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                             </h2>
                             <p>
-                               <?php echo  $this->escapeHtml($eventos->va_descripcion);?>
+                               <?php echo $eventos->va_descripcion;?>
                             </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">
@@ -32,7 +32,7 @@
                                     <a href="#" title="comentarios"><?php echo  $this->escapeHtml($eventos->comentarios);?></a>
                                 </span><!-- .meta-comments -->
                                 <span class="meta-views" title="Views">
-                                    <i class="icon-tag"></i>
+                                    <i class="icon-tag"><?php echo  $this->escapeHtml($eventos->comentarios);?></i>
                                     <a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
                                 </span><!-- .meta-views -->
                             </footer>
@@ -67,7 +67,7 @@
                                 <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                             </h2>
                             <p>
-                               <?php echo  $this->escapeHtml($grupos->va_descripcion);?>
+                               <?php echo  $grupos->va_descripcion;?>
                             </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">

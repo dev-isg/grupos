@@ -46,7 +46,6 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
-        
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
@@ -93,7 +92,7 @@ class IndexController extends AbstractActionController
         $message = new Message();
         $message->addTo($correo, $usuario)
         ->setFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
-        ->setSubject('REGISTRO A GRUPOS');
+        ->setSubject('Confirmación de Registro en Juntate.pe');
          $bodyHtml= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
@@ -101,7 +100,8 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
-          usted se a registrado a grupos, acceda al siguiente link para comenzar a crear sus eventos <a href="'.$this->_options->host->ruta.'/auth?token='.$valor.' ">grupos.pe</a>
+         Tu cuenta en <a href="'.$this->_options->host->ruta.'">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
+         <a href="'.$this->_options->host->ruta.'/auth?token='.$valor.' ">'.$this->_options->host->ruta.'/auth?token='.$valor.'</a>
                                                      </div>
                                                </body>
                                                </html>';
@@ -167,10 +167,15 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
+
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
                     $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
                     $this->flashMessenger()->addMessage('Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla');
                     $this->redirect()->toUrl('agregarusuario');
+//                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
+//                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
+//                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+
                  } else {
                     echo 'problemas con el redimensionamiento';
                     exit();

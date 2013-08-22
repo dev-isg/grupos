@@ -121,30 +121,30 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 ?>
-                 <input type="hidden" name="accion"
-				value="<?php echo $this->accion;?>" />
-			<div class="control-group">
-				<label class="control-label" for="inputEmail">Email:</label>
-				<div class="controls">
-                          <?php  echo $this->formRow($form->get('va_nombre'));?>
-                      </div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPassword">Contraseña:</label>
-				<div class="controls">
-                          <?php  echo $this->formRow($form->get('va_contrasena'));?>
-                      </div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-                          <?php  echo $this->formSubmit($form->get('submit'));?>
-                      </div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<a href="/cambio">¿Olvidaste tu contraseña?</a>
-				</div>
-			</div>
+                 <input type="hidden" name="accion" value="<?php echo $this->accion;?>" />
+        			<div class="control-group">
+        				<label class="control-label" for="inputEmail">Email:</label>
+        				<div class="controls">
+                            <?php  echo $this->formRow($form->get('va_email'));?>
+                        </div>
+        			</div>
+        			<div class="control-group">
+        				<label class="control-label" for="inputPassword">Contraseña:</label>
+        				<div class="controls">
+                            <?php  echo $this->formRow($form->get('va_contrasena'));?>
+                        </div>
+        			</div>
+        			<div class="control-group">
+        				<div class="controls">
+                            <?php  echo $this->formSubmit($form->get('submit'));?>
+                        </div>
+        			</div>
+        			<div class="control-group">
+        				<div class="controls">
+                            <span class="reg-spam"><a href="/usuario/index/agregarusuario">Resgistrate</a></span>
+                            <span><a href="/cambio">¿Olvidaste tu contraseña?</a></span>
+        				</div>
+        			</div>
                     <?php  echo $this->form()->closeTag(); ?>
             </div>
 	</div>

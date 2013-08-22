@@ -14,10 +14,10 @@ class UserForm extends Form
         $this->setAttribute('endtype', 'multipart/form-data');
    
          $this->add(array(
-            'name' => 'va_nombre',
+            'name' => 'va_email',
             'type' => 'Text',
             'attributes' => array(               
-                'placeholder'=>'Ingrese el nombre de usario…'
+                'placeholder'=>'Ingrese un correo valido…'
             ),
         ));  
          
@@ -30,27 +30,27 @@ class UserForm extends Form
             ),
         ));
          
-          $this->add(array(
-            'name' => 'va_token',
-            'type' => 'Hidden',
-            'attributes'=>array(
-                'id'=>'id'
-            )
-        ));
+//          $this->add(array(
+//            'name' => 'va_token',
+//            'type' => 'Hidden',
+//            'attributes'=>array(
+//                'id'=>'id'
+//            )
+//        ));
           
-        $this->add(array(
-            'name' => 'Remenber',
-            'type' => 'MultiCheckbox',
-             'attributes' => array(               
-                'class' => 'checkbox inline',
-                'id'   => 'en_destaque',
-                 'placeholder'=>'Ingrese su destaque'
-            ),
-            'options' => array(
-                   'label' => 'Remember Me ?:',
-                  'value_options' => array(0=>'recordar'),
-                )
-        ));
+//        $this->add(array(
+//            'name' => 'Remenber',
+//            'type' => 'MultiCheckbox',
+//             'attributes' => array(               
+//                'class' => 'checkbox inline',
+//                'id'   => 'en_destaque',
+//                 'placeholder'=>'Ingrese su destaque'
+//            ),
+//            'options' => array(
+//                   'label' => 'Remember Me ?:',
+//                  'value_options' => array(0=>'recordar'),
+//                )
+//        ));
           
         
 
@@ -70,13 +70,13 @@ class UserForm extends Form
         $inputFilter = new InputFilter();
         
         $inputFilter->add(array(
-            'name' => 'va_nombre',
+            'name' => 'va_email',
             'required' => true,
         ));
-         $inputFilter->add(array(
-            'name' => 'va_token',
-            'required' => false,
-        ));
+//         $inputFilter->add(array(
+//            'name' => 'va_token',
+//            'required' => false,
+//        ));
         $inputFilter->add(array(
             'name' => 'va_contrasena',
             'required' => true,
