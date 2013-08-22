@@ -6,14 +6,13 @@ function crearevento(){
 	$(document).ready(function(){
         $('.fileupload').fileupload();
         $(".form_datetime2").datetimepicker({
-            format: "dd MM yyyy - hh:ii",
+        	format: "dd MM yyyy - hh:ii",
             autoclose: true,
             todayBtn: false,
             startDate: fecha_actual,
             minuteStep: 10,
             pickerPosition: "bottom-left",
-            todayHighlight:true,
-            language: 'es'
+            todayHighlight:true
         });
 
         $("[data-toggle='tooltip']").tooltip();
@@ -189,7 +188,7 @@ var valregistro=function(elemento){
                 required : true,
                 minlength:8             
             },
-            va_contrasena2:{
+            verificar_contrasena:{
                 required : true,
                 equalTo: "#va_contrasena",
                 minlength:8               
@@ -206,7 +205,7 @@ var valregistro=function(elemento){
                 required : "Ingrese la clave",
                 minlength:"Ingresa un password de 8 caracteres a mas"
             },
-            va_contrasena2: {
+            verificar_contrasena: {
                 required : "Repita la clave",            
                 minlength:"Ingresa un password de 8 caracteres a mas",
                 equalTo : "Ingrese el mismo valor de Clave"

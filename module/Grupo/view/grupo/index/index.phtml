@@ -27,6 +27,10 @@
                             </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">
+                                <span class="meta-comments">
+                                    <i class="icon-comment"></i>
+                                    <a href="#" title="comentarios"><?php echo  $this->escapeHtml($eventos->comentarios);?></a>
+                                </span><!-- .meta-comments -->
                                 <span class="meta-views" title="Views">
                                     <i class="icon-tag"></i>
                                     <a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>

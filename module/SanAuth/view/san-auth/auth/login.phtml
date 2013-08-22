@@ -13,7 +13,9 @@ $form->setAttribute('action', $this->url(
 $form->prepare();
 
 echo $this->form()->openTag($form);
-echo $this->formCollection($form);
+echo $this->formRow($form->get('va_nombre'));
+echo $this->formRow($form->get('va_contrasena'));
+echo $this->formsubmit($form->get('submit'));
 echo $this->form()->closeTag();
 
 if ($this->messages){

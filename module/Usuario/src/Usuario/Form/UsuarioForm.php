@@ -89,8 +89,8 @@ class UsuarioForm extends Form{
 //                'label' => 'Password:',          
 //            ),
             'attributes' => array(
-                'id'=>'inputPassword',
-//                'class' => 'span12',
+                'id'=>'va_contrasena',
+                //'class' => 'span12',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
         ));
@@ -103,7 +103,7 @@ class UsuarioForm extends Form{
                 'label' => '',          
             ),
             'attributes' => array(               
-                'class' => 'span12',
+                //'class' => 'span12',
                 'placeholder'=>'Confirme la contraseña…'
             ),
         ));

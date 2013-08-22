@@ -83,12 +83,10 @@ class EventoTable{
 //             $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
 //             
 //             $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
-      echo($evento->va_fecha);exit;
+//       echo($evento->va_fecha);
       $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
       $fecha_esp = str_replace("-", " ", $fecha_esp);
-      var_dump($fecha_esp);
       $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
-      var_dump($fecha);Exit;
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>$evento->va_descripcion,
