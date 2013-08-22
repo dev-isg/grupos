@@ -24,6 +24,7 @@ class GrupoTable{
              ->where(array('ta_grupo.va_estado'=>'activo'));
                    $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
+
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
        }

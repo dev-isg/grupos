@@ -49,19 +49,18 @@ class AuthController extends AbstractActionController {
         return $this->form;
     }
 
-    public function loginAction() {
-        $token = $this->params()->fromQuery('token');
-        if ($token) {
-            $usuario = $this->getUsuarioTable()->usuario($token);
-            if (count($usuario) > 0) {
-                $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-                $mensaje = 'tu cuenta ya esta activada';
-            } else {
-                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
-            }
-        }
-        $form = $this->getForm();
-        // $form->get('va_token')->setValue($token);
+
+    public function loginAction()
+    {
+         $token = $this->params()->fromQuery('token');
+        if($token)
+        {$usuario = $this->getUsuarioTable()->usuario($token);
+        if(count($usuario)>0)
+         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+         $mensaje='tu cuenta ya esta activada';}
+         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');}}
+         $form = $this->getForm();
+
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
@@ -69,7 +68,9 @@ class AuthController extends AbstractActionController {
         );
     }
 
-    public function authenticateAction() {
+
+    public function authenticateAction()
+    {  
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
@@ -111,11 +112,21 @@ class AuthController extends AbstractActionController {
                                             'va_email'
                                         )));
                     }
-                } else {
-                    return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
-                }
+
+                    $storage = $this->getAuthService()->getStorage();
+                    $storage->write($this->getServiceLocator()
+                        ->get('TableAuthService')
+                        ->getResultRowObject(array(
+                        'in_id',
+                        'va_nombre',
+                        'va_contrasena',
+                        'va_email'
+                    )));
+                }}
+                else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+              
             }
-        }
+        
 
         return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
