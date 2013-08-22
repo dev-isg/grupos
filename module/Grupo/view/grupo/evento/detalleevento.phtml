@@ -3,8 +3,9 @@
         <div class="row-fluid">
             <div class="span3 group-sidebar">
               <div class="img-grupo">
+                  <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($this->eventos[0]['id_grupo'], ENT_QUOTES, 'utf-8');  ?>">
                 <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
-              </div>
+                  </a>   </div>
               <h2 class="gh"><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($this->eventos[0]['id_grupo'], ENT_QUOTES, 'utf-8');  ?>"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
               <p class="fund gh">
                 <em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']); echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em>
@@ -88,11 +89,16 @@
                           </li>
                           <li class="clearfix">
                             <div class="ficha-dep">
-                              Dirección:  
+                              Dirección: 
+                              <br>
+                              <em>
+                               referencia:
+                               </em>
                             </div>
+                           
                             <div class="ficha-desc">
                               <p><?php echo $this->eventos[0]['va_direccion']; ?></p>
-                              <em>Lima, Lima</em>
+                              <em>(<?php echo $this->eventos[0]['va_referencia']; ?>)</em>
                             </div>
                           </li>
                         </ul> <!-- /score-list -->

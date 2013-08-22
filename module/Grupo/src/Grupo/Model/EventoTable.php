@@ -79,11 +79,16 @@ class EventoTable{
     }
     
   public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
-//       $fecha_esp=preg_replace('/\s+/','', $texto);
-      //       $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
-      //       $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
-      $fecha_esp = str_replace("-", " ", $evento->va_fecha);
+      
+//             $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
+//             
+//             $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
+      echo($evento->va_fecha);exit;
+      $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
+      $fecha_esp = str_replace("-", " ", $fecha_esp);
+      var_dump($fecha_esp);
       $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
+      var_dump($fecha);Exit;
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>$evento->va_descripcion,
@@ -277,22 +282,23 @@ class EventoTable{
      }
      
        public function listadoEvento()
-    {
-              $fecha = date("Y-m-d h:m:s"); 
-         $adapter = $this->tableGateway->getAdapter();
-            $sql = new Sql($adapter);
-            $selecttot = $sql->select()
-                    ->from('ta_evento')
-          //             ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')            
-      
-          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
-          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')
-      //    ->join(array('c' => 'ta_comentario'), 'c.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(c.in_id)')), 'left')          
-          ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha))           
-          ->order('in_id desc');  
-        $selectString = $sql->getSqlStringForSqlObject($selecttot);
-        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
-        return $resultSet->buffer();
+    {    
+    $fecha = date("Y-m-d h:m:s"); 
+    $adapter = $this->tableGateway->getAdapter();
+    $sql = new Sql($adapter);
+    $selecttot = $sql->select()
+      ->from('ta_evento')
+                   ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')            
+    ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
+    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')
+   ->join(array('c' => 'ta_comentario'), 'c.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(c.in_id)')), 'left')          
+    ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha))           
+    ->order('in_id desc')
+            ->group('in_id');  
+    $selectString = $sql->getSqlStringForSqlObject($selecttot);
+
+    $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
+    return $resultSet->buffer();
     }    
        public function listadocategoriasEvento($categoria)
     {
@@ -314,6 +320,7 @@ class EventoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_evento')
+          ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')   
           ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha)) 
@@ -465,11 +472,14 @@ class EventoTable{
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
-          ->from('ta_usuario_has_ta_evento')      
+          ->from('ta_usuario_has_ta_evento')               
           ->join('ta_evento','ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
-          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id') 
+          ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
+         ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id') 
           ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
-         ->where(array('ta_usuario_has_ta_evento.ta_usuario_in_id'=>$id,'ta_evento.va_estado'=>'activo'));
+         ->where(array('ta_usuario_has_ta_evento.ta_usuario_in_id'=>$id,'ta_evento.va_estado'=>'activo'))
+                  ->group('ta_evento.in_id')
+                    ;
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
             return $resultSet;
@@ -483,10 +493,11 @@ class EventoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
           ->from('ta_evento')      
-          //->join('ta_evento','ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
-          ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
+            ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
+             ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
           ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
-         ->where(array('ta_evento.ta_usuario_in_id'=>$id));
+         ->where(array('ta_evento.ta_usuario_in_id'=>$id))
+                    ->group('in_id');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
          //   var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  

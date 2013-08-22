@@ -92,7 +92,7 @@ class IndexController extends AbstractActionController
        {
         $message = new Message();
         $message->addTo($correo, $usuario)
-        ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
+        ->setFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
         ->setSubject('REGISTRO A GRUPOS');
          $bodyHtml= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>

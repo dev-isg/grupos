@@ -43,6 +43,8 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+        
+       
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->categorias();
@@ -60,7 +62,10 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
 
         if (empty($valor) and empty($tipo) and ! $request->isPost()) {
-            $listaEventos = $this->getEventoTable()->listadoEvento();}
+         
+            $listaEventos = $this->getEventoTable()->listadoEvento();
+           
+            }
         if ($request->isPost()) {
             if ($nombre) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
@@ -94,14 +99,16 @@ class IndexController extends AbstractActionController
             } else {  $listaEventos = $this->getEventoTable()->listadoEvento(); } }
         if(count($listaEventos)>0)
             
-        { //echo '1';exit;
-            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
+        { 
+        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(12);}
-        else{
+        elseif(count($listagrupos)>0){ //echo 'we';exit;
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator2->setItemCountPerPage(12);}
+        else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+        
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,

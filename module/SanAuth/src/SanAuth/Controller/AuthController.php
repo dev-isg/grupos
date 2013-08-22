@@ -66,7 +66,7 @@ class AuthController extends AbstractActionController
     }
 
     public function authenticateAction()
-    {
+    {  
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
@@ -81,18 +81,13 @@ class AuthController extends AbstractActionController
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
              if($token)
-                {               
-               $usuario = $this->getUsuarioTable()->usuario($token);
-              
-               if(count($usuario)>0){ 
-                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);       
+             { $usuario = $this->getUsuarioTable()->usuario($token);             
+               if(count($usuario)>0){                      
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
-                    $this->flashmessenger()->addMessage($message);
-                }
-                  
-                if ($result->isValid()) {
-//                     $redirect = 'success';
+                    $this->flashmessenger()->addMessage($message);}
+             if ($result->isValid()) {
+                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']); 
                     $accion=$request->getPost('accion');
                     if($accion=='detalleevento'){
                         $redirect = 'evento';
@@ -111,27 +106,17 @@ class AuthController extends AbstractActionController
                         'va_nombre',
                         'va_contrasena',
                         'va_email'
-                    )));
-                     
-                          }
-                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
-                  
-                  }
+                    ))); } 
+                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');} }
                 else
-                {
-                 
-                  $usuario = $this->getUsuarioTable()->usuario1($nombre);
+                {$usuario = $this->getUsuarioTable()->usuario1($nombre);
                   if($usuario[0]['va_estado']=='activo'){
-                   
-                
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
                     // save message temporary into flashmessenger
-                    $this->flashmessenger()->addMessage($message);
-                }
+                    $this->flashmessenger()->addMessage($message);  }
                 
                 if ($result->isValid()) {
-//                     $redirect = 'success';
                     $accion=$request->getPost('accion');
                     if($accion=='detalleevento'){
                         $redirect = 'evento';
@@ -151,12 +136,9 @@ class AuthController extends AbstractActionController
                         'va_contrasena',
                         'va_email'
                     )));
-                }  
-                      
-                      
-                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+                }}
+                else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
 
-                
                 }
             }
         }
