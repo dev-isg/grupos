@@ -160,21 +160,25 @@ class IndexController extends AbstractActionController {
             $form->setData($data); // $request->getPost()
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
-                $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email'));
-                if (count($email) <= 0) {
-                    if ($this->redimensionarFoto($File, $nonFile, $imagen, $id = null)) {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
-                        $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
-                        $mensaje = 'Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
-                    } else {
-                        echo 'problemas con el redimensionamiento';
-                        exit();
-                    }
-                } else {
 
-                    $mensaje = 'correo electrónico ya uzado';
-                    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
-                }
+               $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email')); 
+               if( count($email)<=0)
+               {  if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
+                 $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
+                   $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
+                   $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+
+                 } else {
+                    echo 'problemas con el redimensionamiento';
+                    exit();
+                }}
+                else  { 
+                    
+               $mensaje ='el correo electrónico '.$request->getPost('va_email').' ya esta asociado a un usuario';     
+                   // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
+                    
+                    }              
+
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages()); // $inputFilter->getInvalidInput()
