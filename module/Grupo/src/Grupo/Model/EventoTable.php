@@ -55,7 +55,7 @@ class EventoTable{
                 $selecttot->where(array('ta_grupo.ta_categoria_in_id'=>$tipo));
             }
             if($nombre!=null){
-                $selecttot->where(array('ta_grupo.va_nombre'=>$nombre));
+                $selecttot->where(array('ta_grupo.va_nombre'=>$nombre,'ta_grupo.va_nombre LIKE ?'=> '%'.$nombre.'%',));
             }
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
