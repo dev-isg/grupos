@@ -174,7 +174,7 @@ class IndexController extends AbstractActionController
                     $this->redirect()->toUrl('agregarusuario');
 //                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
 //                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
-//                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
 
                  } else {
                     echo 'problemas con el redimensionamiento';
@@ -187,10 +187,10 @@ class IndexController extends AbstractActionController
             }
         }
         
-        $flashMessenger = $this->flashMessenger();
-        if ($flashMessenger->hasMessages()) {
-            $mensajes = $flashMessenger->getMessages();
-        }
+//        $flashMessenger = $this->flashMessenger();
+//        if ($flashMessenger->hasMessages()) {
+//            $mensajes = $flashMessenger->getMessages();
+//        }
         return array(
             'form' => $form,
             'mensaje'=>$mensajes

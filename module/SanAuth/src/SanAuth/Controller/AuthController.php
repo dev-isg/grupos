@@ -99,8 +99,7 @@ class AuthController extends AbstractActionController {
                         } elseif ($accion == 'detallegrupo') {
                             $redirect = 'grupo';
                         } elseif ($accion == 'index') {
-//                         var_dump($accion);exit;
-                            $redirect = 'agregar-grupo';
+                            $redirect = 'elegir-grupo';//'agregar-grupo';
                         }
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
