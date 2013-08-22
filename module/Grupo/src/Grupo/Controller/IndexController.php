@@ -43,8 +43,6 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        
-       
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->categorias();
@@ -154,7 +152,6 @@ class IndexController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
 
         $user_info = $this->getGrupoTable()->misgrupos($storage->read()->in_id);
-        
         return array('grupos' => $user_info);
     }
 
@@ -225,6 +222,8 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
+                   $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
+                   
                     return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
 //                    $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
 //                                'action' => 'agregarevento'

@@ -60,11 +60,11 @@
                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
                 echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
                               <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
-                                    $hora = date_format($fecha, 'h:m');
+                                    $hora = date_format($fecha, 'h');
                                             if($hora<12)
-                                            { echo $hora.' AM'; }
+                                            { echo $hora.':'. date_format($fecha, 'm').' AM'; }
                                             else
-                                                { echo $hora.' PM'; }
+                                             { echo $hora.':'. date_format($fecha, 'm').' PM'; }
                                    ?></em>
                             </div>
                           </li>

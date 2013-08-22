@@ -58,7 +58,7 @@ class AuthController extends AbstractActionController {
         if(count($usuario)>0)
          {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
          $mensaje='tu cuenta ya esta activada';}
-         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');}}
+         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
          $form = $this->getForm();
 
         return array(

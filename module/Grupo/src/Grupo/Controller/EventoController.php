@@ -48,6 +48,11 @@ class EventoController extends AbstractActionController
 
     public function agregareventoAction()
     {   
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
+        
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $idgrupo = $this->params()->fromRoute('in_id');
@@ -94,10 +99,6 @@ class EventoController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
-            
-            
-            
-            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -106,13 +107,11 @@ class EventoController extends AbstractActionController
             //
             $evento = new Evento();
             $form->setInputFilter($evento->getInputFilter());
-            $form->setData($data); // $request->getPost()
-//             var_dump($data);exit;
+            $form->setData($data); 
             if ($form->isValid()) {
                 $evento->exchangeArray($form->getData());
    
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-//                     var_dump($data["va_fecha"]);
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else 
@@ -130,7 +129,8 @@ class EventoController extends AbstractActionController
         }
         return array(
             'formevento' => $form,
-            'idgrupo'=>$idgrupo
+            'idgrupo'=>$idgrupo,
+            'mensajes'=>$mensajes
         );
     }
 
