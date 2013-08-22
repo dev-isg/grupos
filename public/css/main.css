@@ -240,7 +240,11 @@ nav a:hover {
   height: 72px;
 }
 .recuperacion {
-  width: 90%;
+  width: 100%;
+  padding: 10px;
+}
+#recuperacion{
+  margin-bottom: 0;
 }
 .menu-login span{
   font-size: 2.5em;

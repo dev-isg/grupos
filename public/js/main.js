@@ -12,8 +12,7 @@ function crearevento(){
             startDate: fecha_actual,
             minuteStep: 10,
             pickerPosition: "bottom-left",
-            todayHighlight:true,
-            language: 'es'
+            todayHighlight:true
         });
 
         $("[data-toggle='tooltip']").tooltip();
@@ -191,7 +190,7 @@ var valregistro=function(elemento){
             },
             verificar_contrasena:{
                 required : true,
-                equalTo: "#inputPassword",
+                equalTo: "#va_contrasena",
                 minlength:8               
             }
         },
