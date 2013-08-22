@@ -48,6 +48,9 @@ class GrupoTable{
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
            //var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+          if (!$resultSet) {
+            throw new \Exception("Could not find row");
+        }
             
             return $resultSet->buffer();
         

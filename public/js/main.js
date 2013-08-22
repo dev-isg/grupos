@@ -6,7 +6,7 @@ function crearevento(){
 	$(document).ready(function(){
         $('.fileupload').fileupload();
         $(".form_datetime2").datetimepicker({
-            format: "dd MM yyyy - hh:ii",
+        	format: "dd MM yyyy - hh:ii",
             autoclose: true,
             todayBtn: false,
             startDate: fecha_actual,
