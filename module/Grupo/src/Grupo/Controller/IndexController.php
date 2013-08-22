@@ -70,12 +70,13 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             if ($nombre) {   
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-                $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-                if(count($grupo)===0 and count($listaEventos)===0)
-                { return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }
                 if (count($grupo)>0) {
-                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-               } else { $listaEventos = $this->getEventoTable()->listado2Evento($nombre); }}
+                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);} 
+               else {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+                   if(count($listaEventos)>0) 
+                   {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);}
+                   else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }  }
+             }
                else
                {return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }   
                }

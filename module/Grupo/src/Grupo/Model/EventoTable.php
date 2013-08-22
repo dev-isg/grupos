@@ -60,8 +60,8 @@ class EventoTable{
             $selecttot ->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-            
-            return $resultSet;
+
+            return $resultSet->buffer();
         
     }
     public function getEvento($id)
@@ -510,10 +510,13 @@ class EventoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_evento')
+   ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
+            
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
          ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha,'ta_categoria.in_id'=>$id))           
-          ->order('in_id desc');  
+          ->order('in_id desc')
+                    ->group('in_id');  
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
         return $resultSet->buffer();
