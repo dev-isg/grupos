@@ -224,6 +224,9 @@ nav a:hover {
   margin-top: 10px;
   font-size: 15px;
 }
+.reg-spam{
+  margin-right: 10px;
+}
 .login-secundario{
   padding: 10px;
 }
