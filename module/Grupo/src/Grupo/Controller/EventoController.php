@@ -52,7 +52,7 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-        
+//        var_dump($mensajes);
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $idgrupo = $this->params()->fromRoute('in_id');
