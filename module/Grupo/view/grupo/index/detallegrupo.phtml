@@ -7,7 +7,9 @@
                 </div>
                 <h2 class="gh"><a href="#"><?php echo $this->grupo[0]['va_nombre']; ?></a></h2>
                 <p class="fund gh"><em>Fundado el <?php  $fecha = date_create($this->grupo[0]['va_fecha']);
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em></p>
+                $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></em></p>
                 <p class="desc gh">
                  <?php echo $this->grupo[0]['va_descripcion']; ?><br> <a href="#">Ver mas...</a>
                 </p>
@@ -24,7 +26,10 @@
 						<div class="row-fluid">
 							<div class="span12 cont-eve">
 								<p class="pp"> <?php  $fecha = date_create($this->escapeHtml($proximos_eventos->va_fecha));
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y  h:m:s"); ?></p>
+                    $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                    echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y").' '.date_format($fecha, "h:m:s"); ?>                                
+                                                                </p>
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -89,8 +94,10 @@
                             </div>
                         </div>
                         <div class="row-fluid unio">
-                           <p class="span12">Se unio el <?php  $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
+                           <p class="span12">Se unió el <?php  $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
+                                         $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
                         </div>
                           <?php endforeach;  ?>
                       </div>

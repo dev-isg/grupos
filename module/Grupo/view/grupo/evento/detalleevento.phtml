@@ -8,7 +8,10 @@
                   </a>   </div>
               <h2 class="gh"><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($this->eventos[0]['id_grupo'], ENT_QUOTES, 'utf-8');  ?>"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
               <p class="fund gh">
-                <em>Fundado el <?php  $fecha = date_create($this->eventos[0]['fecha_creacion']); echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></em>
+                <em>Fundado el <?php $fecha = date_create($this->eventos[0]['fecha_creacion']); 
+                $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></em>
               </p>
               <p class="desc gh">
                 <?php echo $this->eventos[0]['descripcion']; ?> <br> <a href="#">Ver mas...</a>
@@ -52,8 +55,10 @@
                               Fecha y hora:  
                             </div>
                             <div class="ficha-desc">
-                              <p><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
-                                   echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
+                              <p><?php $fecha = date_create($this->eventos[0]['va_fecha']); 
+                $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
                               <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
                                     $hora = date_format($fecha, 'h:m');
                                             if($hora<12)
@@ -172,7 +177,9 @@
                             <p><?php echo  $this->escapeHtml($comentarios->va_descripcion);?></p>
                             <p class="small muted">
                              <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?>
+                                         $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?>
                             </p>
                           </div>
                         </div>
