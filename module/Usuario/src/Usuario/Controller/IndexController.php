@@ -145,8 +145,9 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
-            
-//            codigo de guardar imagen con apodo
+         if($File['name']!='')
+         {
+                      //   codigo de guardar imagen con apodo
             require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -156,6 +157,9 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();        
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
+             
+         }else{$imagen = ''; }
+
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -168,15 +172,23 @@ class IndexController extends AbstractActionController
                 $usuario->exchangeArray($form->getData());
                $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email')); 
                if( count($email)<=0)
-               {  if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
+               { 
+                   if($File['name']!='')
+                       { 
+                   if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
                  $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
-
                  } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
-                }}
+                }
+                
+                }else{ $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
+                   $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
+                   $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                   }  
+                }
                 else  { 
                     
                $mensaje ='el correo electrónico '.$request->getPost('va_email').' ya esta asociado a un usuario';     
@@ -245,10 +257,13 @@ class IndexController extends AbstractActionController
         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
-            $nonFile = $this->params()->fromPost('va_nombre');
+            $nonFile = $this->params()->fromPost('va_nombre'); 
+            //var_dump($File);exit;
             
             
-             require './vendor/Classes/Filter/Alnum.php';
+             if($File['name']!='')
+         {
+            require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
             $valor = uniqid();
@@ -256,7 +271,11 @@ class IndexController extends AbstractActionController
             $imf2 = $valor . '.' . $info['extension'];
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
-            $imagen = $filtered . '-' . $imf2;
+            $imagen = $filtered . '-' . $imf2;}
+            else{$idusuario = $this->getUsuarioTable()->getUsuario($id);
+                $imagen = $idusuario->va_foto;
+               
+                }
 
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -270,17 +289,21 @@ class IndexController extends AbstractActionController
 //            exit;
             
             if ($form->isValid()) {
+                  if($File['name']!=''){//echo 'mamaya';exit;
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-//                    echo "ver";
-//                    exit;
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-//                    var_dump($data);
-//                    exit;
-                    return $this->redirect()->toRoute('usuario');
+                    $mensaje = 'datos actualizados correctamente';
+                   //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
                 } else {
                     echo 'problemas con el redimensionamiento';
-                    exit();
-                }
+                    exit();}
+         }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+                {$mensaje = 'datos actualizados correctamente';
+                 //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
+                 
+                 }}
+                
+                
             } else {
 //                 var_dump($form->isValid());exit;
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
@@ -293,6 +316,7 @@ class IndexController extends AbstractActionController
         
         return array(
             'in_id' => $id,
+            'mensaje' => $mensaje,
             'form' => $form,
             'usuario' => $usuario,
             'valor' => $valor,
@@ -364,7 +388,7 @@ class IndexController extends AbstractActionController
     }
 
     private function redimensionarFoto($File, $nonFile, $imagen, $id=null)
-    {
+    {//echo $imagen;exit;
         try {
             
             $anchura = 248;
@@ -444,9 +468,9 @@ class IndexController extends AbstractActionController
                     return true;
                 }
             }
-            if ($ancho < $alto) {
+            if ($ancho < $alto) {//echo 'maa';exit;
 //                require './vendor/Classes/Filter/Alnum.php';
-                // $anchura =(int)($ancho*$altura/$alto);
+// $anchura =(int)($ancho*$altura/$alto);
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
 //                    $nom = $nonFile;

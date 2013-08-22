@@ -43,8 +43,6 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        
-       
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
         $categorias = $this->categorias();
