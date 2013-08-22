@@ -62,7 +62,7 @@ class AuthController extends AbstractActionController
         if(count($usuario)>0)
          {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
          $mensaje='tu cuenta ya esta activada';}
-         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');}}
          $form = $this->getForm();
        // $form->get('va_token')->setValue($token);
         return array(
@@ -74,6 +74,7 @@ class AuthController extends AbstractActionController
 
     public function authenticateAction()
     {  
+  
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
@@ -116,8 +117,7 @@ class AuthController extends AbstractActionController
                     )));
                 }}
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
-
-                
+              
             }
         }
        

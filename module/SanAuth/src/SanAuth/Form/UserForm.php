@@ -30,13 +30,13 @@ class UserForm extends Form
             ),
         ));
          
-          $this->add(array(
-            'name' => 'va_token',
-            'type' => 'Hidden',
-            'attributes'=>array(
-                'id'=>'id'
-            )
-        ));
+//          $this->add(array(
+//            'name' => 'va_token',
+//            'type' => 'Hidden',
+//            'attributes'=>array(
+//                'id'=>'id'
+//            )
+//        ));
           
         $this->add(array(
             'name' => 'Remenber',
@@ -73,10 +73,10 @@ class UserForm extends Form
             'name' => 'va_nombre',
             'required' => true,
         ));
-         $inputFilter->add(array(
-            'name' => 'va_token',
-            'required' => false,
-        ));
+//         $inputFilter->add(array(
+//            'name' => 'va_token',
+//            'required' => false,
+//        ));
         $inputFilter->add(array(
             'name' => 'va_contrasena',
             'required' => true,
