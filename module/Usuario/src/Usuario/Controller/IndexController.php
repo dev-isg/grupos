@@ -100,7 +100,8 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
-          usted se a registrado a grupos, acceda al siguiente link para comenzar a crear sus eventos <a href="'.$this->_options->host->ruta.'/auth?token='.$valor.' ">grupos.pe</a>
+         Tu cuenta en <a href="'.$this->_options->host->ruta.'">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
+         <a href="'.$this->_options->host->ruta.'/auth?token='.$valor.' ">'.$this->_options->host->ruta.'/auth?token='.$valor.'</a>
                                                      </div>
                                                </body>
                                                </html>';
@@ -141,7 +142,7 @@ class IndexController extends AbstractActionController
         $form->get('submit')->setValue('Crear Usuario');
         $request = $this->getRequest();
         
-        if ($request->isPost()) {echo 'aa';exit;
+        if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
             
@@ -166,10 +167,8 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
-                 //   md5($nom);
-                  //  var_dump(md5($nom));exit;
-                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
-                    $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
+                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
+                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
                     $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
                  } else {
                     echo 'problemas con el redimensionamiento';

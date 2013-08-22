@@ -56,64 +56,38 @@ class AuthController extends AbstractActionController
 
     public function loginAction()
     {
-        $token = $this->params()->fromQuery('token');
-        $form = $this->getForm();
-        $form->get('va_token')->setValue($token);
+         $token = $this->params()->fromQuery('token');
+        if($token)
+        {$usuario = $this->getUsuarioTable()->usuario($token);
+        if(count($usuario)>0)
+         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+         $mensaje='tu cuenta ya esta activada';}
+         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+         $form = $this->getForm();
+       // $form->get('va_token')->setValue($token);
         return array(
             'form' => $form,
+            'mensaje'=>$mensaje,
             'messages' => $this->flashmessenger()->getMessages()
         );
     }
 
     public function authenticateAction()
     {  
-
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ( $form->isValid()) { //
-                 $token = $request->getPost('va_token');
-                 $nombre = $request->getPost('va_nombre');
+                // $token = $request->getPost('va_token');
+                $nombre = $request->getPost('va_nombre');
                 $contrasena = $request->getPost('va_contrasena');
                  $this->getAuthService()
                      ->getAdapter()
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
-             if($token)
-             { //echo 'ss';exit;
-                 
-                 $usuario = $this->getUsuarioTable()->usuario($token);             
-               if(count($usuario)>0){                      
-                $result = $this->getAuthService()->authenticate();
-                foreach ($result->getMessages() as $message) {
-                    $this->flashmessenger()->addMessage($message);}
-             if ($result->isValid()) {
-                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']); 
-                    $accion=$request->getPost('accion');
-                    if($accion=='detalleevento'){
-                        $redirect = 'evento';
-                    }elseif($accion=='detallegrupo'){
-                        $redirect = 'grupo';
-                    }
-                    elseif($accion=='index'){
-//                         var_dump($accion);exit;
-                        $redirect = 'agregar-grupo';
-                    }
-                    $storage = $this->getAuthService()->getStorage();
-                    $storage->write($this->getServiceLocator()
-                        ->get('TableAuthService')
-                        ->getResultRowObject(array(
-                        'in_id',
-                        'va_nombre',
-                        'va_contrasena',
-                        'va_email'
-                    ))); } 
-                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');} }
-                else
-                    
-                {$usuario = $this->getUsuarioTable()->usuario1($nombre);
+                $usuario = $this->getUsuarioTable()->usuario1($nombre);
                   if($usuario[0]['va_estado']=='activo'){
                 $result = $this->getAuthService()->authenticate();
                 foreach ($result->getMessages() as $message) {
@@ -143,7 +117,7 @@ class AuthController extends AbstractActionController
                 }}
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
 
-                }
+                
             }
         }
        

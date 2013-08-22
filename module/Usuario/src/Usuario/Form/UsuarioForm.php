@@ -89,7 +89,7 @@ class UsuarioForm extends Form{
 //                'label' => 'Password:',          
 //            ),
             'attributes' => array(
-                'id'=>'inputPassword',
+                'id'=>'va_contrasena',
                 //'class' => 'span12',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
@@ -107,7 +107,7 @@ class UsuarioForm extends Form{
                 'placeholder'=>'Confirme la contraseña…'
             ),
         ));
-//          
+////          
 //        $this->add(array(
 //            'name' => 'Remenber',
 //            'type' => 'MultiCheckbox',
