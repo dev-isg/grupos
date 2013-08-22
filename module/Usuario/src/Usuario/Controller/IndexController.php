@@ -179,7 +179,7 @@ class IndexController extends AbstractActionController
                 }}
                 else  { 
                     
-               $mensaje ='correo electrónico ya uzado';     
+               $mensaje ='el correo electrónico '.$request->getPost('va_email').' ya esta asociado a un usuario';     
                    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
                     
                     }              
@@ -190,10 +190,6 @@ class IndexController extends AbstractActionController
             }
         }
         
-//        $flashMessenger = $this->flashMessenger();
-////        if ($flashMessenger->hasMessages()) {
-////            $mensajes = $flashMessenger->getMessages();
-////        }
         return array(
             'form' => $form,
             'mensaje'=>$mensaje
