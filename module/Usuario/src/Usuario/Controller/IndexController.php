@@ -167,9 +167,15 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
-                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
-                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
-                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+
+                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
+                    $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
+                    $this->flashMessenger()->addMessage('Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla');
+                    $this->redirect()->toUrl('agregarusuario');
+//                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
+//                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
+//                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+
                  } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -181,9 +187,13 @@ class IndexController extends AbstractActionController
             }
         }
         
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
         return array(
             'form' => $form,
-            'mensaje'=>$mensaje
+            'mensaje'=>$mensajes
         );
         // return array();
     }

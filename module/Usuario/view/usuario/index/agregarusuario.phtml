@@ -22,28 +22,29 @@
         $form->prepare();
         echo $this->form()->openTag($form);
       ?>
-      <div class="row-fluid">
-        <div class="span4 cambiofotouser">
-          <h1>Registro de Usuario</h1>
-          <p>Seleccione una Imagen para su perfil</p>
-          <div class="cambiofoto2">
-            <div class="fileupload fileupload-new" data-provides="fileupload" >
-              <div class="img-thu-user fileupload-new thumbnail">
-                <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
-              </div>
-              <div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
-              <div class="detalle-img">
-                <span class="btn botonuser btn-file">
-                  <span class="fileupload-new">Cargar una imagen</span>
-                  <span class="fileupload-exists">Cambiar Imagen </span>
-                   <?php echo $this->formRow($form->get('va_foto'));?>
-                </span>
-                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
-              </div>
+      <div class="span4 cambiofotouser">
+           <h2><?php  echo $this->mensaje[0]; ?></h2>
+        <h1>Registro de Usuario</h1>
+        <p>Seleccione una Imagen para su perfil</p>
+        <div class="cambiofoto2">
+          <div class="fileupload fileupload-new" data-provides="fileupload" >
+            <div class="img-thu-user fileupload-new thumbnail">
+              <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
+            </div>
+            <div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
+            <div class="detalle-img">
+              <span class="btn botonuser btn-file">
+                <span class="fileupload-new">Cargar una imagen</span>
+                <span class="fileupload-exists">Cambiar Imagen </span>
+                 <?php echo $this->formRow($form->get('va_foto'));?>
+              </span>
+              <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
             </div>
           </div>      
         </div>
-        <div class="span6 registro">
+        
+      </div>
+          <div class="span6 registro">
           <?php echo $this->formHidden($form->get('in_id'));?>
           <span>(<strong> * </strong>) Por favor complete los campos requeridos</span>
             <p>
@@ -71,7 +72,6 @@
             <!--<input type="submit" value="Registrarse">-->
             <?php echo $this->formSubmit($form->get('submit'));?>
         </div>
-      </div>
       
         <?php echo $this->form()->closeTag();?>
 
