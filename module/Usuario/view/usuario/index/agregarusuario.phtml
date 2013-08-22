@@ -42,7 +42,9 @@
             </div>
           </div>      
         </div>
-        <div class="span6 registro">
+        
+      </div>
+          <div class="span6 registro">
           <?php echo $this->formHidden($form->get('in_id'));?>
           <span>(<strong> * </strong>) Por favor complete los campos requeridos</span>
             <p>
@@ -70,7 +72,6 @@
             <!--<input type="submit" value="Registrarse">-->
             <?php echo $this->formSubmit($form->get('submit'));?>
         </div>
-      </div>
       
         <?php echo $this->form()->closeTag();?>
 
