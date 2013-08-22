@@ -1,7 +1,15 @@
 <div class="main-container">
   <div class="container">
+
+    <!--Mensaje de registro-->
+    <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo $this->mensaje; ?>
+      </div>
+    </div>
+
     <div class="row-fluid sep">
-      <div class="span12 group-sidebar">
+      <div class="span12 group-sidebar dep-ja">
       <?php
         $form = $this->form;
         $form->setAttributes(array(
@@ -16,7 +24,6 @@
       ?>
       <div class="row-fluid">
         <div class="span4 cambiofotouser">
-          <h2><?php  echo $this->mensaje; ?></h2>
           <h1>Registro de Usuario</h1>
           <p>Seleccione una Imagen para su perfil</p>
           <div class="cambiofoto2">

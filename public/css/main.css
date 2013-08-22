@@ -217,7 +217,33 @@ nav a:hover {
   margin-top: 1em;
 }
 #registro{
-  padding: 20px;
+  
+}
+.alert-margin{
+  margin-bottom: 0;
+  margin-top: 10px;
+  font-size: 15px;
+}
+.login-secundario{
+  padding: 10px;
+}
+.for-ji.form-horizontal label{
+  text-align: left;
+  width: 100px;
+}
+.for-ji.form-horizontal .controls {
+  margin-left: 100px;
+}
+.login-secundario h3{
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+.dep-ja{
+  padding: 10px;
+}
+.dep-ja form{
+  margin-bottom: 0;
 }
 #login a {
   color: #228EC8;
@@ -324,7 +350,6 @@ nav a:hover {
   border: 1px solid #ddd;
 }
 .sep{
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 .registro span{

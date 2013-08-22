@@ -112,7 +112,7 @@ class EventoController extends AbstractActionController
                 $evento->exchangeArray($form->getData());
    
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                    var_dump($data["va_fecha"]);
+//                     var_dump($data["va_fecha"]);
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else 
