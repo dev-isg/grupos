@@ -307,7 +307,7 @@ nav a:hover {
   background: #228EC8;
   color: #fff !important;
 }
-.logincuenta ul li i{
+/*.logincuenta ul li i{
   display: block;
   text-align: center;
   font-size: 30px;
@@ -321,7 +321,7 @@ nav a:hover {
   color: #999;
   padding: 37px 7px 0px;
   text-decoration: none;
-}
+}*/
 .contenido-group {
   float: left;
   width: 100%;
@@ -1692,8 +1692,49 @@ ul.score-list li:first-child {
    Estilo de icono styles
    ========================================================================== */
 @charset "UTF-8";
-
-@font-face {
+.center-li{
+  text-align: center;
+}
+.hh{
+  width: 100%;
+  height: 32px;
+  display: block!important;
+}
+.icon-salir{
+  background: url(../img/shutdown.png) no-repeat center;
+}
+.icon-cuenta{
+  background: url(../img/cuenta.png) no-repeat center;  
+}
+.icon-group{
+  background: url(../img/group.png) no-repeat center;    
+}
+.icon-event{
+  background: url(../img/event.png) no-repeat center;      
+}
+.icon-mygroup{
+  background: url(../img/mygroup.png) no-repeat center;      
+}
+.icon-myevent{
+  background: url(../img/myevent.png) no-repeat center;   
+}
+.center-li{
+  padding-top: 5px;
+}
+.center-li:hover a p{
+  color: white;
+}
+.center-li:hover a{
+    text-decoration: none;
+}
+.center-li a{
+  display: block;
+}
+.center-li a p{
+  margin: 0;
+  padding: 0 5px;
+}
+/*@font-face {
   font-family: "untitled-font-1";
   src:url("../font/untitled-font-1.eot");
   src:url("../font/untitled-font-1.eot?#iefix") format("embedded-opentype"),
@@ -1771,7 +1812,7 @@ ul.score-list li:first-child {
 }
 
 .icon-cuenta:before {
-  content: "c";
+  content: "e";
 }
 
 .icon-salir:before {
@@ -1803,7 +1844,7 @@ ul.score-list li:first-child {
 }
 .icon-noti-1:before {
   content: "k";
-}
+}*/
 /*Color box*/
 /*
     Colorbox Core Style:

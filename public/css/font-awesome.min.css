@@ -208,7 +208,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-filter:before{content:"\f0b0";}
 .icon-briefcase:before{content:"\f0b1";}
 .icon-fullscreen:before{content:"\f0b2";}
-.icon-group:before{content:"\f0c0";}
+/*.icon-group:before{content:"\f0c0";}*/
 .icon-link:before{content:"\f0c1";}
 .icon-cloud:before{content:"\f0c2";}
 .icon-beaker:before{content:"\f0c3";}

@@ -1,4 +1,5 @@
 <?php
+
 namespace SanAuth\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -11,48 +12,43 @@ use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
-//SanAuth\Controller\UpdatepassForm;
+
+// SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;
-class AuthController extends AbstractActionController
-{
+class AuthController extends AbstractActionController {
 
     protected $form;
-
     protected $storage;
-
     protected $authservice;
-
     protected $usuarioTable;
 
-    public function getAuthService()
-    {
-        if (! $this->authservice) {
+    public function getAuthService() {
+        if (!$this->authservice) {
             $this->authservice = $this->getServiceLocator()->get('AuthService');
         }
-        
+
         return $this->authservice;
     }
 
-    public function getSessionStorage()
-    {
-        if (! $this->storage) {
+    public function getSessionStorage() {
+        if (!$this->storage) {
             $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
         }
-        
+
         return $this->storage;
     }
 
-    public function getForm()
-    {
-        if (! $this->form) {
+    public function getForm() {
+        if (!$this->form) {
             // $user = new User();
             // $builder = new AnnotationBuilder();
-            
+
             $this->form = new \SanAuth\Form\UserForm(); // $builder->createForm($user);
         }
-        
+
         return $this->form;
     }
+
 
     public function loginAction()
     {
@@ -64,48 +60,59 @@ class AuthController extends AbstractActionController
          $mensaje='tu cuenta ya esta activada';}
          else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
          $form = $this->getForm();
-       // $form->get('va_token')->setValue($token);
+
         return array(
             'form' => $form,
-            'mensaje'=>$mensaje,
+            'mensaje' => $mensaje,
             'messages' => $this->flashmessenger()->getMessages()
         );
     }
 
+
     public function authenticateAction()
     {  
-  
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            if ( $form->isValid()) { //
+            if ($form->isValid()) { //
                 // $token = $request->getPost('va_token');
-                $nombre = $request->getPost('va_nombre');
+                $nombre = $request->getPost('va_email');
                 $contrasena = $request->getPost('va_contrasena');
-                 $this->getAuthService()
-                     ->getAdapter()
-                    ->setIdentity($nombre)
-                    ->setCredential($contrasena);
+                $this->getAuthService()
+                        ->getAdapter()
+                        ->setIdentity($nombre)
+                        ->setCredential($contrasena);
                 $usuario = $this->getUsuarioTable()->usuario1($nombre);
-                  if($usuario[0]['va_estado']=='activo'){
-                $result = $this->getAuthService()->authenticate();
-                foreach ($result->getMessages() as $message) {
-                    // save message temporary into flashmessenger
-                    $this->flashmessenger()->addMessage($message);  }
-                
-                if ($result->isValid()) {
-                    $accion=$request->getPost('accion');
-                    if($accion=='detalleevento'){
-                        $redirect = 'evento';
-                    }elseif($accion=='detallegrupo'){
-                        $redirect = 'grupo';
+                if ($usuario[0]['va_estado'] == 'activo') {
+                    $result = $this->getAuthService()->authenticate();
+                    foreach ($result->getMessages() as $message) {
+                        // save message temporary into flashmessenger
+                        $this->flashmessenger()->addMessage($message);
                     }
-                    elseif($accion=='index'){
+
+                    if ($result->isValid()) {
+                        $accion = $request->getPost('accion');
+                        if ($accion == 'detalleevento') {
+                            $redirect = 'evento';
+                        } elseif ($accion == 'detallegrupo') {
+                            $redirect = 'grupo';
+                        } elseif ($accion == 'index') {
 //                         var_dump($accion);exit;
-                        $redirect = 'agregar-grupo';
+                            $redirect = 'agregar-grupo';
+                        }
+                        $storage = $this->getAuthService()->getStorage();
+                        $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_contrasena',
+                                            'va_email'
+                                        )));
                     }
+
                     $storage = $this->getAuthService()->getStorage();
                     $storage->write($this->getServiceLocator()
                         ->get('TableAuthService')
@@ -119,24 +126,22 @@ class AuthController extends AbstractActionController
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-        }
-       
-        return $this->redirect()->toRoute($redirect, array('action'=>'agregargrupo'));//$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+        
+
+        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
 
-    public function logoutAction()
-    {
+    public function logoutAction() {
         if ($this->getAuthService()->hasIdentity()) {
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
             $this->flashmessenger()->addMessage("You've been logged out");
         }
         return $this->redirect()->toRoute('home');
-//         return $this->redirect()->toRoute('login');
+        // return $this->redirect()->toRoute('login');
     }
 
-    public function changeemailAction()
-    {
+    public function changeemailAction() {
         $request = $this->getRequest();
         $form = new PasswordForm();
         if ($request->isPost()) {
@@ -149,7 +154,7 @@ class AuthController extends AbstractActionController
                 } catch (\Exception $e) {
                     $this->flashmessenger()->addMessage('Este correo no esta registrado...');
                 }
-                
+
                 if ($results) {
                     $config = $this->getServiceLocator()->get('Config');
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
@@ -164,11 +169,11 @@ class AuthController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-                    
+
                     $message = new Message();
                     $message->addTo($mail)
-                        ->addFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
-                        ->setSubject('Recuperación de contraseña');
+                            ->addFrom('listadelsabor@innovationssystems.com', 'juntate.pe')
+                            ->setSubject('Recuperación de contraseña');
                     $bodyPart = new \Zend\Mime\Message();
                     $bodyMessage = new \Zend\Mime\Part($bodyHtml);
                     $bodyMessage->type = 'text/html';
@@ -177,7 +182,7 @@ class AuthController extends AbstractActionController
                     ));
                     $message->setBody($bodyPart);
                     $message->setEncoding('UTF-8');
-                    
+
                     $transport = $this->getServiceLocator()->get('mail.transport'); // new SendmailTransport();//$this->getServiceLocator('mail.transport')
                     $transport->send($message);
                 }
@@ -195,28 +200,26 @@ class AuthController extends AbstractActionController
         // $this->flashmessenger()->clearMessages();
     }
 
-    public function recuperarAction()
-    {
+    public function recuperarAction() {
         $password = $this->params()->fromQuery('contrasena');
-        $form=new UpdatepassForm();
+        $form = new UpdatepassForm();
         try {
             $results = $this->getUsuarioTable()->consultarPassword($password);
         } catch (\Exception $e) {
-//             echo 'aka es';exit;
+            // echo 'aka es';exit;
             $this->flashMessenger()->addMessage('Este contrase�a temporal no existe...');
         }
 
         if ($results) {
             $request = $this->getRequest();
 
-//             $usuario = new Usuario();
-//             $form = new UsuarioForm();
-//             $form->setInputFilter($usuario->getInputFilter());
+            // $usuario = new Usuario();
+            // $form = new UsuarioForm();
+            // $form->setInputFilter($usuario->getInputFilter());
             $form->setData($request->getPost());
             if ($request->isPost()) {
-                if($form->isValid())
-                {
-            
+                if ($form->isValid()) {
+
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
                         // $this->flashmessenger()->addMessage('La contrase�a se actualizo correctamente...');
@@ -233,12 +236,12 @@ class AuthController extends AbstractActionController
         );
     }
 
-    public function getUsuarioTable()
-    {
-        if (! $this->usuarioTable) {
+    public function getUsuarioTable() {
+        if (!$this->usuarioTable) {
             $sm = $this->getServiceLocator();
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
         }
         return $this->usuarioTable;
     }
+
 }
