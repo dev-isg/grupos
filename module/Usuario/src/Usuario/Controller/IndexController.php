@@ -169,7 +169,8 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,$valor);
                     $this->correo($usuario->va_email, $usuario->va_nombre,$valor);
-                    $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                    $this->flashMessenger()->addMessage('Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla');
+                    $this->redirect()->toUrl('agregarusuario');
                  } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -181,9 +182,13 @@ class IndexController extends AbstractActionController
             }
         }
         
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
         return array(
             'form' => $form,
-            'mensaje'=>$mensaje
+            'mensaje'=>$mensajes
         );
         // return array();
     }

@@ -11,7 +11,7 @@ use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
-//SanAuth\Controller\UpdatepassForm;
+// SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;
 class AuthController extends AbstractActionController
 {
@@ -66,84 +66,92 @@ class AuthController extends AbstractActionController
     }
 
     public function authenticateAction()
-    {  
+    {
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            if ( $form->isValid()) { //
-                 $token = $request->getPost('va_token');
-                 $nombre = $request->getPost('va_nombre');
+            if ($form->isValid()) { //
+                $token = $request->getPost('va_token');
+                $nombre = $request->getPost('va_nombre');
                 $contrasena = $request->getPost('va_contrasena');
-                 $this->getAuthService()
-                     ->getAdapter()
+                $this->getAuthService()
+                    ->getAdapter()
                     ->setIdentity($nombre)
                     ->setCredential($contrasena);
-             if($token)
-             { $usuario = $this->getUsuarioTable()->usuario($token);             
-               if(count($usuario)>0){                      
-                $result = $this->getAuthService()->authenticate();
-                foreach ($result->getMessages() as $message) {
-                    $this->flashmessenger()->addMessage($message);}
-             if ($result->isValid()) {
-                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']); 
-                    $accion=$request->getPost('accion');
-                    if($accion=='detalleevento'){
-                        $redirect = 'evento';
-                    }elseif($accion=='detallegrupo'){
-                        $redirect = 'grupo';
+                if ($token) {
+                    $usuario = $this->getUsuarioTable()->usuario($token);
+                    if (count($usuario) > 0) {
+                        $result = $this->getAuthService()->authenticate();
+                        foreach ($result->getMessages() as $message) {
+                            $this->flashmessenger()->addMessage($message);
+                        }
+                        if ($result->isValid()) {
+                            $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+                            $accion = $request->getPost('accion');
+                            if ($accion == 'detalleevento') {
+                                $redirect = 'evento';
+                            } elseif ($accion == 'detallegrupo') {
+                                $redirect = 'grupo';
+                            } elseif ($accion == 'index') {
+                                // var_dump($accion);exit;
+                                $redirect = 'agregar-grupo';
+                            }
+                            $storage = $this->getAuthService()->getStorage();
+                            $storage->write($this->getServiceLocator()
+                                ->get('TableAuthService')
+                                ->getResultRowObject(array(
+                                'in_id',
+                                'va_nombre',
+                                'va_contrasena',
+                                'va_email'
+                            )));
+                        }
+                    } else {
+                        return $this->redirect()->toUrl($this->getRequest()
+                            ->getBaseUrl() . '/auth');
                     }
-                    elseif($accion=='index'){
-//                         var_dump($accion);exit;
-                        $redirect = 'agregar-grupo';
+                } else {
+                    $usuario = $this->getUsuarioTable()->usuario1($nombre);
+                    if ($usuario[0]['va_estado'] == 'activo') {
+                        $result = $this->getAuthService()->authenticate();
+                        foreach ($result->getMessages() as $message) {
+                            // save message temporary into flashmessenger
+                            $this->flashmessenger()->addMessage($message);
+                        }
+                        
+                        if ($result->isValid()) {
+                            $accion = $request->getPost('accion');
+                            if ($accion == 'detalleevento') {
+                                $redirect = 'evento';
+                            } elseif ($accion == 'detallegrupo') {
+                                $redirect = 'grupo';
+                            } elseif ($accion == 'index') {
+                                // var_dump($accion);exit;
+                                $redirect = 'agregar-grupo';
+                            }
+                            $storage = $this->getAuthService()->getStorage();
+                            $storage->write($this->getServiceLocator()
+                                ->get('TableAuthService')
+                                ->getResultRowObject(array(
+                                'in_id',
+                                'va_nombre',
+                                'va_contrasena',
+                                'va_email'
+                            )));
+                        }
+                    } else {
+                        return $this->redirect()->toUrl($this->getRequest()
+                            ->getBaseUrl() . '/auth');
                     }
-                    $storage = $this->getAuthService()->getStorage();
-                    $storage->write($this->getServiceLocator()
-                        ->get('TableAuthService')
-                        ->getResultRowObject(array(
-                        'in_id',
-                        'va_nombre',
-                        'va_contrasena',
-                        'va_email'
-                    ))); } 
-                  }else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');} }
-                else
-                {$usuario = $this->getUsuarioTable()->usuario1($nombre);
-                  if($usuario[0]['va_estado']=='activo'){
-                $result = $this->getAuthService()->authenticate();
-                foreach ($result->getMessages() as $message) {
-                    // save message temporary into flashmessenger
-                    $this->flashmessenger()->addMessage($message);  }
-                
-                if ($result->isValid()) {
-                    $accion=$request->getPost('accion');
-                    if($accion=='detalleevento'){
-                        $redirect = 'evento';
-                    }elseif($accion=='detallegrupo'){
-                        $redirect = 'grupo';
-                    }
-                    elseif($accion=='index'){
-//                         var_dump($accion);exit;
-                        $redirect = 'agregar-grupo';
-                    }
-                    $storage = $this->getAuthService()->getStorage();
-                    $storage->write($this->getServiceLocator()
-                        ->get('TableAuthService')
-                        ->getResultRowObject(array(
-                        'in_id',
-                        'va_nombre',
-                        'va_contrasena',
-                        'va_email'
-                    )));
-                }}
-                else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
-
                 }
             }
         }
-       
-        return $this->redirect()->toRoute($redirect, array('action'=>'agregargrupo'));//$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+        
+        return $this->redirect()->toRoute($redirect, array(
+            'action' => 'agregargrupo'
+        )); // $this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
 
     public function logoutAction()
@@ -154,7 +162,7 @@ class AuthController extends AbstractActionController
             $this->flashmessenger()->addMessage("You've been logged out");
         }
         return $this->redirect()->toRoute('home');
-//         return $this->redirect()->toRoute('login');
+        // return $this->redirect()->toRoute('login');
     }
 
     public function changeemailAction()
@@ -220,25 +228,24 @@ class AuthController extends AbstractActionController
     public function recuperarAction()
     {
         $password = $this->params()->fromQuery('contrasena');
-        $form=new UpdatepassForm();
+        $form = new UpdatepassForm();
         try {
             $results = $this->getUsuarioTable()->consultarPassword($password);
         } catch (\Exception $e) {
-//             echo 'aka es';exit;
+            // echo 'aka es';exit;
             $this->flashMessenger()->addMessage('Este contrase�a temporal no existe...');
         }
-
+        
         if ($results) {
             $request = $this->getRequest();
-
-//             $usuario = new Usuario();
-//             $form = new UsuarioForm();
-//             $form->setInputFilter($usuario->getInputFilter());
+            
+            // $usuario = new Usuario();
+            // $form = new UsuarioForm();
+            // $form->setInputFilter($usuario->getInputFilter());
             $form->setData($request->getPost());
             if ($request->isPost()) {
-                if($form->isValid())
-                {
-            
+                if ($form->isValid()) {
+                    
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
                         // $this->flashmessenger()->addMessage('La contrase�a se actualizo correctamente...');
