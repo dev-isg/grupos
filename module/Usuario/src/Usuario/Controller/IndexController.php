@@ -314,13 +314,13 @@ class IndexController extends AbstractActionController
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/grupoparticipo ">Grupos donde participo</a></li>  
-            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/grupo/evento/eventosparticipo ">Eventos donde participo</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/grupo/evento/miseventos ">Mis Eventos</a></li>
-            <li><i class="icon-group"> </i> <a href=" '.$ruta . '/usuario/index/misgrupos ">Mis Grupos</a></li>
-            <li><i class="icon-cuenta"></i> <a href=" '.$ruta . '/usuario/index/editarusuario "  class="activomenu">Mi cuenta</a></li>
+            <li class="center-li"><a href=" '.$ruta . '/usuario/index/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" '.$ruta . '/grupo/evento/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" '.$ruta . '/grupo/evento/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" '.$ruta . '/usuario/index/misgrupos "><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" '.$ruta . '/usuario/index/editarusuario" class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>
 
-            <li><i class="icon-salir"></i><a href="#">Cerrar Sesion</a></li>                   
+            <li class="center-li"><a href="#"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
           </div>                            
         </div>';
