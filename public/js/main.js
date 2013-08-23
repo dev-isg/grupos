@@ -127,7 +127,7 @@ function cargarMapa(){
             administrative_area_level_1: '#administrative_area_level_1',
             country:  '#country',
             postal_code: '#postal_code',
-          type:    '#type' 
+            type:    '#type' 
           }
         });
 

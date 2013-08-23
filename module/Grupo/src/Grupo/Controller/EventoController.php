@@ -69,7 +69,7 @@ class EventoController extends AbstractActionController
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/themes/base/jquery.ui.all.css');
         $renderer->inlineScript()
-            ->setScript('crearevento();cargarMapa();')
+            ->setScript('crearevento();cargarMapa();cargarFecha();')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.ui.addresspicker.js')
             ->prependFile($this->_options->host->base . '/js/jquery-ui.js')
