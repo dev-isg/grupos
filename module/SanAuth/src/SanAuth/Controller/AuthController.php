@@ -59,7 +59,7 @@ class AuthController extends AbstractActionController {
         $categorias =  $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
          $token = $this->params()->fromQuery('token');
-        // var_dump($token);exit;
+     //var_dump($token);exit;
         if($token)
         {$usuario = $this->getUsuarioTable()->usuario($token);
         if(count($usuario)>0)

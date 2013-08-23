@@ -261,7 +261,8 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre'); 
-            //var_dump($File);exit;
+         
+           
             
             
              if($File['name']!='')
@@ -285,25 +286,42 @@ class IndexController extends AbstractActionController
                 ->toArray());
             $form->setInputFilter($usuario->getInputFilter2());
             $form->setData($data);
-            // $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-//             var_dump($data);
-//            exit;
-            
             if ($form->isValid()) {
-                  if($File['name']!=''){//echo 'mamaya';exit;
-                if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                    $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-
-                     return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
-                   
-                } else {
-                    echo 'problemas con el redimensionamiento';
-                    exit();}
-         }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-
-               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
-               }
                 
+                if($this->params()->fromPost('va_contrasena')=='' )
+                 {
+                     $dataa = $this->getUsuarioTable()->getUsuario($id);
+                     $pass=$dataa->va_contrasena;
+                    
+                        if($File['name']!=''){//echo 'mamaya';exit;
+                        if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,'',$pass);
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');    
+                        } else {
+                            echo 'problemas con el redimensionamiento';
+                            exit();}
+                        }else{$this->getUsuarioTable()->guardarUsuario($usuario, $imagen,'',$pass);
+
+                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
+                       }
+                 
+                    
+                 }else{
+
+                       if($File['name']!=''){//echo 'mamaya';exit;
+                        if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');    
+                        } else {
+                            echo 'problemas con el redimensionamiento';
+                            exit();}
+                        }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+
+                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
+                       } 
+                 }
+             
+               
                 
             } else {
 //                 var_dump($form->isValid());exit;
