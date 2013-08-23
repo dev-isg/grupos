@@ -7,6 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Grupos</title>
+       
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--<link rel="stylesheet" href="css/normalize.min.css">-->
@@ -34,6 +35,7 @@
 					data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/">Grupos</a>
+                                 <?php if($_GET['categoria']) {?> <a  class="brand"><?php  echo $_GET['categoria']  ?></a><?php } ?>
 				<div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
             <?php if(!$this->session){?>
@@ -58,6 +60,7 @@
 			</div>
 		</div>
 	</div>
+      
 	<div class="search">
 		<div class="container">
 			<div class="row-fluid">
@@ -97,6 +100,7 @@
                         <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>
                         <?php }?>
                     </div>
+                       
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio"> 
                             <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?>" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
@@ -106,6 +110,7 @@
                 </div>
             </div>
         </div>
+      
         <!--Login-->
         <div style='display:none'>
             <div id='inline_evento' style='padding:10px; background:#fff;'>

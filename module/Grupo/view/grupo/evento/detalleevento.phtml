@@ -124,6 +124,10 @@
                 <div class="event-comentario">
                   <div class="row-fluid">
                   <?php if($this->session && $this->grupocomprueba){?>
+                      
+                   <?php $fecha_actual = date("Y-m-d h:m:s"); 
+                    if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
+                    {?> 
                     <div class="span12 comentar-form">
                       <h4><?php echo ucwords($this->session->va_nombre);?>, ¡Comente aqui!</h4>
                 <?php
@@ -150,8 +154,13 @@
                           </p>
                         </div>
                             <?php echo $this->form()->closeTag();?>
-
                     </div>
+                      
+                      <?php  } else {}?>
+                      
+                      
+                      
+                      
                      <?php }elseif(!$this->grupocomprueba){?>
                      <div class="span12 login-comentario">
                       <p>Debes de unirte al evento para comentar.</p>
