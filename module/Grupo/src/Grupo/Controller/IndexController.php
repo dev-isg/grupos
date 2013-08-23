@@ -136,11 +136,6 @@ class IndexController extends AbstractActionController
         if (!$storage) {
             return $this->redirect()->toRoute('grupo');
         }
-//        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-//        if($urlorigen=='/usuario/index/misgrupos'){
-//            $url=1;
-//        }
-        
                 // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
@@ -162,9 +157,6 @@ class IndexController extends AbstractActionController
 
     public function agregargrupoAction()
     {
-        $url= new Container();  
-        var_dump($url->urlorigen);exit;
-//        var_dump($urlorigen);exit;
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         
@@ -199,7 +191,9 @@ class IndexController extends AbstractActionController
         $form = new GruposForm($adpter);
         $form->get('submit')->setValue('Crear Grupo');
         $request = $this->getRequest();
-
+        
+        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+        
         if ($request->isPost()) {
 
             $File = $this->params()->fromFiles('va_imagen');
@@ -232,7 +226,7 @@ class IndexController extends AbstractActionController
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
-                   if($url==1){
+                   if($this->params()->fromPost('url')=='/usuario/index/misgrupos'){
 //                       var_dump($urlorigen);exit;
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        
@@ -261,7 +255,7 @@ class IndexController extends AbstractActionController
         return $mainViewModel->setVariables(array(
             'form' => $form,
             'grupos' => $user_info,
-            'url'=>$url
+            'urlorigen'=>$urlorigen
         ));
 
     }
