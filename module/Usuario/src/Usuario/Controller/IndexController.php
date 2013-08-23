@@ -178,7 +178,8 @@ class IndexController extends AbstractActionController
                    if ($this->redimensionarFoto($File, $nonFile, $imagen, $id=null)) {
                  $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
-                   $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                 
+                    return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario?m=1');
                  } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -186,10 +187,12 @@ class IndexController extends AbstractActionController
                 
                 }else{ $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,md5($nom));
                    $this->correo($usuario->va_email, $usuario->va_nombre,md5($nom));
-                   $mensaje ='Tu cuenta está casi lista para usuar. Solo tienes que activar tu correo para activarla';
+                 
+                    return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario?m=1');
+                   
                    }  
                 }
-                else  { 
+                else { 
                     
                $mensaje ='el correo electrónico '.$request->getPost('va_email').' ya esta asociado a un usuario';     
                    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
@@ -290,14 +293,14 @@ class IndexController extends AbstractActionController
                   if($File['name']!=''){//echo 'mamaya';exit;
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                     $mensaje ='datos actualizados correctamente';
+
                      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
                    
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();}
          }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-               $mensaje ='datos actualizados correctamente';
+
                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
                }
                 
@@ -315,7 +318,7 @@ class IndexController extends AbstractActionController
         return array(
             'in_id' => $id,
             'form' => $form,
-            'mensaje'=>$mensaje,
+
             'usuario' => $usuario,
             'valor' => $valor,
             'formnotif'=>$formNotif
