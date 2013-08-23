@@ -914,6 +914,9 @@ vertical-align: middle;
   -moz-border-radius: 5px;
   margin-top: 30px;
 }
+.event:first-child{
+  margin-top: 10px!important;
+}
 .box{
   -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
@@ -1471,6 +1474,7 @@ p.pp{
 }
 .unete-grupo{
   margin-top: 20px;
+  text-align: center;
 }
 .unete-grupo p{
   text-align: center;

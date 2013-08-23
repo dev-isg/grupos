@@ -36,7 +36,7 @@ function crearevento(){
             editable:true,
             dataBound:{
                 city:'#cityId',
-                //address:'#address',
+                address:'#address',
                 addressRef:'#addressReference'
             },
             center:{lat:-12.047816, lng:-77.062203},
