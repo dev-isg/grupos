@@ -1481,6 +1481,9 @@ p.pp{
   width: 100%;
   margin-bottom: 15px;
 }
+.height-evento{
+  height:250px;
+}
 .editarGrupo a{
   width: 100px;
 }
@@ -1509,6 +1512,9 @@ p.pp{
   padding: 5px 0px;
   font-weight: bold;
   border-radius: 4px;
+}
+#map img{
+  max-width: none;
 }
 .si a,.no a{
   color: #FFF !important;

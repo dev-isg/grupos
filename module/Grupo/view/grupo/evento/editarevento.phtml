@@ -108,7 +108,7 @@
 							<label class="control-label" for="inputIcon">Minimo:</label>
 							<div class="controls">
 								<div class="input-prepend">
-									<span class="add-on"><i class="icon-envelope"></i></span>
+									<span class="add-on"><i class="icon-user"></i></span>
                       <?php echo $this->formRow($form->get('va_min'));?>
                     </div>
 							</div>
@@ -117,7 +117,7 @@
 							<label class="control-label" for="inputIcon">Maximo:</label>
 							<div class="controls">
 								<div class="input-prepend">
-									<span class="add-on"><i class="icon-envelope"></i></span>
+									<span class="add-on"><i class="icon-user"></i></span>
                       <?php echo $this->formRow($form->get('va_max'));?>
                     </div>
 							</div>
@@ -127,7 +127,8 @@
 				<div class="row-fluid crear-evento-3 event">
 					<h2>Elige el lugar del evento</h2>
 					<div class="span12 event-padding dev-padd">
-						<div id="map" style="border: 1px solid #eee;"></div>
+						<label>Address : </label> <input id="addresspicker_map" />
+						<div id="map" class="span12 event-padding height-evento" style="border: 1px solid #eee;"></div>
 					</div>
 					<div class="span3 lugar-nm event-padding">
 						<div class="form-item">
@@ -174,15 +175,15 @@
 	</div>
 </div>
 <script>
-                    $(document).ready(function(){
-                        
-                    $('#submitbutton').click(function (){
-                        
-                   	 var a=$('#address').val();
-                   	 var b=$('#fechaId').val();
-                    	alert(a);
-                    	alert(b);
-                        });});
+    $(document).ready(function(){
+        
+    $('#submitbutton').click(function (){
+        
+   	 var a=$('#address').val();
+   	 var b=$('#fechaId').val();
+    	alert(a);
+    	alert(b);
+        });});
                    
                     
  </script>

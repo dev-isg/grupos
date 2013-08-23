@@ -111,34 +111,37 @@ function cargarFecha(){
 }
 
 function cargarMapa(){
-    //var addresspicker = $( "#addresspicker" ).addresspicker();
-    var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
-        regionBias: "fr",
-    //updateCallback: showCallback,
-      elements: {
-        map:      "#map",
-        lat:      "#mapLocationLat",
-        lng:      "#mapLocationLon",
-        street_number: '#street_number',
-        route: '#route',
-        locality: '#locality',
-        administrative_area_level_2: '#administrative_area_level_2',
-        administrative_area_level_1: '#administrative_area_level_1',
-        country:  '#country',
-        postal_code: '#postal_code',
-      type:    '#type' 
-      }
+    $(document).on('ready', function(){
+        //var addresspicker = $( "#addresspicker" ).addresspicker();
+        var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+            regionBias: "fr",
+        //updateCallback: showCallback,
+          elements: {
+            map:      "#map",
+            lat:      "#mapLocationLat",
+            lng:      "#mapLocationLon",
+            street_number: '#street_number',
+            route: '#route',
+            locality: '#locality',
+            administrative_area_level_2: '#administrative_area_level_2',
+            administrative_area_level_1: '#administrative_area_level_1',
+            country:  '#country',
+            postal_code: '#postal_code',
+          type:    '#type' 
+          }
+        });
+
+        var gmarker = addresspickerMap.addresspicker( "marker");    
+        gmarker.setVisible(true);
+        addresspickerMap.addresspicker("updatePosition");
+
+        $("#addresspicker_map").addresspicker(
+            "option", 
+            "reverseGeocode", 
+            "true"
+        ); 
+
     });
-
-    var gmarker = addresspickerMap.addresspicker( "marker");    
-    gmarker.setVisible(true);
-    addresspickerMap.addresspicker("updatePosition");
-
-    $("#addresspicker_map").addresspicker(
-        "option", 
-        "reverseGeocode", 
-        "true"
-    ); 
 }
 
 function actualizarDatos(){
