@@ -1481,6 +1481,9 @@ p.pp{
   width: 100%;
   margin-bottom: 15px;
 }
+.height-evento{
+  height:250px;
+}
 .editarGrupo a{
   width: 100px;
 }
