@@ -291,12 +291,15 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
                      $mensaje ='datos actualizados correctamente';
+                     return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
                    
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();}
          }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-               $mensaje ='datos actualizados correctamente';}
+               $mensaje ='datos actualizados correctamente';
+               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
+               }
                 
                 
             } else {
@@ -338,6 +341,9 @@ class IndexController extends AbstractActionController
     {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
+        
+      //  $imagen = $storage->read()->va_imagen;
+        
         $estados = '<div class="span12 menu-login">
           <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
@@ -388,7 +394,14 @@ class IndexController extends AbstractActionController
             
             $anchura = 248;
             $altura = 500; // 143;
-            
+            $anchax = 73;
+            $altay = 68;
+            $comentariosx = 80;
+            $comentariosy = 75; 
+            $perfilx = 27;
+            $perfily = 27;
+            $cuentax = 70;
+            $cuentay = 60;
             $generalx = 270;
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -400,105 +413,147 @@ class IndexController extends AbstractActionController
             if ($id != null){
                 $idusuario = $this->getUsuarioTable()->getUsuario($id);
                 $imog = $idusuario->va_foto;
-                
                 $eliminar1 = $this->_options->upload->images . '/usuario/general/' . $imog;
-//                print_r($eliminar1);
-//                exit;
                 $eliminar2 = $this->_options->upload->images . '/usuario/original/' . $imog;
                 $eliminar3 = $this->_options->upload->images . '/usuario/principal/' . $imog;
-                
+                $eliminar4 = $this->_options->upload->images . '/usuario/detalle/' . $imog;
+                $eliminar5 = $this->_options->upload->images . '/usuario/comentarios/' . $imog;
+                $eliminar6 = $this->_options->upload->images . '/usuario/perfil/' . $imog;
+                $eliminar7 = $this->_options->upload->images . '/usuario/cuenta/' . $imog;
                   unlink($eliminar1);
                   unlink($eliminar2);
                   unlink($eliminar3);
+                  unlink($eliminar4);
+                  unlink($eliminar5);
+                  unlink($eliminar6);
+                   unlink($eliminar7);
                 
             }
-                
-            
-            
-//            print_r($imagen);
-//            exit;
-            // $altura=$tamanio[1];
-//            $valor = uniqid();
-            if ($ancho > $alto) { // echo 'ddd';exit;
-                
-                
-//                require './vendor/Classes/Filter/Alnum.php';
-                // $altura =(int)($alto*$anchura/$ancho); //($alto*$anchura/$ancho);
+            if ($ancho > $alto) {
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-//
-                    $name = $imagen;
-//                    print_r($name);
-//                    exit;
-                    
-                    
-                    // $contenido = new \Zend\Session\Container('contenido');
-                    
-                    if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
+                    $name = $imagen;   if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejafoto = imagecreatefromjpeg($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
+                        $detallefoto = imagecreatetruecolor($anchax, $altay);
+                        $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                        $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                        $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
+                        imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                        imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                        imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
+                        $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                        $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                        $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
+                        imagejpeg($detallefoto, $detalle);
+                        imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                        imagejpeg($cuentafoto, $cuenta);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
+                        $detallefoto = imagecreatetruecolor($anchax, $altay);
+                        $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                        $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                           $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
+                        imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                           imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
+                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
-                        imagepng($generalfoto, $general);
+                        imagepng($generalfoto, $general); 
+                        imagejpeg($detallefoto, $detalle);
+                        imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                         imagejpeg($cuentafoto, $cuenta);
+                        
                     }
                     return true;
                 }
             }
-            if ($ancho < $alto) {//echo 'maa';exit;
-//                require './vendor/Classes/Filter/Alnum.php';
-// $anchura =(int)($ancho*$altura/$alto);
+            if ($ancho < $alto) {
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-//                    $nom = $nonFile;
-//                    $imf2 = $valor . '.' . $info['extension'];
-//                    $filter = new \Filter_Alnum();
-//                    $filtered = $filter->filter($nom);
-//                    $name = $filtered . '-' . $imf2;
                     $name = $imagen;
                     
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejafoto = imagecreatefromjpeg($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
+                        $detallefoto = imagecreatetruecolor($anchax, $altay);
+                        $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
+                        imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
+                        $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
+                           imagejpeg($detallefoto, $detalle);
+                           imagejpeg($comentariosfoto, $comentario);
+                           imagejpeg($perfilfoto, $perfil);
+                            imagejpeg($cuentafoto, $cuenta);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
+                          $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                           $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                           $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                           imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
+                        imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                       imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                              imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
+                        $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                        $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                        $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
                         imagepng($generalfoto, $general);
+                        imagejpeg($detallefoto, $detalle);
+                        imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                          imagejpeg($cuentafoto, $cuenta);
                     }
                     
                     return true;
