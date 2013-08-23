@@ -52,16 +52,16 @@ class AuthController extends AbstractActionController {
 
     public function loginAction()
     {
-         $token = $this->params()->fromQuery('token');
-        if ($token) {
-            $usuario = $this->getUsuarioTable()->usuario($token);
-            if (count($usuario) > 0) {
-                $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-                $mensaje = 'tu cuenta ya esta activada';
-            } else {
-                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
-            }
-        }
+//         $token = $this->params()->fromQuery('token');
+//        if ($token) {
+//            $usuario = $this->getUsuarioTable()->usuario($token);
+//            if (count($usuario) > 0) {
+//                $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+//                $mensaje = 'tu cuenta ya esta activada';
+//            } else {
+//                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+//            }
+//        }
         $form = $this->getForm();
 
         return array(
@@ -89,8 +89,7 @@ class AuthController extends AbstractActionController {
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
-//                $usuario = $this->getUsuarioTable()->usuario1($nombre);
-//                
+//                $usuario = $this->getUsuarioTable()->usuario1($nombre);               
 //                if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {

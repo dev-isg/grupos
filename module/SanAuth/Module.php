@@ -89,21 +89,30 @@ class Module implements AutoloaderProviderInterface
             
          if ($actionName == 'login') {
                         if ($authAdapter->hasIdentity() === true) {
-                            return $controller->redirect()
-                                    ->toRoute('grupo');
                             $storage = new \Zend\Authentication\Storage\Session('Auth');
                             $session = $storage->read();
                             $controller->layout()->session = $session;
+                               return $controller->redirect()
+                                    ->toRoute('home');
                         } else {
                             return;
                         }
-                    } elseif ($actionName == 'agregargrupo') {
+         } elseif ($actionName == 'agregargrupo') {
                         if ($authAdapter->hasIdentity() === false) {
+//                            echo 'sin logearseeee';exit;
                             return $controller->redirect()
                                     ->toRoute('login');
                         } else {
-
+                            $storage = new \Zend\Authentication\Storage\Session('Auth');
+                            $session = $storage->read();
+                            $controller->layout()->session = $session;
+                               return;
                         }
+                    }else{
+                            $storage = new \Zend\Authentication\Storage\Session('Auth');
+                            $session = $storage->read();
+                            $controller->layout()->session = $session;
+                        return;
                     }
    //////////////////////////////////////////////////////////INICIO//////////////////////////////////////////////////////////////////
 //            if ($authAdapter->hasIdentity() === true) {
