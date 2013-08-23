@@ -5,15 +5,6 @@ $(document).ready(function(){
 function crearevento(){
 	$(document).ready(function(){
         $('.fileupload').fileupload();
-        $(".form_datetime2").datetimepicker({
-        	format: "dd MM yyyy - hh:ii",
-            autoclose: true,
-            todayBtn: false,
-            startDate: fecha_actual,
-            minuteStep: 10,
-            pickerPosition: "bottom-left",
-            todayHighlight:true
-        });
 
         $("[data-toggle='tooltip']").tooltip();
         $("#imageUrl").juImgPicker({
@@ -32,7 +23,6 @@ function crearevento(){
             }
         });
 
-        cargarMapa();
         /*$("#map").juGoogleMap({
             editable:true,
             dataBound:{
@@ -102,6 +92,20 @@ function crearevento(){
             var log = $("#mapLocationLon").val();
             var direc = $("#address").val();
             alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
+        });
+    });
+}
+
+function cargarFecha(){
+    $(document).on('ready', function(){
+        $(".form_datetime2").datetimepicker({
+            format: "dd MM yyyy - hh:ii",
+            autoclose: true,
+            todayBtn: false,
+            startDate: fecha_actual,
+            minuteStep: 10,
+            pickerPosition: "bottom-left",
+            todayHighlight:true
         });
     });
 }
