@@ -21,6 +21,7 @@ class AuthController extends AbstractActionController {
     protected $storage;
     protected $authservice;
     protected $usuarioTable;
+    protected $grupoTable;
 
     public function getAuthService() {
         if (!$this->authservice) {
@@ -51,16 +52,21 @@ class AuthController extends AbstractActionController {
 
 
     public function loginAction()
-    {
-         $token = $this->params()->fromQuery('token');
-        if($token)
-        {$usuario = $this->getUsuarioTable()->usuario($token);
-        if(count($usuario)>0)
-         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-         $mensaje='tu cuenta ya esta activada';}
-         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+    {  
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias =  $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
+//         $token = $this->params()->fromQuery('token');
+//        // var_dump($token);exit;
+//        if($token)
+//        {$usuario = $this->getUsuarioTable()->usuario($token);
+//        if(count($usuario)>0)
+//         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+//         $mensaje='tu cuenta ya esta activada';}
+//         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
          $form = $this->getForm();
-
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
@@ -74,18 +80,20 @@ class AuthController extends AbstractActionController {
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
+        
         if ($request->isPost()) {
+            
             $form->setData($request->getPost());
-            if ($form->isValid()) { //
-                // $token = $request->getPost('va_token');
-                $nombre = $request->getPost('va_email');
+            if ($form->isValid()) {
+//                echo 'aka llego post';exit;
+                $correo = $request->getPost('va_email');
                 $contrasena = $request->getPost('va_contrasena');
                 $this->getAuthService()
                         ->getAdapter()
-                        ->setIdentity($nombre)
+                        ->setIdentity($correo)
                         ->setCredential($contrasena);
-                $usuario = $this->getUsuarioTable()->usuario1($nombre);
-                if ($usuario[0]['va_estado'] == 'activo') {
+//                $usuario = $this->getUsuarioTable()->usuario1($nombre);               
+//                if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
                         // save message temporary into flashmessenger
@@ -93,6 +101,7 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
+//                        var_dump($usuario);
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
@@ -110,18 +119,10 @@ class AuthController extends AbstractActionController {
                                             'va_contrasena',
                                             'va_email'
                                         )));
+                       
                     }
-
-                    $storage = $this->getAuthService()->getStorage();
-                    $storage->write($this->getServiceLocator()
-                        ->get('TableAuthService')
-                        ->getResultRowObject(array(
-                        'in_id',
-                        'va_nombre',
-                        'va_contrasena',
-                        'va_email'
-                    )));
-                }}
+                    } 
+//                }
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
@@ -141,6 +142,11 @@ class AuthController extends AbstractActionController {
     }
 
     public function changeemailAction() {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias =  $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $request = $this->getRequest();
         $form = new PasswordForm();
         if ($request->isPost()) {
@@ -241,6 +247,14 @@ class AuthController extends AbstractActionController {
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
         }
         return $this->usuarioTable;
+    }
+    public function getGrupoTable()
+    {
+        if (! $this->grupoTable) {
+            $sm = $this->getServiceLocator();
+            $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+        }
+        return $this->grupoTable;
     }
 
 }

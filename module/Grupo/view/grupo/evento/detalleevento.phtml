@@ -124,6 +124,10 @@
                 <div class="event-comentario">
                   <div class="row-fluid">
                   <?php if($this->session && $this->grupocomprueba){?>
+                      
+                   <?php $fecha_actual = date("Y-m-d h:m:s"); 
+                    if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
+                    {?> 
                     <div class="span12 comentar-form">
                       <h4><?php echo ucwords($this->session->va_nombre);?>, ¡Comente aqui!</h4>
                 <?php
@@ -140,7 +144,7 @@
                  ?>
                         <div class="row-fluid fn-form">
                           <div class="span2">
-                            <img src="../../img/avatar.jpg" alt="">
+                            <img src="../../img/foto-carnet.jpg" alt="">
                           </div>
                           <div class="span10">
                           <?php echo $this->formRow($form->get('va_descripcion'));?>
@@ -150,8 +154,13 @@
                           </p>
                         </div>
                             <?php echo $this->form()->closeTag();?>
-
                     </div>
+                      
+                      <?php  } else {}?>
+                      
+                      
+                      
+                      
                      <?php }elseif(!$this->grupocomprueba){?>
                      <div class="span12 login-comentario">
                       <p>Debes de unirte al evento para comentar.</p>
@@ -169,8 +178,11 @@
                       <li> 
                         <div class="content-comentario">
                           <div class="span2">
-                            <!--<img src="<?php   echo $this->host('images') . '/usuario/principal/' . $this->escapeHtml($comentarios->imagen)  ?>jpg" alt="">-->
-                            <img src="/img/foto-carnet.jpg">
+                       <?php if(($comentarios->imagen)!="foto-carnet.jpg"){?>
+                     <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $comentarios->imagen ;?>" alt="">
+                     <?php }else{?>
+                      <img src="<?php echo $this->host('images') ?>/img/foto-carnet.jpg" alt="">
+                      <?php }?>
                           </div>
                           <div class="span10 ti-coment">
                             <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
@@ -225,8 +237,12 @@
                          <?php  foreach ($this->usuarios  as $usuarios) :?>
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
-                              <!--<img src="<?php   echo $this->host('images') . '/usuario/principal/' . htmlspecialchars($usuarios->imagen, ENT_QUOTES, 'utf-8');  ?>" alt="">-->
-                              <img src="/img/foto-carnet.jpg">
+                  
+                              <?php if(($usuarios->imagen)!="foto-carnet.jpg"){?>
+                     <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" alt="">
+                     <?php }else{?>
+                      <img src="<?php echo $this->host('images') ?>/img/foto-carnet.jpg" alt="">
+                      <?php }?>
                             </div>
                             <div class="span8 desc-user">
                                 <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>
