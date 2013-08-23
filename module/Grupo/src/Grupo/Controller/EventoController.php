@@ -32,6 +32,8 @@ class EventoController extends AbstractActionController
     protected $eventoTable;
 
     protected $usuarioTable;
+    
+    protected $grupoTable;
 
     protected $_options;
 
@@ -507,6 +509,8 @@ class EventoController extends AbstractActionController
         }
         return $this->eventoTable;
     }
+    
+    
 
     private function redimensionarImagen($File, $nonFile,$imagen)
     {
