@@ -26,6 +26,9 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
         <div class="row-fluid">
             <div class="span12 crear-evento event box">
                 <h1>Crear un nuevo evento</h1>
+                <?php foreach($this->mensajes as $message){ ?>                          
+            <h2><?php echo $message;?></h2>
+                  <?php } ?>
                 <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
             </div>
         </div>

@@ -10,7 +10,7 @@
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
                         	<i class="icon-datos ico-noti"></i>
-                                 <?php if ($this->mensaje) {  ?> <p><?php echo $this->mensaje;  ?></p> <?php } ?>
+                           
                         	<p id="datos">ACTUALIZAR MIS DATOS</p>
                         </div>
                         <span>x</span>
@@ -36,7 +36,7 @@
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
                                                 <?php if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
-                                                    <img src="/imagenes/usuario/general/<?php echo $this->usuario->va_foto?>" style="width:130px;height:130px;">
+                                                    <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
                                                 <?php }else{?>
                                                     <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
                                                 <?php }?>

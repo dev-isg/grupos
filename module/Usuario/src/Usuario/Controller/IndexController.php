@@ -158,7 +158,7 @@ class IndexController extends AbstractActionController
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
              
-         }else{$imagen = ''; }
+         }else{$imagen = 'foto-carnet.jpg'; }
 
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -273,9 +273,7 @@ class IndexController extends AbstractActionController
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;}
             else{$idusuario = $this->getUsuarioTable()->getUsuario($id);
-                $imagen = $idusuario->va_foto;
-               
-                }
+                $imagen = $idusuario->va_foto;}
 
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -292,16 +290,13 @@ class IndexController extends AbstractActionController
                   if($File['name']!=''){//echo 'mamaya';exit;
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                    $mensaje = 'datos actualizados correctamente';
-                   //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
+                     $mensaje ='datos actualizados correctamente';
+                   
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();}
          }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                {$mensaje = 'datos actualizados correctamente';
-                 //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario');
-                 
-                 }}
+               $mensaje ='datos actualizados correctamente';}
                 
                 
             } else {
@@ -316,8 +311,8 @@ class IndexController extends AbstractActionController
         
         return array(
             'in_id' => $id,
-            'mensaje' => $mensaje,
             'form' => $form,
+            'mensaje'=>$mensaje,
             'usuario' => $usuario,
             'valor' => $valor,
             'formnotif'=>$formNotif
