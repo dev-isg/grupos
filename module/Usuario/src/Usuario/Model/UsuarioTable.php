@@ -118,7 +118,7 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario, $imagen,$valor)
+    public function guardarUsuario(Usuario $usuario, $imagen,$valor=null,$pass=null)
     {
         // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
@@ -134,10 +134,6 @@ class UsuarioTable
             'va_estado' =>'desactivo'
         // 'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
                 );
-//         print_r($imagen);
-//            exit;
-//         var_dump($data);
-//         exit;
         $id = (int) $usuario->in_id;
         
         foreach($data as $key=>$value){
@@ -145,21 +141,24 @@ class UsuarioTable
                $data[$key]=0;
            }
        }
-        // var_dump($data);
-        // exit();
-        
+
         if ($id == 0) {
             $this->tableGateway->insert($data);
-            //$idusuario=$this->tableGateway->getLastInsertValue();
-           /// $correoconfirmacion=IndexController::correo($usuario->va_nombre,$usuario->va_email);
         } else {
             
             if ($this->getUsuario($id)) {
-                $data['va_estado'] = 'activo';
+                if($pass==''){$data['va_estado'] = 'activo';
+                $data['va_verificacion'] = '';
                 $this->tableGateway->update($data, array(
-                    'in_id' => $id
-                ));
-            } else {
+                    'in_id' => $id));}
+                   else
+                 {$data['va_contrasena'] = $pass;
+                 $data['va_verificacion'] = '';
+                 $data['va_estado'] = 'activo';
+                
+                $this->tableGateway->update($data, array(
+                    'in_id' => $id)); }  } 
+                    else {
                 throw new \Exception('no existe el usuario');
             }
         }
