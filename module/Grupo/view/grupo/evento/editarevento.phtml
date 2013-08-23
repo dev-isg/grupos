@@ -1,3 +1,7 @@
+<script type="text/javascript">	
+	var centrarLat='-12.0478158';
+  	var centrarLon='-77.06220280000002';
+</script>
 <div class="main-container">
 	<div class="container">
 		<div class="row-fluid">
@@ -165,25 +169,13 @@
                 <?php echo $this->formRow($form->get('va_longitud'));?>       
             </div>
 				</div>
-				<p class="crear-evento">
-            <?php echo $this->formSubmit($form->get('submit'));?>
-        </p>
+			<p class="crear-evento">
+            	<?php echo $this->formSubmit($form->get('submit'));?>
+            	<a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
+        	</p>
             <?php echo $this->form()->closeTag();?>
     </div>
 
 		</div>
 	</div>
 </div>
-<script>
-    $(document).ready(function(){
-        
-    $('#submitbutton').click(function (){
-        
-   	 var a=$('#address').val();
-   	 var b=$('#fechaId').val();
-    	alert(a);
-    	alert(b);
-        });});
-                   
-                    
- </script>

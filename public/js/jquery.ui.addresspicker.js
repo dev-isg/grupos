@@ -13,7 +13,8 @@
  *   jquery.ui.autocomplete.js
  */
 (function( $, undefined ) {
-
+  var valorLat = centrarLat;
+  var valorLon = centrarLon;
   $.widget( "ui.addresspicker", {
     options: {
         appendAddressString: "",
@@ -23,7 +24,7 @@
         reverseGeocode: false,
         mapOptions: {
             zoom: 12, 
-            center: new google.maps.LatLng(-12.0478158, -77.06220280000002), 
+            center: new google.maps.LatLng(valorLat, valorLon), 
             scrollwheel: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         },
@@ -56,7 +57,7 @@
     },
     
     reloadPosition: function() {
-      this.gmarker.setVisible(true);
+      this.gmarker.setVisible(true);      
       this.gmarker.setPosition(new google.maps.LatLng(this.lat.val(), this.lng.val()));
       this.gmap.setCenter(this.gmarker.getPosition());
     },
@@ -87,12 +88,11 @@
         this.mapElement = $(this.options.elements.map);
         this._initMap();
       }
-
     },
 
     _initMap: function() {
       if (this.lat && this.lat.val()) {
-        this.options.mapOptions.center = new google.maps.LatLng(this.lat.val(), this.lng.val());
+        //this.options.mapOptions.center = new google.maps.LatLng(this.lat.val(), this.lng.val());
       }
 
       this.gmap = new google.maps.Map(this.mapElement[0], this.options.mapOptions);

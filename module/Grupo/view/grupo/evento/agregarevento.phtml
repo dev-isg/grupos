@@ -2,6 +2,8 @@
 <!--
 var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
 //-->
+    var centrarLat='-12.0478158';
+    var centrarLon='-77.06220280000002';    
 </script>
 <div class="main-container">
     <div class="container">
@@ -160,6 +162,7 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
         </div>
         <p class="crear-evento box">
             <?php echo $this->formSubmit($form->get('submit'));?>
+            <a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
         </p>
             <?php echo $this->form()->closeTag();?>
     </div>
