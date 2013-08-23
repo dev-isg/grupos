@@ -520,8 +520,11 @@ class EventoController extends AbstractActionController
             
             $anchura = 248;
             $altura = 500; // 143;
-            
             $generalx = 270;
+            
+                $detallex=550;
+                $detalley=600;
+   
             $imf = $File['name'];
             $info = pathinfo($File['name']);
             $tamanio = getimagesize($File['tmp_name']);
@@ -530,81 +533,89 @@ class EventoController extends AbstractActionController
             // $altura=$tamanio[1];
           //  $valor = uniqid();
             $name=$imagen;
-            if ($ancho > $alto) { // echo 'ddd';exit;
-              //  require './vendor/Classes/Filter/Alnum.php';
-                // $altura =(int)($alto*$anchura/$ancho); //($alto*$anchura/$ancho);
+            if ($ancho > $alto) { 
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
-                if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-//                    $nom = $nonFile;
-//                    $imf2 = $valor . '.' . $info['extension'];
-//                    $filter = new \Filter_Alnum();
-//                    $filtered = $filter->filter($nom);
-//                    $name = $filtered . '-' . $imf2;
-                    
+                $alturadetalleevento = (int) ($alto * $detallex / $ancho);
+               if($alturadetalleevento>600){$detalley=600;}
+               else{$detalley=$alturadetalleevento;}           
+                if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {   
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $detalleimagen = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                     imagecopyresized($detalleimagen, $viejaimagen, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/eventos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/eventos/original/' . $name;
                         $general = $this->_options->upload->images . '/eventos/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/eventos/detalle/' . $name;
                         imagejpeg($nuevaimagen, $copia);
                         imagejpeg($viejaimagen, $origen);
                         imagejpeg($generalimagen, $general);
+                        imagejpeg($detalleimagen, $detalle);
                     } else {
                         $viejaimagen = imagecreatefrompng($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $detalleimagen = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detalleimagen, $viejaimagen, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/eventos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/eventos/original/' . $name;
                         $general = $this->_options->upload->images . '/eventos/general/' . $name;
+                         $detalle = $this->_options->upload->images . '/eventos/detalle/' . $name;
                         imagepng($nuevaimagen, $copia);
                         imagepng($viejaimagen, $origen);
                         imagepng($generalimagen, $general);
+                        imagejpeg($detalleimagen, $detalle);
                     }
                     return true;
                 }
             }
             if ($ancho < $alto) {
-              //  require './vendor/Classes/Filter/Alnum.php';
-                // $anchura =(int)($ancho*$altura/$alto);
+                
+                
+              $anchodetalleevento = (int) ($ancho * $detalley / $alto);
+               if($anchodetalleevento>550){$detallex=550;}
+               else{$detallex = $anchodetalleevento; }
                 $altura = (int) ($alto * $anchura / $ancho);
-                if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
-//                    $nom = $nonFile;
-//                    $imf2 = $valor . '.' . $info['extension'];
-//                    $filter = new \Filter_Alnum();
-//                    $filtered = $filter->filter($nom);
-//                    $name = $filtered . '-' . $imf2;
-                    
+                if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {   
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                         $detalleimagen = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detalleimagen, $viejaimagen, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/eventos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/eventos/original/' . $name;
                         $general = $this->_options->upload->images . '/eventos/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/eventos/detalle/' . $name;
                         imagejpeg($nuevaimagen, $copia);
                         imagejpeg($viejaimagen, $origen);
                         imagejpeg($generalimagen, $general);
+                        imagejpeg($detalleimagen, $detalle);
                     } else {
                         $viejaimagen = imagecreatefrompng($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $detalleimagen = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($detalleimagen, $viejaimagen, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/eventos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/eventos/original/' . $name;
                         $general = $this->_options->upload->images . '/eventos/general/' . $name;
+                        $detalle = $this->_options->upload->images . '/eventos/detalle/' . $name;
                         imagepng($nuevaimagen, $copia);
                         imagepng($viejaimagen, $origen);
                         imagepng($generalimagen, $general);
+                        imagejpeg($detalleimagen, $detalle);
                     }
                     
                     return true;
