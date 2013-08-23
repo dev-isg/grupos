@@ -268,7 +268,9 @@ class IndexController extends AbstractActionController
         }
        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+            ->setScript('$(document).ready(function(){crearevento();});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = (int) $this->params()->fromRoute('in_id', 0);
