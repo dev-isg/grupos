@@ -87,6 +87,7 @@
         this.mapElement = $(this.options.elements.map);
         this._initMap();
       }
+
     },
 
     _initMap: function() {
@@ -139,23 +140,18 @@
     },
 
     _parseGeocodeResult: function(geocodeResult){
-
       var parsed = {lat: geocodeResult.geometry.location.lat(),
-        lng: geocodeResult.geometry.location.lng()};
-
+      lng: geocodeResult.geometry.location.lng()};
       for (var addressPart in this._addressParts){
         parsed[addressPart] = this._findInfo(geocodeResult, addressPart);
       }
-
       parsed.type = geocodeResult.types[0];
-
       return parsed;
     },
     
     _markerMoved: function() {
       this._updatePosition(this.gmarker.getPosition());
-
-      if (this.options.reverseGeocode){
+      if(this.options.reverseGeocode){
         this._updateAddressPartsViaReverseGeocode(this.gmarker.getPosition());
       }
     },
