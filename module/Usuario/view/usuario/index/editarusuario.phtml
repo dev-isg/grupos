@@ -38,7 +38,7 @@
                                                 <?php if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
                                                     <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
                                                 <?php }else{?>
-                                                    <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
+                                                    <img src="<?php echo $this->host('images') ?>/img/foto-carnet.jpg" style="width:130px;height:130px;">
                                                 <?php }?>
 								            </div>
 							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
