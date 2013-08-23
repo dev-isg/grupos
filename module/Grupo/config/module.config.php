@@ -93,6 +93,16 @@ return array(
                     )
                 ),
             ),
+            'editar-evento' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/evento/editar[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Evento',
+                        'action' => 'editarevento'
+                    )
+                ),
+            ),
             'agregar-evento' => array(
                 'type' => 'Segment',
                 'options' => array(

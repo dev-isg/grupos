@@ -291,18 +291,17 @@ class IndexController extends AbstractActionController
         
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
-//        var_dump($grupo);exit;
-//        $form->bind($grupo);
-        
+        $form->bind($grupo);
+        var_dump($grupo->va_imagen);Exit;
         // $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
         // $aux = array();
         // foreach($var as $y){
         // $aux[]=$y['ta_notificacion_in_id'];
         // }
         // $form->get('tipo_notificacion')->setValue($aux);
-        $form->get('va_imagen')->setAttribute('value', '');
+//        $form->get('va_imagen')->setAttribute('value', '');
         $form->get('submit')->setAttribute('value', 'Editar');
-        
+        $imagen=$this->_options->host->base.$grupo->va_imagen;
         $request = $this->getRequest();
         
         if ($request->isPost()) {
@@ -348,7 +347,8 @@ class IndexController extends AbstractActionController
         
         return array(
             'in_id' => $id,
-            'form' => $form
+            'form' => $form,
+            'imagen'=>$imagen
         );
     }
 
