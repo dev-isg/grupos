@@ -398,6 +398,10 @@ class IndexController extends AbstractActionController
             $altay = 68;
             $comentariosx = 80;
             $comentariosy = 75; 
+            $perfilx = 27;
+            $perfily = 27;
+            $cuentax = 70;
+            $cuentay = 60;
             $generalx = 270;
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -413,12 +417,16 @@ class IndexController extends AbstractActionController
                 $eliminar2 = $this->_options->upload->images . '/usuario/original/' . $imog;
                 $eliminar3 = $this->_options->upload->images . '/usuario/principal/' . $imog;
                 $eliminar4 = $this->_options->upload->images . '/usuario/detalle/' . $imog;
-                 $eliminar5 = $this->_options->upload->images . '/usuario/comentarios/' . $imog;
+                $eliminar5 = $this->_options->upload->images . '/usuario/comentarios/' . $imog;
+                $eliminar6 = $this->_options->upload->images . '/usuario/perfil/' . $imog;
+                $eliminar7 = $this->_options->upload->images . '/usuario/cuenta/' . $imog;
                   unlink($eliminar1);
                   unlink($eliminar2);
                   unlink($eliminar3);
                   unlink($eliminar4);
                   unlink($eliminar5);
+                  unlink($eliminar6);
+                   unlink($eliminar7);
                 
             }
             if ($ancho > $alto) {
@@ -431,40 +439,56 @@ class IndexController extends AbstractActionController
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
                         $detallefoto = imagecreatetruecolor($anchax, $altay);
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                        $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                        $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                        imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                        imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
                         $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                        $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                        $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
                         imagejpeg($detallefoto, $detalle);
                         imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                        imagejpeg($cuentafoto, $cuenta);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
                         $detallefoto = imagecreatetruecolor($anchax, $altay);
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                        $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                           $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                           imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
                         $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
                          $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
                         imagepng($generalfoto, $general); 
                         imagejpeg($detallefoto, $detalle);
                         imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                         imagejpeg($cuentafoto, $cuenta);
                         
                     }
                     return true;
@@ -481,40 +505,55 @@ class IndexController extends AbstractActionController
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
                         $detallefoto = imagecreatetruecolor($anchax, $altay);
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
+                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
                         $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
                            imagejpeg($detallefoto, $detalle);
                            imagejpeg($comentariosfoto, $comentario);
+                           imagejpeg($perfilfoto, $perfil);
+                            imagejpeg($cuentafoto, $cuenta);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
                         $generalfoto = imagecreatetruecolor($generalx, $altura);
                           $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
+                           $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
+                           $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                            imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
-                      
+                       imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
+                              imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
                         $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
+                        $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
+                        $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
                         imagepng($generalfoto, $general);
                         imagejpeg($detallefoto, $detalle);
                         imagejpeg($comentariosfoto, $comentario);
+                        imagejpeg($perfilfoto, $perfil);
+                          imagejpeg($cuentafoto, $cuenta);
                     }
                     
                     return true;
