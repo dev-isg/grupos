@@ -261,7 +261,12 @@ class IndexController extends AbstractActionController
     }
 
     public function editargrupoAction()
-    {   $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+    {          
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        if (! $storage) {
+            return $this->redirect()->toRoute('grupos');
+        }
+       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
             ->setScript('$(document).ready(function(){crearevento();});')
             ->prependFile($this->_options->host->base . '/js/main.js')
@@ -287,16 +292,16 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->bind($grupo);
-        
+        var_dump($grupo->va_imagen);Exit;
         // $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
         // $aux = array();
         // foreach($var as $y){
         // $aux[]=$y['ta_notificacion_in_id'];
         // }
         // $form->get('tipo_notificacion')->setValue($aux);
-        
+//        $form->get('va_imagen')->setAttribute('value', '');
         $form->get('submit')->setAttribute('value', 'Editar');
-        
+        $imagen=$this->_options->host->base.$grupo->va_imagen;
         $request = $this->getRequest();
         
         if ($request->isPost()) {
@@ -323,12 +328,11 @@ class IndexController extends AbstractActionController
             $form->setInputFilter($grupo->getInputFilter());
             $form->setData($data);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            // var_dump($form->setData($data));
             
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$imagen);
-                    return $this->redirect()->toRoute('grupo');
+                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+                    return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
@@ -343,7 +347,8 @@ class IndexController extends AbstractActionController
         
         return array(
             'in_id' => $id,
-            'form' => $form
+            'form' => $form,
+            'imagen'=>$imagen
         );
     }
 
