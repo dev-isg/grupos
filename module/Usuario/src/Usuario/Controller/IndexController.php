@@ -291,12 +291,15 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                     $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
                      $mensaje ='datos actualizados correctamente';
+                     return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
                    
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();}
          }else{   $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-               $mensaje ='datos actualizados correctamente';}
+               $mensaje ='datos actualizados correctamente';
+               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/editarusuario?m=1');
+               }
                 
                 
             } else {
