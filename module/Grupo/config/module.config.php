@@ -73,6 +73,16 @@ return array(
                     )
                 ),
             ),
+            'editar-grupo' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/grupo/editar[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Index',
+                        'action' => 'editargrupo'
+                    )
+                ),
+            ),
             'evento' => array(
                 'type' => 'Segment',
                 'options' => array(
