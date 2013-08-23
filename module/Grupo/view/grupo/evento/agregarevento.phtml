@@ -5,6 +5,16 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
 </script>
 <div class="main-container">
     <div class="container">
+        <?php 
+            if($this->mensajes){ ?>
+        <div class="row-fluid">
+            <div class="alert alert-success alert-margin">
+                <?php foreach($this->mensajes as $message){
+                    echo $message;
+                }?>
+            </div>
+        </div>
+        <?php }?>
         <div class="row-fluid">
 <div class="row-fluid crear-evento-grupos">
             <?php
@@ -26,9 +36,6 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
         <div class="row-fluid">
             <div class="span12 crear-evento event box">
                 <h1>Crear un nuevo evento</h1>
-                <?php foreach($this->mensajes as $message){ ?>                          
-            <h2><?php echo $message;?></h2>
-                  <?php } ?>
                 <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
             </div>
         </div>
@@ -114,7 +121,8 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
         <div class="row-fluid crear-evento-3 event button-agregar box">
             <h2>Elige el lugar del evento</h2>
             <div class="span12 event-padding dev-padd">
-                <div id="map" style="border:1px solid #eee;"></div>
+                <label>Address : </label> <input id="addresspicker_map" />
+                <div id="map" class="span12" style="border:1px solid #eee;height:200px;"></div>
             </div>
             <div class="span3 lugar-nm event-padding">
                 <div class="form-item">
@@ -123,9 +131,6 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                     </div>
                     <div class="item-value">
                         <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
-<!--                        <select name="cityId" id="cityId" class="input-block-level">
-                            <option value="PER-LIM" label="Lima, Perú" selected="selected">Lima, Perú</option>
-                        </select>-->
                     </div>
                 </div>       
             </div>

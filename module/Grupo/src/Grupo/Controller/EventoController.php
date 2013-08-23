@@ -67,12 +67,13 @@ class EventoController extends AbstractActionController
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
+        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/themes/base/jquery.ui.all.css');
         $renderer->inlineScript()
             ->setScript('crearevento();')
             ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+            ->prependFile($this->_options->host->base . '/js/jquery.ui.addresspicker.js')
+            ->prependFile($this->_options->host->base . '/js/jquery-ui.js')
+            ->prependFile('http://maps.google.com/maps/api/js?sensor=false')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
             ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')

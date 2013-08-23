@@ -141,7 +141,7 @@ class EventoForm extends Form
             'name' => 'va_direccion',
             'type' => 'Text',
             'attributes' => array(               
-                'class' => 'input-block-level',
+                'class' => 'input-block-level addresspicker_map',
                 'id'   => 'address',
                 'placeholder'=>'Ingrese direccion',
                 'maxlength'=>150
