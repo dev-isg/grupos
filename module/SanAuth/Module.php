@@ -87,28 +87,48 @@ class Module implements AutoloaderProviderInterface
             $controller->layout()->form = new \SanAuth\Form\UserForm();
             $controller->layout()->accion = $actionName;
             
-            if ($authAdapter->hasIdentity() === true) {
-//                echo 'aka';exit;
-                $storage = new \Zend\Authentication\Storage\Session('Auth');
-                $session = $storage->read();
-                $controller->layout()->session = $session;
-//                var_dump($session);Exit;
-                    if ($actionName == 'login') {
-                            return $controller->redirect()->toRoute('grupos');
-                    }else{
-                        return;
+         if ($actionName == 'login') {
+                        if ($authAdapter->hasIdentity() === true) {
+                            return $controller->redirect()
+                                    ->toRoute('grupo');
+                            $storage = new \Zend\Authentication\Storage\Session('Auth');
+                            $session = $storage->read();
+                            $controller->layout()->session = $session;
+                        } else {
+                            return;
+                        }
+                    } elseif ($actionName == 'agregargrupo') {
+                        if ($authAdapter->hasIdentity() === false) {
+                            return $controller->redirect()
+                                    ->toRoute('login');
+                        } else {
+
+                        }
                     }
-                
-            } else {
-//                echo 'aka';exit;
-//                 if ($actionName == 'agregargrupo') {
-//                                 return $controller->redirect()
-//                                 ->toRoute('login');
-//                         }else{
-//                             return;
-//                         }
-           
-            }
+   //////////////////////////////////////////////////////////INICIO//////////////////////////////////////////////////////////////////
+//            if ($authAdapter->hasIdentity() === true) {
+////                echo 'aka entro session';exit;
+//                $storage = new \Zend\Authentication\Storage\Session('Auth');
+//                $session = $storage->read();
+//                $controller->layout()->session = $session;
+//
+//                    if ($actionName == 'login') {
+//                            return $controller->redirect()->toRoute('grupos');
+//                    }else{
+//                        return;
+//                    }
+//                
+//            } else {
+////                echo 'aka sin logear';exit;
+////                 if ($actionName == 'agregargrupo') {
+////                                 return $controller->redirect()
+////                                 ->toRoute('login');
+////                         }else{
+////                             return;
+////                         }
+//          
+//            }
+ //////////////////////////////////////////////////////////////FINNNN///////////////////////////////////////////////////
 
         }, 100);
     }
