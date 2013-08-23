@@ -1513,6 +1513,9 @@ p.pp{
   font-weight: bold;
   border-radius: 4px;
 }
+#map img{
+  max-width: none;
+}
 .si a,.no a{
   color: #FFF !important;
 }
