@@ -66,6 +66,7 @@ class AuthController extends AbstractActionController {
          {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
          $mensaje='tu cuenta ya esta activada';}
          else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+
          $form = $this->getForm();
         return array(
             'form' => $form,
@@ -92,6 +93,7 @@ class AuthController extends AbstractActionController {
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
+
                 $usuario = $this->getUsuarioTable()->usuario1($correo);               
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();

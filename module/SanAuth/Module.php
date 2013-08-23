@@ -87,7 +87,7 @@ class Module implements AutoloaderProviderInterface
             $controller->layout()->form = new \SanAuth\Form\UserForm();
             $controller->layout()->accion = $actionName;
             
-         if ($actionName == 'login') {
+            if ($actionName == 'login') {
                         if ($authAdapter->hasIdentity() === true) {
                             $storage = new \Zend\Authentication\Storage\Session('Auth');
                             $session = $storage->read();
@@ -97,7 +97,7 @@ class Module implements AutoloaderProviderInterface
                         } else {
                             return;
                         }
-         } elseif ($actionName == 'agregargrupo') {
+                 } elseif ($actionName == 'agregargrupo') {
                         if ($authAdapter->hasIdentity() === false) {
 //                            echo 'sin logearseeee';exit;
                             return $controller->redirect()
@@ -108,7 +108,7 @@ class Module implements AutoloaderProviderInterface
                             $controller->layout()->session = $session;
                                return;
                         }
-                    }else{
+                    } else{
                             $storage = new \Zend\Authentication\Storage\Session('Auth');
                             $session = $storage->read();
                             $controller->layout()->session = $session;
