@@ -306,9 +306,7 @@ class IndexController extends AbstractActionController
         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
-            $nonFile = $this->params()->fromPost('va_nombre');
-            
-            
+            $nonFile = $this->params()->fromPost('va_nombre');  
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -332,6 +330,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+                
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
