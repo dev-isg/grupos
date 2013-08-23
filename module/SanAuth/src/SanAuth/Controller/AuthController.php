@@ -21,6 +21,7 @@ class AuthController extends AbstractActionController {
     protected $storage;
     protected $authservice;
     protected $usuarioTable;
+    protected $grupoTable;
 
     public function getAuthService() {
         if (!$this->authservice) {
@@ -51,8 +52,13 @@ class AuthController extends AbstractActionController {
 
 
     public function loginAction()
-    {
+    {  $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias =  $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
          $token = $this->params()->fromQuery('token');
+        // var_dump($token);exit;
         if($token)
         {$usuario = $this->getUsuarioTable()->usuario($token);
         if(count($usuario)>0)
@@ -141,6 +147,11 @@ class AuthController extends AbstractActionController {
     }
 
     public function changeemailAction() {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias =  $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
         $request = $this->getRequest();
         $form = new PasswordForm();
         if ($request->isPost()) {
@@ -241,6 +252,14 @@ class AuthController extends AbstractActionController {
             $this->usuarioTable = $sm->get('Usuario\Model\UsuarioTable');
         }
         return $this->usuarioTable;
+    }
+    public function getGrupoTable()
+    {
+        if (! $this->grupoTable) {
+            $sm = $this->getServiceLocator();
+            $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+        }
+        return $this->grupoTable;
     }
 
 }
