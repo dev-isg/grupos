@@ -316,8 +316,6 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
-            
-            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -330,7 +328,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
-                
+                    $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
@@ -343,6 +341,7 @@ class IndexController extends AbstractActionController
                 }
             }
         }
+        
         
         return array(
             'in_id' => $id,
