@@ -130,7 +130,6 @@
       this.geocoder.geocode({'latLng': latLng}, $.proxy(function(results, status){
         if (status == google.maps.GeocoderStatus.OK)
           this._updateAddressParts(results[0]);
-          alert('hola');
           $("#address").val(results[0].formatted_address);
           this.selectedResult = results[0];
           if (this.options.updateCallback) {
@@ -163,18 +162,18 @@
     
     // Autocomplete source method: fill its suggests with google geocoder results
     _geocode: function(request, response) {
-        var address = request.term, self = this;
-        this.geocoder.geocode({
-          'address': address + this.options.appendAddressString,
-          'region': this.options.regionBias
-        }, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
-                    results[i].label =  results[i].formatted_address;
-                };
-            } 
-            response(results);
-        })
+      var address = request.term, self = this;
+      this.geocoder.geocode({
+        'address': address + this.options.appendAddressString,
+        'region': this.options.regionBias
+      }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            results[i].label =  results[i].formatted_address;
+          };
+        } 
+        response(results);
+      })
     },
     
     _findInfo: function(result, type) {

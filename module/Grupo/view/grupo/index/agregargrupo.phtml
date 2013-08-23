@@ -5,35 +5,6 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
 </script>
         <div class="main-container">
             <div class="container">
-                <!--Crear Grupo-->
-<!--                <div class="row-fluid elige-crea">
-                    <div class="crear-grupo-agregar">
-                        <div class="row-fluid">
-                            <div class="span12 crear-evento event">
-                                <h1>Elige tu grupo o crea un nuevo grupo</h1>
-                                <p>¡Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy!</p>
-                            </div>
-                        </div>
-                        <div class="row-fluid event nmb1">
-                            <div class="span12 space-group">
-                                <label>Elige tu grupo:</label>
-                                 <select name="grupos" class="span11 nm-crear-grupo" id="crearGrupo">
-                                    <option value="" label="..Elige un grupo..">..Elige un grupo..</option>
-                                <?php foreach($this->grupos as $grupo): ?>
-                                    <option value="<?php echo $grupo->in_id;?>" label="<?php echo $grupo->va_nombre;?>"><?php echo $grupo->va_nombre;?></option>
-                                <?php endforeach; ?>
-                               </select>
-                            </div>
-                            <p class="activar-agregar" style="margin-top:10px;margin-left:10px;">
-                                <a href="#" class="btn btn-primary btn-agregar">Agregar un nuevo grupo</a>
-                            </p>
-                        </div>
-                    </div>
-                    Crear grupo o agregar
-                    <p class="next-space">
-                        <a href="/agregar-evento/" class="btn btn-warning next-grupo">Siguiente</a>
-                    </p>
-                </div>    -->
                 <div class="row-fluid crear-grupos">
                     <?php
                     $form = $this->form;

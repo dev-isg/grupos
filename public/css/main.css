@@ -1476,6 +1476,14 @@ p.pp{
   margin-top: 20px;
   text-align: center;
 }
+.editarGrupo{
+  text-align: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.editarGrupo a{
+  width: 100px;
+}
 .unete-grupo p{
   text-align: center;
   margin-bottom: 0;
