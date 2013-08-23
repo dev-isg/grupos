@@ -56,8 +56,8 @@ class AuthController extends AbstractActionController {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
         ->prependFile($this->_options->host->base . '/js/main.js');
-        $categorias =  $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
+//        $categorias =  $this->getGrupoTable()->tipoCategoria();
+//        $this->layout()->categorias = $categorias;
 //         $token = $this->params()->fromQuery('token');
 //        // var_dump($token);exit;
 //        if($token)
@@ -92,7 +92,7 @@ class AuthController extends AbstractActionController {
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
-//                $usuario = $this->getUsuarioTable()->usuario1($nombre);               
+//                $usuario = $this->getUsuarioTable()->usuario1($contrasena);               
 //                if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
