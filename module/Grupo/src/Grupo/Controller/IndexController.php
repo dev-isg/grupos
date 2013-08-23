@@ -261,7 +261,12 @@ class IndexController extends AbstractActionController
     }
 
     public function editargrupoAction()
-    {   $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+    {          
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        if (! $storage) {
+            return $this->redirect()->toRoute('grupos');
+        }
+       $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
         ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -325,8 +330,8 @@ class IndexController extends AbstractActionController
             
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$imagen);
-                    return $this->redirect()->toRoute('grupo');
+                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+                    return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
