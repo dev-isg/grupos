@@ -139,7 +139,7 @@ class EventoController extends AbstractActionController
 
     public function editareventoAction()
     {
-        $idgrupo = $this->params()->fromRoute('in_id');
+//        $idgrupo = $this->params()->fromRoute('in_id');
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -174,19 +174,29 @@ class EventoController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-        
+
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
         $form->bind($evento);
-        // $value=$form->get('va_fecha')->getValue();
-        // var_dump($value);
-        // $value2=$form->get('va_fecha')->setAttribute('value', '');
-        // var_dump($value2);exit;
+
         $form->get('submit')->setAttribute('value', 'Editar');
-        
+        $imagen=$this->_options->host->images.'/eventos/general/'.$evento->va_imagen;       
         $request = $this->getRequest();
         
+                    
         if ($request->isPost()) {
+            $File = $this->params()->fromFiles('va_imagen');
+            $nonFile = $this->params()->fromPost('va_nombre');  
+             require './vendor/Classes/Filter/Alnum.php';
+            $imf = $File['name'];
+            $info = pathinfo($File['name']);
+            $valor = uniqid();
+            $nom = $nonFile;
+            $imf2 = $valor . '.' . $info['extension'];
+            $filter = new \Filter_Alnum();
+            $filtered = $filter->filter($nom);
+            $imagen = $filtered . '-' . $imf2;
+            
             
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -197,8 +207,14 @@ class EventoController extends AbstractActionController
             $form->setData($data);
             
             if ($form->isValid()) {
-                $this->$this->getEventoTable()->guardarEvento($evento, $idgrupo);
-                return $this->redirect()->toRoute('grupo');
+                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                 return $this->redirect()->toRoute('evento',array('in_id'=>$id));
+//                return $this->redirect()->toRoute('grupo');
+                 } else {
+                    echo 'problemas con el redimensionamiento';
+                    exit();
+                }
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
@@ -209,7 +225,9 @@ class EventoController extends AbstractActionController
         return array(
             'in_id' => $id,
             'formevento' => $form,
-            'idgrupo'=>$idgrupo
+            'idgrupo'=>$idgrupo,
+            'latitud'=>$evento->va_latitud,
+            'longitud'=>$evento->va_longitud,
         );
     }
 
@@ -514,7 +532,7 @@ class EventoController extends AbstractActionController
     
     
 
-    private function redimensionarImagen($File, $nonFile,$imagen)
+    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
     {
         try {
             

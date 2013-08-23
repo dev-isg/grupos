@@ -294,7 +294,7 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->bind($grupo);
-        var_dump($grupo->va_imagen);Exit;
+//        var_dump($grupo->va_imagen);Exit;
         // $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
         // $aux = array();
         // foreach($var as $y){
@@ -303,14 +303,12 @@ class IndexController extends AbstractActionController
         // $form->get('tipo_notificacion')->setValue($aux);
 //        $form->get('va_imagen')->setAttribute('value', '');
         $form->get('submit')->setAttribute('value', 'Editar');
-        $imagen=$this->_options->host->base.$grupo->va_imagen;
+        $imagen=$this->_options->host->images.'/grupos/general/'.$grupo->va_imagen;
         $request = $this->getRequest();
         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
-            $nonFile = $this->params()->fromPost('va_nombre');
-            
-            
+            $nonFile = $this->params()->fromPost('va_nombre');  
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -320,8 +318,6 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
-            
-            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -334,6 +330,7 @@ class IndexController extends AbstractActionController
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+                    $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
@@ -346,6 +343,7 @@ class IndexController extends AbstractActionController
                 }
             }
         }
+        
         
         return array(
             'in_id' => $id,

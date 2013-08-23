@@ -103,10 +103,10 @@ class EventoTable{
           'va_duracion'=>$evento->va_duracion,
           'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
 //          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
-          'ta_grupo_in_id'=>$idgrupo//$evento->ta_grupo_in_id
+          'ta_grupo_in_id'=>$idgrupo=$idgrupo!=null?$idgrupo:$evento->ta_grupo_in_id//$evento->ta_grupo_in_id
       );
-      
-    
+//      var_dump($idgrupo);
+//   var_dump($evento->ta_grupo_in_id);Exit;
       $id = (int) $evento->in_id;
   
       foreach($data as $key=>$value){
@@ -122,10 +122,9 @@ class EventoTable{
           return $idevento;
           
       }else {
-          
             if ($this->getEvento($id)) {
-                $this->tableGateway->update($data, array('in_id' => $id));
-                
+//                var_dump($data);Exit;
+                $this->tableGateway->update($data, array('in_id' => $id));       
             } else {
                 throw new \Exception('no existe el evento');
             }

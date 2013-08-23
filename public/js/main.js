@@ -113,7 +113,7 @@ function cargarFecha(){
 function cargarMapa(){
     $(document).on('ready', function(){
         //var addresspicker = $( "#addresspicker" ).addresspicker();
-        var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+        var addresspickerMap = $("#addresspicker_map" ).addresspicker({
             regionBias: "fr",
         //updateCallback: showCallback,
           elements: {
