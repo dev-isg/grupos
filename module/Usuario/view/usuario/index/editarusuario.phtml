@@ -1,5 +1,7 @@
 <div class="main-container">
     <div class="container">
+       
+       
         <div class="row-fluid">
 			<div ><?php echo $this->valor;  ?></div> 
     		<div class="row-fluid">       
@@ -8,6 +10,7 @@
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
                         	<i class="icon-datos ico-noti"></i>
+                                 <?php if ($_GET['m']==1) { ?> <p><?php echo 'datos cambiados correctamente'?></p> <?php } ?>
                         	<p id="datos">ACTUALIZAR MIS DATOS</p>
                         </div>
                         <span>x</span>
@@ -32,8 +35,8 @@
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
-                                                <?php if(($this->usuario->va_foto)!=""){?>
-                                                    <img src="/imagenes/usuario/general/<?php echo $this->usuario->va_foto?>" style="width:130px;height:130px;">
+                                                <?php if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
+                                                    <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
                                                 <?php }else{?>
                                                     <img src="/img/foto-carnet.jpg" style="width:130px;height:130px;">
                                                 <?php }?>
