@@ -58,14 +58,14 @@ class AuthController extends AbstractActionController {
         ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias =  $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-//         $token = $this->params()->fromQuery('token');
-//        // var_dump($token);exit;
-//        if($token)
-//        {$usuario = $this->getUsuarioTable()->usuario($token);
-//        if(count($usuario)>0)
-//         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-//         $mensaje='tu cuenta ya esta activada';}
-//         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+         $token = $this->params()->fromQuery('token');
+        // var_dump($token);exit;
+        if($token)
+        {$usuario = $this->getUsuarioTable()->usuario($token);
+        if(count($usuario)>0)
+         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+         $mensaje='tu cuenta ya esta activada';}
+         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
          $form = $this->getForm();
         return array(
             'form' => $form,
@@ -92,8 +92,8 @@ class AuthController extends AbstractActionController {
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
-//                $usuario = $this->getUsuarioTable()->usuario1($nombre);               
-//                if ($usuario[0]['va_estado'] == 'activo') {
+                $usuario = $this->getUsuarioTable()->usuario1($correo);               
+                if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
                         // save message temporary into flashmessenger
@@ -122,7 +122,7 @@ class AuthController extends AbstractActionController {
                        
                     }
                     } 
-//                }
+                }
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
