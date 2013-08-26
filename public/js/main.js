@@ -213,6 +213,30 @@ function actualizarDatos(){
             });
     });
 }
+var valUsuario = function(){
+  $("#usuario").validate({
+    va_email: {
+      required: true,
+      email: true
+    },
+    va_contrasena:{
+      required : true,
+      minlength:8             
+    },
+    messages:{
+      va_email:{
+        required:"Por favor ingresa un Email",
+        email: "Ingrese un correo valido"
+      },
+      va_contrasena: {
+        required : "Ingrese la clave",
+        minlength:"Ingresa un password de 8 caracteres a mas"
+      }
+    }
+  });
+}
+
+
 var valregistro = function(elemento){
     $(elemento).validate({
         rules: {
@@ -238,7 +262,8 @@ var valregistro = function(elemento){
                 required:"Por favor ingresar un nombre"
             },
             va_email:{
-                required:"Por favor ingresa un Email"
+                required:"Por favor ingresa un Email",
+                email: "Ingrese un correo valido"
             },
             va_contrasena: {
                 required : "Ingrese la clave",
