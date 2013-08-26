@@ -21,9 +21,7 @@ function crearevento(){
                 $(".activar-agregar").hide();
                 $(".next-space").show();
             }
-        });
-
-        if($("#usuario").length){valregistro("#usuario");}
+        });        
         /*$("#map").juGoogleMap({
             editable:true,
             dataBound:{
@@ -213,15 +211,38 @@ function actualizarDatos(){
             });
     });
 }
-var valUsuario = function(){
+function valUsuario(){  
   $("#usuario").validate({
-    va_email: {
-      required: true,
-      email: true
-    },
-    va_contrasena:{
-      required : true,
-      minlength:8             
+    rules: {
+      va_email: {
+        required: true,
+        email: true,
+        remote: {
+          type:'POST',
+          dataType: 'json',
+          url: '/prueba-validar',
+          data:{
+              va_email: function(){
+                  return $('#txtPaginaWeb').val();
+              },
+              va_contrasena: function(){
+                  return $('#inputPassword').val();
+              },
+          },
+          dataFilter: function(data){
+              var obj = jQuery.parseJSON(data);
+              if(obj.result == true){
+                  return true
+              }else{
+                  return false
+              }
+          }
+        }
+      },
+      va_contrasena:{
+        required : true,
+        minlength: 8
+      }
     },
     messages:{
       va_email:{

@@ -17,6 +17,7 @@ class UserForm extends Form
             'name' => 'va_email',
             'type' => 'Text',
             'attributes' => array(               
+                'id' => 'va_email',
                 'placeholder'=>'Ingrese un correo valido…'
             ),
         ));  

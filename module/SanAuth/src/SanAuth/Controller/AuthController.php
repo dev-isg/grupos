@@ -87,7 +87,6 @@ class AuthController extends AbstractActionController {
             
             $form->setData($request->getPost());
             if ($form->isValid()) {
-//                echo 'aka llego post';exit;
                 $correo = $request->getPost('va_email');
                 $contrasena = $request->getPost('va_contrasena');
                 $this->getAuthService()

@@ -26,7 +26,7 @@ return array(
                     'process' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[/:action]',
+                            'route'    => '/[/:action]',//[:controller
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -76,7 +76,7 @@ return array(
                     'route' => '/prueba-validar',
                     'defaults' => array(
                         '__NAMESPACE__' => 'SanAuth\Controller',
-                        'controller' => 'Prueba',
+                        'controller' => 'Auth',
                         'action' => 'validar'
                     )
                 )
