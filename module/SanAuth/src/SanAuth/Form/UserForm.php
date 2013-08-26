@@ -19,7 +19,7 @@ class UserForm extends Form
             'attributes' => array(               
                 'id' => 'va_email',
                 'placeholder'=>'Ingrese un correo valido…'
-            ),
+            )
         ));  
          
          $this->add(array(
@@ -28,7 +28,7 @@ class UserForm extends Form
             'attributes' => array(
                 'id'=>'inputPassword',
                 'placeholder'=>'Ingrese la contraseña…'
-            ),
+            )
         ));
          
           $this->add(array(
