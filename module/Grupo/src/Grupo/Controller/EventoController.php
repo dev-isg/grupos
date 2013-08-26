@@ -338,7 +338,7 @@ class EventoController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});if($("#usuario").length){valregistro("#usuario");}});')
+            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});valUsuario();});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')

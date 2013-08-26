@@ -218,7 +218,7 @@ class AuthController extends AbstractActionController {
     public function changeemailAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->setScript('$(document).ready(function(){if($("#usuario").length){valregistro("#usuario");}});')
+        ->setScript('$(document).ready(function(){valUsuario();});')
         ->prependFile($this->_options->host->base . '/js/main.js')
         ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias =  $this->getGrupoTable()->tipoCategoria();
