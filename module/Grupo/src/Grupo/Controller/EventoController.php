@@ -147,7 +147,7 @@ class EventoController extends AbstractActionController
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/themes/base/jquery.ui.all.css');
         $renderer->inlineScript()
-            ->setScript('crearevento();cargarMapa();')
+            ->setScript('crearevento();cargarMapa();cargarFecha();')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.ui.addresspicker.js')
             ->prependFile($this->_options->host->base . '/js/jquery-ui.js')
@@ -337,11 +337,12 @@ class EventoController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
+            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});if($("#usuario").length){valregistro("#usuario");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
