@@ -127,7 +127,7 @@ class IndexController extends AbstractActionController
         $this->layout()->categorias = $categorias;
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
-            ->setScript('if( $("#registro").length){valregistro("#registro");};')
+            ->setScript('if( $("#registro").length){valregistro("#registro");}if($("#usuario").length){valregistro("#usuario");}')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')

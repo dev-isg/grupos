@@ -44,7 +44,10 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
+        $renderer->inlineScript()
+            ->setScript('$(document).ready(function(){if($("#usuario").length){valregistro("#usuario");}});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $buscar = $this->params()->fromPost('dato');
@@ -359,7 +362,9 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->setScript('$(document).ready(function(){crearevento();if($("#usuario").length){valregistro("#usuario");}});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();

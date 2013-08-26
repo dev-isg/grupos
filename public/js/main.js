@@ -23,6 +23,7 @@ function crearevento(){
             }
         });
 
+        if($("#usuario").length){valregistro("#usuario");}
         /*$("#map").juGoogleMap({
             editable:true,
             dataBound:{
@@ -203,17 +204,16 @@ function actualizarDatos(){
         });
           $(".mifoto").delegate("span","click",function(){
              $(".cambiofoto").hide();
-                  $(".ocultarfoto").slideDown(); 
-                     $(".mifoto span").hide(); 
-                     $(".mifoto").animate({
-                     'width': "48.93617021276595%",
-                     'height': "180px"
-                       }); 
+                $(".ocultarfoto").slideDown(); 
+                   $(".mifoto span").hide(); 
+                   $(".mifoto").animate({
+                   'width': "48.93617021276595%",
+                   'height': "180px"
+                     }); 
             });
     });
 }
-
-var valregistro=function(elemento){
+var valregistro = function(elemento){
     $(elemento).validate({
         rules: {
             va_nombre: {

@@ -1752,6 +1752,10 @@ ul.score-list li:first-child {
   margin: 0;
   padding: 0 5px;
 }
+.controls label.error{
+  font-size: 12px;
+  margin-bottom: 0;
+}
 /*@font-face {
   font-family: "untitled-font-1";
   src:url("../font/untitled-font-1.eot");
