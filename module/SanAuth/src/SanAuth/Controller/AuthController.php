@@ -102,8 +102,8 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-                        var_dump($urlorigen);exit;
+//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+//                        var_dump($urlorigen);exit;
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
