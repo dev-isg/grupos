@@ -102,7 +102,8 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-//                        var_dump($usuario);
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        var_dump($urlorigen);exit;
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
@@ -134,7 +135,7 @@ class AuthController extends AbstractActionController {
     
     public function validarAction(){
         $request = $this->getRequest();
-//        if ($request->isPost()) {
+        if ($request->isPost()) {
                 $correo = $this->params()->fromPost('va_email');
                 $contrasena = $this->params()->fromPost('va_contrasena');
                 $usuario = $this->getUsuarioTable()->usuario1($correo);
@@ -143,13 +144,13 @@ class AuthController extends AbstractActionController {
                     if ($password) {
                         if($password===$contrasena){
                             return new JsonModel(array(
-                            'login'=>true
+                            'success'=>true
                             ));
                         }else{
                            $mensaje='El correo no concide con la contrasena';
                            $result = new JsonModel(array(
                             'mensaje' =>$mensaje,
-                            'success'=>true
+                            'success'=>false
                             ));
                             return $result;
                         }
@@ -162,11 +163,11 @@ class AuthController extends AbstractActionController {
                     $mensaje='El correo no se encuentra registrado';
                     $result = new JsonModel(array(
                             'mensaje' =>$mensaje,
-                            'success'=>true
+                            'success'=>false
                         ));
                      return $result;
                 }
-//        }
+        }
     
     }
 
