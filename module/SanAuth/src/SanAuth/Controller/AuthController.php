@@ -149,7 +149,7 @@ class AuthController extends AbstractActionController {
                         }else{
                            $mensaje='El correo no concide con la contrasena';
                            $result = new JsonModel(array(
-                            'mensaje' =>$mensaje,
+                            'menssage' =>$mensaje,
                             'success'=>false
                             ));
                             return $result;
@@ -162,7 +162,7 @@ class AuthController extends AbstractActionController {
                 }else{
                     $mensaje='El correo no se encuentra registrado';
                     $result = new JsonModel(array(
-                            'mensaje' =>$mensaje,
+                            'menssage' =>$mensaje,
                             'success'=>false
                         ));
                      return $result;
