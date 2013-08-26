@@ -102,8 +102,9 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-//                        var_dump($urlorigen);exit;
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+//                        $arrurl=explode('/',$urlorigen);
+//                        var_dump($arrurl);exit;
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
@@ -137,7 +138,7 @@ class AuthController extends AbstractActionController {
         $request = $this->getRequest();
         if ($request->isPost()) {
                 $correo = $this->params()->fromPost('va_email');
-                $contrasena = $this->params()->fromPost('va_contrasena');
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));
                 $usuario = $this->getUsuarioTable()->usuario1($correo);
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id']);
