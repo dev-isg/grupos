@@ -26,7 +26,7 @@ return array(
                     'process' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[/:action]',
+                            'route'    => '/[/:action]',//[:controller
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -70,14 +70,25 @@ return array(
                     )
                 )
             ), 
-            'prueba-validar' => array(
+            'validar-correo' => array(   
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/prueba-validar',
+                    'route' => '/validar-correo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'SanAuth\Controller',
-                        'controller' => 'Prueba',
-                        'action' => 'validar'
+                        'controller' => 'Auth',
+                        'action' => 'validarcorreo'
+                    )
+                )
+            ),
+             'validar-contrasena' => array(   
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/validar-contrasena',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'validarcontrasena'
                     )
                 )
             ),
@@ -126,6 +137,9 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'SanAuth' => __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 );

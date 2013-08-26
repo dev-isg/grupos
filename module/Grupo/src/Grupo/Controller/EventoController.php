@@ -147,7 +147,7 @@ class EventoController extends AbstractActionController
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/themes/base/jquery.ui.all.css');
         $renderer->inlineScript()
-            ->setScript('crearevento();cargarMapa();')
+            ->setScript('crearevento();cargarMapa();cargarFecha();')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.ui.addresspicker.js')
             ->prependFile($this->_options->host->base . '/js/jquery-ui.js')
@@ -186,7 +186,9 @@ class EventoController extends AbstractActionController
                     
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
-            $nonFile = $this->params()->fromPost('va_nombre');  
+            $nonFile = $this->params()->fromPost('va_nombre');
+            
+            if ($File['name'] != '') {
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -196,7 +198,9 @@ class EventoController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
-            
+            } else {
+                $imagen = $evento->va_imagen;
+            }
             
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -207,8 +211,9 @@ class EventoController extends AbstractActionController
             $form->setData($data);
             
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                $this->flashMessenger()->addMessage('Evento editado correctamente');
                  return $this->redirect()->toRoute('evento',array('in_id'=>$id));
 //                return $this->redirect()->toRoute('grupo');
                  } else {
@@ -228,6 +233,7 @@ class EventoController extends AbstractActionController
             'idgrupo'=>$idgrupo,
             'latitud'=>$evento->va_latitud,
             'longitud'=>$evento->va_longitud,
+            'imagen'=>$imagen
         );
     }
 
@@ -336,11 +342,12 @@ class EventoController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});')
+            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});valUsuario();});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -365,9 +372,11 @@ class EventoController extends AbstractActionController
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
         
-
-
-         
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
+        
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -379,16 +388,22 @@ class EventoController extends AbstractActionController
             'idevento' => $id,
             'session'=>$session,
             'grupocomprueba'=>$grupocompr,
-            'participa'=>$activo
+            'participa'=>$activo,
+            'mensajes'=>$mensajes
+            
         )
         ;
     }
     
-//     public function listauserAction(){
-//         $usuarios = $this->getEventoTable()->usuariosevento($id);
-//         $result = new JsonModel(array('usuarios'=>$usuarios));
-//         return $result;
-//     }
+     public function usereventoAction(){
+            $request=$this->getRequest();
+        $id=$this->params()->fromPost('idevento');
+        if($request->isPost()){
+         $usuarios = $this->getEventoTable()->usuariosevento($id);
+     }
+         $result = new JsonModel(array('usuarios'=>$usuarios->toArray()));
+         return $result;
+     }
     
     
     public function unirAction(){
@@ -434,6 +449,7 @@ class EventoController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                 }
                 $activo=1;
+                $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
             }
             
         }elseif ($unir==0){
@@ -472,14 +488,26 @@ class EventoController extends AbstractActionController
             
             }
             $activo=0;
+            $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
         }
         
-//             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
-//             $activo=$participa->va_estado=='activo'?true:false;
+           $userestado=$userestado->current();
+           
+           setlocale(LC_TIME, "es_ES.UTF-8"); 
+           foreach($userestado as $key=>$value){
+               if($key=='va_fecha'){  
+                    $fecha=str_replace("/", "-",$value);
+                    $date = strtotime($fecha);     
+                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+
+               }else{
+                   $arruser[$key]=$value;
+               }
+           }
         $result = new JsonModel(array(
             'estado' =>$activo,
+            'userestado'=>$arruser
         ));
-        
         return $result;
     }
     
@@ -532,7 +560,7 @@ class EventoController extends AbstractActionController
     
     
 
-    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
+    private function redimensionarImagen($File, $nonFile,$imagen)
     {
         try {
             

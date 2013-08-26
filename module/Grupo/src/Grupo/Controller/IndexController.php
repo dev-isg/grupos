@@ -44,7 +44,10 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');      
+        $renderer->inlineScript()
+            ->setScript('$(document).ready(function(){valUsuario();});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $buscar = $this->params()->fromPost('dato');
@@ -311,6 +314,8 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');  
+            
+            if ($File['name'] != '') {
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -320,6 +325,10 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
+            } else {
+                $imagen = $grupo->va_imagen;
+            }
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -328,9 +337,9 @@ class IndexController extends AbstractActionController
             $form->setInputFilter($grupo->getInputFilter());
             $form->setData($data);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            
+//            var_dump($data);Exit;
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
@@ -339,13 +348,16 @@ class IndexController extends AbstractActionController
                     exit();
                 }
             } else {
-                // var_dump($form->isValid());
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
                 }
             }
         }
         
+//        $flashMessenger = $this->flashMessenger();
+//        if ($flashMessenger->hasMessages()) {
+//            $mensajes = $flashMessenger->getMessages();
+//        }
         
         return array(
             'in_id' => $id,
@@ -361,7 +373,9 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->setScript('$(document).ready(function(){valUsuario();});')
+            ->prependFile($this->_options->host->base . '/js/main.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $id = $this->params()->fromRoute('in_id');
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();
@@ -379,6 +393,12 @@ class IndexController extends AbstractActionController
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
         }
+        
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
+        
         return array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
@@ -387,8 +407,21 @@ class IndexController extends AbstractActionController
             'proximos_eventos' => $paginator2,
             'session'=>$session,
             'in_id'=>$id,
-            'participa'=>$activo
+            'participa'=>$activo,
+            'mensajes'=>$mensajes
         );
+    }
+    
+    public function usergrupoAction(){
+        $request=$this->getRequest();
+        $id=$this->params()->fromPost('idgrupo');
+        if($request->isPost()){
+            $usuarios = $this->getGrupoTable()->usuariosgrupo($id);            
+        }
+         $result = new JsonModel(array(
+                'usuarios'=>$usuarios->toArray()
+            )); 
+            return $result;
     }
 
     public function unirAction()
@@ -436,6 +469,7 @@ class IndexController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
                 }
                 $activo=1;
+                $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
             }
         } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
@@ -469,28 +503,26 @@ class IndexController extends AbstractActionController
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
                     }
-//                     $message = new Message();
-//                     $message->addTo('ola@yopmail.com', $nombre)
-//                         ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
-//                         ->setSubject('Ha dejado un grupo');
-//                     // ->setBody($bodyHtml);
-//                     $bodyPart = new \Zend\Mime\Message();
-//                     $bodyMessage = new \Zend\Mime\Part($bodyHtml);
-//                     $bodyMessage->type = 'text/html';
-//                     $bodyPart->setParts(array(
-//                         $bodyMessage
-//                     ));
-//                     $message->setBody($bodyPart);
-//                     $message->setEncoding('UTF-8');
-                    
-//                     $transport = $this->getServiceLocator()->get('mail.transport');
-//                     $transport->send($message);
-//                     $this->redirect()->toUrl('/grupo');
+                    $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
                 }
                 $activo=0;
             }
+           $userestado=$userestado->current();
+           
+           setlocale(LC_TIME, "es_ES.UTF-8"); 
+           foreach($userestado as $key=>$value){
+               if($key=='va_fecha'){  
+                    $fecha=str_replace("/", "-",$value);
+                    $date = strtotime($fecha);     
+                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+
+               }else{
+                   $arruser[$key]=$value;
+               }
+           }
             $result = new JsonModel(array(
                 'estado' =>$activo,
+                'userestado'=>$arruser
             ));
             
             return $result;
@@ -589,7 +621,7 @@ class IndexController extends AbstractActionController
         return $this->authservice;
     }
 
-    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
+    private function redimensionarImagen($File, $nonFile,$imagen)
     { 
         try {
             

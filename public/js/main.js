@@ -21,8 +21,7 @@ function crearevento(){
                 $(".activar-agregar").hide();
                 $(".next-space").show();
             }
-        });
-
+        });        
         /*$("#map").juGoogleMap({
             editable:true,
             dataBound:{
@@ -84,14 +83,6 @@ function crearevento(){
                 va_referencia : "Ingrese dirección de referencia",
                 editor1 : "Ingrese una descripción del evento"
             }
-        });
-
-        $("#submitbutton").click(function(){
-            var fechaPrin = $("#fechaId").val();
-            var lat = $("#mapLocationLat").val();
-            var log = $("#mapLocationLon").val();
-            var direc = $("#address").val();
-            alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
         });
     });
 }
@@ -203,17 +194,83 @@ function actualizarDatos(){
         });
           $(".mifoto").delegate("span","click",function(){
              $(".cambiofoto").hide();
-                  $(".ocultarfoto").slideDown(); 
-                     $(".mifoto span").hide(); 
-                     $(".mifoto").animate({
-                     'width': "48.93617021276595%",
-                     'height': "180px"
-                       }); 
+                $(".ocultarfoto").slideDown(); 
+                   $(".mifoto span").hide(); 
+                   $(".mifoto").animate({
+                   'width': "48.93617021276595%",
+                   'height': "180px"
+                     }); 
             });
     });
 }
+function valUsuario(){
+  $("#usuario").validate({
+    rules: {
+      va_email: {
+        required: true,
+        email: true,
+        remote: {
+          type:'POST',
+          dataType: 'json',
+          url: '/validar-correo',
+          data:{
+            va_email: function(){
+              return $('#va_email').val();
+            }
+          },
+          dataFilter: function(data){
+            var obj = jQuery.parseJSON(data);
+            if(obj.success == true){
+              return true
+            }else{
+              return false
+            }
+          }
+        }
+      },
+      va_contrasena:{
+        required : true,
+        minlength: 8,
+        remote: {
+          type:'POST',
+          dataType: 'json',
+          url: '/validar-contrasena',
+          data:{
+            va_contrasena: function(){
+              return $('#inputPassword').val();
+            },
+            va_email: function(){
+              return $('#va_email').val();
+            }
+          },
+          dataFilter: function(data){
+            var obj = jQuery.parseJSON(data);
+            if(obj.success == true){
+              return true
+            }else{
+              return false
+            }
+          }
+        }
+      }
+    },
+    messages:{
+      va_email:{
+        required:"Por favor ingresa un Email",
+        email: "Ingrese un correo valido",
+        remote: "Correo incorrecto"
+      },
+      va_contrasena: {
+        required : "Ingrese la clave",
+        minlength:"Ingresa un password de 8 caracteres a mas",
+        remote: "Contraseña invalida"
+      }
+    }
+  });
+}
 
-var valregistro=function(elemento){
+
+var valregistro = function(elemento){
     $(elemento).validate({
         rules: {
             va_nombre: {
@@ -238,7 +295,8 @@ var valregistro=function(elemento){
                 required:"Por favor ingresar un nombre"
             },
             va_email:{
-                required:"Por favor ingresa un Email"
+                required:"Por favor ingresa un Email",
+                email: "Ingrese un correo valido"
             },
             va_contrasena: {
                 required : "Ingrese la clave",

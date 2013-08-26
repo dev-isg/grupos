@@ -19,6 +19,15 @@
         <script>
             $(document).ready(function(){
                 $(".inlineEvento").colorbox({inline:true, width:"500px"});
+                $("#usuario").submit(function(){
+                  
+                });
+                $(".eventDato").click(function(){
+                    $("#origen").val('ingresarPrin');
+                });
+                $(".btn-home-evnt").click(function(){
+                    $("#origen").val('');
+                });
             });
         </script>
     </body>

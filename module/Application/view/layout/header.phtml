@@ -16,15 +16,13 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $this->host('ruta')?>/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/main.css">
 
-        <link href="<?php echo $this->host('ruta')?>/css/page.css"
-        	rel="stylesheet" />
-        <link href="<?php echo $this->host('ruta')?>/css/theme.css"
-        	rel="stylesheet" />
-              <?php echo $this->headLink(); ?>
+        <link href="<?php echo $this->host('ruta')?>/css/page.css" rel="stylesheet" />
+        <link href="<?php echo $this->host('ruta')?>/css/theme.css" rel="stylesheet" />
+        <?php echo $this->headLink(); ?>
         		
-              <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
         <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
-        <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>       
 
 </head>
 <body id="blog">
@@ -43,7 +41,7 @@
                                  <div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
             <?php if(!$this->session){?>
-            <li class="top-ini"><a href="#inline_evento" class="inlineEvento">Iniciar sesion</a></li>
+            <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesion</a></li>
 						<li class="divider-vertical divider-one"></li>
 						<li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
             <?php }else{?>
@@ -116,8 +114,8 @@
         </div>
       
         <!--Login-->
-        <div style='display:none'>
-            <div id='inline_evento' style='padding:10px; background:#fff;'>
+        <div style="display:none">
+            <div id="inline_evento" style="padding:10px; background:#fff;">
                 <h3>Iniciar sesión</h3>
                 <?php
                 $form = $this->formlogeo;
@@ -130,11 +128,12 @@
                 $form->prepare();
                 echo $this->form()->openTag($form);
                 ?>
+                 <input type="hidden" name="origen" value="" id="origen" />
                  <input type="hidden" name="accion" value="<?php echo $this->accion;?>" />
         			<div class="control-group">
         				<label class="control-label" for="inputEmail">Email:</label>
         				<div class="controls">
-                            <?php  echo $this->formRow($form->get('va_email'));?>
+                            <?php echo $this->formRow($form->get('va_email'));?>
                         </div>
         			</div>
         			<div class="control-group">

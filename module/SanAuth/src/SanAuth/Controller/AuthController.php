@@ -12,6 +12,7 @@ use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
+use Zend\View\Model\JsonModel;
 
 // SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;
@@ -86,7 +87,6 @@ class AuthController extends AbstractActionController {
             
             $form->setData($request->getPost());
             if ($form->isValid()) {
-//                echo 'aka llego post';exit;
                 $correo = $request->getPost('va_email');
                 $contrasena = $request->getPost('va_contrasena');
                 $this->getAuthService()
@@ -98,20 +98,25 @@ class AuthController extends AbstractActionController {
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
-                        // save message temporary into flashmessenger
                         $this->flashmessenger()->addMessage($message);
                     }
 
                     if ($result->isValid()) {
-//                        var_dump($usuario);
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl=explode('/',$urlorigen);
+                        $id=end($arrurl);
                         $accion = $request->getPost('accion');
+                        $origen = $request->getPost('origen','evento');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
-                            $redirect = 'grupo';
-                        } elseif ($accion == 'index') {
+                            $redirect = 'detalle-grupo';
+                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
                             $redirect = 'elegir-grupo';//'agregar-grupo';
+                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+                            $redirect = 'home';
                         }
+                            
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -128,9 +133,84 @@ class AuthController extends AbstractActionController {
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-        
+//            echo $id;
+//            echo $origen;
+//            echo $redirect;exit;
+            if($id){
+                 return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+            }else{
+                
+                 return $this->redirect()->toRoute($redirect);
+            }
+    }
+    
+    public function validarcontrasenaAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if ($usuario[0]['va_estado'] == 'activo') {
+                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
+                    if ($password) {
+                        if($password===$contrasena){
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
+                        }else{
+                           $mensaje='El correo no concide con la contrasena';
+                           $result = new JsonModel(array(
+                            'menssage' =>$mensaje,
+                            'success'=>false
+                            ));
+                            return $result;
+                        }
+                    }else{
+                            return new JsonModel(array(
+                            'success'=>false
+                            ));
+                    }
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                    $result = new JsonModel(array(
+                            'menssage' =>$mensaje,
+                            'success'=>false
+                        ));
+                     return $result;
+                }
+        }
+    
+    }
+    
+      public function validarcorreoAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');     
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if($usuario){
+                     if ($usuario[0]['va_estado'] == 'activo') {
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
+                    }else{
+                       $mensaje='El correo no se encuentra registrado';
+                       $result = new JsonModel(array(
+                               'menssage' =>$mensaje,
+                               'success'=>false
+                           ));
+                        return $result;
+                   }                   
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                      return new JsonModel(array(
+                          'menssage' =>$mensaje,
+                           'success'=>false
+                            ));
+                    
+                }
 
-        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+        }
+    
     }
 
     public function logoutAction() {
@@ -146,7 +226,9 @@ class AuthController extends AbstractActionController {
     public function changeemailAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->setScript('$(document).ready(function(){valUsuario();});')
+        ->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias =  $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $request = $this->getRequest();
