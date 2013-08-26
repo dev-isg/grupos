@@ -84,14 +84,6 @@ function crearevento(){
                 editor1 : "Ingrese una descripción del evento"
             }
         });
-
-        $("#submitbutton").click(function(){
-            var fechaPrin = $("#fechaId").val();
-            var lat = $("#mapLocationLat").val();
-            var log = $("#mapLocationLon").val();
-            var direc = $("#address").val();
-            alert(fechaPrin + ' -- ' + lat +" -- " + log + " -- "+ direc);
-        });
     });
 }
 
@@ -220,14 +212,11 @@ function valUsuario(){
         remote: {
           type:'POST',
           dataType: 'json',
-          url: '/prueba-validar',
+          url: '/validar-correo',
           data:{
             va_email: function(){
               return $('#va_email').val();
-            },
-            va_contrasena: function(){
-              return $('#inputPassword').val();
-            },
+            }
           },
           dataFilter: function(data){
             var obj = jQuery.parseJSON(data);
@@ -241,7 +230,28 @@ function valUsuario(){
       },
       va_contrasena:{
         required : true,
-        minlength: 8
+        minlength: 8,
+        remote: {
+          type:'POST',
+          dataType: 'json',
+          url: '/validar-contrasena',
+          data:{
+            va_contrasena: function(){
+              return $('#inputPassword').val();
+            },
+            va_email: function(){
+              return $('#va_email').val();
+            }
+          },
+          dataFilter: function(data){
+            var obj = jQuery.parseJSON(data);
+            if(obj.success == true){
+              return true
+            }else{
+              return false
+            }
+          }
+        }
       }
     },
     messages:{
@@ -252,7 +262,8 @@ function valUsuario(){
       },
       va_contrasena: {
         required : "Ingrese la clave",
-        minlength:"Ingresa un password de 8 caracteres a mas"
+        minlength:"Ingresa un password de 8 caracteres a mas",
+        remote: "Contraseña invalida"
       }
     }
   });

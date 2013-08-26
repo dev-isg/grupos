@@ -366,7 +366,7 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->setScript('$(document).ready(function(){crearevento();if($("#usuario").length){valregistro("#usuario");}});')
+        ->setScript('$(document).ready(function(){crearevento();valUsuario();});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $id = $this->params()->fromRoute('in_id');
