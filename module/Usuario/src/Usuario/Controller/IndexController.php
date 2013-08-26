@@ -33,11 +33,13 @@ class IndexController extends AbstractActionController {
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
+        
     }
 
     public function indexAction() {
 
         // return array();
+
     }
 
     public function grupoparticipoAction() {

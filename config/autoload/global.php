@@ -24,6 +24,13 @@ return array(
    'upload' => array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
+    
+    
+    'facebook' => array(
+        'appId' => '123456789',
+        'secret' => '123456789123456789123456789'
+    ),
+    
    'host' => array(
 
         'base' => 'http://192.168.1.25:8081',
