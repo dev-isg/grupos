@@ -102,7 +102,8 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-//                        var_dump($usuario);
+//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+//                        var_dump($urlorigen);exit;
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
@@ -135,28 +136,34 @@ class AuthController extends AbstractActionController {
     public function validarAction(){
         $request = $this->getRequest();
         if ($request->isPost()) {
-                $correo = $this->params()->fromPost('va_email','cesar@yopmail.com');
-                $contrasena = $this->params()->fromPost('va_contrasena','321654987');
+                $correo = $this->params()->fromPost('va_email');
+                $contrasena = $this->params()->fromPost('va_contrasena');
                 $usuario = $this->getUsuarioTable()->usuario1($correo);
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id']);
                     if ($password) {
                         if($password===$contrasena){
-                            return;
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
                         }else{
                            $mensaje='El correo no concide con la contrasena';
                            $result = new JsonModel(array(
-                            'mensaje' =>$mensaje,
+                            'menssage' =>$mensaje,
+                            'success'=>false
                             ));
                             return $result;
                         }
                     }else{
-                        return;
+                            return new JsonModel(array(
+                            'success'=>false
+                            ));
                     }
                 }else{
                     $mensaje='El correo no se encuentra registrado';
                     $result = new JsonModel(array(
-                            'mensaje' =>$mensaje,
+                            'menssage' =>$mensaje,
+                            'success'=>false
                         ));
                      return $result;
                 }
