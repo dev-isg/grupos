@@ -70,14 +70,25 @@ return array(
                     )
                 )
             ), 
-            'prueba-validar' => array(
+            'validar-correo' => array(   
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/prueba-validar',
+                    'route' => '/validar-correo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'SanAuth\Controller',
                         'controller' => 'Auth',
-                        'action' => 'validar'
+                        'action' => 'validarcorreo'
+                    )
+                )
+            ),
+             'validar-contrasena' => array(   
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/validar-contrasena',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'validarcontrasena'
                     )
                 )
             ),

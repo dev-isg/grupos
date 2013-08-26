@@ -102,8 +102,9 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
 //                        $arrurl=explode('/',$urlorigen);
+//                        var_dump($urlorigen);
 //                        var_dump($arrurl);exit;
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
@@ -129,19 +130,17 @@ class AuthController extends AbstractActionController {
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-        
-
         return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     }
     
-    public function validarAction(){
+    public function validarcontrasenaAction(){
         $request = $this->getRequest();
         if ($request->isPost()) {
                 $correo = $this->params()->fromPost('va_email');
-                $contrasena = sha1($this->params()->fromPost('va_contrasena'));
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
                 $usuario = $this->getUsuarioTable()->usuario1($correo);
                 if ($usuario[0]['va_estado'] == 'activo') {
-                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id']);
+                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
                     if ($password) {
                         if($password===$contrasena){
                             return new JsonModel(array(
@@ -168,6 +167,37 @@ class AuthController extends AbstractActionController {
                         ));
                      return $result;
                 }
+        }
+    
+    }
+    
+      public function validarcorreoAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');     
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if($usuario){
+                     if ($usuario[0]['va_estado'] == 'activo') {
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
+                    }else{
+                       $mensaje='El correo no se encuentra registrado';
+                       $result = new JsonModel(array(
+                               'menssage' =>$mensaje,
+                               'success'=>false
+                           ));
+                        return $result;
+                   }                   
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                      return new JsonModel(array(
+                          'menssage' =>$mensaje,
+                           'success'=>false
+                            ));
+                    
+                }
+
         }
     
     }
