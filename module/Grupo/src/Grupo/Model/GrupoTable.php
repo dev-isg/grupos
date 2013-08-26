@@ -337,7 +337,8 @@ class GrupoTable{
                    $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
                         'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
              }else{
-                   $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id));
+                   $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                       'ta_usuario_has_ta_grupo.va_estado'=>'activo'));
              }
 
             $selectString = $sql->getSqlStringForSqlObject($select);
