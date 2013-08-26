@@ -500,10 +500,10 @@ class IndexController extends AbstractActionController
                                                </html>';
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
-                    }
-                    $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
-                }
-                $activo=0;
+                    }        
+                     $activo=0;
+                     $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser); //getGrupoUsuario($idgrup, $iduser);
+                    }               
             }
            $userestado=$userestado->current();
            
