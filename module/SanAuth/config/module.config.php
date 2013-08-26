@@ -127,5 +127,8 @@ return array(
         'template_path_stack' => array(
             'SanAuth' => __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
 );

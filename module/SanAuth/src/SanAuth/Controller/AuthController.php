@@ -98,7 +98,6 @@ class AuthController extends AbstractActionController {
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
-                        // save message temporary into flashmessenger
                         $this->flashmessenger()->addMessage($message);
                     }
 
@@ -131,6 +130,41 @@ class AuthController extends AbstractActionController {
         
 
         return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+    }
+    
+    public function validarAction(){
+        
+        $form = $this->getForm();
+        $redirect = 'login';
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $correo = $request->getPost('va_email');
+//                $contrasena = $request->getPost('va_contrasena');
+
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if ($usuario[0]['va_estado'] == 'activo') {
+                    if (!$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])) {
+                        $mensaje='El correo no concide con la contraseña';
+                        $result = new JsonModel(array(
+                            'mensaje' =>$mensaje,
+                        ));
+                        return $result;
+                    }
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                    $result = new JsonModel(array(
+                            'mensaje' =>$mensaje,
+                        ));
+                     return $result;
+                }
+            }
+        }
+        
+
+        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+    
     }
 
     public function logoutAction() {

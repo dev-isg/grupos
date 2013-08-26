@@ -1,6 +1,6 @@
 <script type="text/javascript">	
-	var centrarLat='-12.0478158';
-  	var centrarLon='-77.06220280000002';
+	var centrarLat='<?php echo $this->latitud?>';
+  	var centrarLon='<?php echo $this->longitud?>';
 </script>
 <div class="main-container">
 	<div class="container">
@@ -10,7 +10,7 @@
         $form = $this->formevento;
 
         $form->setAttributes(array(
-            'action' => $this->url.'/grupo/evento/agregarevento/'.$this->in_id,
+            'action' => $this->url.'/grupo/evento/editarevento/'.$this->in_id,
             'method' => 'post',
             'class'=>'span12 form-crear-grupo',
             'id'=>'crearEventos'
@@ -20,6 +20,7 @@
         echo $this->form()->openTag($form);
         ?>
     <?php echo $this->formHidden($form->get('in_id'));?>
+    <?php echo $this->formHidden($form->get('ta_grupo_in_id'));?>
     <?php echo $this->formHidden($form->get('ta_usuario_in_id'));?>
 
         <div class="row-fluid">

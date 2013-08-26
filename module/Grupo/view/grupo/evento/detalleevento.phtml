@@ -1,5 +1,16 @@
 <div class="main-container">
     <div class="container">
+       <?php if ($this->mensajes) { ?>
+                <div class="row-fluid">
+                    <div class="alert alert-success alert-margin">
+                        <?php
+                        foreach ($this->mensajes as $message) {
+                            echo $message;
+                        }
+                        ?>
+                    </div>
+                </div>
+<?php } ?>
         <div class="row-fluid">
             <div class="span3 group-sidebar">
               <div class="img-grupo">
@@ -35,7 +46,7 @@
             <div class="span6 group-sidebar">
                 <div class="event-group">
                   <div class="content-img-det">
-                    <img src="<?php   echo $this->host('images') . '/eventos/general/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+                    <img src="<?php   echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
                   </div>
                    <?php $fecha_actual = date("Y-m-d h:m:s"); 
                     if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)

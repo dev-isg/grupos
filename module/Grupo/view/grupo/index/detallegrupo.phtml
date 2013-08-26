@@ -1,5 +1,16 @@
 <div class="main-container">
 	<div class="container">
+            <?php if ($this->mensajes) { ?>
+                <div class="row-fluid">
+                    <div class="alert alert-success alert-margin">
+                        <?php
+                        foreach ($this->mensajes as $message) {
+                            echo $message;
+                        }
+                        ?>
+                    </div>
+                </div>
+<?php } ?>
 		<div class="row-fluid">
 		  	<div class="span3 group-sidebar">
           <div class="img-grupo">

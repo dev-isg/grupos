@@ -33,8 +33,12 @@
 					data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/">Grupos</a>
-                                 <?php if($_GET['categoria']) {?> <a  class="brand"><?php  echo $_GET['categoria']  ?></a><?php } ?>
-				<div class="nav-collapse collapse navbar-responsive-collapse">
+                       
+              <?php if($_GET['nombre']) {?> <a  class="brand">categoria: <?php  echo $_GET['nombre']  ?></a><?php } ?>
+				
+                                 
+                                 
+                                 <div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
             <?php if(!$this->session){?>
             <li class="top-ini"><a href="#inline_evento" class="inlineEvento">Iniciar sesion</a></li>
@@ -85,7 +89,7 @@
                                     ?>
                                 <li class="man-dev">
                                     <ul>  
-                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                     </ul>
                                 </li> 
                                  <?php endforeach; ?>  
