@@ -53,6 +53,7 @@ class IndexController extends AbstractActionController
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
+        
 
         setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
@@ -60,7 +61,7 @@ class IndexController extends AbstractActionController
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo',$valor);
         $tipo = $this->params()->fromQuery('categoria');
-    $this->params()->fromQuery('nombre');
+        $this->params()->fromQuery('nombre');
     
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
@@ -76,6 +77,7 @@ class IndexController extends AbstractActionController
                 if (count($grupo)>0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);} 
                else {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+               
                    if(count($listaEventos)>0) 
                    {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);}
                    else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }  }

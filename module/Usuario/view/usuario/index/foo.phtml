@@ -1,3 +1,42 @@
-<strong>Module:</strong>        ZendSkeletonModule &raquo;
-<strong>Controller:</strong>    Skeleton &raquo;
-<strong>Action:</strong>        foo
+<!doctype>
+<html>
+        <head>
+                <title>
+                fb
+                </title>
+        </head>
+    <body>
+
+
+        <?php  include 'libs/facebook.com';
+        $facebook = new Facebook(array(
+               'appId'  => '506108746137454',
+               'secret' => 'c6a59a6619573c2e6d89ddc84d7ac71c',
+                   'cookie'=> true
+               ));
+
+
+        $session = $facebook->getSession();
+        $me = null;
+        if($session)
+        {
+         try{
+
+         }
+        catch(FacebookApiExcepcion  $e){
+        echo  $e->getMessage();
+        }
+        }
+        if($me)
+        {
+        $logoutUrl = $facebook->getLogoutUrl();
+        echo "<a href='$logoutUrl'>login</a>";
+        }
+
+        else{
+        $loginUrl =$facebook->getLoginUrl();
+        echo "<a href='$loginUrl'>login</a>";
+        }
+         ?>
+         </body>
+</html>
