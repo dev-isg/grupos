@@ -342,6 +342,10 @@ class IndexController extends AbstractActionController
             }
         }
         
+//        $flashMessenger = $this->flashMessenger();
+//        if ($flashMessenger->hasMessages()) {
+//            $mensajes = $flashMessenger->getMessages();
+//        }
         
         return array(
             'in_id' => $id,
@@ -375,6 +379,12 @@ class IndexController extends AbstractActionController
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
         }
+        
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
+        
         return array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
@@ -383,7 +393,8 @@ class IndexController extends AbstractActionController
             'proximos_eventos' => $paginator2,
             'session'=>$session,
             'in_id'=>$id,
-            'participa'=>$activo
+            'participa'=>$activo,
+            'mensajes'=>$mensajes
         );
     }
 

@@ -209,6 +209,7 @@ class EventoController extends AbstractActionController
             if ($form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$id)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                $this->flashMessenger()->addMessage('Evento editado correctamente');
                  return $this->redirect()->toRoute('evento',array('in_id'=>$id));
 //                return $this->redirect()->toRoute('grupo');
                  } else {
@@ -227,7 +228,7 @@ class EventoController extends AbstractActionController
             'formevento' => $form,
             'idgrupo'=>$idgrupo,
             'latitud'=>$evento->va_latitud,
-            'longitud'=>$evento->va_longitud,
+            'longitud'=>$evento->va_longitud
         );
     }
 
@@ -365,9 +366,11 @@ class EventoController extends AbstractActionController
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
         
-
-
-         
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
+        
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -379,7 +382,9 @@ class EventoController extends AbstractActionController
             'idevento' => $id,
             'session'=>$session,
             'grupocomprueba'=>$grupocompr,
-            'participa'=>$activo
+            'participa'=>$activo,
+            'mensajes'=>$mensajes
+            
         )
         ;
     }
