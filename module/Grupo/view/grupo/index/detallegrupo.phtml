@@ -170,6 +170,25 @@
                 success: function(data){
                     $(".img-lo").hide();
                     $(".uneteAbEvent").show();
+                    var itm = data.userestado;
+                    alert(itm.nombre_usuario);
+                    var dataPer = '<li>'+
+                                    '<div class="users">'+
+                                        '<div class="row-fluid">'+
+                                            '<div class="span4 img-user-ev">'+
+                                                '<img src="http://192.168.1.25:8081/img/foto-carnet.jpg" alt="">'+
+                                            '</div>'+
+                                            '<div class="span8 desc-user">'+
+                                                '<h3><a href="#">marataa</a></h3>'+
+                                                '<p>0</p>'+
+                                            '</div>'+
+                                        '</div>'+
+                                        '<div class="row-fluid unio">'+
+                                            '<p class="span12">Se unió el 23 de Agosto del 2013</p>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '</li>';
+                    $(".lista-usuario ul").prepend(dataPer);
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
