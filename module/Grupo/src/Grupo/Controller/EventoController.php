@@ -228,7 +228,8 @@ class EventoController extends AbstractActionController
             'formevento' => $form,
             'idgrupo'=>$idgrupo,
             'latitud'=>$evento->va_latitud,
-            'longitud'=>$evento->va_longitud
+            'longitud'=>$evento->va_longitud,
+            'imagen'=>$imagen
         );
     }
 

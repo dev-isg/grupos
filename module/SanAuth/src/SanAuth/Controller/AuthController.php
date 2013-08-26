@@ -102,15 +102,14 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-//                        $arrurl=explode('/',$urlorigen);
-//                        var_dump($urlorigen);
-//                        var_dump($arrurl);exit;
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl=explode('/',$urlorigen);
+                        $id=end($arrurl);
                         $accion = $request->getPost('accion');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
-                            $redirect = 'grupo';
+                            $redirect = 'detalle-grupo';
                         } elseif ($accion == 'index') {
                             $redirect = 'elegir-grupo';//'agregar-grupo';
                         }
@@ -130,7 +129,11 @@ class AuthController extends AbstractActionController {
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+            if(isset($id)){
+                 return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+            }else{
+                 return $this->redirect()->toRoute($redirect);
+            }
     }
     
     public function validarcontrasenaAction(){
