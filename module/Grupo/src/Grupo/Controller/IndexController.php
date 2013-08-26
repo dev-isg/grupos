@@ -467,7 +467,7 @@ class IndexController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
                 }
                 $activo=1;
-                $userestado=$this->getGrupoTable()->getGrupoUsuario($idgrup, $iduser);
+                $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
             }
         } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
@@ -501,13 +501,13 @@ class IndexController extends AbstractActionController
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
                     }
-                    $userestado=$this->getGrupoTable()->getGrupoUsuario($idgrup, $iduser);
+                    $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
                 }
                 $activo=0;
             }
             $result = new JsonModel(array(
                 'estado' =>$activo,
-                'userestado'=>$userestado
+                'userestado'=>$userestado->toArray()
             ));
             
             return $result;
