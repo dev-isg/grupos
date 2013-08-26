@@ -505,9 +505,22 @@ class IndexController extends AbstractActionController
                 }
                 $activo=0;
             }
+           $userestado=$userestado->current();
+           
+           setlocale(LC_TIME, "es_ES.UTF-8"); 
+           foreach($userestado as $key=>$value){
+               if($key=='va_fecha'){  
+                    $fecha=str_replace("/", "-",$value);
+                    $date = strtotime($fecha);     
+                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+
+               }else{
+                   $arruser[$key]=$value;
+               }
+           }
             $result = new JsonModel(array(
                 'estado' =>$activo,
-                'userestado'=>$userestado->toArray()
+                'userestado'=>$arruser
             ));
             
             return $result;

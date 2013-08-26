@@ -491,11 +491,22 @@ class EventoController extends AbstractActionController
             $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
         }
         
-//             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
-//             $activo=$participa->va_estado=='activo'?true:false;
+           $userestado=$userestado->current();
+           
+           setlocale(LC_TIME, "es_ES.UTF-8"); 
+           foreach($userestado as $key=>$value){
+               if($key=='va_fecha'){  
+                    $fecha=str_replace("/", "-",$value);
+                    $date = strtotime($fecha);     
+                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+
+               }else{
+                   $arruser[$key]=$value;
+               }
+           }
         $result = new JsonModel(array(
             'estado' =>$activo,
-            'userestado'=>$userestado
+            'userestado'=>$arruser
         ));
         return $result;
     }

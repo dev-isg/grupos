@@ -2,6 +2,7 @@
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set('session.cookie_httponly', 1);
 date_default_timezone_set('America/Lima');
+setlocale(LC_ALL, "es_ES"); 
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
