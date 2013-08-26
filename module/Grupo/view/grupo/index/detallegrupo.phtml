@@ -170,8 +170,7 @@
                 success: function(data){
                     $(".img-lo").hide();
                     $(".uneteAbEvent").show();
-                    var itm = data.userestado;
-                    alert(itm.nombre_usuario);
+                    alert(data.userestado['nombre_usuario']);
                     var dataPer = '<li>'+
                                     '<div class="users">'+
                                         '<div class="row-fluid">'+
