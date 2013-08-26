@@ -203,7 +203,7 @@ function actualizarDatos(){
             });
     });
 }
-function valUsuario(){  
+function valUsuario(){
   $("#usuario").validate({
     rules: {
       va_email: {
