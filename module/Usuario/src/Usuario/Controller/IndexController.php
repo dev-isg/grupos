@@ -34,12 +34,21 @@ class IndexController extends AbstractActionController
     public function __construct()
     {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
+        
     }
 
     public function indexAction()
-    {
+    { 
         
-        // return array();
+//      $faceboo = \Classes\fb::getInstance()->getUser();
+//      var_dump($faceboo);exit;
+      require './vendor/facebook/facebook.php';
+      $facebook = new \Facebook(array(
+       'appId'  => 'YOUR_APP_ID',
+       'secret' => 'YOUR_APP_SECRET',
+       ));
+       $user = $facebook->getUser();
+       var_dump($user);exit;
     }
 
     public function grupoparticipoAction()
