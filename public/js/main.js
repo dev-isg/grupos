@@ -222,20 +222,20 @@ function valUsuario(){
           dataType: 'json',
           url: '/prueba-validar',
           data:{
-              va_email: function(){
-                  return $('#txtPaginaWeb').val();
-              },
-              va_contrasena: function(){
-                  return $('#inputPassword').val();
-              },
+            va_email: function(){
+              return $('#va_email').val();
+            },
+            va_contrasena: function(){
+              return $('#inputPassword').val();
+            },
           },
           dataFilter: function(data){
-              var obj = jQuery.parseJSON(data);
-              if(obj.result == true){
-                  return true
-              }else{
-                  return false
-              }
+            var obj = jQuery.parseJSON(data);
+            if(obj.success == true){
+              return true
+            }else{
+              return false
+            }
           }
         }
       },
@@ -247,7 +247,8 @@ function valUsuario(){
     messages:{
       va_email:{
         required:"Por favor ingresa un Email",
-        email: "Ingrese un correo valido"
+        email: "Ingrese un correo valido",
+        remote: "Correo incorrecto"
       },
       va_contrasena: {
         required : "Ingrese la clave",
