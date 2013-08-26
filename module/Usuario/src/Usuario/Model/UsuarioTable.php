@@ -43,12 +43,12 @@ class UsuarioTable
         $row = $this->tableGateway->select(array(
             'in_id' => $id
         ));
-        $row = $row->current();
+        
         
         if (! $row) {
             throw new \Exception("Could not find row $id");
         }
-        return $row;
+        return $row->current();;
     }
 
     public function getUsuarioxEmail($email)
