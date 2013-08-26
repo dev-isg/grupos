@@ -46,7 +46,7 @@ return array(
             'elegir-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/elegir-grupo[/:in_id]',
+                    'route' => '/elegir-grupo',//[/:in_id]
                     'defaults' => array(
                         'controller' => 'Grupo\Controller\Index',
                         'action' => 'elegirgrupo'

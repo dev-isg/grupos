@@ -102,18 +102,21 @@ class AuthController extends AbstractActionController {
                     }
 
                     if ($result->isValid()) {
-//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-//                        $arrurl=explode('/',$urlorigen);
-//                        var_dump($urlorigen);
-//                        var_dump($arrurl);exit;
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl=explode('/',$urlorigen);
+                        $id=end($arrurl);
                         $accion = $request->getPost('accion');
+                        $origen = $request->getPost('origen','evento');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
-                            $redirect = 'grupo';
-                        } elseif ($accion == 'index') {
+                            $redirect = 'detalle-grupo';
+                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
                             $redirect = 'elegir-grupo';//'agregar-grupo';
+                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+                            $redirect = 'home';
                         }
+                            
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -130,7 +133,15 @@ class AuthController extends AbstractActionController {
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
+//            echo $id;
+//            echo $origen;
+//            echo $redirect;exit;
+            if($id){
+                 return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+            }else{
+                
+                 return $this->redirect()->toRoute($redirect);
+            }
     }
     
     public function validarcontrasenaAction(){

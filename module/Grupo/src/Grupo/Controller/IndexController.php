@@ -312,6 +312,8 @@ class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');  
+            
+            if ($File['name'] != '') {
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -321,6 +323,10 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
+            } else {
+                $imagen = $grupo->va_imagen;
+            }
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -329,9 +335,9 @@ class IndexController extends AbstractActionController
             $form->setInputFilter($grupo->getInputFilter());
             $form->setData($data);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            
+//            var_dump($data);Exit;
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
@@ -340,7 +346,6 @@ class IndexController extends AbstractActionController
                     exit();
                 }
             } else {
-                // var_dump($form->isValid());
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
                 }
@@ -366,7 +371,7 @@ class IndexController extends AbstractActionController
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->setScript('$(document).ready(function(){crearevento();valUsuario();});')
+        ->setScript('$(document).ready(function(){valUsuario();});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $id = $this->params()->fromRoute('in_id');
@@ -403,6 +408,18 @@ class IndexController extends AbstractActionController
             'participa'=>$activo,
             'mensajes'=>$mensajes
         );
+    }
+    
+    public function usergrupoAction(){
+        $request=$this->getRequest();
+        $id=$this->params()->fromPost('idgrupo');
+        if($request->isPost()){
+            $usuarios = $this->getGrupoTable()->usuariosgrupo($id);            
+        }
+         $result = new JsonModel(array(
+                'usuarios'=>$usuarios->toArray()
+            )); 
+            return $result;
     }
 
     public function unirAction()
@@ -603,7 +620,7 @@ class IndexController extends AbstractActionController
         return $this->authservice;
     }
 
-    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
+    private function redimensionarImagen($File, $nonFile,$imagen)
     { 
         try {
             
