@@ -12,6 +12,7 @@ use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
+use Zend\View\Model\JsonModel;
 
 // SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;
@@ -133,24 +134,25 @@ class AuthController extends AbstractActionController {
     }
     
     public function validarAction(){
-        
-        $form = $this->getForm();
-        $redirect = 'login';
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData($request->getPost());
-            if ($form->isValid()) {
-                $correo = $request->getPost('va_email');
-//                $contrasena = $request->getPost('va_contrasena');
-
+                $correo = $this->params()->fromPost('va_email','cesar@yopmail.com');
+                $contrasena = $this->params()->fromPost('va_contrasena','321654987');
                 $usuario = $this->getUsuarioTable()->usuario1($correo);
                 if ($usuario[0]['va_estado'] == 'activo') {
-                    if (!$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])) {
-                        $mensaje='El correo no concide con la contraseña';
-                        $result = new JsonModel(array(
+                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id']);
+                    if ($password) {
+                        if($password===$contrasena){
+                            return;
+                        }else{
+                           $mensaje='El correo no concide con la contrasena';
+                           $result = new JsonModel(array(
                             'mensaje' =>$mensaje,
-                        ));
-                        return $result;
+                            ));
+                            return $result;
+                        }
+                    }else{
+                        return;
                     }
                 }else{
                     $mensaje='El correo no se encuentra registrado';
@@ -159,11 +161,7 @@ class AuthController extends AbstractActionController {
                         ));
                      return $result;
                 }
-            }
         }
-        
-
-        return $this->redirect()->toRoute($redirect, array('action' => 'agregargrupo')); //$this->redirect()->toUrl($this->getRequest()->getBaseUrl().$redirect); //
     
     }
 
