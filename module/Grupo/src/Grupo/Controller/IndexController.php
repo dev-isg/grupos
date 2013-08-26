@@ -57,6 +57,8 @@ class IndexController extends AbstractActionController
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo',$valor);
         $tipo = $this->params()->fromQuery('categoria');
+    $this->params()->fromQuery('nombre');
+    
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
 
