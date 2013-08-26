@@ -186,7 +186,9 @@ class EventoController extends AbstractActionController
                     
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_imagen');
-            $nonFile = $this->params()->fromPost('va_nombre');  
+            $nonFile = $this->params()->fromPost('va_nombre');
+            
+            if ($File['name'] != '') {
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -196,7 +198,9 @@ class EventoController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
-            
+            } else {
+                $imagen = $evento->va_imagen;
+            }
             
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
@@ -207,7 +211,7 @@ class EventoController extends AbstractActionController
             $form->setData($data);
             
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$id)) {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                 $this->flashMessenger()->addMessage('Evento editado correctamente');
                  return $this->redirect()->toRoute('evento',array('in_id'=>$id));
@@ -391,11 +395,15 @@ class EventoController extends AbstractActionController
         ;
     }
     
-//     public function listauserAction(){
-//         $usuarios = $this->getEventoTable()->usuariosevento($id);
-//         $result = new JsonModel(array('usuarios'=>$usuarios));
-//         return $result;
-//     }
+     public function usereventoAction(){
+            $request=$this->getRequest();
+        $id=$this->params()->fromPost('idevento');
+        if($request->isPost()){
+         $usuarios = $this->getEventoTable()->usuariosevento($id);
+     }
+         $result = new JsonModel(array('usuarios'=>$usuarios->toArray()));
+         return $result;
+     }
     
     
     public function unirAction(){
@@ -539,7 +547,7 @@ class EventoController extends AbstractActionController
     
     
 
-    private function redimensionarImagen($File, $nonFile,$imagen,$id= null)
+    private function redimensionarImagen($File, $nonFile,$imagen)
     {
         try {
             

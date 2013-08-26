@@ -106,13 +106,17 @@ class AuthController extends AbstractActionController {
                         $arrurl=explode('/',$urlorigen);
                         $id=end($arrurl);
                         $accion = $request->getPost('accion');
+                        $origen = $request->getPost('origen','evento');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
                             $redirect = 'detalle-grupo';
-                        } elseif ($accion == 'index') {
+                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
                             $redirect = 'elegir-grupo';//'agregar-grupo';
+                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+                            $redirect = 'home';
                         }
+                            
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -129,9 +133,13 @@ class AuthController extends AbstractActionController {
                 else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
               
             }
-            if(isset($id)){
+//            echo $id;
+//            echo $origen;
+//            echo $redirect;exit;
+            if($id){
                  return $this->redirect()->toRoute($redirect, array('in_id' => $id));
             }else{
+                
                  return $this->redirect()->toRoute($redirect);
             }
     }
