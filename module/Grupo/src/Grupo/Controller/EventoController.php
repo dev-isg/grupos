@@ -449,6 +449,7 @@ class EventoController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                 }
                 $activo=1;
+                $userestado=$this->getEventoTable()->getEventoUsuario($idevent, $iduser);
             }
             
         }elseif ($unir==0){
@@ -487,14 +488,15 @@ class EventoController extends AbstractActionController
             
             }
             $activo=0;
+            $userestado=$this->getEventoTable()->getEventoUsuario($idevent, $iduser);
         }
         
 //             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($storage->read()->in_id,$idevent);
 //             $activo=$participa->va_estado=='activo'?true:false;
         $result = new JsonModel(array(
             'estado' =>$activo,
+            'userestado'=>$userestado
         ));
-        
         return $result;
     }
     

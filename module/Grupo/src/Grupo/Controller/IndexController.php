@@ -467,6 +467,7 @@ class IndexController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
                 }
                 $activo=1;
+                $userestado=$this->getGrupoTable()->getGrupoUsuario($idgrup, $iduser);
             }
         } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
@@ -500,28 +501,13 @@ class IndexController extends AbstractActionController
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
                     }
-//                     $message = new Message();
-//                     $message->addTo('ola@yopmail.com', $nombre)
-//                         ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
-//                         ->setSubject('Ha dejado un grupo');
-//                     // ->setBody($bodyHtml);
-//                     $bodyPart = new \Zend\Mime\Message();
-//                     $bodyMessage = new \Zend\Mime\Part($bodyHtml);
-//                     $bodyMessage->type = 'text/html';
-//                     $bodyPart->setParts(array(
-//                         $bodyMessage
-//                     ));
-//                     $message->setBody($bodyPart);
-//                     $message->setEncoding('UTF-8');
-                    
-//                     $transport = $this->getServiceLocator()->get('mail.transport');
-//                     $transport->send($message);
-//                     $this->redirect()->toUrl('/grupo');
+                    $userestado=$this->getGrupoTable()->getGrupoUsuario($idgrup, $iduser);
                 }
                 $activo=0;
             }
             $result = new JsonModel(array(
                 'estado' =>$activo,
+                'userestado'=>$userestado
             ));
             
             return $result;

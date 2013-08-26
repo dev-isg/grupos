@@ -16,9 +16,11 @@
                 <div class="img-grupo">
                     <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->grupo[0]['va_imagen'], ENT_QUOTES, 'utf-8'); ?>">
                 </div>
+                <?php if($this->grupo[0]['ta_usuario_in_id']==$session->in_id){?>
                 <div class="editarGrupo">
                     <a href="/grupo/editar/<?php echo $this->in_id ?>" class="btn btn-success">Editar</a>
                 </div>
+                <?php }?>
                 <h2 class="gh"><a href="#"><?php echo $this->grupo[0]['va_nombre']; ?></a></h2>
                 <p class="fund gh"><em>Fundado el <?php
         $fecha = date_create($this->grupo[0]['va_fecha']);

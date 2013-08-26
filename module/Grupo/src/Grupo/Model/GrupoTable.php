@@ -271,7 +271,7 @@ class GrupoTable{
           if (!$row) {
             throw new \Exception("No se puede unir al grupo");
             }
-          return true;
+          return $row;//true;
 
      }
      
