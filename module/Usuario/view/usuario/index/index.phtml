@@ -1,6 +1,9 @@
 <!doctype html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
-
+  <head>
+    <title>php-sdk</title>
+   
+  </head>
   <body>
     <h1>php-sdk</h1>
 
@@ -9,11 +12,11 @@
     <?php else: ?>
       <div>
         Login PHP SDK:
-        <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
+       <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
       </div>
     <?php endif ?>
-<!--    <h3>PHP Session</h3>
-    <pre><?php print_r($_SESSION); ?></pre>-->
+    <h3>PHP Session</h3>
+    <pre><?php print_r($_SESSION); ?></pre>
 
   </body>
 </html>

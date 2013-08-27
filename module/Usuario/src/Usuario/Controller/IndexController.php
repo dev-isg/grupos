@@ -32,11 +32,27 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
+    protected $storage;
+    protected $authservice;
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
+   public function getAuthService() {
+        if (!$this->authservice) {
+            $this->authservice = $this->getServiceLocator()->get('AuthService');
+        }
 
+        return $this->authservice;
+    }
+
+    public function getSessionStorage() {
+        if (!$this->storage) {
+            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
+        }
+
+        return $this->storage;
+    }
     public function indexAction() {
         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
@@ -71,13 +87,15 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+
+                             //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
                              }
                            }
                          else
                          { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
-                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
+                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
+//    
    
                          }                       
                        }
