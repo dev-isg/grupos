@@ -50,27 +50,32 @@ class IndexController extends AbstractActionController {
                  } 
              catch (FacebookApiException $e) {
                            error_log($e);
-                           $user = null;
-                                             }
+                           $user = null; }
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         
                        } else {
                          $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
                        }
-
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
                        else
-                           {
-                                     
-                           $pass = $user_profile['email'];
-                           var_dump($pass);
-                           $id_facebook = $user_profile['id'];
-                           var_dump($id_facebook);
-                           $name = $user_profile['name']; 
-                           var_dump($name);exit;
+                        {    var_dump($name);exit;
+                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                            { if ($correo[0]['id_facebook']=='')  
+                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                             else
+                             {$this->getUsuarioTable()->insertarusuariofacebbok($email,$id_facebook,$name);}
                            }
+                         else
+                         {          }
+                        
+                         }
                   
                      return array(
                          'user_profile' => $user_profile,
