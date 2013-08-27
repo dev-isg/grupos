@@ -195,12 +195,11 @@ nav a:hover {
   font-family: Arial, sans-serif;
   background: #e3e3e3;
   display: block;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
   color: #666;
   border: none;
   font-weight: normal;
-  padding: 18px 15px;
+  padding: 10px 15px;
 }
 #registro input[type="submit"],
 #login input[type="submit"],
@@ -218,6 +217,30 @@ nav a:hover {
 }
 #registro{
   
+}
+.invitar{
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+.invitar-amigos .accordion-group{
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
+#va_duracion{
+  text-align: center;
+}
+#inputIcon1{
+  text-align: center;
+}
+#inputIcon2{
+  text-align: center;
+}
+.invitar:hover{
+  text-decoration: none;
 }
 .alert-margin{
   margin-bottom: 0;
@@ -281,6 +304,10 @@ nav a:hover {
   float: left;
   font-family: "league_gothicregular";
   font-weight: normal !important;
+}
+#addresspicker_map{
+  margin-bottom: 0px;
+  margin-top: 5px;
 }
 .menu-login img{
   float:left;
@@ -1371,8 +1398,17 @@ span.nm{
   font-size: 16px!important;
   margin-top: 20px!important;
 }
+.cont-eve{
+  padding: 0 10px;
+}
 .cont-eve h2{
   font-size: 16px;
+}
+.dvn-img{
+  padding-left: 10px;
+}
+.dvn-decs{
+  padding-right: 10px;
 }
 /*Eventos*/
 

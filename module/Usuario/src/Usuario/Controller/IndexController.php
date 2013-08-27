@@ -16,7 +16,6 @@ use Zend\Http\Request;
 use Zend\Json\Json;
 use Usuario\Model\Usuario;
 use SanAuth\Controller\AuthController; 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 
 
