@@ -75,8 +75,11 @@ class IndexController extends AbstractActionController {
                              }
                            }
                          else
-                         { $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);}                       
-                         }
+                         { 
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
+   
+                         }                       
+                       }
                   
                      return array(
                          'user_profile' => $user_profile,
