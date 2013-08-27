@@ -99,21 +99,19 @@ return array(
                     )
                 )
             ), 
+                'agregar' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/agregar',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'agregarusuario'
+                    )
+                )
+            ), 
         ),
     ),
-
-    
-//           'agregar' => array(
-//                'type' => 'Literal',
-//                'options' => array(
-//                    'route' => '/agregar',
-//                    'defaults' => array(
-//                        '__NAMESPACE__' => 'Usuario\Controller',
-//                        'controller' => 'Index',
-//                        'action' => 'agregarusuario'
-//                    )
-//                )
-//            ), 
     'view_manager' => array(
         'template_path_stack' => array(
             'Usuario' => __DIR__ . '/../view',
