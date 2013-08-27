@@ -32,37 +32,89 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
+    protected $storage;
+    protected $authservice;
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
+   public function getAuthService() {
+        if (!$this->authservice) {
+            $this->authservice = $this->getServiceLocator()->get('AuthService');
+        }
 
+        return $this->authservice;
+    }
+
+    public function getSessionStorage() {
+        if (!$this->storage) {
+            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
+        }
+
+        return $this->storage;
+    }
     public function indexAction() {
         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => '171038663080276',
                  'secret' => '6ae99781de7ed810fb4713032a068e3a',
                ));
-                     $user = $facebook->getUser();
-                       if ($user) {
-                         try {
-                           $user_profile = $facebook->api('/me');
-                        
-                         } catch (FacebookApiException $e) {
+            $user = $facebook->getUser();
+            if ($user) {
+             try {
+                   $user_profile = $facebook->api('/me');
+                 } 
+             catch (FacebookApiException $e) {
                            error_log($e);
-                           $user = null;
-                         }
+                           $user = null; }
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         
                        } else {
-                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));
-                          
+                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
                        }
-
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
-                       else{     var_dump($user_profile['email']);exit;}
+                       else
+                        {    
+                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                            { if ($correo[0]['id_facebook']=='')  
+                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                             else
+                             {
+
+                        $storage = $this->getAuthService()->getStorage();
+                        $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_email',
+                                            'va_foto'
+                                        )));
+                             }
+                           }
+                         else
+                         { 
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
+                             $storage = $this->getAuthService()->getStorage();
+                             $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_email',
+                                            'va_foto'
+                                        )));
+//    
+   
+                         }                       
+                       }
                   
                      return array(
                          'user_profile' => $user_profile,
@@ -419,23 +471,50 @@ class IndexController extends AbstractActionController {
 //        self::$rutaStatic=$config['host']['images'];
 //    }
 
-    public static function headerAction($id) {
+    public function headerAction($id) {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
         $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;
-
+        $accion=$this->params('action');
+         if($accion=='misgrupos'){
+           $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"  class="activomenu"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         }elseif($accion=='miseventos'){
+           $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos" class="activomenu"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='eventosparticipo'){
+             $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo"  class="activomenu"><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='grupoparticipo'){
+            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo"  class="activomenu"><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='editarusuario'){
+             $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo"><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         }
         $estados = '<div class="span12 menu-login">
           <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
-          <ul>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/misgrupos "><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/editarusuario" class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>
-
-            <li class="center-li"><a href="#"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
+          <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
           </div>                            
         </div>';

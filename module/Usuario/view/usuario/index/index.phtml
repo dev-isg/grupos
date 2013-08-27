@@ -2,47 +2,24 @@
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
     <title>php-sdk</title>
-    <style>
-      body {
-        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
-      }
-      h1 a {
-        text-decoration: none;
-        color: #3b5998;
-      }
-      h1 a:hover {
-        text-decoration: underline;
-      }
-    </style>
+   
   </head>
   <body>
     <h1>php-sdk</h1>
 
     <?php if ($this->user): ?>
       <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
+
     <?php else: ?>
       <div>
         Login PHP SDK:
-        <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
+       <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
+
       </div>
     <?php endif ?>
     <h3>PHP Session</h3>
     <pre><?php print_r($_SESSION); ?></pre>
 
-    <?php if ($this->user): ?>
-      <h3>Tus Datos</h3>
-      <img whidt="200" height="200"src="https://graph.facebook.com/<?php echo $this->user; ?>/picture">
-	  <pre>Tú ID es:<?php print_r($this->user_profile['id']); ?></pre>
-       <pre>Tú nombre es:<?php print_r($this->user_profile['name']); ?></pre>
-	   <pre>Tú correo es:<?php print_r($this->user_profile['email']); ?></pre>
-	   <pre>Trabajas en:<?php print_r($this->user_profile['work'][0]['employer']['name']); ?></pre>
-	   <pre>vives en:<?php print_r($this->user_profile['work'][0]['location']['name']); ?></pre>
-      <h3>objetos del usuario (/me)</h3>
-      <pre><?php print_r($this->user_profile); ?></pre>
-    <?php else: ?>
-      <strong><em>no estas conectado.</em></strong>
-    <?php endif ?>
-    <?php echo $this->naitik['name']; ?>
   </body>
 </html>
 

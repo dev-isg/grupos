@@ -200,7 +200,7 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         
         $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-        
+       
         if ($request->isPost()) {
 
             $File = $this->params()->fromFiles('va_imagen');
@@ -234,11 +234,9 @@ class IndexController extends AbstractActionController
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
                    if($this->params()->fromPost('url')=='/usuario/index/misgrupos'){
-//                       var_dump($urlorigen);exit;
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        
                    }else{
-//                       var_dump($urlorigen);exit;
                        return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
                    }
                     
