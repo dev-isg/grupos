@@ -89,7 +89,7 @@ class EventoTable{
       $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
       $data=array(
          'va_nombre'=>$evento->va_nombre,
-         'va_descripcion'=>$evento->va_descripcion,
+         'va_descripcion'=>  htmlentities($evento->va_descripcion),
          'va_costo'=>$evento->va_costo,
           'va_fecha'=>$fecha,//$evento->va_fecha,
          'va_latitud'=>$evento->va_latitud,
@@ -105,8 +105,8 @@ class EventoTable{
 //          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
           'ta_grupo_in_id'=>$idgrupo=$idgrupo!=null?$idgrupo:$evento->ta_grupo_in_id//$evento->ta_grupo_in_id
       );
-//      var_dump($idgrupo);
-//   var_dump($evento->ta_grupo_in_id);Exit;
+
+//   var_dump($data['va_descripcion']);Exit;
       $id = (int) $evento->in_id;
   
       foreach($data as $key=>$value){
