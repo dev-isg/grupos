@@ -36,7 +36,7 @@
 					<div class="span8 desc-evento">
                 <?php echo $this->formRow($form->get('va_nombre'));?>
                 <label>Descripción del evento:</label>
-                <?php echo $this->formRow($form->get('va_descripcion'));?>
+                <?php echo html_entity_decode($this->formRow($form->get('va_descripcion')));?>
                 <!--<textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10"></textarea>-->
 					</div>
 					<div class="span4">
