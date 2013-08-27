@@ -71,11 +71,11 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                                
+                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
                              }
                            }
                          else
-                         { $this->getUsuarioTable()->insertarusuariofacebbok($email,$id_facebook,$name);}                       
+                         { $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);}                       
                          }
                   
                      return array(
