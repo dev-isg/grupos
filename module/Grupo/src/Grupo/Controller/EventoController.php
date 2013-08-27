@@ -261,51 +261,12 @@ class EventoController extends AbstractActionController
     // }
     // }
 
-    public function miseventosAction()
-    {   
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
-        $id = $this->params()->fromQuery('id');
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $id = $storage->read()->in_id;
-        $miseventos = $this->getEventoTable()->miseventos($id);
-        $valor = metodo::headerAction($id);
-        
-        return array
-      (
-            'grupo' => $valor,
-        'miseventos'=> $miseventos,
-       );
-    }
-
     public function misgruposAction()
     {
         return new ViewModel();
     }
 
-    public function eventosparticipoAction()
-    {
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
-        $id = $this->params()->fromQuery('id');
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $id = $storage->read()->in_id;
-
-         $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
-//         $index=new \Usuario\Controller\IndexController();
-        $valor = metodo::headerAction($id);
-               
-        return array(
-            'grupo' => $valor,
-            'eventos'=>$eventosusuario
-        );
-    }
+//AKA EVENTO PARTICIPO
 
     public function getUsuarioTable()
     {
