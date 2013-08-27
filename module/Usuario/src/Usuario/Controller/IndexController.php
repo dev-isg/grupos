@@ -247,10 +247,7 @@ if( $facebook  ){
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                             $user_session = new Container('user');
-                                $user_session->username = $email;
-//                            AuthController::facebookAction($email);
-                               return $this->redirect()->toRoute('/');
+                            
                              }
                            }
                          else
