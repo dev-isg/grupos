@@ -88,7 +88,7 @@ class IndexController extends AbstractActionController {
                              else
                              {
 
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
+                             //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
                              }
                            }
                          else
