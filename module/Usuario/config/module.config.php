@@ -55,6 +55,18 @@ return array(
                     )
                 )
             ), 
+            
+              'registrarse' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/registrarse',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'agregarusuario'
+                    )
+                )
+            ), 
                'usuario-misgrupos' => array(
                 'type' => 'Literal',
                 'options' => array(

@@ -17,7 +17,7 @@
       <?php
         $form = $this->form;
         $form->setAttributes(array(
-          'action' => $this->url.'/agregar',
+          'action' => $this->url.'/registrarse',
           'method' => 'post',
           'class'=>'span12 form-crear-usuario',
           'id'=>'registro'
@@ -27,7 +27,15 @@
         echo $this->form()->openTag($form);
       ?>
       <div class="span4 cambiofotouser">
-           
+        <div>
+            <h1>REGISTRARSE CON FACEBOOK</h1>
+            <?php if ($this->user): ?>
+              <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
+            <?php else: ?>
+        
+               <a href="<?php echo $this->loginUrl; ?>">REGISTRARSE CON TU CUNTA DE FACEBOOK</a>
+            <?php endif ?>
+        </div>   
         <h1>Registro de Usuario</h1>
         <p>Seleccione una Imagen para su perfil</p>
         <div class="cambiofoto2">

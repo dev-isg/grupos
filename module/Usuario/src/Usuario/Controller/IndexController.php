@@ -213,7 +213,85 @@ class IndexController extends AbstractActionController {
 
     public function agregarusuarioAction() {
         // AGREGAR CSS       
-
+if( $user  ){
+          require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => '171038663080276',
+                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
+               ));
+            $user = $facebook->getUser();
+            if ($user) {
+             try {
+                   $user_profile = $facebook->api('/me');
+                 } 
+             catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null; }
+                       }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         
+                       } else {
+                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
+                       }
+                       $naitik = $facebook->api('/naitik');
+                       if($user_profile==''){}
+                       else
+                        {    
+                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                            { if ($correo[0]['id_facebook']=='')  
+                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                             else
+                             {
+                             $user_session = new Container('user');
+                                $user_session->username = $email;
+//                            AuthController::facebookAction($email);
+                               return $this->redirect()->toRoute('/');
+                             }
+                           }
+                         else
+                          { 
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+                           }                       
+                       }
+                  
+                     return array(
+                         'user_profile' => $user_profile,
+                         'user' => $user,
+                         'logoutUrl'  =>$logoutUrl,
+                         'loginUrl'  =>$loginUrl,
+                         'naitik' =>$naitik );
+        
+}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -270,7 +348,7 @@ class IndexController extends AbstractActionController {
                             $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
                             $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
 
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/agregarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -279,7 +357,7 @@ class IndexController extends AbstractActionController {
                         $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
                         $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/agregarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                     }
                 } else {
 
