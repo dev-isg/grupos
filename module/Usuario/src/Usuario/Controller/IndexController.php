@@ -87,15 +87,7 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-//                               $storage->write($this->getServiceLocator()
-//                                        ->get('TableAuthService')
-//                                        ->getResultRowObject(array(
-//                                            'in_id',
-//                                            'va_nombre',
-//                                            'va_contrasena',
-//                                            'va_email',
-//                                            'va_foto'
-//                                        )));  
+
                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
                              }
                            }
@@ -103,16 +95,7 @@ class IndexController extends AbstractActionController {
                          { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
-//                             $storage = $this->getAuthService()->getStorage();
-//                             $storage->write($this->getServiceLocator()
-//                                        ->get('TableAuthService')
-//                                        ->getResultRowObject(array(
-//                                            'in_id',
-//                                            'va_nombre',
-//                                            'va_contrasena',
-//                                            'va_email',
-//                                            'va_foto'
-//                                        )));
+//    
    
                          }                       
                        }
