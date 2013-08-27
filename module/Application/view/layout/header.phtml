@@ -45,9 +45,9 @@
               <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""></a>
 
 							<ul class="dropdown-menu">
-								<li><a href="/usuario/index/editarusuario">Mi perfil</a></li>
-								<li><a href="/grupo/evento/miseventos">Mis eventos</a></li>
-								<li><a href="/usuario/index/misgrupos">Mis grupos</a></li>
+								<li><a href="<?php echo $this->host('base');?>/usuario/index/editarusuario">Mi perfil</a></li>
+								<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
+								<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
 								<li class="divider"></li>
 								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
 							</ul>
