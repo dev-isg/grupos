@@ -237,7 +237,6 @@ class IndexController extends AbstractActionController
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        
                    }else{
-//                       var_dump($urlorigen);exit;
                        return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
                    }
                     
