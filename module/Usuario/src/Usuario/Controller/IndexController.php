@@ -43,7 +43,7 @@ class IndexController extends AbstractActionController {
                  'appId'  => '171038663080276',
                  'secret' => '6ae99781de7ed810fb4713032a068e3a',
                ));
-                       $user = $facebook->getUser();
+                     $user = $facebook->getUser();
                        if ($user) {
                          try {
                            $user_profile = $facebook->api('/me');
@@ -57,17 +57,19 @@ class IndexController extends AbstractActionController {
                          $logoutUrl = $facebook->getLogoutUrl();
                        } else {
                          $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));
-                          var_dump($user_profile['email']);exit;
+                          
                        }
 
                        $naitik = $facebook->api('/naitik');
-                       var_dump($user_profile['email']);exit;
+                       if($user_profile==''){}
+                       else{     var_dump($user_profile['email']);exit;}
+                  
                      return array(
-                        // 'user_profile' => $user_profile,
+                         'user_profile' => $user_profile,
                          'user' => $user,
                          'logoutUrl'  =>$logoutUrl,
                          'loginUrl'  =>$loginUrl,
-                        // 'naitik' =>$naitik
+                         'naitik' =>$naitik
 
                );
                 
