@@ -88,13 +88,29 @@ class IndexController extends AbstractActionController {
                              else
                              {
 
-                             //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
+                        $storage = $this->getAuthService()->getStorage();
+                        $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_email',
+                                            'va_foto'
+                                        )));
                              }
                            }
                          else
                          { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
+                             $storage = $this->getAuthService()->getStorage();
+                             $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_email',
+                                            'va_foto'
+                                        )));
 //    
    
                          }                       
