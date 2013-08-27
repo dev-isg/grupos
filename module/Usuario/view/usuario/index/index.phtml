@@ -12,7 +12,8 @@
     <?php else: ?>
       <div>
         Login PHP SDK:
-        <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
+        <?php  echo "<script type='text/javascript'>top.location.href = '$this->logintUrl';</script>";
+        exit; ?>
       </div>
     <?php endif ?>
     <h3>PHP Session</h3>
