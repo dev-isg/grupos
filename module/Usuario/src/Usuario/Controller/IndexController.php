@@ -65,8 +65,7 @@ class IndexController extends AbstractActionController {
                            {
                                      
                            $pass = $user_profile['email'];
-                           $id_facebook = $user_profile['id'];
-                           $name = $user_profile['name'];                           
+                           var_dump($pass);exit;
                            }
                   
                      return array(
