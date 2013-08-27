@@ -23,7 +23,7 @@
                                 <a href="/evento/<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                             </h2>
                             <p>
-                               <?php echo $eventos->va_descripcion;?>
+                               <?php echo strip_tags($eventos->va_descripcion);?>
                             </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">
