@@ -1,16 +1,16 @@
 <div class="main-container">
     <div class="container">
-       <?php if ($this->mensajes) { ?>
-                <div class="row-fluid">
-                    <div class="alert alert-success alert-margin">
-                        <?php
-                        foreach ($this->mensajes as $message) {
-                            echo $message;
-                        }
-                        ?>
-                    </div>
-                </div>
-<?php } ?>
+        <?php if ($this->mensajes) { ?>
+          <div class="row-fluid">
+            <div class="alert alert-success alert-margin">
+              <?php
+              foreach ($this->mensajes as $message) {
+                  echo $message;
+              }
+              ?>
+            </div>
+          </div>
+        <?php } ?>
         <div class="row-fluid">
             <div class="span3 group-sidebar">
               <div class="img-grupo">
@@ -81,11 +81,11 @@
                 echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
                               <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
                                     $hora = date_format($fecha, 'h');
-                                            if($hora<12)
-                                            { echo $hora.':'. date_format($fecha, 'm').' AM'; }
-                                            else
-                                             { echo $hora.':'. date_format($fecha, 'm').' PM'; }
-                                   ?></em>
+                                  if($hora<12)
+                                  { echo $hora.':'. date_format($fecha, 'm').' AM'; }
+                                  else
+                                   { echo $hora.':'. date_format($fecha, 'm').' PM'; }
+                                ?></em>
                             </div>
                           </li>
                           <li class="clearfix">
@@ -130,16 +130,31 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
-
-
-                    <div class="mapa-group map-wrapper">
-                        <div id="map_canvas"></div>
-                    </div>
-                    <div class="desc-evento-g">
-                        <div id="event-description-wrap" itemprop="description" class="line">
-                            <p><?php echo html_entity_decode($this->eventos[0]['va_descripcion']); ?></p>
+                  <div class="invitar-amigos">
+                    <div class="accordion" id="accordion2">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle invitar" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                            Evitar amigos
+                            <img src="/img/add.png">
+                          </a>
                         </div>
+                        <div id="collapseOne" class="accordion-body collapse">
+                          <div class="accordion-inner">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                          </div>
+                        </div>
+                      </div>                      
                     </div>
+                  </div>
+                  <div class="mapa-group map-wrapper">
+                      <div id="map_canvas"></div>
+                  </div>
+                  <div class="desc-evento-g">
+                      <div id="event-description-wrap" itemprop="description" class="line">
+                          <p><?php echo html_entity_decode($this->eventos[0]['va_descripcion']); ?></p>
+                      </div>
+                  </div>
                 </div>
                 <div class="event-comentario">
                   <div class="row-fluid">
