@@ -29,7 +29,8 @@ class UsuarioForm extends Form{
         $this->add(array(
             'name' => 'va_nombre',
             'type' => 'Text',
-            'attributes' => array(               
+            'attributes' => array(   
+                'class' => 'span10',
                 'placeholder'=>'Ingrese el nombre de usario…'
             ),
         ));  
@@ -37,7 +38,8 @@ class UsuarioForm extends Form{
         $this->add(array(
             'name' => 'va_email',
             'type' => 'Text',
-            'attributes' => array(               
+            'attributes' => array(
+                'class' => 'span10',
                 'placeholder'=>'Ingrese el mail... '
             ),
         )); 
@@ -45,7 +47,7 @@ class UsuarioForm extends Form{
         $this->add(array(
             'name' => 'va_dni',
             'type' => 'Text',
-            'attributes' => array(               
+            'attributes' => array(
                 'placeholder'=>'Ingrese el dni... '
             ),
         )); 
@@ -76,7 +78,7 @@ class UsuarioForm extends Form{
         $this->add(array(
             'name' => 'va_descripcion',
             'type' => 'Text',
-            'attributes' => array(               
+            'attributes' => array(             
                 'placeholder'=>'Ingrese su descripción... '
             ),
         )); 
@@ -90,7 +92,7 @@ class UsuarioForm extends Form{
 //            ),
             'attributes' => array(
                 'id'=>'va_contrasena',
-                //'class' => 'span12',
+                'class' => 'span10',
                 'placeholder'=>'Ingrese la contraseña…'
             ),
         ));
@@ -103,7 +105,7 @@ class UsuarioForm extends Form{
                 'label' => '',          
             ),
             'attributes' => array(               
-                //'class' => 'span12',
+                'class' => 'span10',
                 'placeholder'=>'Confirme la contraseña…'
             ),
         ));

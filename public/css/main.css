@@ -266,7 +266,8 @@ nav a:hover {
   font-size: 25px;
 }
 .dep-ja{
-  padding: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 .dep-ja form{
   margin-bottom: 0;
@@ -1846,6 +1847,16 @@ ul.score-list li:first-child {
 .controls label.error{
   font-size: 12px;
   margin-bottom: 0;
+}
+.dev-marca-face{
+  padding-top: 10px;
+  padding-right: 10px;
+}
+.dev-marca-face a{
+  display: block;
+}
+.dev-marca-face h1{
+  margin-top: 100px;
 }
 /*@font-face {
   font-family: "untitled-font-1";
