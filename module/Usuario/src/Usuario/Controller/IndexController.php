@@ -77,6 +77,7 @@ class IndexController extends AbstractActionController {
                          else
                          { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
+                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario');
    
                          }                       
                        }
