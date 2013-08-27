@@ -124,7 +124,8 @@ class AuthController extends AbstractActionController {
                                             'in_id',
                                             'va_nombre',
                                             'va_contrasena',
-                                            'va_email'
+                                            'va_email',
+                                            'va_foto'
                                         )));
                        
                     }

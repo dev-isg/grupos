@@ -29,15 +29,15 @@ class IndexController extends AbstractActionController {
 
     protected $usuarioTable;
     static $usuarioTableStatic;
+    protected $ruta;
+    static $rutaStatic;
     protected $_options;
 
     public function __construct() {
-        $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
-        
+        $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
 
     public function indexAction() {
-
         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => '171038663080276',
@@ -63,13 +63,10 @@ class IndexController extends AbstractActionController {
                        if($user_profile==''){}
                        else
                            {
-                           
-                           
+                                     
                            $pass = $user_profile['email'];
                            $id_facebook = $user_profile['id'];
-                           $name = $user_profile['name']; 
-                           
-
+                           $name = $user_profile['name'];                           
                            }
                   
                      return array(
@@ -80,7 +77,6 @@ class IndexController extends AbstractActionController {
                          'naitik' =>$naitik
 
                );
-                
     }
 
     public function grupoparticipoAction() {
@@ -123,6 +119,47 @@ class IndexController extends AbstractActionController {
             'grupo' => $valor,
             'misgrupos' => $misgrupos,
         );
+    }
+    
+  public function eventosparticipoAction()
+    {
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
+        $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
+
+         $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
+//         $index=new \Usuario\Controller\IndexController();
+        $valor = $this->headerAction($id);
+               
+        return array(
+            'grupo' => $valor,
+            'eventos'=>$eventosusuario
+        );
+    }
+    
+        public function miseventosAction()
+    {   
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
+        $id = $this->params()->fromQuery('id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $id = $storage->read()->in_id;
+        $miseventos = $this->getEventoTable()->miseventos($id);
+        $valor = $this->headerAction($id);
+        
+        return array
+      (
+            'grupo' => $valor,
+        'miseventos'=> $miseventos,
+       );
     }
 
     public function correo($correo, $usuario, $valor) {
@@ -382,20 +419,24 @@ class IndexController extends AbstractActionController {
 
         return array();
     }
+//    public function getServicio(){
+//        $config=$this->getServiceLocator()->get('Config');  
+//        self::$rutaStatic=$config['host']['images'];
+//    }
 
     public static function headerAction($id) {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
-
-        //  $imagen = $storage->read()->va_imagen;
+        $config = self::$rutaStatic;
+        $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;
 
         $estados = '<div class="span12 menu-login">
-          <img src="http://lorempixel.com/50/50/people/" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
+          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>
             <li class="center-li"><a href=" ' . $ruta . '/usuario/index/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
-            <li class="center-li"><a href=" ' . $ruta . '/grupo/evento/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/grupo/evento/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
             <li class="center-li"><a href=" ' . $ruta . '/usuario/index/misgrupos "><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
             <li class="center-li"><a href=" ' . $ruta . '/usuario/index/editarusuario" class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>
 
@@ -425,8 +466,19 @@ class IndexController extends AbstractActionController {
         if (!$this->grupoTable) {
             $sm = $this->getServiceLocator();
             $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+            $config=$sm->get('Config');  
+            self::$rutaStatic=$config['host']['images'];
         }
         return $this->grupoTable;
+    }
+    
+        public function getEventoTable()
+    {
+        if (! $this->eventoTable) {
+            $sm = $this->getServiceLocator();
+            $this->eventoTable = $sm->get('Grupo\Model\EventoTable');
+        }
+        return $this->eventoTable;
     }
 
     private function redimensionarFoto($File, $nonFile, $imagen, $id = null) {//echo $imagen;exit;
