@@ -264,6 +264,29 @@ class UsuarioTable
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
+    
+    public function idfacebook($id,$idfacebook)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->update('ta_usuario')
+                ->set(array('id_facebook'=>$idfacebook))
+                ->where(array('in_id'=>$id));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+                   $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+    }
+
+    
+     public function insertarusuariofacebbok($nombre,$email,$idfacebook)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->insert()
+                ->into('ta_usuario')
+                ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,'va_estado'=>'activo'));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+         $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+    }
 
     
 }
