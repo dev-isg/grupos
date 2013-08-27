@@ -29,24 +29,21 @@
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/">Grupos</a>
-                       
-              <?php if($_GET['nombre']) {?> <a  class="brand">categoria: <?php  echo $_GET['nombre']  ?></a><?php } ?>
-				
-                                 
-                                 
-                                 <div class="nav-collapse collapse navbar-responsive-collapse">
+                <?php if($_GET['nombre']) {?> <span class="category-home">Categoria: <?php echo $_GET['nombre'] ?></span><?php } ?>
+                <div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
             <?php if(!$this->session){?>
-            <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesion</a></li>
+                        <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesion</a></li>
 						<li class="divider-vertical divider-one"></li>
 						<li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
+
             <?php }else{?>
             <li class="dropdown">
               <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""></a>
+
 							<ul class="dropdown-menu">
 								<li><a href="/usuario/index/editarusuario">Mi perfil</a></li>
 								<li><a href="/grupo/evento/miseventos">Mis eventos</a></li>
@@ -54,9 +51,9 @@
 								<li class="divider"></li>
 								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
 							</ul>
-            </li>
+                        </li>
             <?php }?>
-          </ul>
+                    </ul>
 				</div>
 				<!-- /.nav-collapse -->
 			</div>
@@ -72,17 +69,17 @@
 						action="<?php echo $this->host('ruta')?>/grupo/index/index">
 						<input type="text"
 							value="<?php
-        if ($_POST['dato']) {
-                $filter = new \Zend\I18n\Filter\Alnum(true);
-                $nombre = trim($filter->filter($_POST['dato']));
-                echo $nombre;
-            } else {
-                echo $_COOKIE['dato'];
-            }
-            ?>"
+                            if ($_POST['dato']) {
+                                    $filter = new \Zend\I18n\Filter\Alnum(true);
+                                    $nombre = trim($filter->filter($_POST['dato']));
+                                    echo $nombre;
+                                } else {
+                                    echo $_COOKIE['dato'];
+                                }
+                                ?>"
 							name="dato"
 							class="input-medium search-query span10 dropdown-toggle"
-							data-toggle="dropdown">
+							data-toggle="dropdown" id="search-home">
 						<ul class="dropdown-menu" id="menu-categoria">
                                 <?php
                                 foreach ($this->categorias as $categorias) :

@@ -1,16 +1,21 @@
 <div class="main-container">
     <div class="container">
-       
-       
+        <?php if ($_GET['m']==1) { ?>
+            <div class="row-fluid">
+                <div class="alert alert-success alert-margin">
+                    <?php echo 'Datos guardados correctamente'?>
+                </div>
+            </div>
+        <?php } ?>
+
         <div class="row-fluid">
-			<div ><?php echo $this->valor;  ?></div> 
+			<?php echo $this->valor;  ?>
     		<div class="row-fluid">       
                 <div class="span12 contenido-cuenta">
                     <div class="row-fluid">
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
                         	<i class="icon-datos ico-noti"></i>
-                                 <?php if ($_GET['m']==1) { ?> <p><?php echo 'datos cambiados correctamente'?></p> <?php } ?>
                         	<p id="datos">ACTUALIZAR MIS DATOS</p>
                         </div>
                         <span>x</span>
