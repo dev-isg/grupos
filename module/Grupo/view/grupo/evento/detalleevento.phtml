@@ -133,7 +133,7 @@
                     </div>
                     <div class="desc-evento-g">
                         <div id="event-description-wrap" itemprop="description" class="line">
-                            <p><?php echo $this->eventos[0]['va_descripcion']; ?></p>
+                            <p><?php echo html_entity_decode($this->eventos[0]['va_descripcion']); ?></p>
                         </div>
                     </div>
                 </div>
