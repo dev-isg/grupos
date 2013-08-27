@@ -283,7 +283,7 @@ class UsuarioTable
         $sql = new Sql($adapter);
         $selecttot = $sql->insert()
                 ->into('ta_usuario')
-                ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook));
+                ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,'va_estado'=>'activo'));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
          $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
