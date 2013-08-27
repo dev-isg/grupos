@@ -470,23 +470,50 @@ class IndexController extends AbstractActionController {
 //        self::$rutaStatic=$config['host']['images'];
 //    }
 
-    public static function headerAction($id) {
+    public function headerAction($id) {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
         $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;
-
+        $accion=$this->params('action');
+         if($accion=='misgrupos'){
+           $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"  class="activomenu"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         }elseif($accion=='miseventos'){
+           $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos" class="activomenu"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='eventosparticipo'){
+             $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo"  class="activomenu"><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='grupoparticipo'){
+            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo"  class="activomenu"><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         
+         }elseif($accion=='editarusuario'){
+             $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo"><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/miseventos"><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
+            <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
+         }
         $estados = '<div class="span12 menu-login">
           <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
           <div class="logincuenta">
-          <ul>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/eventosparticipo "><i class="hh icon-mygroup"> </i><p>Eventos donde participo</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/miseventos "><i class="hh icon-event"> </i><p>Mis Eventos</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/misgrupos "><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
-            <li class="center-li"><a href=" ' . $ruta . '/usuario/index/editarusuario" class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>
-
-            <li class="center-li"><a href="#"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
+          <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
           </div>                            
         </div>';

@@ -44,8 +44,64 @@ return array(
                     ),
                 ),
             ),
+              'usuario-micuenta' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/micuenta',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'editarusuario'
+                    )
+                )
+            ), 
+               'usuario-misgrupos' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cuenta/misgrupos',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'misgrupos'
+                    )
+                )
+            ), 
+            'usuario-miseventos' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cuenta/miseventos',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'miseventos'
+                    )
+                )
+            ), 
+            'usuario-eventosparticipo' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cuenta/eventosparticipo',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'eventosparticipo'
+                    )
+                )
+            ), 
+            'usuario-grupoparticipo' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/cuenta/grupoparticipo',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller' => 'Index',
+                        'action' => 'grupoparticipo'
+                    )
+                )
+            ), 
         ),
     ),
+
     
 //           'agregar' => array(
 //                'type' => 'Literal',
