@@ -12,15 +12,22 @@
 					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
 	                    <ul>
 	                      <?php  foreach ($this->misgrupos  as $misgrupos) :?>
-	                        <li data-category="web">
+	                        <li data-category="web" class="img-dev-evento">
 	                            <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($misgrupos->in_id); ?>" class="preview" data-ui-lightbox>
 	                                <img src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($misgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 	                            </a>
+	                            <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
+				                    <div class="content-edit">
+				                      <a href="/grupo/editar/<?php echo $this->in_id ?>" title="Editar detalle de evento">
+				                        <img src="/img/edit-2.png">
+				                      </a>
+				                    </div>
+				                <?php } ?>
 	                            <div class="content">
 	                            	<div class="entry-post-date" style="border-top-color: #2999b5">
 		                                <div class="date-month">
 		                                    <?php  $fecha = date_create($misgrupos->va_fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
+                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>
 		                                </div>
 		                            </div>
 	                                <h2><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($misgrupos->in_id); ?>"><?php echo  $this->escapeHtml($misgrupos->va_nombre);?></a></h2>

@@ -1,5 +1,11 @@
 $(document).ready(function(){
 	$('.dropdown-toggle').dropdown();
+  $('#search-home').focus(function() {
+    $('#search-home').val('');
+  });
+  $('#search-home').click(function() {
+    $('#search-home').val('');
+  });
 });
 
 function crearevento(){
@@ -32,7 +38,6 @@ function crearevento(){
             center:{lat:-12.047816, lng:-77.062203},
             zoom:8
         });*/
-
 
         $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
             var e = event;

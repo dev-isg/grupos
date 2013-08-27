@@ -265,7 +265,7 @@ nav a:hover {
   background: #fff;
   float: left;
   width: 100%;
-  margin-top: 5em;
+  margin-top: 10px;
   height: 72px;
 }
 .recuperacion {
@@ -1674,6 +1674,55 @@ p.pp{
 }
 .content-img-det{
   text-align: center;
+  position: relative;
+}
+.content-edit{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 2px solid #333;
+  background-color: #5bb75b;
+  background-image: -moz-linear-gradient(top, #62c462, #51a351);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+  background-image: -o-linear-gradient(top, #62c462, #51a351);
+  background-image: linear-gradient(to bottom, #62c462, #51a351);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.content-edit a{
+  display: block;
+  line-height: 58px;
+}
+.img-dev-evento{
+  position: relative;
+}
+.img-dev-evento .content-edit{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 2px solid #333;
+  background-color: #5bb75b;
+  background-image: -moz-linear-gradient(top, #62c462, #51a351);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+  background-image: -o-linear-gradient(top, #62c462, #51a351);
+  background-image: linear-gradient(to bottom, #62c462, #51a351);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.img-dev-evento .content-edit a{
+  display: block!important;
+  line-height: 40px!important;
+  text-align: center;
 }
 .review-block {
   display: block;
@@ -1683,6 +1732,12 @@ p.pp{
   border-bottom: none;
   margin-bottom: 15px;
   margin-top: 10px;
+}
+.category-home{
+  float: left;
+  color: #bbb;
+  line-height: 46px;
+  margin-left: 40px;
 }
 .overall_score {
   font-size: 17.5px;
