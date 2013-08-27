@@ -115,6 +115,7 @@ class EventoForm extends Form
             'type' => 'Text',
             'attributes' => array(               
                 'class' => 'span6',
+                'id' => 'va_duracion',
                 'placeholder'=>'Cuanto tiempo...'
             )
         ));
@@ -124,7 +125,7 @@ class EventoForm extends Form
             'type' => 'Text',
             'attributes' => array(               
                 'class' => 'span5',
-                'id'   => 'inputIcon',
+                'id'   => 'inputIcon1',
             )
         ));
           $this->add(array(
@@ -132,7 +133,7 @@ class EventoForm extends Form
             'type' => 'Text',
             'attributes' => array(               
                 'class' => 'span5',
-                'id'   => 'inputIcon',
+                'id'   => 'inputIcon2',
             )
         ));
           

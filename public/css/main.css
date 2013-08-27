@@ -230,6 +230,15 @@ nav a:hover {
   -o-border-radius: 0px;
   border-radius: 0px;
 }
+#va_duracion{
+  text-align: center;
+}
+#inputIcon1{
+  text-align: center;
+}
+#inputIcon2{
+  text-align: center;
+}
 .invitar:hover{
   text-decoration: none;
 }
