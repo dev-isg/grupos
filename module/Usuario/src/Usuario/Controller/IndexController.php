@@ -47,7 +47,7 @@ class IndexController extends AbstractActionController {
                        if ($user) {
                          try {
                            $user_profile = $facebook->api('/me');
-                          var_dump($user_profile['email']);exit;
+                        
                          } catch (FacebookApiException $e) {
                            error_log($e);
                            $user = null;
@@ -57,6 +57,7 @@ class IndexController extends AbstractActionController {
                          $logoutUrl = $facebook->getLogoutUrl();
                        } else {
                          $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));
+                          var_dump($user_profile['email']);exit;
                        }
 
                        $naitik = $facebook->api('/naitik');
