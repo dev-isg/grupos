@@ -77,7 +77,7 @@ class AuthController extends AbstractActionController {
     }
 
 
-    public function authenticateAction()
+    public function authenticateAction($correo=null,$contrasena=null)
     {  
         $form = $this->getForm();
         $redirect = 'login';

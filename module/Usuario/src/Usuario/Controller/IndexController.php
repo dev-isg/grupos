@@ -15,6 +15,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Http\Request;
 use Zend\Json\Json;
 use Usuario\Model\Usuario;
+use SanAuth\Controller\AuthController; 
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
 use Usuario\Form\NotificacionForm;
@@ -87,16 +88,8 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-
-                        $storage = $this->getAuthService()->getStorage();
-                        $storage->write($this->getServiceLocator()
-                                        ->get('TableAuthService')
-                                        ->getResultRowObject(array(
-                                            'in_id',
-                                            'va_nombre',
-                                            'va_email',
-                                            'va_foto'
-                                        )));
+                        $this = AuthController::authenticateAction($email);
+                    
                              }
                            }
                          else
