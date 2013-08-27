@@ -19,6 +19,7 @@ use SanAuth\Controller\AuthController;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 
+
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
 use Usuario\Form\NotificacionForm;
@@ -29,6 +30,8 @@ use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
 
+
+
 class IndexController extends AbstractActionController {
 
     protected $usuarioTable;
@@ -36,27 +39,12 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
-    protected $storage;
-    protected $authservice;
+   
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
-   public function getAuthService() {
-        if (!$this->authservice) {
-            $this->authservice = $this->getServiceLocator()->get('AuthService');
-        }
 
-        return $this->authservice;
-    }
-
-    public function getSessionStorage() {
-        if (!$this->storage) {
-            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
-        }
-
-        return $this->storage;
-    }
     public function indexAction() {
         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
@@ -91,28 +79,16 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                                 $user_session = new Container('user');
-		               $user_session->username = $email;
-//                        AuthController::facebookAction($email);
+                             $user_session = new Container('user');
+                                $user_session->username = $email;
+//                            AuthController::facebookAction($email);
                                return $this->redirect()->toRoute('/');
-                    
                              }
                            }
                          else
-                         { 
-                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
-                             $storage = $this->getAuthService()->getStorage();
-                             $storage->write($this->getServiceLocator()
-                                        ->get('TableAuthService')
-                                        ->getResultRowObject(array(
-                                            'in_id',
-                                            'va_nombre',
-                                            'va_email',
-                                            'va_foto'
-                                        )));
-//    
-   
-                         }                       
+                          { 
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+                           }                       
                        }
                   
                      return array(
@@ -120,9 +96,7 @@ class IndexController extends AbstractActionController {
                          'user' => $user,
                          'logoutUrl'  =>$logoutUrl,
                          'loginUrl'  =>$loginUrl,
-                         'naitik' =>$naitik
-
-               );
+                         'naitik' =>$naitik );
     }
 
     public function grupoparticipoAction() {
