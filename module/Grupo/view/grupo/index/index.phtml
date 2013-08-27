@@ -22,9 +22,6 @@
                             <h2>
                                 <a href="/evento/<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                             </h2>
-                            <p>
-                               <?php echo strip_tags($eventos->va_descripcion);?>
-                            </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">
                                 <span class="meta-comments">
@@ -66,9 +63,6 @@
                             <h2>
                                 <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                             </h2>
-                            <p>
-                               <?php echo  $grupos->va_descripcion;?>
-                            </p>
                             <div class="divider-1px-meta"></div>
                             <footer class="entry-extra clearfix">
                                 <span class="meta-views" title="Views">
