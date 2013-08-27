@@ -64,17 +64,18 @@ class IndexController extends AbstractActionController {
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
                        else
-                        {    var_dump($name);exit;
+                        {    
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
-                             {$this->getUsuarioTable()->insertarusuariofacebbok($email,$id_facebook,$name);}
+                             {
+                                
+                             }
                            }
                          else
-                         {          }
-                        
+                         { $this->getUsuarioTable()->insertarusuariofacebbok($email,$id_facebook,$name);}                       
                          }
                   
                      return array(
