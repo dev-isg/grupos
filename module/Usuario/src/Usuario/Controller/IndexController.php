@@ -16,6 +16,9 @@ use Zend\Http\Request;
 use Zend\Json\Json;
 use Usuario\Model\Usuario;
 use SanAuth\Controller\AuthController; 
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container;
+
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
 use Usuario\Form\NotificacionForm;
@@ -88,7 +91,10 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                        AuthController::facebookAction($email);
+                                 $user_session = new Container('user');
+		               $user_session->username = $email;
+//                        AuthController::facebookAction($email);
+                               return $this->redirect()->toRoute('/');
                     
                              }
                            }
