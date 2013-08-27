@@ -1,21 +1,22 @@
 <!doctype html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
-
+  <head>
+    <title>php-sdk</title>
+   
+  </head>
   <body>
     <h1>php-sdk</h1>
 
-    <?php if ($this->user){?>
+    <?php if ($this->user): ?>
       <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
-    <?php }else{ ?>
+    <?php else: ?>
       <div>
         Login PHP SDK:
-        <?php echo "<script type='text/javascript'>top.location.href = '$this->loginUrl';</script>";
-       ?>
-
+        <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
       </div>
-    <?php } ?>
-<!--    <h3>PHP Session</h3>
-    <pre><?php print_r($_SESSION); ?></pre>-->
+    <?php endif ?>
+    <h3>PHP Session</h3>
+    <pre><?php print_r($_SESSION); ?></pre>
 
   </body>
 </html>
