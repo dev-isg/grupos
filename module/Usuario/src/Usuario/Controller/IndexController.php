@@ -88,7 +88,7 @@ class IndexController extends AbstractActionController {
                              { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
                              {
-                        $this = AuthController::authenticateAction($email);
+                        AuthController::authenticateAction($email);
                     
                              }
                            }
