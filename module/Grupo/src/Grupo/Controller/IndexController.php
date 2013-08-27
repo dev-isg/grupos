@@ -41,86 +41,98 @@ class IndexController extends AbstractActionController
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){valUsuario();});')
-            ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+                ->setScript('$(document).ready(function(){valUsuario();});')
+                ->prependFile($this->_options->host->base . '/js/main.js')
+                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
-        
+
 
         setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
 
         $valor = $this->params()->fromQuery('tipo');
-        setcookie('tipo',$valor);
+        setcookie('tipo', $valor);
         $tipo = $this->params()->fromQuery('categoria');
         $this->params()->fromQuery('nombre');
-    
+
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
 
-        if (empty($valor) and empty($tipo) and ! $request->isPost()) {
-         
-            $listaEventos = $this->getEventoTable()->listadoEvento();
-           
-            }
-        if ($request->isPost()) {
-            if ($nombre) {   
-                $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-                if (count($grupo)>0) {
-                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);} 
-               else {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-               
-                   if(count($listaEventos)>0) 
-                   {$listaEventos = $this->getEventoTable()->listado2Evento($nombre);}
-                   else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }  }
-             }
-               else
-               {return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }   
-               }
-  
-        if ($tipo) {//var_dump($rango);exit;
-            if (!empty($rango)) {      
-                if($rango=='Grupos'){ $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-                 if(count($listagrupos)<=0)
-                    {return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); } 
-                }
-                else{ 
-                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo); 
-                    if(count($listaEventos)<=0)
-                    {return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); }               
-                }
-         } else { $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+        if (empty($valor) and empty($tipo) and !$request->isPost()) {
 
-         } }    
+            $listaEventos = $this->getEventoTable()->listadoEvento();
+        }
+        if ($request->isPost()) {
+            if ($nombre) {
+                $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                if (count($grupo) > 0) {
+                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                } else {
+                    $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+
+                    if (count($listaEventos) > 0) {
+                        $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+                    } else {
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+                    }
+                }
+            } else {
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+            }
+        }
+
+        if ($tipo) {//var_dump($rango);exit;
+            if (!empty($rango)) {
+                if ($rango == 'Grupos') {
+                    $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                    if (count($listagrupos) <= 0) {
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+                    }
+                } else {
+                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
+                    if (count($listaEventos) <= 0) {
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+                    }
+                }
+            } else {
+                $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+            }
+        }
         if ($valor) {
             if ($valor == 'Grupos') {
                 $listagrupos = $this->getGrupoTable()->fetchAll();
-            } else {  $listaEventos = $this->getEventoTable()->listadoEvento(); } }
-        if(count($listaEventos)>0)
-            
-        { 
-        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
-        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator->setItemCountPerPage(12);}
-        elseif(count($listagrupos)>0){ //echo 'we';exit;
-        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
-        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(12);}
-        else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
-        
+            } else {
+                $listaEventos = $this->getEventoTable()->listadoEvento();
+            }
+        }
+        if (count($listaEventos) > 0) {
+            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator->setItemCountPerPage(12);
+        } elseif (count($listagrupos) > 0) { //echo 'we';exit;
+            $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
+            $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator2->setItemCountPerPage(12);
+        } else {
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+        }
+        $list=$listaEventos->toArray();
+        //$list[9]['va_descripcion']
+        $text = $list[9]['va_descripcion'];//'aaaaaaaaaaaaaaa   <img src="http://192.168.1.50:82/imagenes/eventos/general/evento-111-521cbbee29305.jpg" />   ';//'<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a>';
+//        var_dump((string)$text);exit;
+//        var_dump(strip_tags($text));exit;
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
-             'dato' => $valor 
-          );
+            'dato' => $valor
+        );
     }
 
      public function categorias()
