@@ -226,23 +226,18 @@ class IndexController extends AbstractActionController {
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
 
-        // $user_info = $this->getUsuarioTable()->usuariox(1);
-        // var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-
-        // $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
         $request = $this->getRequest();
 
         
-        
-        
-         require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => '171038663080276',
-                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
-               ));
+      $facebook = \Classes\fb::getInstance()->getfb();
+//         require './vendor/facebook/facebook.php';
+//               $facebook = new \Facebook(array(
+//                 'appId'  => '171038663080276',
+//                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
+//               ));
             $user = $facebook->getUser();
             if ($user) {
              try {
@@ -279,11 +274,9 @@ class IndexController extends AbstractActionController {
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
                            }                       
                        }
-        
-        
-        
-        
-        
+
+                       
+                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
