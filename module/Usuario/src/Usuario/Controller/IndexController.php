@@ -232,12 +232,12 @@ class IndexController extends AbstractActionController {
         $request = $this->getRequest();
 
         
-      $facebook = \Classes\fb::getInstance()->getfb();
-//         require './vendor/facebook/facebook.php';
-//               $facebook = new \Facebook(array(
-//                 'appId'  => '171038663080276',
-//                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
-//               ));
+ 
+         require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+               ));
             $user = $facebook->getUser();
             if ($user) {
              try {
