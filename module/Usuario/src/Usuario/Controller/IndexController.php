@@ -55,7 +55,7 @@ class IndexController extends AbstractActionController {
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
-                       } else {echo 'mama';exit;
+                       } else {
                          $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));
                        }
 
