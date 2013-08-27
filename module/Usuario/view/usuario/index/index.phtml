@@ -8,18 +8,18 @@
     <h1>php-sdk</h1>
 
     <?php if ($this->user): ?>
-      <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
-       <a><?php echo $this->logoutUrl; ?></a>
+      <a href="<?php echo $this->logoutUrl; ?>"> <img src="http://static.ak.fbcdn.net/rsrc.php/z2Y31/hash/cxrz4k7j.gif">
+  </a>
+
     <?php else: ?>
       <div>
         Login PHP SDK:
-       <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
-        <a><?php echo $this->logoutUrl; ?></a>
-      
+       <a href="<?php echo $this->loginUrl; ?>"> <img alt="" src="http://static.ak.fbcdn.net/rsrc.php/zB6N8/hash/4li2k73z.gif">
+  </a>
+
       </div>
     <?php endif ?>
-    <h3>PHP Session</h3>
-    <pre><?php print_r($_SESSION); ?></pre>
+    
 
   </body>
 </html>
