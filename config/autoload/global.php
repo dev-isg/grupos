@@ -30,6 +30,7 @@ return array(
         'appId' => '123456789',
         'secret' => '123456789123456789123456789'
     ),
+
     
    'host' => array(
 
@@ -38,6 +39,7 @@ return array(
         'images' => 'http://192.168.1.37:82/imagenes',
         'img'=>'http://192.168.1.37:82/img',
         'ruta' => 'http://192.168.1.37:82',
+
         'version'=>1,
     ),
     
