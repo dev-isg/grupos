@@ -38,8 +38,37 @@ class IndexController extends AbstractActionController {
 
     public function indexAction() {
 
-        // return array();
+        require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => '171038663080276',
+                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
+               ));
+                       $user = $facebook->getUser();
+                       if ($user) {
+                         try {
+                           $user_profile = $facebook->api('/me');
+                         } catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null;
+                         }
+                       }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                       } else {
+                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));
+                       }
 
+                       $naitik = $facebook->api('/naitik');
+
+                     return array(
+                   'user_profile' => $user_profile,
+                   'user' => $user,
+                         'logoutUrl'  =>$logoutUrl,
+                         'loginUrl'  =>$loginUrl,
+                         'naitik' =>$naitik
+
+               );
+                
     }
 
     public function grupoparticipoAction() {
@@ -115,7 +144,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function agregarusuarioAction() {
-        // AGREGAR CSS
+        // AGREGAR CSS       
 
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
@@ -199,6 +228,7 @@ class IndexController extends AbstractActionController {
         return array(
             'form' => $form,
             'mensaje' => $mensaje
+            
         );
         // return array();
     }

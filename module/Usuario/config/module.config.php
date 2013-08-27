@@ -20,6 +20,10 @@ return array(
                         'action'        => 'index',
                     ),
                 ),
+                
+                
+         
+            
                 'may_terminate' => true,
                 'child_routes' => array(
                     // This route is a sane default when developing a module;
@@ -42,6 +46,18 @@ return array(
             ),
         ),
     ),
+    
+//           'agregar' => array(
+//                'type' => 'Literal',
+//                'options' => array(
+//                    'route' => '/agregar',
+//                    'defaults' => array(
+//                        '__NAMESPACE__' => 'Usuario\Controller',
+//                        'controller' => 'Index',
+//                        'action' => 'agregarusuario'
+//                    )
+//                )
+//            ), 
     'view_manager' => array(
         'template_path_stack' => array(
             'Usuario' => __DIR__ . '/../view',
