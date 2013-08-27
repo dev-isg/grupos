@@ -303,6 +303,23 @@
         success: function(data){
           $(".img-lo").hide();
           $(".uneteAbEvent").show();
+          var dataPer = '<li>'+
+            '<div class="users">'+
+                '<div class="row-fluid">'+
+                  '<div class="span4 img-user-ev">'+
+                    '<img src="'+data.userestado["imagen"]+'" alt="">'+
+                  '</div>'+
+                  '<div class="span8 desc-user">'+
+                    '<h3><a href="#">'+data.userestado["nombre_usuario"]+'</a></h3>'+
+                    '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
+                  '</div>'+
+                '</div>'+
+                '<div class="row-fluid unio">'+
+                  '<p class="span12">'+data.userestado["va_fecha"]+'</p>'+
+                '</div>'+
+            '</div>'+
+            '</li>';
+          $(".lista-usuario ul").prepend(dataPer);
         },
         error: function(){
             console.log('Fallo conectando con el servidor')
@@ -329,6 +346,7 @@
         success: function(data){
           $(".img-lo").hide();
           $(".uneteEvent").show();
+          $(".lista-usuario ul li:first-child").remove();
         },
         error: function(){
             console.log('Fallo conectando con el servidor')

@@ -169,21 +169,20 @@
                 dataType: "json",
                 success: function(data){
                     $(".img-lo").hide();
-                    $(".uneteAbEvent").show();
-                    alert(data.userestado['nombre_usuario']);
+                    $(".uneteAbEvent").show();                    
                     var dataPer = '<li>'+
                                     '<div class="users">'+
                                         '<div class="row-fluid">'+
                                             '<div class="span4 img-user-ev">'+
-                                                '<img src="http://192.168.1.25:8081/img/foto-carnet.jpg" alt="">'+
+                                                '<img src="'+data.userestado["imagen"]+'" alt="">'+
                                             '</div>'+
                                             '<div class="span8 desc-user">'+
-                                                '<h3><a href="#">marataa</a></h3>'+
-                                                '<p>0</p>'+
+                                                '<h3><a href="#">'+data.userestado["nombre_usuario"]+'</a></h3>'+
+                                                '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
                                             '</div>'+
                                         '</div>'+
                                         '<div class="row-fluid unio">'+
-                                            '<p class="span12">Se unió el 23 de Agosto del 2013</p>'+
+                                            '<p class="span12">'+data.userestado["va_fecha"]+'</p>'+
                                         '</div>'+
                                     '</div>'+
                                     '</li>';
@@ -213,6 +212,7 @@
                 success: function(data){
                     $(".img-lo").hide();
                     $(".uneteEvent").show();
+                    $(".lista-usuario ul li:first-child").remove();
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
