@@ -213,8 +213,32 @@ class IndexController extends AbstractActionController {
 
     public function agregarusuarioAction() {
         // AGREGAR CSS       
-if( $facebook  ){
-          require './vendor/facebook/facebook.php';
+          
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
+        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+        $renderer->inlineScript()
+                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
+                ->prependFile($this->_options->host->base . '/js/main.js')
+                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+
+        // $user_info = $this->getUsuarioTable()->usuariox(1);
+        // var_dump($user_info);Exit;
+        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+
+        // $form = new UsuarioForm($adpter);
+        $form = new UsuarioForm();
+        $form->get('submit')->setValue('Crear Usuario');
+        $request = $this->getRequest();
+
+        
+        
+        
+         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => '171038663080276',
                  'secret' => '6ae99781de7ed810fb4713032a068e3a',
@@ -255,61 +279,11 @@ if( $facebook  ){
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
                            }                       
                        }
-                  
-                     return array(
-                         'user_profile' => $user_profile,
-                         'user' => $user,
-                         'logoutUrl'  =>$logoutUrl,
-                         'loginUrl'  =>$loginUrl,
-                         'naitik' =>$naitik );
-        
-}
         
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
-        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-        $renderer->inlineScript()
-                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
-                ->prependFile($this->_options->host->base . '/js/main.js')
-                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
-
-        // $user_info = $this->getUsuarioTable()->usuariox(1);
-        // var_dump($user_info);Exit;
-        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-
-        // $form = new UsuarioForm($adpter);
-        $form = new UsuarioForm();
-        $form->get('submit')->setValue('Crear Usuario');
-        $request = $this->getRequest();
-
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -370,7 +344,12 @@ if( $facebook  ){
 
         return array(
             'form' => $form,
-            'mensaje' => $mensaje
+            'mensaje' => $mensaje,
+             'user_profile' => $user_profile,
+                         'user' => $user,
+                         'logoutUrl'  =>$logoutUrl,
+                         'loginUrl'  =>$loginUrl,
+                         'naitik' =>$naitik
             
         );
         // return array();
