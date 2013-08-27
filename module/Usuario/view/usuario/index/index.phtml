@@ -9,10 +9,13 @@
 
     <?php if ($this->user): ?>
       <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
+       <a><?php echo $this->logoutUrl; ?></a>
     <?php else: ?>
       <div>
         Login PHP SDK:
        <a href="<?php echo $this->loginUrl; ?>">Login with Facebook</a>
+        <a><?php echo $this->logoutUrl; ?></a>
+      
       </div>
     <?php endif ?>
     <h3>PHP Session</h3>
