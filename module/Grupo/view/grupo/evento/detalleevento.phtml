@@ -76,9 +76,9 @@
                             </div>
                             <div class="ficha-desc">
                               <p><?php $fecha = date_create($this->eventos[0]['va_fecha']); 
-                $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
+                              $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                              echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?></p>
                               <em><?php  $fecha = date_create($this->eventos[0]['va_fecha']);
                                     $hora = date_format($fecha, 'h');
                                   if($hora<12)
@@ -152,7 +152,7 @@
                   </div>
                   <div class="desc-evento-g">
                       <div id="event-description-wrap" itemprop="description" class="line">
-                          <p><?php echo html_entity_decode($this->eventos[0]['va_descripcion']); ?></p>
+                        <?php echo html_entity_decode($this->eventos[0]['va_descripcion']); ?>
                       </div>
                   </div>
                 </div>
