@@ -174,7 +174,18 @@ class AuthController extends AbstractActionController {
                         $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
                         $arrurl=explode('/',$urlorigen);
                         $id=end($arrurl);
-
+//                        $accion = $request->getPost('accion');
+//                        $origen = $request->getPost('origen','evento');
+//                        if ($accion == 'detalleevento') {
+//                            $redirect = 'evento';
+//                        } elseif ($accion == 'detallegrupo') {
+//                            $redirect = 'detalle-grupo';
+//                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
+//                            $redirect = 'elegir-grupo';//'agregar-grupo';
+//                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+//                            $redirect = 'home';
+//                        }
+                            
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -285,14 +296,13 @@ class AuthController extends AbstractActionController {
 
     public function logoutAction() {
         $finsesion=  $this->params()->fromRoute('in_id_face');
-      
+
         if ($this->getAuthService()->hasIdentity()) {
-          
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
 //            $this->flashmessenger()->addMessage("You've been logged out");
-        if($finsesion){ 
-            return $this->redirect()->toUrl($this->session->va_logout);
+        if($finsesion){
+            return $this->redirect()->toUrl($finsesion);
          }
         }
         return $this->redirect()->toRoute('home');
