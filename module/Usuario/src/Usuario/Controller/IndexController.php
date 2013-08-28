@@ -237,19 +237,7 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
-             
-           
-//             if (!$session){                
-//                 require './vendor/facebook/facebook.php';
-//                 $facebook = new \Facebook(array(
-//                 'appId'  => $this->_options->facebook->appId,
-//                 'secret' => $this->_options->facebook->secret,
-//               ));
-//              $user = $facebook->getUser();
-//                  $logoutUrl = $facebook->getLogoutUrl();
-//                  $this->$logoutUrl;
-//                 }
-        
+            
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
@@ -274,16 +262,15 @@ public function getAuthService() {
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
-                         
                        } else {
                          $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
-                             //'redirect_uri' => 'http://dev.juntate.pe/'
+//                             'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
                        $storage = new \Zend\Authentication\Storage\Session('Auth');
-                    $session=$storage->read();
+                       $session=$storage->read();
                        if(!$session){
                        if($user_profile==''){}
                        else
@@ -306,13 +293,13 @@ public function getAuthService() {
                          else
                           { 
                               $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                              // $this->$logoutUrl;
                            }                       
                         }
-                      }else{}
+                      }else{  }
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
@@ -568,7 +555,7 @@ public function getAuthService() {
             <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
          }
         $estados = '<div class="span12 menu-login">
-          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
+          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido<br> ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 

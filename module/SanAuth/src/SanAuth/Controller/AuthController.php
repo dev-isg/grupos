@@ -131,7 +131,8 @@ class AuthController extends AbstractActionController {
                                             'va_nombre',
                                             'va_contrasena',
                                             'va_email',
-                                            'va_foto'
+                                            'va_foto',
+                                            'va_logout'
                                         )));
                        
                     }
@@ -193,7 +194,8 @@ class AuthController extends AbstractActionController {
                                             'va_nombre',
                                             'va_contrasena',
                                             'va_email',
-                                            'va_foto'
+                                            'va_foto',
+                                            'va_logout'
                                         )));
                        
                     }
@@ -293,10 +295,17 @@ class AuthController extends AbstractActionController {
     }
 
     public function logoutAction() {
+        $finsesion=$this->params()->fromRoute('in_id_face');
+        if($finsesion){
+           return $this->redirect()->toUrl($finsesion);
+        }
         if ($this->getAuthService()->hasIdentity()) {
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
 //            $this->flashmessenger()->addMessage("You've been logged out");
+        if($finsesion){
+            return $this->redirect()->toUrl($finsesion);
+         }
         }
         return $this->redirect()->toRoute('home');
         // return $this->redirect()->toRoute('login');

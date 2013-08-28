@@ -45,7 +45,7 @@
             <div class="span6 group-sidebar">
                 <div class="event-group">
                   <div class="content-img-det">
-                    <img src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+                    <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
                     <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
                     <div class="content-edit">
                       <a href="/evento/editar/<?php echo $this->idevento?>" title="Editar detalle de evento">
@@ -131,6 +131,21 @@
                     </div>  <!-- /overall_score -->  
                   </div>
                   <div class="invitar-amigos">
+                    <script src="http://connect.facebook.net/en_US/all.js"></script>
+                    <script>
+                      FB.init({
+                        appId:'171038663080276',
+                        cookie:true,
+                        status:true,
+                        xfbml:true
+                      });
+                      function FacebookInviteFriends(){
+                          FB.ui({
+                          method: 'apprequests',
+                          message: 'Grupos > Crea tu evento'
+                        });
+                      }
+                    </script>
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
                         <div class="accordion-heading">
@@ -141,7 +156,10 @@
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
-                            hi
+                            <div id="fb-root"></div>
+                              <a href='#' onclick="FacebookInviteFriends();"> 
+                                Invita a tus Amigos de Facebook!
+                              </a>
                           </div>
                         </div>
                       </div>                      
@@ -237,17 +255,17 @@
                 </div>
             </div>
             <div class="span3 group-sidebar grupo-right-sidebar">
+              <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
               <div class="asistir-event">
                 <div class="row-fluid">
                   <div class="span12">
-                     <?php $fecha_actual = date("Y-m-d h:m:s"); 
-                    if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
-                    {?>   
-                         <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
+                    <?php $fecha_actual = date("Y-m-d h:m:s"); 
+                      if ($this->eventos[0]['va_fecha'] >= $fecha_actual)
+                    {?>
                     <div class="row-fluid title-side">
                       <h4>¿Asistiras?</h4>                   
                     </div>
-                      <?php } ?>
+                      
                     <div class="row-fluid">
                       <div class="span12 btn-unete">
                     <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
@@ -267,8 +285,9 @@
                    else { } ?>  
                   </div>     
                 </div>
-               </div>
-               <div class="lista-usuario">
+              </div>
+              <?php } ?>
+              <div class="lista-usuario">
                   <ul>
                     <li>
                       <div class="users">

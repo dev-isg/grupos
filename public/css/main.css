@@ -121,7 +121,7 @@ nav a:hover {
    ============== */
 
 .main {
-    padding: 5px 0 23px;
+    padding: 0px 0 23px;
 }
 .footer-container footer {
     color: white;
@@ -300,8 +300,8 @@ nav a:hover {
   margin-bottom: 0;
 }
 .menu-login span{
-  font-size: 2.5em;
-  padding: 23px 12px;
+  font-size: 25px;
+  padding: 10px 10px;
   float: left;
   font-family: "league_gothicregular";
   font-weight: normal !important;
@@ -1251,7 +1251,7 @@ span.nm{
 }
 #event-description-wrap p{
   font-family: arial;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 18px;
   color: #363636;
 }
@@ -1695,7 +1695,7 @@ p.pp{
   padding: 10px;
 }
 .lista-usuario{
-  padding: 10px;
+  padding: 0px;
 }
 .title-si{  
   background: #FBFBFB;
@@ -1712,6 +1712,9 @@ p.pp{
 .content-img-det{
   text-align: center;
   position: relative;
+}
+.content-img-det img.det-img{
+  width: 200px;
 }
 .content-edit{
   position: absolute;

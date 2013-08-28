@@ -24,7 +24,29 @@
         		
         <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
         <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
-
+        <style type="text/css">
+            #facebook_friends{
+                margin: 220px 0px 0px 380px;
+                border-radius: 6px;
+                border: 2px solid #fff;
+                background: #526da5;
+                background: -webkit-gradient(linear, 0 0, 0 bottom, from(#526da5), to(#292929));
+                background: -webkit-linear-gradient(#526da5, #292929);
+                background: -moz-linear-gradient(#526da5, #292929);
+                background: -ms-linear-gradient(#526da5, #292929);
+                background: -o-linear-gradient(#526da5, #292929);
+                background: linear-gradient(#526da5, #292929);
+                -pie-background: linear-gradient(#526da5, #292929);
+                border-radius: 5px;
+                color: #fbfbfb;
+                behavior: url(PIE.php);
+                width: 400px;
+                padding: 20px 60px;
+                text-align: center;
+                font-size: 25px;
+                cursor: pointer;
+            }
+    </style>
 </head>
 <body id="blog">
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
@@ -47,16 +69,20 @@
                     <li class="dropdown">
                       <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""></a>
 
-        							<ul class="dropdown-menu">
-        								<li><a href="<?php echo $this->host('base');?>/usuario/index/editarusuario">Mi perfil</a></li>
-        								<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
-        								<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
-        								<li class="divider"></li>
-                                                                        <li><a href="<?php echo $this->logoutUrl; ?>">Cerrar facebook</a></li>
-        								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
-                                                                        
-        							</ul>
-                                </li>
+						<ul class="dropdown-menu">
+							<li><a href="<?php echo $this->host('base');?>/usuario/index/editarusuario">Mi perfil</a></li>
+							<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
+							<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
+							<li class="divider"></li>
+                            <?php if($this->session->va_logout!=='') 
+							{?>
+                                <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>
+                               
+                            <?php  }else{?>
+                                <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión N</a></li>
+                            <?php }?>
+						</ul>
+                    </li>
                     <?php }?>
                     </ul>
 				</div>
