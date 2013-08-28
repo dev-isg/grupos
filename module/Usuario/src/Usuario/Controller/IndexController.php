@@ -208,7 +208,7 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
- 
+     if(!$storage = new \Zend\Authentication\Storage\Session('Auth')){
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
@@ -257,17 +257,18 @@ public function getAuthService() {
                             }
                          else
                           { 
-                             
-                    
                               $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
-                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                              AuthController::sessionfacebook($email);
                               // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                            }                       
                         }
 
-                       
-                       
+     }
+           
+                        
+                        
+                        
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');

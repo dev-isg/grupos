@@ -24,6 +24,11 @@ class AuthController extends AbstractActionController {
     protected $usuarioTable;
     protected $grupoTable;
 
+    
+    public function __construct() {
+        $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
+    }
+
     public function getAuthService() {
         if (!$this->authservice) {
             $this->authservice = $this->getServiceLocator()->get('AuthService');
@@ -147,11 +152,11 @@ class AuthController extends AbstractActionController {
     }
     
     
-       public function sessionfacebook($email,$pass)
+       public function sessionfacebook($email)
     {  
        
                 $correo = $email;
-                $contrasena = $pass;
+                $contrasena = $this->_options->facebook->pass;
                 $this->getAuthService()
                         ->getAdapter()
                         ->setIdentity($correo)
