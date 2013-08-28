@@ -296,9 +296,7 @@ class AuthController extends AbstractActionController {
 
     public function logoutAction() {
         $finsesion=  md5($this->params()->fromRoute('in_id_face'));
-        if($finsesion){
-           return $this->redirect()->toUrl($finsesion);
-        }
+
         if ($this->getAuthService()->hasIdentity()) {
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
