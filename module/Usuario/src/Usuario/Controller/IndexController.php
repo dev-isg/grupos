@@ -307,7 +307,7 @@ public function getAuthService() {
                               $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                              // $this->$logoutUrl;
                            }                       
                         }
