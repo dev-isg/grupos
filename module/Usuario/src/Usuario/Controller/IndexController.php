@@ -311,7 +311,7 @@ public function getAuthService() {
                              // $this->$logoutUrl;
                            }                       
                         }
-                      }else{}
+                      }else{  }
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');

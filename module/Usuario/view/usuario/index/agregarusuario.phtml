@@ -82,7 +82,9 @@
       <div class="span4 cambiofotouser dev-marca-face">
           <h1>REGISTRARSE CON FACEBOOK</h1>
           <?php if ($this->user): ?>
-            <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
+            <a href="<?php echo $this->loginUrl; ?>">
+              <img src="/img/face.png">
+            </a>
           <?php else: ?>
       
             <a href="<?php echo $this->loginUrl; ?>">
