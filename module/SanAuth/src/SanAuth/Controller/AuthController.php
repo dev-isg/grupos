@@ -103,9 +103,9 @@ class AuthController extends AbstractActionController {
                 $usuario = $this->getUsuarioTable()->usuario1($correo);               
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
-                    foreach ($result->getMessages() as $message) {
-                        $this->flashmessenger()->addMessage($message);
-                    }
+//                    foreach ($result->getMessages() as $message) {
+//                        $this->flashmessenger()->addMessage($message);
+//                    }
 
                     if ($result->isValid()) {
                         $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
@@ -295,10 +295,17 @@ class AuthController extends AbstractActionController {
     }
 
     public function logoutAction() {
+        $finsesion=$this->params()->fromRoute('in_id_face');
+        if($finsesion){
+           return $this->redirect()->toUrl($finsesion);
+        }
         if ($this->getAuthService()->hasIdentity()) {
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
-            $this->flashmessenger()->addMessage("You've been logged out");
+//            $this->flashmessenger()->addMessage("You've been logged out");
+        if($finsesion){
+            return $this->redirect()->toUrl($finsesion);
+         }
         }
         return $this->redirect()->toRoute('home');
         // return $this->redirect()->toRoute('login');
@@ -320,6 +327,7 @@ class AuthController extends AbstractActionController {
                 $mail = $this->params()->fromPost('va_email');
                 try {
                     $results = $this->getUsuarioTable()->generarPassword($mail);
+                    $usuario = $this->getUsuarioTable()->getUsuarioxEmail($mail);
                     $this->flashmessenger()->addMessage('Este correo fue enviado con exito...');
                 } catch (\Exception $e) {
                     $this->flashmessenger()->addMessage('Este correo no esta registrado...');
@@ -333,9 +341,9 @@ class AuthController extends AbstractActionController {
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Su clave es: <a href="' . $config['host']['base'] . '/cambio-contrasena?contrasena=' . utf8_decode($results) . '">
-                                                     <strong style="color:#133088; font-weight: bold;">' . utf8_decode($results) . '</strong></a><br />
-                                              
+                                                    Hola '.ucwords($usuario->va_nombre).', 
+                                                    Para recuperar tu contraseña debes hacer <a href="' . $config['host']['base'] . '/cambio-contrasena?contrasena=' . utf8_decode($results) . '">Clic Aquí</a>
+                                                    o copiar la siguiente url en su navegador:' . $config['host']['base'] . '/cambio-contrasena?contrasena=' . utf8_decode($results) .'          
                                                      </div>
                                                </body>
                                                </html>';

@@ -223,13 +223,15 @@ class GrupoTable{
             $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
             $adapter1 = $this->tableGateway->getAdapter();
             $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
+//            var_dump($notificacion);Exit;
             foreach ($notificacion as $key => $value) {
                 $update = $this->tableGateway->getSql()
                     ->insert()
                     ->into('ta_notificacion_has_ta_usuario')
                     ->values(array(
-                    'ta_usuario_in_id' => $id,
-                    'ta_notificacion_in_id' => $value
+                    'ta_notificacion_in_id' => $value,
+                    'ta_usuario_in_id' => $id
+                    
                 ));
                 
                 $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);

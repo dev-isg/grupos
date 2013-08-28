@@ -29,7 +29,7 @@
                 echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
                 ?></em></p>
                 <p class="desc gh">
-<?php echo $this->grupo[0]['va_descripcion']; ?><br> <a href="#">Ver mas...</a>
+                <?php echo $this->grupo[0]['va_descripcion']; ?><br> 
                 </p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
                 <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
@@ -65,7 +65,13 @@
                                         } else {
                                             ?> <h2>EVENTO CADUCADO</h2> <?php } ?>          
                                             <h3><a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><?php echo $this->escapeHtml($proximos_eventos->va_nombre); ?></a></h3>
-                                            <p><?php echo $proximos_eventos->va_descripcion; ?></p>
+                                            <?php 
+                                            $descrip=strip_tags(html_entity_decode($proximos_eventos->va_descripcion));
+                                            if(strlen($descrip)>250){
+                                                $strdescrip=trim(substr($descrip, 0, 247));
+                                                 $strdescrip.='...';
+                                                }else {$strdescrip=$descrip;} ?>
+                                            <p><?php echo $strdescrip; ?></p>
                                         </div>		
                                     </div>
                                 </div>

@@ -35,7 +35,6 @@
                          	<div class="actualizar">
                                     <?php echo $this->formHidden($form->get('in_id'));?>
 		                        <h1>Actualizar Cuenta</h1>		                        
-<!-- 		                        <form action="" id="actualizar"> -->
 		                        	<h5>Cambiar mi imagen de perfil</h5>
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -66,10 +65,10 @@
 		                            	<label for="">Correo Electrónico</label>
                                         <?php echo $this->formRow($form->get('va_email'));?>
 		                            </p>                                  
-		                             <p>
-		                            	<label for="">Documento de Identidad</label>
-                                        <?php echo $this->formRow($form->get('va_dni'));?>
-		                            </p>
+		                             <!--<p>-->
+<!--		                            	<label for="">Documento de Identidad</label>-->
+                                        <?php //echo $this->formRow($form->get('va_dni'));?>
+		                            <!--</p>-->
 		                            <p>
                                         <label for="">Género</label>
                                                 
@@ -88,9 +87,7 @@
 		                            <p>
                                                 <?php echo $this->formSubmit($form->get('submit'));?>
 		                            </p>
-		                             <?php echo $this->form()->closeTag();?> 
-<!-- 		                        </form> -->
-                    		    
+		                             <?php echo $this->form()->closeTag();?> 	    
                                 </div> 
                         
                     	</div>                    

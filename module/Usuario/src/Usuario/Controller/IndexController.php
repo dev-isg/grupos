@@ -182,8 +182,9 @@ class IndexController extends AbstractActionController {
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
-         Tu cuenta en <a href="' . $this->_options->host->ruta . '">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
-         <a href="' . $this->_options->host->ruta . '/auth?token=' . $valor . ' ">' . $this->_options->host->ruta . '/auth?token=' . $valor . '</a>
+            Tu cuenta en <a href="' . $this->_options->host->ruta . '">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
+            <a href="' . $this->_options->host->ruta . '/auth?token=' . $valor . ' ">' . $this->_options->host->ruta . '/auth?token=' . $valor . '</a><br />
+             <img src="'.$this->_options->host->img.'/juntate.png" title="juntate.pe"/>
                                                      </div>
                                                </body>
                                                </html>';
