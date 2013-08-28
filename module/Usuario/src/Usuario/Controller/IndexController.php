@@ -37,7 +37,8 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
-   
+   protected $storage;
+    protected $authservice;
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
@@ -209,7 +210,22 @@ class IndexController extends AbstractActionController {
         $transport = $this->getServiceLocator()->get('mail.transport');
         $transport->send($message);
     }
+public function getAuthService() {
+        if (!$this->authservice) {
+            $this->authservice = $this->getServiceLocator()->get('AuthService');
+        }
 
+        return $this->authservice;
+    }
+
+    public function getSessionStorage() {
+        if (!$this->storage) {
+            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
+        }
+
+        return $this->storage;
+    }
+    
     public function agregarusuarioAction() {
         // AGREGAR CSS       
           
@@ -264,15 +280,19 @@ class IndexController extends AbstractActionController {
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
+                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                                }     
                              else
                                 {
+                                    AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                                     
                                 }
                             }
                          else
                           { 
-                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook); 
+                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                            }                       
                         }
 

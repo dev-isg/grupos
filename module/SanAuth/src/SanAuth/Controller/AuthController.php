@@ -145,6 +145,78 @@ class AuthController extends AbstractActionController {
             }
     }
     
+    
+       public function sessionfacebook($email,$pass)
+    {  
+       
+                $correo = $email;
+                $contrasena = $pass;
+                $this->getAuthService()
+                        ->getAdapter()
+                        ->setIdentity($correo)
+                        ->setCredential($contrasena);
+
+                $usuario = $this->getUsuarioTable()->usuario1($correo);               
+                if ($usuario[0]['va_estado'] == 'activo') {
+                    $result = $this->getAuthService()->authenticate();
+                    foreach ($result->getMessages() as $message) {
+                        $this->flashmessenger()->addMessage($message);
+                    }
+
+                    if ($result->isValid()) {
+                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl=explode('/',$urlorigen);
+                        $id=end($arrurl);
+//                        $accion = $request->getPost('accion');
+//                        $origen = $request->getPost('origen','evento');
+//                        if ($accion == 'detalleevento') {
+//                            $redirect = 'evento';
+//                        } elseif ($accion == 'detallegrupo') {
+//                            $redirect = 'detalle-grupo';
+//                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
+//                            $redirect = 'elegir-grupo';//'agregar-grupo';
+//                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+//                            $redirect = 'home';
+//                        }
+                            
+                        $storage = $this->getAuthService()->getStorage();
+                        $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_contrasena',
+                                            'va_email',
+                                            'va_foto'
+                                        )));
+                       
+                    }
+                    } 
+                
+                else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
+              
+            
+//            echo $id;
+//            echo $origen;
+//            echo $redirect;exit;
+            if($id){
+                 return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+            }else{
+                
+                 return $this->redirect()->toRoute($redirect);
+            }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public function validarcontrasenaAction(){
         $request = $this->getRequest();
         if ($request->isPost()) {
