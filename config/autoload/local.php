@@ -17,6 +17,7 @@ return array(
         'secret' => '123456789123456789123456789'
     ),
     
+
 //   'host' => array(
 //        'base' => 'http://dev.juntate.pe',
 //        'static' => 'http://dev.juntate.pe',
@@ -25,4 +26,5 @@ return array(
 //        'ruta' => 'http://dev.juntate.pe',
 //        'version'=>1,
 //    ),
+
 );
