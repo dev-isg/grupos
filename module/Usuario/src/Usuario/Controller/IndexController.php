@@ -221,7 +221,7 @@ public function getAuthService() {
                          $email = $user_profile['email'];
                          
                        } else {
-                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
+                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',"redirect_uri" => "http://dev.juntate.pe/")); 
                        }
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
@@ -232,19 +232,19 @@ public function getAuthService() {
                             { if ($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                               //   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 }     
                              else
                                 {
                                   AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
-                                   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                   //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 }
                             }
                          else
                           { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                              // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                            }                       
                         }
 
