@@ -87,7 +87,7 @@ class Module implements AutoloaderProviderInterface
             $controller->layout()->form = new \SanAuth\Form\UserForm();
             $controller->layout()->accion = $actionName;
             
-            if ($actionName == 'login') {
+            if ($actionName == 'login' || $actionName == 'logout' ) {
                         if ($authAdapter->hasIdentity() === true) {
                             $storage = new \Zend\Authentication\Storage\Session('Auth');
                             $session = $storage->read();
