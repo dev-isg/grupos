@@ -236,8 +236,7 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
-             $storage = new \Zend\Authentication\Storage\Session('Auth');
-             $session=$storage->read();
+             
            
 //             if (!$session){                
 //                 require './vendor/facebook/facebook.php';
@@ -259,6 +258,7 @@ public function getAuthService() {
                   // 'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
+           // $session = $facebook->getSession();
             if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
@@ -281,6 +281,9 @@ public function getAuthService() {
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
+                       $storage = new \Zend\Authentication\Storage\Session('Auth');
+                    $session=$storage->read();
+                       if(!$session){
                        if($user_profile==''){}
                        else
                         {    
@@ -308,12 +311,8 @@ public function getAuthService() {
                              // $this->$logoutUrl;
                            }                       
                         }
-
-    
-           
-                        
-                        
-                        
+                      }else{}
+                      
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
