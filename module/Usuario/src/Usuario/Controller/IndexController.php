@@ -246,7 +246,16 @@ public function getAuthService() {
                             }
                          else
                           { 
-                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook); 
+                                $ch = curl_init('https://graph.facebook.com/'.$user.'/picture');
+                                $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $user.'.jpg';
+                                $fp = fopen($cuenta, 'wb');
+                                curl_setopt($ch, CURLOPT_FILE, $fp);
+                                curl_setopt($ch, CURLOPT_HEADER, 0);
+                                curl_exec($ch);
+                                curl_close($ch);
+                                fclose($fp);
+                                $imagen =  $user.'.jpg';
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                               // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                            }                       
