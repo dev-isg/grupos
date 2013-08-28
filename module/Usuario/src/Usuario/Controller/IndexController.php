@@ -277,7 +277,7 @@ public function getAuthService() {
                        } else {
                          $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
-                             //'redirect_uri' => 'http://dev.juntate.pe/'
+                             'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
@@ -307,11 +307,11 @@ public function getAuthService() {
                               $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                              // $this->$logoutUrl;
                            }                       
                         }
-                      }else{}
+                      }else{  }
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
