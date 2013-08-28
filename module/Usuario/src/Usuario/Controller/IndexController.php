@@ -61,7 +61,14 @@ class IndexController extends AbstractActionController {
 
     public function grupoparticipoAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
@@ -84,7 +91,14 @@ class IndexController extends AbstractActionController {
 
     public function misgruposAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
 
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
@@ -105,7 +119,14 @@ class IndexController extends AbstractActionController {
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
@@ -126,7 +147,14 @@ class IndexController extends AbstractActionController {
     {   
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
@@ -349,11 +377,11 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-             'user_profile' => $user_profile,
-                         'user' => $user,
-                         'logoutUrl'  =>$logoutUrl,
-                         'loginUrl'  =>$loginUrl,
-                         'naitik' =>$naitik
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik
             
         );
         // return array();

@@ -3,31 +3,31 @@
                 <h3>footer</h3>
             </footer>
         </div>
+
         <!--Script-->
-        
         <script src="<?php echo $this->host('base');?>/js/bootstrap.js"></script>
         <script src="<?php echo $this->host('base');?>/js/bootstrap-dropdown.js"></script>
         <script src="<?php echo $this->host('base');?>/js/bootstrap-button.js"></script>
         <script src="<?php echo $this->host('base');?>/js/bootstrap-collapse.js"></script>
         <script src="<?php echo $this->host('base');?>/js/jquery.colorbox-min.js"></script>
         <!--Home evento-->
-        <script src="<?php echo $this->host('base');?>/js/respond.js"></script>
+        <!--<script src="<?php echo $this->host('base');?>/js/respond.js"></script>
         <script src="<?php echo $this->host('base');?>/js/browser.js"></script>
         <script src="<?php echo $this->host('base');?>/js/loaded.js"></script>
-        <script src="<?php echo $this->host('base');?>/js/page.js"></script>
+        <script src="<?php echo $this->host('base');?>/js/page.js"></script>-->
         
         <?php echo $this->inlineScript() ?>
         <script>
-            $(document).ready(function(){
-                $(".inlineEvento").colorbox({inline:true, width:"500px"});
-                $("#usuario").submit(function(){
+            jQuery(document).ready(function(){
+                jQuery(".inlineEvento").colorbox({inline:true, width:"500px"});
+                jQuery("#usuario").submit(function(){
                   
                 });
-                $(".eventDato").click(function(){
-                    $("#origen").val('ingresarPrin');
+                jQuery(".eventDato").click(function(){
+                    jQuery("#origen").val('ingresarPrin');
                 });
-                $(".btn-home-evnt").click(function(){
-                    $("#origen").val('');
+                jQuery(".btn-home-evnt").click(function(){
+                    jQuery("#origen").val('');
                 });
             });
         </script>
