@@ -123,11 +123,7 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-        $list=$listaEventos->toArray();
-        //$list[9]['va_descripcion']
-        $text = $list[9]['va_descripcion'];//'aaaaaaaaaaaaaaa   <img src="http://192.168.1.50:82/imagenes/eventos/general/evento-111-521cbbee29305.jpg" />   ';//'<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a>';
-//        var_dump((string)$text);exit;
-//        var_dump(strip_tags($text));exit;
+
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,

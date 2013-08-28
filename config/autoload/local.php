@@ -17,12 +17,14 @@ return array(
         'secret' => '123456789123456789123456789'
     ),
     
-   'host' => array(
-        'base' => 'http://dev.juntate.pe',
-        'static' => 'http://dev.juntate.pe',
-        'images' => 'http://192.168.1.37:82/imagenes',
-        'img'=>'http://192.168.1.37:82/img',
-        'ruta' => 'http://dev.juntate.pe',
-        'version'=>1,
-    ),
+
+//   'host' => array(
+//        'base' => 'http://dev.juntate.pe',
+//        'static' => 'http://dev.juntate.pe',
+//        'images' => 'http://dev.juntate.pe/imagenes',
+//        'img'=>'http://dev.juntate.pe/img',
+//        'ruta' => 'http://dev.juntate.pe',
+//        'version'=>1,
+//    ),
+
 );
