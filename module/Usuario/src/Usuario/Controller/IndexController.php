@@ -246,11 +246,9 @@ public function getAuthService() {
                  'secret' => $this->_options->facebook->secret,
                ));
               $user = $facebook->getUser();
-             if ($user) {        
-                   $user_profile = $facebook->api('/me');
                   $logoutUrl = $facebook->getLogoutUrl();
                   $this->$logoutUrl;
-                 } }
+                 }
         
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
