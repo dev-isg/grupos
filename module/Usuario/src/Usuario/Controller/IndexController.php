@@ -204,7 +204,7 @@ public function getAuthService() {
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-                   'redirect_uri'=>  'http://dev.juntate.pe/'
+                  // 'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
             if ($user) {
@@ -222,7 +222,10 @@ public function getAuthService() {
                          $email = $user_profile['email'];
                          
                        } else {
-                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists','redirect_uri' => 'http://dev.juntate.pe/')); 
+                         $loginUrl = $facebook->getLoginUrl
+                      (array('scope'=>'email,publish_stream,read_friendlists',
+                             //'redirect_uri' => 'http://dev.juntate.pe/'
+                          )); 
                        }
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
