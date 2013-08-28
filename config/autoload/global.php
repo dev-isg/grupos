@@ -29,14 +29,14 @@ return array(
         'secret' => '6ae99781de7ed810fb4713032a068e3a',
         'pass'=>'123456789159753'
     ),
-//   'host' => array(
-//        'base' => 'http://192.168.1.50:82',
-//        'static' => 'http://192.168.1.50:82',
-//        'images' => 'http://192.168.1.50:82/imagenes',
-//        'img'=>'http://192.168.1.50:82/img',
-//        'ruta' => 'http://192.168.1.50:82',
-//        'version'=>1,
-//    ),
+ 'host' => array(
+        'base' => 'http://dev.juntate.pe',
+        'static' => 'http://dev.juntate.pe',
+        'images' => 'http://192.168.1.37:82/imagenes',
+        'img'=>'http://192.168.1.37:82/img',
+        'ruta' => 'http://dev.juntate.pe',
+        'version'=>1,
+    ),
     
         'mail' => array(
         'transport' => array(
