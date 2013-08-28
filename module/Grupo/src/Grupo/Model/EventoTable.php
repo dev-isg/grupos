@@ -78,15 +78,11 @@ class EventoTable{
         return $row;
     }
     
-  public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
-      
-//             $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
-//             
-//             $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
-//       echo($evento->va_fecha);
+  public function guardarEvento(Evento $evento,$idgrupo=null,$imagen,$iduser=null){
       $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
       $fecha_esp = str_replace("-", " ", $fecha_esp);
       $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
+
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>  htmlentities($evento->va_descripcion),
@@ -101,25 +97,27 @@ class EventoTable{
           'va_max'=>$evento->va_max,
           'va_min'=>$evento->va_min,
           'va_duracion'=>$evento->va_duracion,
-          'ta_usuario_in_id'=>$evento->ta_usuario_in_id,
+          'ta_usuario_in_id'=>$iduser=($iduser!=null)?$iduser:$evento->ta_usuario_in_id,
 //          'ta_ubigeo_in_id'=>$evento->ta_ubigeo_in_id,//distrito,//$convertir[0]['in_id']   
-          'ta_grupo_in_id'=>$idgrupo=$idgrupo!=null?$idgrupo:$evento->ta_grupo_in_id//$evento->ta_grupo_in_id
+          'ta_grupo_in_id'=>$idgrupo=($idgrupo!=null)?$idgrupo:$evento->ta_grupo_in_id//$evento->ta_grupo_in_id
       );
 
-//   var_dump($data['va_descripcion']);Exit;
       $id = (int) $evento->in_id;
   
-      foreach($data as $key=>$value){
-          if(empty($value)){
-              $data[$key]=0;
-          }
-      }
+//      foreach($data as $key=>$value){
+//          if(empty($value)){
+//              $data[$key]=0;
+//          }
+//      }
      
      
       if ($id == 0) {
           $this->tableGateway->insert($data);
           $idevento=$this->tableGateway->getLastInsertValue();
-          return $idevento;
+          if($this->unirseEvento($idevento,$iduser)){
+              return $idevento;
+          }  
+         
           
       }else {
             if ($this->getEvento($id)) {
@@ -401,7 +399,8 @@ class EventoTable{
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                         'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser));
              }else{
-                  $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id));
+                  $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
+                                        'ta_usuario_has_ta_evento.va_estado'=>'activo'));
              }
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);

@@ -243,12 +243,14 @@
                      <?php $fecha_actual = date("Y-m-d h:m:s"); 
                     if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
                     {?>   
+                         <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
                     <div class="row-fluid title-side">
-                      <h4>¿Asistiras?</h4>
+                      <h4>¿Asistiras?</h4>                   
                     </div>
+                      <?php } ?>
                     <div class="row-fluid">
                       <div class="span12 btn-unete">
-                      <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
+                    <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
                         <?php if($session){?>
                             <?php if($participa){?>
                             <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el evento</a>

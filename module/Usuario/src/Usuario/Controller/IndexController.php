@@ -37,64 +37,26 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
-   
+   protected $storage;
+    protected $authservice;
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
 
     public function indexAction() {
-//        require './vendor/facebook/facebook.php';
-//               $facebook = new \Facebook(array(
-//                 'appId'  => '171038663080276',
-//                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
-//               ));
-//            $user = $facebook->getUser();
-//            if ($user) {
-//             try {
-//                   $user_profile = $facebook->api('/me');
-//                 } 
-//             catch (FacebookApiException $e) {
-//                           error_log($e);
-//                           $user = null; }
-//                       }
-//                       if ($user) {
-//                         $logoutUrl = $facebook->getLogoutUrl();
-//                         $id_facebook = $user_profile['id'];
-//                         $name = $user_profile['name']; 
-//                         $email = $user_profile['email'];
-//                         
-//                       } else {
-//                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
-//                       }
-//                       $naitik = $facebook->api('/naitik');
-//                       if($user_profile==''){}
-//                       else
-//                        {    
-//                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-//                         if(count($correo)>0)
-//                            { if ($correo[0]['id_facebook']=='')  
-//                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
-//                             else
-//                             {
-//                             $user_session = new Container('user');
-//                                $user_session->username = $email;
-////                            AuthController::facebookAction($email);
-//                               return $this->redirect()->toRoute('/');
-//                             }
-//                           }
-//                         else
-//                          { 
-//                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
-//                           }                       
-//                       }
-//                  
-//                     return array(
-//                         'user_profile' => $user_profile,
-//                         'user' => $user,
-//                         'logoutUrl'  =>$logoutUrl,
-//                         'loginUrl'  =>$loginUrl,
-//                         'naitik' =>$naitik );
+        
+        
+//        $ch = curl_init('https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/1116961_1561721285_1332327023_q.jpg');
+//        $cuenta = $this->_options->upload->images . '/usuario/cuenta/1561721285.jpg';
+//                                $fp = fopen($cuenta, 'wb');
+//                                curl_setopt($ch, CURLOPT_FILE, $fp);
+//                                curl_setopt($ch, CURLOPT_HEADER, 0);
+//                                curl_exec($ch);
+//                                curl_close($ch);
+//                                fclose($fp);
+//                                exit();
+
     }
 
     public function grupoparticipoAction() {
@@ -237,7 +199,22 @@ class IndexController extends AbstractActionController {
         $transport = $this->getServiceLocator()->get('mail.transport');
         $transport->send($message);
     }
+public function getAuthService() {
+        if (!$this->authservice) {
+            $this->authservice = $this->getServiceLocator()->get('AuthService');
+        }
 
+        return $this->authservice;
+    }
+
+    public function getSessionStorage() {
+        if (!$this->storage) {
+            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
+        }
+
+        return $this->storage;
+    }
+    
     public function agregarusuarioAction() {
         // AGREGAR CSS       
           
@@ -259,13 +236,14 @@ class IndexController extends AbstractActionController {
         $request = $this->getRequest();
 
         
- 
+  
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
-                 'scope'  => 'email,publish_stream'
+                 'scope'  => 'email,publish_stream',
+                  // 'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
             if ($user) {
@@ -278,12 +256,17 @@ class IndexController extends AbstractActionController {
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
+                         var_dump($logoutUrl);exit;
+                         $this->layout()->logoutUrl = $logoutUrl;
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
                          
                        } else {
-                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
+                         $loginUrl = $facebook->getLoginUrl
+                      (array('scope'=>'email,publish_stream,read_friendlists',
+                             //'redirect_uri' => 'http://dev.juntate.pe/'
+                          )); 
                        }
                        $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
@@ -292,20 +275,33 @@ class IndexController extends AbstractActionController {
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
+                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                // $this->$logoutUrl;
+                                }     
                              else
                                 {
-                                    
+                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
+                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                 // $this->$logoutUrl;
                                 }
                             }
                          else
                           { 
-                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
+                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                             // $this->$logoutUrl;
                            }                       
                         }
 
-                       
-                       
+    
+           
+                        
+                        
+                        
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');

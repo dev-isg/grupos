@@ -54,7 +54,7 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-//        var_dump($mensajes);
+
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $idgrupo = $this->params()->fromRoute('in_id');
@@ -115,7 +115,7 @@ class EventoController extends AbstractActionController
                 $evento->exchangeArray($form->getData());
    
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                 $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                 $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen,$storage->read()->in_id);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else 
                     {
@@ -175,6 +175,10 @@ class EventoController extends AbstractActionController
             ));
         }
 
+            $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
+            $fecha=date('d F Y - H:i', strtotime($fecha_esp));
+            $evento->va_fecha=$fecha;
+            
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
         $form->bind($evento);
