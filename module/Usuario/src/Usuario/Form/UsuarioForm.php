@@ -44,13 +44,13 @@ class UsuarioForm extends Form{
             ),
         )); 
         
-        $this->add(array(
-            'name' => 'va_dni',
-            'type' => 'Text',
-            'attributes' => array(
-                'placeholder'=>'Ingrese el dni... '
-            ),
-        )); 
+//        $this->add(array(
+//            'name' => 'va_dni',
+//            'type' => 'Text',
+//            'attributes' => array(
+//                'placeholder'=>'Ingrese el dni... '
+//            ),
+//        )); 
         
         $this->add(array(
             'name' => 'va_genero',

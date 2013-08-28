@@ -389,16 +389,16 @@ class EventoController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
-                
+                                                     Hola '.ucwords($storage->read()->va_nombre).',
+                                                     Usted se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
+                                                     Si desea mas información del evento dar <a href="'.$this->_options->host->base.'/evento/'.$idevent.'">Clic Aquí</a> <br />Equipo Juntate.pe     
                                                      </div>
+                                                     <img src="'.$this->_options->host->base.'/img/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
                 
                 $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al evento');
-                $usuario = $this->getEventoTable()
-                ->eventoxUsuario($idgrup)
-                ->toArray();
+                $usuario = $this->getEventoTable()->eventoxUsuario($idevent) ->toArray();
                 $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
@@ -426,15 +426,18 @@ class EventoController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
-                
+                                                    Hola '.ucwords($storage->read()->va_nombre).',
+                                                    Usted ha abandonado el evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
+                                                    Si desea tener información de otros eventos puede buscarlos en <a href="'.$this->_options->host->base.'">Juntate.pe</a> <br />
+                                                    Equipo Juntate.pe
                                                      </div>
+                                                     <img src="'.$this->_options->host->img.'/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
                 
                 $this->mensaje($storage->read()->va_email, $bodyHtml, 'Has abandonado un evento');
                 $usuario = $this->getEventoTable()
-                ->eventoxUsuario($idgrup)
+                ->eventoxUsuario($idevent)
                 ->toArray();
                 $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>

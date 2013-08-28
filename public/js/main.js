@@ -267,7 +267,7 @@ function valUsuario(){
       },
       va_contrasena: {
         required : "Ingrese la clave",
-        minlength:"Ingresa un password de 8 caracteres a mas",
+        minlength:"Ingresa una contraseña de 8 caracteres a mas",
         remote: "Contraseña invalida"
       }
     }
