@@ -174,18 +174,7 @@ class AuthController extends AbstractActionController {
                         $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
                         $arrurl=explode('/',$urlorigen);
                         $id=end($arrurl);
-//                        $accion = $request->getPost('accion');
-//                        $origen = $request->getPost('origen','evento');
-//                        if ($accion == 'detalleevento') {
-//                            $redirect = 'evento';
-//                        } elseif ($accion == 'detallegrupo') {
-//                            $redirect = 'detalle-grupo';
-//                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
-//                            $redirect = 'elegir-grupo';//'agregar-grupo';
-//                        } elseif($accion=='index' && $origen=='ingresarPrin'){
-//                            $redirect = 'home';
-//                        }
-                            
+
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -295,7 +284,7 @@ class AuthController extends AbstractActionController {
     }
 
     public function logoutAction() {
-        $finsesion=  md5($this->params()->fromRoute('in_id_face'));
+        $finsesion=  $this->params()->fromRoute('in_id_face');
       
         if ($this->getAuthService()->hasIdentity()) {
           
