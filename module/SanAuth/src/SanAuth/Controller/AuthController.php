@@ -100,7 +100,7 @@ class AuthController extends AbstractActionController {
                                         ->getResultRowObject(array(
                                             'in_id',
                                             'va_nombre',
-                                      
+
                                             'va_email',
                                             'va_foto'
                                         )));
