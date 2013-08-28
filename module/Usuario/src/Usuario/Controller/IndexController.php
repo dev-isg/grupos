@@ -228,7 +228,6 @@ public function getAuthService() {
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
-                         var_dump($logoutUrl);exit;
                          $this->layout()->logoutUrl = $logoutUrl;
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
