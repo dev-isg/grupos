@@ -20,15 +20,8 @@ class UsuarioTable
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
-        $selecttot = $sql->select()->from('ta_usuario')
+        $selecttot = $sql->select()->from('ta_usuario');
 //                    ->join('ta_ubigeo','ta_usuario.ta_ubigeo_in_id=ta_ubigeo.in_id',array(),'left')
-                           ;;
-
-        ;
-        
-        ;
-        
-        ;
         
         $selecttot->user('ta_usuario.in_id')->order('ta_usuario.in_id desc');
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
@@ -125,8 +118,7 @@ class UsuarioTable
             'va_nombre' => $usuario->va_nombre,
             'va_email' => $usuario->va_email,
             'va_contrasena' => sha1($usuario->va_contrasena),
-            'va_dni' => $usuario->va_dni,
-//            'va_foto' => $usuario->va_foto['name'],
+//            'va_dni' => $usuario->va_dni,
             'va_foto' => $imagen,
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion,

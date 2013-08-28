@@ -25,7 +25,7 @@ class NotificacionForm extends Form
                    ),
                    'options' => array(
                          'value_options' => array(
-                            '1'=>'Recibir avisos por email cuando ingresa al Grupo ',
+                            '1'=>'Recibir avisos por email cuando ingresa al Grupo',
                             '2'=>'Recibir avisos por email cuando sale del Grupo',
                          ),
                        ),

@@ -134,13 +134,13 @@ class Usuario implements InputFilterAwareInterface{
                 ), 
             )));
              
-             $inputFilter->add($factory->createInput(array(
-                        'name' => 'va_dni',
-                        'required' => false,
-                        'filters' => array(
-                            array('name' => 'Int'),
-                        ),
-                    )));
+//             $inputFilter->add($factory->createInput(array(
+//                        'name' => 'va_dni',
+//                        'required' => false,
+//                        'filters' => array(
+//                            array('name' => 'Int'),
+//                        ),
+//                    )));
              
             $inputFilter->add(
                 $factory->createInput(array(
@@ -224,7 +224,7 @@ class Usuario implements InputFilterAwareInterface{
             
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'va_nombre',
-                'required' => false,
+                'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
@@ -243,7 +243,7 @@ class Usuario implements InputFilterAwareInterface{
             
             $inputFilter->add($factory->createInput(array( 
                 'name' => 'va_email', 
-                'required' => false, 
+                'required' => true, 
                 'filters' => array( 
                     array('name' => 'StripTags'), 
                     array('name' => 'StringTrim'), 
@@ -295,13 +295,13 @@ class Usuario implements InputFilterAwareInterface{
                 ), 
             )));
              
-             $inputFilter->add($factory->createInput(array(
-                        'name' => 'va_dni',
-                        'required' => false,
-                        'filters' => array(
-                            array('name' => 'Int'),
-                        ),
-                    )));
+//             $inputFilter->add($factory->createInput(array(
+//                        'name' => 'va_dni',
+//                        'required' => false,
+//                        'filters' => array(
+//                            array('name' => 'Int'),
+//                        ),
+//                    )));
              
             $inputFilter->add(
                 $factory->createInput(array(
