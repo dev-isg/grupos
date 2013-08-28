@@ -157,6 +157,7 @@ class AuthController extends AbstractActionController {
        
                 $correo = $email;
                 $contrasena = $this->_options->facebook->pass;
+                var_dump($contrasena);exit;
                 $this->getAuthService()
                         ->getAdapter()
                         ->setIdentity($correo)
