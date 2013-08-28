@@ -18,7 +18,6 @@ use Usuario\Model\Usuario;
 use SanAuth\Controller\AuthController; 
 use Zend\Session\Container;
 
-
 use Usuario\Model\UsuarioTable;
 use Usuario\Form\UsuarioForm;
 use Usuario\Form\NotificacionForm;
@@ -237,6 +236,8 @@ class IndexController extends AbstractActionController {
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream'
                ));
             $user = $facebook->getUser();
             if ($user) {
@@ -263,17 +264,17 @@ class IndexController extends AbstractActionController {
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
-                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
                              else
-                             {
-                            
-                             }
-                           }
+                                {
+                                    
+                                }
+                            }
                          else
                           { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
                            }                       
-                       }
+                        }
 
                        
                        
