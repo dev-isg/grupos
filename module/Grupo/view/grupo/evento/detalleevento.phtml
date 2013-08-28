@@ -131,6 +131,22 @@
                     </div>  <!-- /overall_score -->  
                   </div>
                   <div class="invitar-amigos">
+                    <script src="http://connect.facebook.net/en_US/all.js"></script>
+                    <script>
+                      FB.init({
+                        appId:'171038663080276',
+                        cookie:true,
+                        status:true,
+                        xfbml:true
+                      });
+                      function Facebook_friends()
+                      {
+                        FB.ui({
+                            method: 'apprequests',
+                            message: 'Invitación a mi aplicación Grupos'
+                        });
+                      }
+                    </script>
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
                         <div class="accordion-heading">
@@ -141,7 +157,9 @@
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
-                            hi
+                            <div id="facebook_friends" title="Invita a tus amigos de facebook" onclick="Facebook_friends();">
+                              <img src="facebook.jpg" width="50" height="50">&nbsp;&nbsp;Invita a tus amigos de facebook
+                            </div>
                           </div>
                         </div>
                       </div>                      
