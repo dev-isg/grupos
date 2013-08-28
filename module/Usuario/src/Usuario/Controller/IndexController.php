@@ -566,7 +566,7 @@ public function getAuthService() {
             <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
          }
         $estados = '<div class="span12 menu-login">
-          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido ' . $nombre . '</span>
+          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido<br> ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
