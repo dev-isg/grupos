@@ -208,7 +208,7 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
-     if(!$storage = new \Zend\Authentication\Storage\Session('Auth')){
+  
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
@@ -248,11 +248,13 @@ public function getAuthService() {
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                                //   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                 $this->$logoutUrl;
                                 }     
                              else
                                 {
                                   AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
                                    //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                  $this->$logoutUrl;
                                 }
                             }
                          else
@@ -261,10 +263,11 @@ public function getAuthService() {
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email);
                               // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                              $this->$logoutUrl;
                            }                       
                         }
 
-     }
+    
            
                         
                         
