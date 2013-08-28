@@ -278,12 +278,12 @@ class UsuarioTable
 
     
      public function insertarusuariofacebbok($nombre,$email,$idfacebook)
-    {
+    {   $contrasena = sha1(123456789159753) ;
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->insert()
                 ->into('ta_usuario')
-                ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,'va_estado'=>'activo'));
+                ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,'va_estado'=>'activo','va_contrasena'=>$contrasena));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
          $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }

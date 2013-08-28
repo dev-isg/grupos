@@ -54,7 +54,7 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-//        var_dump($mensajes);
+
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $idgrupo = $this->params()->fromRoute('in_id');
@@ -115,7 +115,7 @@ class EventoController extends AbstractActionController
                 $evento->exchangeArray($form->getData());
    
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                 $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                 $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen,$storage->read()->in_id);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else 
                     {
