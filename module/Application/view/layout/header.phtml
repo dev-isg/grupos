@@ -17,43 +17,45 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $this->host('ruta')?>/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/main.css">
 
-        <link href="<?php echo $this->host('ruta')?>/css/page.css" rel="stylesheet" />
-        <link href="<?php echo $this->host('ruta')?>/css/theme.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/masonry.css">
+        <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/options.css">
+
         <?php echo $this->headLink(); ?>
         		
         <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
         <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
-        <script src="<?php echo $this->host('ruta')?>/js/masonry.js"></script>       
 
 </head>
 <body id="blog">
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span>
-					<span class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="/">Grupos</a>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+                    <span class="icon-bar"></span>
+				</a>
+                <a class="brand logo-juntate" href="/" title="juntate.pe"><img src="/img/juntate.png" title="juntate.pe"></a>
                 <?php if($_GET['nombre']) {?> <span class="category-home">Categoria: <?php echo $_GET['nombre'] ?></span><?php } ?>
                 <div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
-            <?php if(!$this->session){?>
+                        <?php if(!$this->session){?>
                         <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesion</a></li>
 						<li class="divider-vertical divider-one"></li>
 						<li class="top-ini"><a href="/registrarse">Registrarse</a></li>
 
-            <?php }else{?>
-            <li class="dropdown">
-              <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""></a>
-
-							<ul class="dropdown-menu">
-								<li><a href="<?php echo $this->host('base');?>/usuario/index/editarusuario">Mi perfil</a></li>
-								<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
-								<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
-								<li class="divider"></li>
-								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
-							</ul>
-                        </li>
-            <?php }?>
+                        <?php }else{?>
+                            <li class="dropdown">
+                                <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""></a>
+                				<ul class="dropdown-menu">
+                					<li><a href="<?php echo $this->host('base');?>/usuario/index/editarusuario">Mi perfil</a></li>
+                					<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
+                					<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
+                					<li class="divider"></li>
+                					<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
+                				</ul>
+                            </li>
+                        <?php }?>
                     </ul>
 				</div>
 				<!-- /.nav-collapse -->

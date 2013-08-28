@@ -44,8 +44,15 @@ class IndexController extends AbstractActionController
     public function indexAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-                ->setScript('$(document).ready(function(){valUsuario();});')
+                ->setScript('jQuery(document).ready(function(){valUsuario();});')
                 ->prependFile($this->_options->host->base . '/js/main.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
@@ -123,11 +130,6 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-        $list=$listaEventos->toArray();
-        //$list[9]['va_descripcion']
-        $text = $list[9]['va_descripcion'];//'aaaaaaaaaaaaaaa   <img src="http://192.168.1.50:82/imagenes/eventos/general/evento-111-521cbbee29305.jpg" />   ';//'<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a>';
-//        var_dump((string)$text);exit;
-//        var_dump(strip_tags($text));exit;
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
