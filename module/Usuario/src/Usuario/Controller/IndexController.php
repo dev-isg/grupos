@@ -236,19 +236,7 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
-             
-           
-//             if (!$session){                
-//                 require './vendor/facebook/facebook.php';
-//                 $facebook = new \Facebook(array(
-//                 'appId'  => $this->_options->facebook->appId,
-//                 'secret' => $this->_options->facebook->secret,
-//               ));
-//              $user = $facebook->getUser();
-//                  $logoutUrl = $facebook->getLogoutUrl();
-//                  $this->$logoutUrl;
-//                 }
-        
+            
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
