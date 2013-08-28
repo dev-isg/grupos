@@ -1,10 +1,10 @@
-$(document).ready(function(){
-	$('.dropdown-toggle').dropdown();
-  $('#search-home').focus(function() {
-    $('#search-home').val('');
+jQuery(document).ready(function(){
+	jQuery('.dropdown-toggle').dropdown();
+  jQuery('#search-home').focus(function() {
+    jQuery('#search-home').val('');
   });
-  $('#search-home').click(function() {
-    $('#search-home').val('');
+  jQuery('#search-home').click(function() {
+    jQuery('#search-home').val('');
   });
 });
 
@@ -209,7 +209,7 @@ function actualizarDatos(){
     });
 }
 function valUsuario(){
-  $("#usuario").validate({
+  jQuery("#usuario").validate({
     rules: {
       va_email: {
         required: true,
@@ -220,7 +220,7 @@ function valUsuario(){
           url: '/validar-correo',
           data:{
             va_email: function(){
-              return $('#va_email').val();
+              return jQuery('#va_email').val();
             }
           },
           dataFilter: function(data){
@@ -242,10 +242,10 @@ function valUsuario(){
           url: '/validar-contrasena',
           data:{
             va_contrasena: function(){
-              return $('#inputPassword').val();
+              return jQuery('#inputPassword').val();
             },
             va_email: function(){
-              return $('#va_email').val();
+              return jQuery('#va_email').val();
             }
           },
           dataFilter: function(data){

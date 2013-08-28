@@ -24,6 +24,11 @@ class AuthController extends AbstractActionController {
     protected $usuarioTable;
     protected $grupoTable;
 
+    
+    public function __construct() {
+        $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
+    }
+
     public function getAuthService() {
         if (!$this->authservice) {
             $this->authservice = $this->getServiceLocator()->get('AuthService');

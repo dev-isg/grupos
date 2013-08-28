@@ -45,12 +45,30 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
+        
+        
+//        $ch = curl_init('https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/1116961_1561721285_1332327023_q.jpg');
+//        $cuenta = $this->_options->upload->images . '/usuario/cuenta/1561721285.jpg';
+//                                $fp = fopen($cuenta, 'wb');
+//                                curl_setopt($ch, CURLOPT_FILE, $fp);
+//                                curl_setopt($ch, CURLOPT_HEADER, 0);
+//                                curl_exec($ch);
+//                                curl_close($ch);
+//                                fclose($fp);
+//                                exit();
 
     }
 
     public function grupoparticipoAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categoria = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categoria;
         $id = $this->params()->fromQuery('id');
@@ -73,7 +91,14 @@ class IndexController extends AbstractActionController {
 
     public function misgruposAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js');
+        $renderer->inlineScript()->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
 
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
@@ -94,7 +119,14 @@ class IndexController extends AbstractActionController {
     {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
@@ -115,7 +147,14 @@ class IndexController extends AbstractActionController {
     {   
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
+        ->prependFile($this->_options->host->base . '/js/main.js')
+        ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
@@ -197,7 +236,19 @@ public function getAuthService() {
         $request = $this->getRequest();
 
         
- 
+             
+           
+//             if (!$session){                
+//                 require './vendor/facebook/facebook.php';
+//                 $facebook = new \Facebook(array(
+//                 'appId'  => $this->_options->facebook->appId,
+//                 'secret' => $this->_options->facebook->secret,
+//               ));
+//              $user = $facebook->getUser();
+//                  $logoutUrl = $facebook->getLogoutUrl();
+//                  $this->$logoutUrl;
+//                 }
+        
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
@@ -207,6 +258,7 @@ public function getAuthService() {
                   // 'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
+           // $session = $facebook->getSession();
             if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
@@ -217,6 +269,7 @@ public function getAuthService() {
                        }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
+                         $this->layout()->logoutUrl = $logoutUrl;
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
@@ -228,6 +281,9 @@ public function getAuthService() {
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
+                       $storage = new \Zend\Authentication\Storage\Session('Auth');
+                    $session=$storage->read();
+                       if(!$session){
                        if($user_profile==''){}
                        else
                         {    
@@ -236,33 +292,27 @@ public function getAuthService() {
                             { if ($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                               //   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                // $this->$logoutUrl;
                                 }     
                              else
                                 {
                                   AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
-                                   //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                 // $this->$logoutUrl;
                                 }
                             }
                          else
                           { 
-                                $ch = curl_init('https://graph.facebook.com/'.$user.'/picture');
-                                $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $user.'.jpg';
-                                $fp = fopen($cuenta, 'wb');
-                                curl_setopt($ch, CURLOPT_FILE, $fp);
-                                curl_setopt($ch, CURLOPT_HEADER, 0);
-                                curl_exec($ch);
-                                curl_close($ch);
-                                fclose($fp);
-                                $imagen =  $user.'.jpg';
+                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                              // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                             // $this->$logoutUrl;
                            }                       
                         }
-
-                       
-                       
+                      }else{}
+                      
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -324,11 +374,11 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-             'user_profile' => $user_profile,
-                         'user' => $user,
-                         'logoutUrl'  =>$logoutUrl,
-                         'loginUrl'  =>$loginUrl,
-                         'naitik' =>$naitik
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik
             
         );
         // return array();

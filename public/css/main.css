@@ -1858,6 +1858,45 @@ ul.score-list li:first-child {
 .dev-marca-face h1{
   margin-top: 100px;
 }
+.navbar .brand{
+  padding: 0;
+  margin-left: 0;
+}
+.logo-juntate img{
+  margin-top: 5px;
+}
+.contenido-fichas{
+  width: 346px;
+  margin-right: 35px;
+  margin-bottom: 35px;
+  padding: 0px;
+  float: left;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.post-block .content{
+  padding: 10px 10px 0px 10px;
+}
+.post-block .content h2, 
+.post-block .content h2 a{
+  color: #111;
+  font-weight: normal;
+  text-transform: uppercase;
+  text-transform: uppercase;
+}
+.post-block .content h2 {
+  margin-bottom: 7px;
+  padding: 0;
+  font-size: 18px;
+  line-height: 22px;
+}
+.divider-1px-meta {
+  height: 1px;
+  background-color: #B7B7B7;
+  margin: 10px 0;
+  width: 100%;
+}
 /*@font-face {
   font-family: "untitled-font-1";
   src:url("../font/untitled-font-1.eot");
@@ -2115,10 +2154,10 @@ ul.score-list li:first-child {
     WIDE: Main
    ============ */
 
-    .main article {
+    /*.main article {
         float: left;
         width: 57%;
-    }
+    }*/
 
     
 }

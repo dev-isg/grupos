@@ -9,101 +9,110 @@
         			<header class="span12"><span>Eventos donde participo</span> <div class="agrupos"><a href="<?php echo $this->url('elegir-grupo');?>">Crear nuevo evento</a></div></header>
         		</div>
 				<div class="row-fluid">
-					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
-	                    <ul>
-	                  <?php  foreach ($this->eventos  as $eventos) :?>
-                            <li data-category="web">
-                                <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
-                               <img src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
-                                </a>
-                                <div class="content">
-                                	<div class="entry-post-date" style="border-top-color: #2999b5">
-		                                <div class="date-month">
-		                                    <?php  $fecha = date_create($eventos->fecha);
-                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>
+					<div class="span12 main wrapper" data-ui-scrollbar>
+						<div id="content">
+		                     <?php  foreach ($this->eventos  as $eventos) :?>
+		                    <article id="post-9" class="img-dev-evento post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope itemtype="http://schema.org/BlogPosting">
+		                        <div class="post-block three_columns">
+		                            <div class="entry-thumb">
+		                                <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
+		                               		<img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
+		                                </a>
+		                            </div> <!-- .entry-thumb -->
+		                            <div class="content">
+		                                <div class="entry-post-date" style="border-top-color: #2999b5">
+		                                    <div class="date-month">
+			                                    <?php  $fecha = date_create($eventos->fecha);
+	                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>
+			                                </div>
 		                                </div>
+		                                <h2>
+	                                        <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>"><?php echo $this->escapeHtml($eventos->nombre); ?></a>
+	                                    </h2>
+		                                <div class="divider-1px-meta"></div>
+		                                <footer class="entry-extra clearfix">
+		                                    <span class="meta-comments">
+			                                    <i class="icon-comment"></i>
+			                                    <a href="#" title="comentarios"><?php echo  $this->escapeHtml($eventos->comentarios);?></a>
+			                                </span><!-- .meta-comments -->
+			                                <span class="meta-views" title="Views">
+			                                    <i class="icon-tag"></i>
+			                                    <a href="#" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+			                                </span><!-- .meta-views -->
+		                                </footer>
 		                            </div>
-                                    <h2>
-                                        <a href="/evento/<?php echo $this->escapeHtml($eventos->id); ?>"><?php echo $this->escapeHtml($eventos->nombre); ?></a>
-                                    </h2>
-                                    <div class="divider-1px-meta"></div>
-		                            <footer class="entry-extra clearfix">
-		                                <span class="meta-comments">
-		                                    <i class="icon-comment"></i>
-		                                    <a href="#" title="comentarios"><?php echo  $this->escapeHtml($eventos->comentarios);?></a>
-		                                </span><!-- .meta-comments -->
-		                                <span class="meta-views" title="Views">
-		                                    <i class="icon-tag"></i>
-		                                    <a href="#" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
-		                                </span><!-- .meta-views -->
-		                            </footer>
-                                </div>
-                            </li>
-                            <?php endforeach;?>
+		                        </div> <!-- .post-block -->  
+		                    </article><!-- #post-ID -->
+		                    <?php endforeach; ?>-->
+		                </div> 
 
-	                    </ul>               
+	                  
 	                </div> 
 				</div>
-              <!--  <div class="row-fluid">
-                	<header class="span12"><span>Grupos Similares</span></header>
-                </div>
-				<div class="row-fluid">
-					<div class="span12 main wrapper" id="content" data-ui-scrollbar>
-		                <ul>
-		                  
-		                    <li data-category="web">
-		                        <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/1.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Web</a></span>
-		                            </div>
-		                            <h2><a href="#">Tumidei Spa</a></h2>
-		                            <p>
-		                                Corporate web site. Html5. Responsive.
-		                            </p>
-		                        </div>
-		                    </li>
-		                    
-
-		                    <li data-category="art">
-		                        <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/2.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Art</a></span>
-		                            </div>
-		                            <h2><a href="#">Crazy Home</a></h2>
-		                            <p>
-		                                Overdrive realizza Art Image (quadri e mobili d'arredo) in collaborazione con Crazy Home.
-		                            </p>
-		                        </div>
-		                    </li>  
-
-		                     
-		                    <li data-category="foto">
-		                         <a href="#" class="preview" data-ui-lightbox>
-		                            <img src="../../img/eventos/3.jpg" alt=""/>
-		                        </a>
-		                        <div class="content">
-		                            <div class="info">
-		                                <span>2013</span>
-		                                <span class="category"><a href="#">Lo Studio</a></span>
-		                            </div>
-		                            <h2><a href="#">Overdrive</a></h2>
-		                            <p>
-		                                I nostro Quartier Generale. Lissone. Piazzale Giotto 1.
-		                            </p>
-		                        </div>
-		                    </li> 
-		            	</ul>               
-		    		</div>
-				</div>-->
 	    </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+            /* <![CDATA[ */
+
+            // Masonry
+            jQuery.noConflict()(function($){
+                //$(window).load(function() {
+        $(document).ready(function() {
+            var $container = $('#content');
+
+            $container.imagesLoaded(function(){
+              $container.masonry({
+                itemSelector: '.masonry-box',
+                isAnimated: true
+              });
+            });
+
+            // Infinite Scroll
+
+            $container.infinitescroll({
+                navSelector  : '.pagination',    // selector for the paged navigation 
+                nextSelector : '.pagination a',  // selector for the NEXT link (to page 2)
+                itemSelector : '.masonry-box',     // selector for all items you'll retrieve
+                loading: {
+                    finishedMsg: 'No more posts to load.',
+                    img: 'http://wp.color-theme.com/pravda/wp-content/themes/wp-pravda/img/ajax-loader.gif'
+                }
+            },
+
+            // trigger Masonry as a callback
+            function(newElements) {
+                var $newElems = $( newElements ).css({ opacity: 0 });
+
+                $newElems.imagesLoaded(function()   {
+                    $newElems.animate({ opacity: 1 });
+                    $container.masonry( 'appended', $newElems, true ); 
+
+                    // post like system
+                    $(".post-like a").click(function() {
+
+                        heart = $(this);
+                        post_id = heart.data("post_id");
+
+                        $.ajax({
+                                type: "post",
+                                url: ajax_var.url,
+                                data: "action=post-like&nonce="+ajax_var.nonce+"&post_like=&post_id="+post_id,
+                                success: function(count){
+                                    if(count != "already") {
+                                        heart.addClass("voted");
+                                        heart.siblings(".count").text(count);
+                                    }
+                                }
+                        });
+                        return false;
+                    }) // end post like system
+
+                });
+            });
+         
+            });
+        });
+        /* ]]> */   
+            </script>
