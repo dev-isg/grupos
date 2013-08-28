@@ -152,12 +152,11 @@ class AuthController extends AbstractActionController {
     }
     
     
-       public function sessionfacebook($email)
+       public function sessionfacebook($email,$pass)
     {  
        
                 $correo = $email;
-                $contrasena = $this->_options->facebook->pass;
-                var_dump($contrasena);exit;
+                $contrasena = $pass;
                 $this->getAuthService()
                         ->getAdapter()
                         ->setIdentity($correo)
