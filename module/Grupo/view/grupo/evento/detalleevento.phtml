@@ -131,21 +131,6 @@
                     </div>  <!-- /overall_score -->  
                   </div>
                   <div class="invitar-amigos">
-                    <script src="http://connect.facebook.net/en_US/all.js"></script>
-                    <script>
-                      FB.init({
-                        appId:'171038663080276',
-                        cookie:true,
-                        status:true,
-                        xfbml:true
-                      });
-                      function FacebookInviteFriends(){
-                          FB.ui({
-                          method: 'apprequests',
-                          message: 'Grupos > Crea tu evento'
-                        });
-                      }
-                    </script>
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
                         <div class="accordion-heading">
@@ -157,7 +142,7 @@
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
                             <div id="fb-root"></div>
-                              <a href='#' onclick="FacebookInviteFriends();"> 
+                              <a href="#" onclick="FB.ui({method: 'apprequests', message: 'Uneté a juntate.pe'});">
                                 Invita a tus Amigos de Facebook!
                               </a>
                           </div>
