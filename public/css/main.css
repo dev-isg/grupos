@@ -306,6 +306,12 @@ nav a:hover {
   font-family: "league_gothicregular";
   font-weight: normal !important;
 }
+span.face{
+  font-size: 14px;
+  margin-right: 5px;
+  color: #333;
+  font-weight: bold;
+}
 #addresspicker_map{
   margin-bottom: 0px;
   margin-top: 5px;
