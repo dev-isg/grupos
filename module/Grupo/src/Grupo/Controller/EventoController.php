@@ -147,7 +147,7 @@ class EventoController extends AbstractActionController
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/themes/base/jquery.ui.all.css');
         $renderer->inlineScript()
-            ->setScript('crearevento();cargarMapa();cargarFecha();CKEDITOR.replace ("editor1");')
+            ->setScript('crearevento();cargarMapa();cargarFecha();CKEDITOR.replace("editor1");')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/jquery.ui.addresspicker.js')
             ->prependFile($this->_options->host->base . '/js/jquery-ui.js')
@@ -175,6 +175,10 @@ class EventoController extends AbstractActionController
             ));
         }
 
+            $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
+            $fecha=date('d F Y - H:i', strtotime($fecha_esp));
+            $evento->va_fecha=$fecha;
+            
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
         $form->bind($evento);

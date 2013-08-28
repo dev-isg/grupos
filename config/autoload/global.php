@@ -25,8 +25,8 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
     'facebook' => array(
-        'appId' => '123456789',
-        'secret' => '123456789123456789123456789'
+        'appId' => '171038663080276',
+        'secret' => '6ae99781de7ed810fb4713032a068e3a'
     ),
    'host' => array(
         'base' => 'http://192.168.1.50:82',

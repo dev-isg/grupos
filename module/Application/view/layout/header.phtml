@@ -10,6 +10,7 @@
        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="<?php echo $this->host('ruta')?>/img/favicon.ico" type="image/vnd.microsoft.icon">
         <!--<link rel="stylesheet" href="css/normalize.min.css">-->
         <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/bootstrap.css">
         <link rel="stylesheet" href="<?php echo $this->host('ruta')?>/css/bootstrap-responsive.css">
@@ -38,7 +39,7 @@
             <?php if(!$this->session){?>
                         <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesion</a></li>
 						<li class="divider-vertical divider-one"></li>
-						<li class="top-ini"><a href="/usuario/index/agregarusuario">Registrarse</a></li>
+						<li class="top-ini"><a href="/registrarse">Registrarse</a></li>
 
             <?php }else{?>
             <li class="dropdown">
@@ -146,7 +147,7 @@
         			</div>
         			<div class="control-group">
         				<div class="controls">
-                            <span class="reg-spam"><a href="/usuario/index/agregarusuario">Resgistrate</a></span>
+                            <span class="reg-spam"><a href="/registrarse">Resgistrate</a></span>
                             <span><a href="/cambio">¿Olvidaste tu contraseña?</a></span>
         				</div>
         			</div>

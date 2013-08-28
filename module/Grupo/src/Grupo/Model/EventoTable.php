@@ -79,14 +79,10 @@ class EventoTable{
     }
     
   public function guardarEvento(Evento $evento,$idgrupo=null,$imagen){
-      
-//             $fecha_esp = str_replace(" ", "-", $evento->va_fecha);
-//             
-//             $fecha_esp=preg_replace('/--+/','-', $fecha_esp);
-//       echo($evento->va_fecha);
       $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
       $fecha_esp = str_replace("-", " ", $fecha_esp);
       $fecha=date('Y-m-d H:i:s', strtotime($fecha_esp));
+
       $data=array(
          'va_nombre'=>$evento->va_nombre,
          'va_descripcion'=>  htmlentities($evento->va_descripcion),
@@ -106,14 +102,13 @@ class EventoTable{
           'ta_grupo_in_id'=>$idgrupo=$idgrupo!=null?$idgrupo:$evento->ta_grupo_in_id//$evento->ta_grupo_in_id
       );
 
-//   var_dump($data['va_descripcion']);Exit;
       $id = (int) $evento->in_id;
   
-      foreach($data as $key=>$value){
-          if(empty($value)){
-              $data[$key]=0;
-          }
-      }
+//      foreach($data as $key=>$value){
+//          if(empty($value)){
+//              $data[$key]=0;
+//          }
+//      }
      
      
       if ($id == 0) {

@@ -28,6 +28,8 @@ use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
 
+
+
 class IndexController extends AbstractActionController {
 
     protected $usuarioTable;
@@ -35,93 +37,64 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     protected $_options;
-    protected $storage;
-    protected $authservice;
+   
 
     public function __construct() {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');     
     }
-   public function getAuthService() {
-        if (!$this->authservice) {
-            $this->authservice = $this->getServiceLocator()->get('AuthService');
-        }
 
-        return $this->authservice;
-    }
-
-    public function getSessionStorage() {
-        if (!$this->storage) {
-            $this->storage = $this->getServiceLocator()->get('SanAuth\Model\MyAuthStorage');
-        }
-
-        return $this->storage;
-    }
     public function indexAction() {
-        require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => '171038663080276',
-                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
-               ));
-            $user = $facebook->getUser();
-            if ($user) {
-             try {
-                   $user_profile = $facebook->api('/me');
-                 } 
-             catch (FacebookApiException $e) {
-                           error_log($e);
-                           $user = null; }
-                       }
-                       if ($user) {
-                         $logoutUrl = $facebook->getLogoutUrl();
-                         $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
-                         $email = $user_profile['email'];
-                         
-                       } else {
-                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
-                       }
-                       $naitik = $facebook->api('/naitik');
-                       if($user_profile==''){}
-                       else
-                        {    
-                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-                         if(count($correo)>0)
-                            { if ($correo[0]['id_facebook']=='')  
-                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
-                             else
-                             {
-                                 $user_session = new Container('user');
-		               $user_session->username = $email;
-//                        AuthController::facebookAction($email);
-                               return $this->redirect()->toRoute('/');
-                    
-                             }
-                           }
-                         else
-                         { 
-                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);
-                             $storage = $this->getAuthService()->getStorage();
-                             $storage->write($this->getServiceLocator()
-                                        ->get('TableAuthService')
-                                        ->getResultRowObject(array(
-                                            'in_id',
-                                            'va_nombre',
-                                            'va_email',
-                                            'va_foto'
-                                        )));
-//    
-   
-                         }                       
-                       }
-                  
-                     return array(
-                         'user_profile' => $user_profile,
-                         'user' => $user,
-                         'logoutUrl'  =>$logoutUrl,
-                         'loginUrl'  =>$loginUrl,
-                         'naitik' =>$naitik
-
-               );
+//        require './vendor/facebook/facebook.php';
+//               $facebook = new \Facebook(array(
+//                 'appId'  => '171038663080276',
+//                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
+//               ));
+//            $user = $facebook->getUser();
+//            if ($user) {
+//             try {
+//                   $user_profile = $facebook->api('/me');
+//                 } 
+//             catch (FacebookApiException $e) {
+//                           error_log($e);
+//                           $user = null; }
+//                       }
+//                       if ($user) {
+//                         $logoutUrl = $facebook->getLogoutUrl();
+//                         $id_facebook = $user_profile['id'];
+//                         $name = $user_profile['name']; 
+//                         $email = $user_profile['email'];
+//                         
+//                       } else {
+//                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
+//                       }
+//                       $naitik = $facebook->api('/naitik');
+//                       if($user_profile==''){}
+//                       else
+//                        {    
+//                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+//                         if(count($correo)>0)
+//                            { if ($correo[0]['id_facebook']=='')  
+//                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+//                             else
+//                             {
+//                             $user_session = new Container('user');
+//                                $user_session->username = $email;
+////                            AuthController::facebookAction($email);
+//                               return $this->redirect()->toRoute('/');
+//                             }
+//                           }
+//                         else
+//                          { 
+//                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+//                           }                       
+//                       }
+//                  
+//                     return array(
+//                         'user_profile' => $user_profile,
+//                         'user' => $user,
+//                         'logoutUrl'  =>$logoutUrl,
+//                         'loginUrl'  =>$loginUrl,
+//                         'naitik' =>$naitik );
     }
 
     public function grupoparticipoAction() {
@@ -239,7 +212,7 @@ class IndexController extends AbstractActionController {
 
     public function agregarusuarioAction() {
         // AGREGAR CSS       
-
+          
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -252,15 +225,59 @@ class IndexController extends AbstractActionController {
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
 
-        // $user_info = $this->getUsuarioTable()->usuariox(1);
-        // var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-
-        // $form = new UsuarioForm($adpter);
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
         $request = $this->getRequest();
 
+        
+ 
+         require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream'
+               ));
+            $user = $facebook->getUser();
+            if ($user) {
+             try {
+                   $user_profile = $facebook->api('/me');
+                 } 
+             catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null; }
+                       }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         
+                       } else {
+                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
+                       }
+                       $naitik = $facebook->api('/naitik');
+                       if($user_profile==''){}
+                       else
+                        {    
+                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                            { if ($correo[0]['id_facebook']=='')  
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
+                             else
+                                {
+                                    
+                                }
+                            }
+                         else
+                          { 
+                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
+                           }                       
+                        }
+
+                       
+                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -296,7 +313,7 @@ class IndexController extends AbstractActionController {
                             $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
                             $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
 
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/agregarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -305,7 +322,7 @@ class IndexController extends AbstractActionController {
                         $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
                         $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/agregarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                     }
                 } else {
 
@@ -321,7 +338,12 @@ class IndexController extends AbstractActionController {
 
         return array(
             'form' => $form,
-            'mensaje' => $mensaje
+            'mensaje' => $mensaje,
+             'user_profile' => $user_profile,
+                         'user' => $user,
+                         'logoutUrl'  =>$logoutUrl,
+                         'loginUrl'  =>$loginUrl,
+                         'naitik' =>$naitik
             
         );
         // return array();
