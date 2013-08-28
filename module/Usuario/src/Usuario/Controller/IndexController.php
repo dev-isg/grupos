@@ -45,6 +45,17 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
+        
+        
+//        $ch = curl_init('https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/1116961_1561721285_1332327023_q.jpg');
+//        $cuenta = $this->_options->upload->images . '/usuario/cuenta/1561721285.jpg';
+//                                $fp = fopen($cuenta, 'wb');
+//                                curl_setopt($ch, CURLOPT_FILE, $fp);
+//                                curl_setopt($ch, CURLOPT_HEADER, 0);
+//                                curl_exec($ch);
+//                                curl_close($ch);
+//                                fclose($fp);
+//                                exit();
 
     }
 
@@ -246,15 +257,9 @@ public function getAuthService() {
                             }
                          else
                           { 
-                                $ch = curl_init('https://graph.facebook.com/'.$user.'/picture');
-                                $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $user.'.jpg';
-                                $fp = fopen($cuenta, 'wb');
-                                curl_setopt($ch, CURLOPT_FILE, $fp);
-                                curl_setopt($ch, CURLOPT_HEADER, 0);
-                                curl_exec($ch);
-                                curl_close($ch);
-                                fclose($fp);
-                                $imagen =  $user.'.jpg';
+                             
+                    
+                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                               // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
