@@ -76,7 +76,7 @@
 							<li class="divider"></li>
                             <?php if($this->session->va_logout!=='') 
 							{?>
-                                                        <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>  md5($this->session->va_logout))); ?>">Cerrar sesión N</a></li>
+                                                        <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>  1)); ?>">Cerrar sesión N</a></li>
                                
                             <?php  }else{?>
                                 <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión N</a></li>
