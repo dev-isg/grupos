@@ -26,7 +26,7 @@ return array(
                     'process' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[/:action]',//[:controller
+                            'route'    => '/[/:action[/:in_id_face]]',//[:controller
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
