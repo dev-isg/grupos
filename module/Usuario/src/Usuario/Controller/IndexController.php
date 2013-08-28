@@ -278,7 +278,7 @@ public function getAuthService() {
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass);
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 // $this->$logoutUrl;
