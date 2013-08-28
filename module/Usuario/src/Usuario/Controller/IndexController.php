@@ -45,57 +45,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function indexAction() {
-//        require './vendor/facebook/facebook.php';
-//               $facebook = new \Facebook(array(
-//                 'appId'  => '171038663080276',
-//                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
-//               ));
-//            $user = $facebook->getUser();
-//            if ($user) {
-//             try {
-//                   $user_profile = $facebook->api('/me');
-//                 } 
-//             catch (FacebookApiException $e) {
-//                           error_log($e);
-//                           $user = null; }
-//                       }
-//                       if ($user) {
-//                         $logoutUrl = $facebook->getLogoutUrl();
-//                         $id_facebook = $user_profile['id'];
-//                         $name = $user_profile['name']; 
-//                         $email = $user_profile['email'];
-//                         
-//                       } else {
-//                         $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists')); 
-//                       }
-//                       $naitik = $facebook->api('/naitik');
-//                       if($user_profile==''){}
-//                       else
-//                        {    
-//                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-//                         if(count($correo)>0)
-//                            { if ($correo[0]['id_facebook']=='')  
-//                             { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);}     
-//                             else
-//                             {
-//                             $user_session = new Container('user');
-//                                $user_session->username = $email;
-////                            AuthController::facebookAction($email);
-//                               return $this->redirect()->toRoute('/');
-//                             }
-//                           }
-//                         else
-//                          { 
-//                             $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook);                   
-//                           }                       
-//                       }
-//                  
-//                     return array(
-//                         'user_profile' => $user_profile,
-//                         'user' => $user,
-//                         'logoutUrl'  =>$logoutUrl,
-//                         'loginUrl'  =>$loginUrl,
-//                         'naitik' =>$naitik );
+
     }
 
     public function grupoparticipoAction() {
@@ -282,17 +232,19 @@ public function getAuthService() {
                             { if ($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 }     
                              else
                                 {
-                                    AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                                    
+                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
+                                   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 }
                             }
                          else
                           { 
                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook); 
                               AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                            }                       
                         }
 
