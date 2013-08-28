@@ -247,13 +247,13 @@ public function getAuthService() {
                          if(count($correo)>0)
                             { if ($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook);
-                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                                 AuthController::sessionfacebook($email);
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 // $this->$logoutUrl;
                                 }     
                              else
                                 {
-                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
+                                  AuthController::sessionfacebook($email); 
                                   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                  // $this->$logoutUrl;
                                 }
