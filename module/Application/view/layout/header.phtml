@@ -75,8 +75,10 @@
         								<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
         								<li class="divider"></li>
                                                                         <li><a href="<?php echo $this->session->va_logout;?>">Cerrar facebook</a></li>
-        								<li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
-                                                                        
+                                                                        <?php if($this->session->va_logout!=='') 
+        								{?><li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
+                                                                        <li><a href="<?php echo $this->session->va_logout ?>">Cerrar sesión</a></li>
+                                                                        <?php  }?>
         							</ul>
                                 </li>
                     <?php }?>
