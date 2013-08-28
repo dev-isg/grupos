@@ -139,13 +139,13 @@
                         status:true,
                         xfbml:true
                       });
-                      function Facebook_friends()
-                      {
-                        FB.ui({
-                            method: 'apprequests',
-                            message: 'Invitación a mi aplicación Grupos'
+                        function FacebookInviteFriends()
+                        {
+                          FB.ui({
+                          method: 'apprequests',
+                          message: 'Grupos > Crea tu evento'
                         });
-                      }
+                        }
                     </script>
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
@@ -157,9 +157,10 @@
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
-                            <div id="facebook_friends" title="Invita a tus amigos de facebook" onclick="Facebook_friends();">
-                              <img src="facebook.jpg" width="50" height="50">&nbsp;&nbsp;Invita a tus amigos de facebook
-                            </div>
+                            <div id="fb-root"></div>
+                              <a href='#' onclick="FacebookInviteFriends();"> 
+                                Invita a tus Amigos de Facebook!
+                              </a>
                           </div>
                         </div>
                       </div>                      
