@@ -261,7 +261,17 @@ public function getAuthService() {
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
-                        if($user_profile==''){}
+                       } else {
+                         $loginUrl = $facebook->getLoginUrl
+                      (array('scope'=>'email,publish_stream,read_friendlists',
+//                          'redirect_uri' => 'http://dev.juntate.pe/'
+                          )); 
+                       }
+                       $naitik = $facebook->api('/naitik');
+                       $storage = new \Zend\Authentication\Storage\Session('Auth');
+                       $session=$storage->read();
+                       if(!$session){
+                       if($user_profile==''){}
                        else
                         {    
                          $correo=$this->getUsuarioTable()->usuariocorreo($email);  
@@ -288,16 +298,7 @@ public function getAuthService() {
                              // $this->$logoutUrl;
                            }                       
                         }
-                         
-                         
-                       } else {
-                         $loginUrl = $facebook->getLoginUrl
-                      (array('scope'=>'email,publish_stream,read_friendlists',
-//                          'redirect_uri' => 'http://dev.juntate.pe/'
-                          )); 
-                       }
-                       $naitik = $facebook->api('/naitik');
-                     
+                      }else{  }
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
