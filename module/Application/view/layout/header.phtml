@@ -149,6 +149,7 @@
         <div style="display:none">
             <div id="inline_evento" style="padding:10px; background:#fff;">
                 <h3>Iniciar sesión</h3>
+                
                 <?php
                 $form = $this->formlogeo;
                 $form->setAttributes(array(
@@ -186,5 +187,15 @@
         				</div>
         			</div>
                     <?php  echo $this->form()->closeTag(); ?>
+                 <div class="span3 cambiofotouser dev-marca-face">
+                <h1>INICIAR CON FACEBOOK</h1>
+                <?php if ($this->user): ?>
+                  <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
+                <?php else: ?>
+                  <a href="https://www.facebook.com/dialog/oauth?client_id=171038663080276&redirect_uri=http%3A%2F%2Fdev.juntate.pe%2Fregistrarse&state=430ac982aca5fc3347e31b248a57d58c&scope=email%2Cpublish_stream%2Cread_friendlists">
+                    <img src="/img/face.png">
+                  </a>
+                <?php endif ?>
+              </div>
             </div>
 	</div>
