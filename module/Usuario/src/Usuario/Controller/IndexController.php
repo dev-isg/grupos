@@ -283,6 +283,7 @@ public function getAuthService() {
                                 }     
                              else
                                 {
+                                 $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
                                   AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
                                   return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                                 }

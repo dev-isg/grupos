@@ -170,22 +170,7 @@ class AuthController extends AbstractActionController {
                         $this->flashmessenger()->addMessage($message);
                     }
 
-                    if ($result->isValid()) {
-//                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-//                        $arrurl=explode('/',$urlorigen);
-//                        $id=end($arrurl);
-//                        $accion = $request->getPost('accion');
-//                        $origen = $request->getPost('origen','evento');
-//                        if ($accion == 'detalleevento') {
-//                            $redirect = 'evento';
-//                        } elseif ($accion == 'detallegrupo') {
-//                            $redirect = 'detalle-grupo';
-//                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
-//                            $redirect = 'elegir-grupo';//'agregar-grupo';
-//                        } elseif($accion=='index' && $origen=='ingresarPrin'){
-//                            $redirect = 'home';
-//                        }
-//                            
+                    if ($result->isValid()) {                           
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
