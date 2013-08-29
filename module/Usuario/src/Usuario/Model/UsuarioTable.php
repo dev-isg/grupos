@@ -257,7 +257,7 @@ class UsuarioTable
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
     
-    public function     idfacebook($id,$idfacebook=null,$logout)
+    public function idfacebook($id,$idfacebook=null,$logout)
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
@@ -279,7 +279,7 @@ class UsuarioTable
                     'va_estado'=>'activo','va_contrasena'=>$contrasena,'va_foto'=>$foto
                    ,'va_logout'=>$logout));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-         $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+      $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
 
     
