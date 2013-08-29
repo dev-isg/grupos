@@ -78,13 +78,9 @@
 							<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
 							<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
 							<li class="divider"></li>
-                            <?php if($this->session->va_logout!=='') 
-							{?>
-                                                        <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>
-                               
-                            <?php  }else{?>
+                   
                                 <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión N</a></li>
-                            <?php }?>
+                          
 						</ul>
                     </li>
                     <?php }?>
