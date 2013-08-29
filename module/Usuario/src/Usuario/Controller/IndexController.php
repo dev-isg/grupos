@@ -264,7 +264,7 @@ public function getAuthService() {
                        } else {
                          $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
-                        'redirect_uri' => 'http://dev.juntate.pe/'
+//                        'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
