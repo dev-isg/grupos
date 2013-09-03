@@ -234,10 +234,7 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-        $request = $this->getRequest();
-
-        
-            
+        $request = $this->getRequest(); 
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
