@@ -29,12 +29,6 @@
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-                    <span class="icon-bar"></span>
-				</a>
-                <a class="brand logo-juntate" href="/" title="juntate.pe"><img src="/img/juntate.png" title="juntate.pe"></a>
                 <?php if($_GET['nombre']) {?> <span class="category-home">Categoria: <?php echo $_GET['nombre'] ?></span><?php } ?>
                 <div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav pull-right menu-dev">
@@ -57,7 +51,7 @@
 							<li class="divider"></li>
                             <?php if($this->session->va_logout!=='') 
 							{?>
-                                                        <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>
+                            <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>
                                
                             <?php  }else{?>
                                 <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión N</a></li>
@@ -71,53 +65,67 @@
 			</div>
 		</div>
 	</div>
-      
 	<div class="search">
 		<div class="container">
-			<div class="row-fluid">
+			<div class="row-fluid" style="position:relative;">
 				<div class="span9 form-search">
-					<form method="post" class="form-search span8 dropdown"
-						name="search"
-						action="<?php echo $this->host('ruta')?>/grupo/index/index">
-						<input type="text"
-							value="<?php
-                            if ($_POST['dato']) {
-                                    $filter = new \Zend\I18n\Filter\Alnum(true);
-                                    $nombre = trim($filter->filter($_POST['dato']));
-                                    echo $nombre;
-                                } else {
-                                    echo $_COOKIE['dato'];
-                                }
-                                ?>"
-							name="dato"
-							class="input-medium search-query span10 dropdown-toggle"
-							data-toggle="dropdown" id="search-home">
-						<ul class="dropdown-menu" id="menu-categoria">
-                                <?php
-                                foreach ($this->categorias as $categorias) :
-                                    ?>
-                                <li class="man-dev">
-                                    <ul>  
-                                        <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                                    </ul>
-                                </li> 
-                                 <?php endforeach; ?>  
-                            </ul>
-                            <input type="submit"  class="btn btn-primary btn-evento-i" value="Buscar"/>
-                        </form>
+                    <div class="logo-juntate">
+                        <a class="brand logo-juntate" href="/" title="juntate.pe">
+                            <img src="/img/juntate.png" title="juntate.pe">
+                        </a>
+                    </div>
+                    <div class="contenedor-slogan">
+                        <p class="primer">conoce amigos,</p>
+                        <p class="segundo"><span>organiza eventos</span> y más!</p>
+                    </div>
+                    <div class="contenedor-btn-form">
                         <?php if(!$this->session){?>
-                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento">CREA UN EVENTO</a>
                          <?php }else{?>
-                        <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt"><i class="icon-white icon-ok"></i> Crear un evento</a>
+                        <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt">CREA UN EVENTO</a>
                         <?php }?>
+                        <form method="post" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/grupo/index/index">
+                            <input type="text"
+                                value="<?php
+                                if ($_POST['dato']) {
+                                        $filter = new \Zend\I18n\Filter\Alnum(true);
+                                        $nombre = trim($filter->filter($_POST['dato']));
+                                        echo $nombre;
+                                    } else {
+                                        echo $_COOKIE['dato'];
+                                    }
+                                    ?>"
+                                name="dato"
+                                class="input-medium search-query span10 dropdown-toggle"
+                                data-toggle="dropdown" id="search-home" placeholder="INGRESA TU BUSQUEDA">
+                                <ul class="dropdown-menu" id="menu-categoria">
+                                    <?php
+                                    foreach ($this->categorias as $categorias) :
+                                        ?>
+                                    <li class="man-dev">
+                                        <ul>  
+                                            <li><a href="<?php echo $this->host('ruta')?>/grupo/index/index?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                        </ul>
+                                    </li> 
+                                     <?php endforeach; ?>  
+                                </ul>
+                            <input type="submit"  class="btn btn-primary btn-evento-i" value=""/>
+                        </form>
                     </div>
-                       
-                    <div class="span3 btn-evento">
-                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?>" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">Eventos</a>
-                            <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?>"  href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">Grupos</a>
-                        </div>
+                </div>
+                <div class="span3 btn-evento">
+                    <div class="btn-group group-right" data-toggle="buttons-radio"> 
+                        <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Eventos">
+                            EVENTOS
+                            <div class="pinchitoa"></div>
+                        </a>
+                        <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/grupo/index/index?tipo=Grupos">
+                            GRUPOS
+                            <div class="pinchitob"></div>
+                        </a>
                     </div>
+                </div>
+                <div class="contenedor-back-ho"></div>
                 </div>
             </div>
         </div>
