@@ -137,7 +137,6 @@ class UsuarioTable
         if ($id == 0) {
             $this->tableGateway->insert($data);
             $iduser=$this->tableGateway->getLastInsertValue();
-//            var_dump($iduser);
                      $adapter = $this->tableGateway->getAdapter();
                     $sql = new Sql($adapter);
                     $notifica = $sql->select()->from('ta_notificacion');
@@ -148,7 +147,6 @@ class UsuarioTable
                  foreach($cantNotif as $arrnot){
                     $cant[$arrnot['in_id']] = $arrnot['va_nombre'];
                 }
-//            var_dump($cant);exit;
             foreach ($cant as $key => $value) {
                 $notif=$this->tableGateway->getSql()->insert()
                     ->into('ta_notificacion_has_ta_usuario')

@@ -351,11 +351,10 @@ class GrupoTable{
                         'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
              }else{
                    $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
-                       'ta_usuario_has_ta_grupo.va_estado'=>'activo'));
+                       'ta_usuario_has_ta_grupo.va_estado'=>'activo'))->order('ta_usuario_has_ta_grupo.va_fecha DESC');
              }
 
             $selectString = $sql->getSqlStringForSqlObject($select);
-          //  var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }

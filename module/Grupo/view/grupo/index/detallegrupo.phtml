@@ -92,7 +92,10 @@
             </div>
             <div class="span3 group-sidebar">
                 <div class="row-fluid">
-                    <div class="span12 unete-grupo">
+            
+                            <div class="span12">
+                                
+                    <div class="span12 unete-grupo"> 
                         <?php 
                       if($this->grupo[0]['ta_usuario_in_id']!=$session->in_id){
                         if ($session) { ?>
@@ -111,11 +114,15 @@
                             <?php }?>
                     </div>
                 </div>
+                    
+  </div>
+                
                 <div class="lista-usuario">
                     <ul>
-                        <li>
-                            <div class="users">
+
                                         <?php foreach ($this->usuarios as $usuarios) : ?>
+                       <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
+                            <div class="users">
                                     <div class="row-fluid">
                                         <div class="span4 img-user-ev">
     <?php if (($usuarios->imagen) != "foto-carnet.jpg") { ?>
@@ -137,9 +144,10 @@
                                         echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
                                         ?></p>
                                     </div>
-<?php endforeach; ?>
-                            </div>
+                               </div>
                         </li>
+<?php endforeach; ?>
+
                     </ul>
                 </div>
                 <!--  <div class="afiliarse">

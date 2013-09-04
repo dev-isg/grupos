@@ -78,13 +78,13 @@
 							<li><a href="<?php echo $this->host('base');?>/usuario/index/miseventos">Mis eventos</a></li>
 							<li><a href="<?php echo $this->host('base');?>/usuario/index/misgrupos">Mis grupos</a></li>
 							<li class="divider"></li>
-                            <?php if($this->session->va_logout!=='') 
-							{?>
-                                                        <li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>
+                            <?php // if($this->session->va_logout!=='') 
+//							{?>
+                                                        <!--<li><a href="<?php echo $this->url('login/process', array('action'=>'logout','in_id_face'=>$this->session->va_logout)); ?>">Cerrar sesión N</a></li>-->
                                
-                            <?php  }else{?>
+                            <?php // }else{?>
                                 <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión N</a></li>
-                            <?php }?>
+                            <?php // }?>
 						</ul>
                     </li>
                     <?php }?>
@@ -150,14 +150,14 @@
             <div id="inline_evento" style="padding:10px; background:#fff;">
                 <h3>Iniciar sesión</h3>
                 <div class="span4 cambiofotouser dev-marca-face">
-                <h1>INICIAR CON FACEBOOK</h1>
-                <?php if ($this->user): ?>
-                  <a href="<?php echo $this->logoutUrl; ?>">Logout</a>
-                <?php else: ?>
-                  <a href="https://www.facebook.com/dialog/oauth?client_id=171038663080276&redirect_uri=http%3A%2F%2Fdev.juntate.pe%2Fregistrarse&state=e9c59e51d167dd4f29e13536a4930380&scope=email%2Cpublish_stream%2Cread_friendlists">
+                <!--<h1>INICIAR CON FACEBOOK</h1>-->
+                <?php // if ($this->user): ?>
+                  <!--<a href="<?php echo $this->logoutUrl; ?>">Logout</a>-->
+                <?php // else: ?>
+<!--                  <a href="https://www.facebook.com/dialog/oauth?client_id=171038663080276&redirect_uri=http%3A%2F%2Fdev.juntate.pe%2Fregistrarse&state=e9c59e51d167dd4f29e13536a4930380&scope=email%2Cpublish_stream%2Cread_friendlists">
                     <img src="/img/face.png">
-                  </a>
-                <?php endif ?>
+                  </a>-->
+                <?php // endif ?>
               </div>
                 <?php
                 $form = $this->formlogeo;

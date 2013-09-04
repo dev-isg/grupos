@@ -521,7 +521,7 @@ class IndexController extends AbstractActionController
                     }               
             }
            $userestado=$userestado->current();
-           
+           $arruser['id']=$iduser;
            setlocale(LC_TIME, "es_ES.UTF-8"); 
            foreach($userestado as $key=>$value){
                if($key=='va_fecha'){  

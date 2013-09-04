@@ -145,6 +145,8 @@ class IndexController extends AbstractActionController {
     
         public function miseventosAction()
     {   
+            
+         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
         ->prependFile($this->_options->host->base . '/js/main.js')
@@ -159,6 +161,7 @@ class IndexController extends AbstractActionController {
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
+//           var_dump($storage->read()->va_imagen);exit;
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         $valor = $this->headerAction($id);
@@ -445,10 +448,16 @@ public function getAuthService() {
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
                     $pass = $dataa->va_contrasena;
-
+                    $nombre=$this->params()->fromPost('va_nombre');
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
+                 
                             $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass);
+                            $obj= $storage->read();
+                            $obj->va_foto=$imagen;
+                            $obj->va_nombre=$nombre;
+                            $storage->write($obj);
+                            
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
@@ -456,6 +465,10 @@ public function getAuthService() {
                         }
                     } else {
                         $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass);
+                            $obj= $storage->read();
+                            $obj->va_foto=$imagen;
+                            $obj->va_nombre=$nombre;
+                            $storage->write($obj);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
                     }

@@ -274,9 +274,10 @@
               <?php } ?>
               <div class="lista-usuario">
                   <ul>
-                    <li>
-                      <div class="users">
+
                          <?php  foreach ($this->usuarios  as $usuarios) :?>
+                      <li id="user-<?php echo $usuarios->ta_usuario_in_id; ?>">
+                       <div class="users">
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
                   
@@ -295,9 +296,10 @@
                            <p class="span12">Se unio el <?php  $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
                                          echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
                         </div>
+                     </div>
+                   </li>
                           <?php endforeach;  ?>
-                      </div>
-                    </li>
+                
                   </ul>
                </div>
             </div>
