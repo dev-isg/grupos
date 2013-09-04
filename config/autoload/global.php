@@ -37,7 +37,7 @@ return array(
 //        'ruta' => 'http://dev.juntate.pe',
 //        'version'=>1,
 //    ),
-//    
+    
         'mail' => array(
         'transport' => array(
             'options' => array(
