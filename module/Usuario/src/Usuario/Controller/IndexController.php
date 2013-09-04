@@ -234,17 +234,14 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-        $request = $this->getRequest();
-
-        
-            
+        $request = $this->getRequest(); 
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-                  // 'redirect_uri'=>  'http://dev.juntate.pe/'
+                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
            // $session = $facebook->getSession();
@@ -264,7 +261,7 @@ public function getAuthService() {
                        } else {
                          $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
-//                          'redirect_uri' => 'http://dev.juntate.pe/'
+//                        'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
