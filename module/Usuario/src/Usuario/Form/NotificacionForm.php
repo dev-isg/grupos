@@ -18,7 +18,7 @@ class NotificacionForm extends Form
                    'name' => 'tipo_notificacion',
                    'type' => 'MultiCheckbox',
                     'attributes' => array(
-                        'value' => array('1', '2'),
+//                        'value' => array('1', '2'),
                        'class' => 'checkbox inline',
                        'id'   => 'en_destaque',
                         'placeholder'=>'Ingrese su destaque'
