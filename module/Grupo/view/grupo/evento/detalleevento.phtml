@@ -1,3 +1,26 @@
+<div id="fb-root"></div>
+  <script type="text/javascript">
+    (function(d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '353959668068919', // App ID
+            status: true, // check login status
+            cookie: true, // enable cookies to allow the server to access the session
+            xfbml: true  // parse XFBML
+        });
+    };
+</script>
 <div class="main-container">
     <div class="container">
         <?php if ($this->mensajes) { ?>

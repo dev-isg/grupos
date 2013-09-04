@@ -26,29 +26,6 @@
         <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
 </head>
 <body id="blog">
-    <div id="fb-root"></div>
-    <script type="text/javascript">
-        (function(d) {
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document));
-
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId: '353959668068919', // App ID
-                status: true, // check login status
-                cookie: true, // enable cookies to allow the server to access the session
-                xfbml: true  // parse XFBML
-            });
-        };
-    </script>
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
 		<div class="navbar-inner">
 			<div class="container">
@@ -151,7 +128,7 @@
                     'action' => $this->url('login/process', array(
                         'action' => 'authenticate'
                     )),
-                    'class' => 'bs-docs-example form-horizontal'
+                    'class' => 'bs-docs-example form-horizontal login-home'
                 ));
                 $form->prepare();
                 echo $this->form()->openTag($form);
