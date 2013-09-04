@@ -237,8 +237,19 @@ class GrupoTable{
                 $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
                 $adapter2 = $this->tableGateway->getAdapter();
                 $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
-                                       }
-                                    }
+             }
+           }else{
+                    $delete = $this->tableGateway->getSql()
+                        ->delete()
+                        ->from('ta_notificacion_has_ta_usuario')
+                        ->where(array(
+                        'ta_usuario_in_id' => $id
+                    ));
+                    $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
+                    $adapter1 = $this->tableGateway->getAdapter();
+                    $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
+             
+         }    
      }
      
      public function getGrupoUsuario($idgrupo,$iduser){

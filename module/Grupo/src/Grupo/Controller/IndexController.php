@@ -248,14 +248,14 @@ class IndexController extends AbstractActionController
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
-                   if($this->params()->fromPost('url')=='/usuario/index/misgrupos'){
+                   if($this->params()->fromPost('url')=='/usuario/index/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        
                    }else{
                        return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
                    }
                     
-//                    $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array(
+//                    $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array( 
 //                                'action' => 'agregarevento'
 //                            ));
 //                     $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
