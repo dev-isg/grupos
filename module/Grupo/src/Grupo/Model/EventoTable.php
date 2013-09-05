@@ -486,7 +486,7 @@ class EventoTable{
                     ;
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
-            return $resultSet;
+            return $resultSet->buffer();
     }
     
 
@@ -505,7 +505,7 @@ class EventoTable{
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
          //   var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
-            return $resultSet;
+            return $resultSet->buffer();
     }
     
     

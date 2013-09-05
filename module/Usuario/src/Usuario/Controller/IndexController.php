@@ -76,16 +76,22 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id; // $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
-        $categorias = $this->getUsuarioTable()
-                        ->categoriasunicas($id)->toArray();
-        for ($i = 0; $i < count($categorias); $i++) {
-            $otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'], $categorias[$i]['id']);
-        }
-
+        if(count($usuariosgrupos)==0)
+        {$mensaje= 'Aún no participas en ningún grupo, Que esperas para crear uno';}
+//       $categorias = $this->getUsuarioTable()
+//                        ->categoriasunicas($id)->toArray();
+//        for ($i = 0; $i < count($categorias); $i++) {
+//            $otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'], $categorias[$i]['id']);
+//        }
+        
+            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($usuariosgrupos));
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator->setItemCountPerPage(12);
         return array(
             'grupo' => $valor,
-            'grupospertenece' => $usuariosgrupos,
-            'otrosgrupos' => $otrosgrupos,
+            'grupospertenece' => $paginator,
+            //'otrosgrupos' => $otrosgrupos,
+            'mensaje'=>$mensaje
         );
     }
 
@@ -107,11 +113,16 @@ class IndexController extends AbstractActionController {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;
         $misgrupos = $this->getGrupoTable()->misgrupos($id);
+          if(count($misgrupos)==0)
+        {$mensaje= 'Aún no has creado ningún grupo, Que esperas para crear uno';}
         $valor = $this->headerAction($id);
-
+         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($misgrupos));
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator->setItemCountPerPage(12); 
         return array(
             'grupo' => $valor,
-            'misgrupos' => $misgrupos,
+            'misgrupos' => $paginator,
+            'mensaje' =>$mensaje
         );
     }
     
@@ -134,12 +145,17 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
+         if(count($eventosusuario)==0)
+        {$mensaje= 'Aún no participas en ningún evento, Que esperas para crear uno';}
 //         $index=new \Usuario\Controller\IndexController();
         $valor = $this->headerAction($id);
-               
+           $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($eventosusuario));
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator->setItemCountPerPage(12);     
         return array(
             'grupo' => $valor,
-            'eventos'=>$eventosusuario
+            'eventos'=>$paginator,
+            'mensaje' =>$mensaje
         );
     }
     
@@ -164,12 +180,18 @@ class IndexController extends AbstractActionController {
 //           var_dump($storage->read()->va_imagen);exit;
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
+        if(count($miseventos)==0)
+        {$mensaje= 'Aún no has creado ningún evento, Que esperas para crear uno';}
         $valor = $this->headerAction($id);
+        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($miseventos));
+            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $paginator->setItemCountPerPage(12); 
         
         return array
       (
             'grupo' => $valor,
-        'miseventos'=> $miseventos,
+        'miseventos'=> $paginator,
+            'mensaje' =>$mensaje
        );
     }
 
@@ -248,7 +270,6 @@ public function getAuthService() {
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
-           // $session = $facebook->getSession();
             if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
@@ -265,7 +286,7 @@ public function getAuthService() {
                        } else {
                          $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
-                      'redirect_uri' => 'http://dev.juntate.pe/'
+//                      'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
                        }
                        $naitik = $facebook->api('/naitik');
@@ -378,7 +399,7 @@ public function getAuthService() {
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-                ->setScript('actualizarDatos();')
+                ->setScript('actualizarDatos();if($("#editarusuario").length){valactualizar("#editarusuario");};')
                 ->prependFile($this->_options->host->base . '/js/main.js')
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');

@@ -195,7 +195,7 @@ class UsuarioTable
           ->where(array('ta_usuario_has_ta_grupo.ta_usuario_in_id'=>$id,'ta_grupo.va_estado'=>'activo'));
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
-            return $resultSet;
+            return $resultSet->buffer();
     }
          public function categoriasunicas($id)
     {
