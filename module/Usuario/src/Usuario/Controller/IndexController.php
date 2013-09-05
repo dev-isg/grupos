@@ -361,11 +361,11 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-//            'user_profile' => $user_profile,
-//            'user' => $user,
-//            'logoutUrl'  =>$logoutUrl,
-//            'loginUrl'  =>$loginUrl,
-//            'naitik' =>$naitik
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik
             
         );
         // return array();
