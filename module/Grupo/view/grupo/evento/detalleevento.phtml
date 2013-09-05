@@ -234,7 +234,7 @@
                     <?php }?>
                   </div>
                   <div class="row-fluid cometarios-detalle">
-                    <div class="fb-comments" data-href="http://example.com" data-width="550"></div>
+                    <div class="fb-comments" data-href="<?php echo $this->host('base').$_SERVER['REQUEST_URI'];?> " data-width="550"></div>
                     <!--<ul>
                         <?php  foreach ($this->comentarios  as $comentarios) :?>
                       <li> 

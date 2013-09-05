@@ -143,16 +143,19 @@ function cargarMapa(){
 function actualizarDatos(){
     $(document).ready(function(){
         $("#datos").on("click",function(){
-         $(".mifoto").slideUp();
+          $(".mifoto").slideUp();
           $(".cface").slideUp();              
-           $(".noti").slideUp();
-         $(".ocultar").hide();
-         $(".misdatos").animate({
-         'width': "100%",
-         'height': "100%"
+          $(".noti").slideUp();
+          $(".ocultar").hide();
+          $(".misdatos").animate({
+            'width': "100%",
+            'height': "100%"
           });
-         $(".modificardatos").slideDown();
-         $(".misdatos span").slideDown();
+          $(".modificardatos").slideDown();
+          $(".misdatos span").slideDown();
+          if($("#usuario").length){
+            valactualizar("#usuario");
+          };
         });
 
         $(".misdatos").delegate("span","click",function(){
@@ -316,6 +319,29 @@ var valregistro = function(elemento){
         }
             
     });
+}
+
+var valactualizar = function(elemento){
+  $(elemento).validate({
+    rules: {
+      va_nombre: {
+        required: true
+      },          
+      va_email: {
+        required: true,
+        email: true
+      }
+    },
+    messages:{
+      va_nombre: {
+        required:"Por favor ingresar un nombre"
+      },
+      va_email:{
+        required:"Por favor ingresa un Email",
+        email: "Ingrese un correo valido"
+      }
+    }   
+  });
 }
 
 

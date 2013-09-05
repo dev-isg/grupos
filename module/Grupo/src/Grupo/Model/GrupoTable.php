@@ -202,7 +202,6 @@ class GrupoTable{
 //          ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
 //          ->where(array('ta_grupo.ta_usuario_in_id'=>$iduser));
          $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//          var_dump($selectString);Exit;
          $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         
         return $resultSet;

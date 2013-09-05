@@ -20,13 +20,13 @@
                         </div>
                         <span>x</span>
                     	<div class="modificardatos">
-                                        <?php
+                        <?php
                             $usuario = $this->usuario;
                             $form = $this->form;
                             $form->setAttributes(array(
                                 'action' => $this->url.'/usuario/index/editarusuario/'.$this->in_id,
                                 'method' => 'post',
-                                'class'=>'form-horizontal'
+                                'class'=>'form-horizontal usuario-actualizar'
                             ));
 
                             $form->prepare();
@@ -64,11 +64,7 @@
 		                            <p>
 		                            	<label for="">Correo Electrónico</label>
                                         <?php echo $this->formRow($form->get('va_email'));?>
-		                            </p>                                  
-		                             <!--<p>-->
-<!--		                            	<label for="">Documento de Identidad</label>-->
-                                        <?php //echo $this->formRow($form->get('va_dni'));?>
-		                            <!--</p>-->
+		                            </p>
 		                            <p>
                                         <label for="">Género</label>
                                                 
