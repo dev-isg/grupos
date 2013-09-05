@@ -1,5 +1,11 @@
 <div class="main-container">
     <div class="container">
+        
+        <?php if ($this->mensaje) { ?> <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo $this->mensaje; ?>
+      </div>
+    </div> <?php } ?>
     	<div class="row-fluid">
         	<div class="span12 contenido-group">
         		<div class="row-fluid">

@@ -42,6 +42,7 @@ class IndexController extends AbstractActionController
     }
 
     public function indexAction() {
+
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
                 ->setScript('jQuery(document).ready(function(){valUsuario();});')
@@ -130,7 +131,7 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-
+//var_dump($listagrupos->toArray());exit;
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
