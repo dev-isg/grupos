@@ -462,6 +462,7 @@ class EventoController extends AbstractActionController
            $userestado=$userestado->current();
            
            setlocale(LC_TIME, "es_ES.UTF-8"); 
+           $arruser['id']=$iduser;
            foreach($userestado as $key=>$value){
                if($key=='va_fecha'){  
                     $fecha=str_replace("/", "-",$value);

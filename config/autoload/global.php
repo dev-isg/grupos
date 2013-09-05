@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * Global Configuration Override
  *
@@ -29,6 +29,7 @@ return array(
         'secret' => '6ae99781de7ed810fb4713032a068e3a',
         'pass'=>'123456789159753'
     ),
+
  'host' => array(
         'base' => 'http://192.168.1.25:8081',
         'static' => 'http://192.168.1.25:8081',

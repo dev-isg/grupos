@@ -203,7 +203,7 @@ class EventoTable{
      public function unirseEvento($idevent,$iduser){
          if($this->getEventoUsuario($idevent,$iduser)){
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
-             ->set(array('va_estado'=>'activo'))
+             ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
              
          }else{   
@@ -400,9 +400,10 @@ class EventoTable{
                         'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser));
              }else{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
-                                        'ta_usuario_has_ta_evento.va_estado'=>'activo'));
-             }
+                                        'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
+             }                                                                          
             $selectString = $sql->getSqlStringForSqlObject($select);
+//            var_dump($selectString);Exit; .' ORDER BY 1 DESC'
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }

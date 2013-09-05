@@ -136,21 +136,48 @@ class UsuarioTable
 
         if ($id == 0) {
             $this->tableGateway->insert($data);
+            $iduser=$this->tableGateway->getLastInsertValue();
+                     $adapter = $this->tableGateway->getAdapter();
+                    $sql = new Sql($adapter);
+                    $notifica = $sql->select()->from('ta_notificacion');
+                $selectStringNotifca = $this->tableGateway->getSql()->getSqlStringForSqlObject($notifica);
+                $adapter1 = $this->tableGateway->getAdapter();
+                $cantNotif=$adapter1->query($selectStringNotifca, $adapter1::QUERY_MODE_EXECUTE);
+                $cant=array();
+                 foreach($cantNotif as $arrnot){
+                    $cant[$arrnot['in_id']] = $arrnot['va_nombre'];
+                }
+            foreach ($cant as $key => $value) {
+                $notif=$this->tableGateway->getSql()->insert()
+                    ->into('ta_notificacion_has_ta_usuario')
+                    ->values(array(
+                    'ta_notificacion_in_id' => $key,
+                    'ta_usuario_in_id' => $iduser));
+                $selectStringNotif = $this->tableGateway->getSql()->getSqlStringForSqlObject($notif);
+                $adapter2 = $this->tableGateway->getAdapter();
+                $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
+            }
+
+            
         } else {
             
             if ($this->getUsuario($id)) {
-                if($pass==''){$data['va_estado'] = 'activo';
+                if($pass==''){
+                    $data['va_estado'] = 'activo';
                 $data['va_verificacion'] = '';
                 $this->tableGateway->update($data, array(
                     'in_id' => $id));}
-                   else
-                 {$data['va_contrasena'] = $pass;
+                   else{
+                       $data['va_contrasena'] = $pass;
                  $data['va_verificacion'] = '';
                  $data['va_estado'] = 'activo';
                 
                 $this->tableGateway->update($data, array(
-                    'in_id' => $id)); }  } 
-                    else {
+                    'in_id' => $id)); 
+                
+                    }  
+                    
+               } else {
                 throw new \Exception('no existe el usuario');
             }
         }
@@ -202,6 +229,7 @@ class UsuarioTable
      public function updateNotificacion($notificacion,$id){
          $adapter = $this->tableGateway->getAdapter();
          $sql = new Sql($adapter);
+         if($notificacion != null){
                 foreach($notificacion as $key=>$value){
                    $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_notificacion')
                       ->join('ta_grupo','ta_grupo.in_id=ta_grupo_has_ta_notificacion.ta_grupo_in_id',array(),'left')
@@ -211,7 +239,7 @@ class UsuarioTable
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 //                    var_dump($selectString);Exit;
                 }
-                
+         }
      }
      
      
