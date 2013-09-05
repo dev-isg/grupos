@@ -108,6 +108,7 @@
                                   { echo date_format($fecha, 'h').':'. date_format($fecha, 'i').' AM'; }
                                   else
                                    { echo date_format($fecha, 'h').':'. date_format($fecha, 'i').' PM'; }
+
                                 ?></em>
                             </div>
                           </li>
@@ -199,7 +200,7 @@
                       if ($this->eventos[0]['va_fecha'] >= $fecha_actual)
                     {?>
                     <div class="row-fluid title-side">
-                      <h4>¿Asistiras?</h4>                   
+                      <h4>¿Asistirás?</h4>                   
                     </div>
                       
                     <div class="row-fluid">
@@ -244,8 +245,11 @@
                             </div>
                         </div>
                         <div class="row-fluid unio">
-                           <p class="span12">Se unio el <?php  $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
-                                         echo $fecha = date_format($fecha, "d \d\e\l m \d\e\l Y"); ?></p>
+                           <p class="span12">Se unió el <?php $fecha = date_create($usuarios->va_fecha); 
+                              $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                              echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?>
+                           </p>
                         </div>
                      </div>
                    </li>

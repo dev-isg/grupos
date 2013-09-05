@@ -239,65 +239,65 @@ public function getAuthService() {
         $form->get('submit')->setValue('Crear Usuario');
         
         $request = $this->getRequest(); 
-//         require './vendor/facebook/facebook.php';
-//               $facebook = new \Facebook(array(
-//                 'appId'  => $this->_options->facebook->appId,
-//                 'secret' => $this->_options->facebook->secret,
-//                 'cookie' => true ,
-//                 'scope'  => 'email,publish_stream',
+         require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream',
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
-//               ));
-//            $user = $facebook->getUser();
-//           // $session = $facebook->getSession();
-//            if ($user) {
-//             try {
-//                   $user_profile = $facebook->api('/me');
-//                 } 
-//             catch (FacebookApiException $e) {
-//                           error_log($e);
-//                           $user = null; }
-//                       }
-//                       if ($user) {
-//                         $logoutUrl = $facebook->getLogoutUrl();
-//                         $id_facebook = $user_profile['id'];
-//                         $name = $user_profile['name']; 
-//                         $email = $user_profile['email'];
-//                       } else {
-//                         $loginUrl = $facebook->getLoginUrl
-//                      (array('scope'=>'email,publish_stream,read_friendlists',
-////                        'redirect_uri' => 'http://dev.juntate.pe/'
-//                          )); 
-//                       }
-//                       $naitik = $facebook->api('/naitik');
-//                       $storage = new \Zend\Authentication\Storage\Session('Auth');
-//                       $session=$storage->read();
-//                       if(!$session){
-//                       if($user_profile==''){}
-//                       else
-//                        {    
-//                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-//                         if(count($correo)>0)
-//                            {if($correo[0]['id_facebook']=='')  
-//                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-//                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-//                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-//                                }     
-//                             else
-//                                {
-//                                 $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
-//                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
-//                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-//                                }
-//                            }
-//                         else
-//                          { 
-//                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-//                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-//                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-//                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-//                          }                       
-//                        }
-//                      }else{  }
+               ));
+            $user = $facebook->getUser();
+           // $session = $facebook->getSession();
+            if ($user) {
+             try {
+                   $user_profile = $facebook->api('/me');
+                 } 
+             catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null; }
+                       }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                       } else {
+                         $loginUrl = $facebook->getLoginUrl
+                      (array('scope'=>'email,publish_stream,read_friendlists',
+                      'redirect_uri' => 'http://dev.juntate.pe/'
+                          )); 
+                       }
+                       $naitik = $facebook->api('/naitik');
+                       $storage = new \Zend\Authentication\Storage\Session('Auth');
+                       $session=$storage->read();
+                       if(!$session){
+                       if($user_profile==''){}
+                       else
+                        {    
+                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                            {if($correo[0]['id_facebook']=='')  
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
+                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                }     
+                             else
+                                {
+                                 $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
+                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
+                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                                }
+                            }
+                         else
+                          { 
+                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
+                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
+                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                          }                       
+                        }
+                      }else{  }
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
@@ -361,11 +361,11 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-//            'user_profile' => $user_profile,
-//            'user' => $user,
-//            'logoutUrl'  =>$logoutUrl,
-//            'loginUrl'  =>$loginUrl,
-//            'naitik' =>$naitik
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik
             
         );
         // return array();
