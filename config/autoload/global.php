@@ -24,6 +24,7 @@ return array(
    'upload' => array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
+
 //    'facebook' => array(
 //        'appId' => '171038663080276',
 //        'secret' => '6ae99781de7ed810fb4713032a068e3a',

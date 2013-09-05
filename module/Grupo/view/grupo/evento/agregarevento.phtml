@@ -162,7 +162,7 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
         </div>
         <p class="crear-evento box">
             <?php echo $this->formSubmit($form->get('submit'));?>
-            <a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
+            <a href="javascript:window.history.back();" class="btn btn-inverse btn-cancelar">Cancelar</a>
         </p>
             <?php echo $this->form()->closeTag();?>
     </div>

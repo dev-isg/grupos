@@ -161,7 +161,7 @@
 </div>
 
 <script type="text/javascript">
-	
+	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
     $(document).on('ready', function(){		
         enviarDatos();
         abandonarDatos();
@@ -184,11 +184,11 @@
                 success: function(data){
                     $(".img-lo").hide();
                     $(".uneteAbEvent").show();                    
-                    var dataPer = '<li>'+
+                    var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
                                     '<div class="users">'+
                                         '<div class="row-fluid">'+
                                             '<div class="span4 img-user-ev">'+
-                                                '<img src="'+data.userestado["imagen"]+'" alt="">'+
+                                                '<img src="'+hostUrl+data.userestado["imagen"]+'" alt="">'+
                                             '</div>'+
                                             '<div class="span8 desc-user">'+
                                                 '<h3><a href="#">'+data.userestado["nombre_usuario"]+'</a></h3>'+
@@ -224,9 +224,10 @@
                 data: 'act=' + activo +'&idE='+even,
                 dataType: "json",
                 success: function(data){
+                    var datoId = data.userestado["id"]; 
                     $(".img-lo").hide();
                     $(".uneteEvent").show();
-                    $(".lista-usuario ul li:first-child").remove();
+                    $(".lista-usuario ul li#user-"+datoId).remove();
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
