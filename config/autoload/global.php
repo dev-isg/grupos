@@ -25,11 +25,11 @@ return array(
         'images' => APPLICATION_PATH . '/public/imagenes'
     ),
 
-////    'facebook' => array(
-////        'appId' => '171038663080276',
-////        'secret' => '6ae99781de7ed810fb4713032a068e3a',
-////        'pass'=>'123456789159753'
-////    ),
+    'facebook' => array(
+        'appId' => '171038663080276',
+        'secret' => '6ae99781de7ed810fb4713032a068e3a',
+        'pass'=>'123456789159753'
+    ),
 //
 //
 // 'host' => array(
