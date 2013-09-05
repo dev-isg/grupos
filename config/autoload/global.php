@@ -29,17 +29,6 @@ return array(
         'secret' => '6ae99781de7ed810fb4713032a068e3a',
         'pass'=>'123456789159753'
     ),
-<<<<<<< HEAD
-// 'host' => array(
-//        'base' => 'http://dev.juntate.pe',
-//        'static' => 'http://dev.juntate.pe',
-//        'images' => 'http://192.168.1.37:82/imagenes',
-//        'img'=>'http://192.168.1.37:82/img',
-//        'ruta' => 'http://dev.juntate.pe',
-//        'version'=>1,
-//    ),
-=======
-
  'host' => array(
         'base' => 'http://192.168.1.25:8081',
         'static' => 'http://192.168.1.25:8081',
@@ -48,7 +37,6 @@ return array(
         'ruta' => 'http://192.168.1.25:8081',
         'version'=>1,
     ),
->>>>>>> 54c62d86c3f8a4e391946293a34d0fc46d2f67f7
     
         'mail' => array(
         'transport' => array(
