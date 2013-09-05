@@ -2035,6 +2035,9 @@ ul.score-list li:first-child {
 .menu-grup .navbar-inner{
   min-height: 34px;
 }
+.usuario-actualizar{
+  overflow: hidden;
+}
 /* ==========================================================================
    Estilo de icono styles
    ========================================================================== */
