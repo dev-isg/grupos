@@ -298,7 +298,6 @@ public function getAuthService() {
 //                          }                       
 //                        }
 //                      }else{  }
-
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
@@ -379,7 +378,7 @@ public function getAuthService() {
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-                ->setScript('actualizarDatos();if($("#actualizar").length){valregistro("#actualizar");};')
+                ->setScript('actualizarDatos();')
                 ->prependFile($this->_options->host->base . '/js/main.js')
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');

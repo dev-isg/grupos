@@ -447,16 +447,30 @@ class IndexController extends AbstractActionController
         $iduser = $storage->read()->in_id; // 1;
         $idgrup = $this->params()->fromQuery('idE'); // 48;
         $unir = $this->params()->fromQuery('act');
+        $idusergrup=$this->getGrupoTable()->getGrupo($idgrup)->ta_usuario_in_id;
         
-       $obtnotif = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
-        foreach ($obtnotif as $key => $value) {
-            if (in_array($value['ta_notificacion_in_id'], 1)) {
+       $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+       $usuariocrear= $this->getGrupoTable()->getNotifiacionesxUsuario($idusergrup)->toArray();
+       $arr=array();
+        foreach ($usuariosesion as $value) {
+            $arr[]=$value['ta_notificacion_in_id'];
+        }
+            if (in_array(1,$arr)) {
                 $correoe = true;
             }
-            if (in_array($value['ta_notificacion_in_id'], 2)) {
+            if (in_array(2,$arr)) {
                 $correos = true;
             }
+            $arrc=array();
+        foreach ($usuariocrear as $values) {
+            $arrc[]=$values['ta_notificacion_in_id'];
         }
+             if (in_array(1,$arrc)) {
+                $correoec = true;
+            }
+            if (in_array(2,$arrc)) {
+                $correosc = true;
+            }
 
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {           
@@ -475,6 +489,8 @@ class IndexController extends AbstractActionController
                                                </html>';
                 
                 $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al grupo');
+               }
+                if($correoec){
                 $usuario = $this->getGrupoTable()
                     ->grupoxUsuario($idgrup)
                     ->toArray();
@@ -513,6 +529,8 @@ class IndexController extends AbstractActionController
                                                </body>
                                                </html>';
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
+                    }
+                    if($correosc){
                     $usuario = $this->getGrupoTable()
                     ->grupoxUsuario($idgrup)
                     ->toArray();
