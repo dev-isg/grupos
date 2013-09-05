@@ -587,7 +587,23 @@ div.upload input {
   margin-top: 0;
 }
 .login-home {
-
+  padding-bottom: 20px;
+  border-bottom: 2px solid #333;
+  margin-bottom: 20px;
+}
+.content-login-facebook p{
+  text-align: center;
+  color: #333;
+  font-size: 15px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.content-login-facebook p a{
+  display: block;
+  background: url(../img/face-login.png) no-repeat;
+  width: 159px;
+  height: 31px;  
+  margin-left: 140px;
 }
 .int{
   width: 91%;
@@ -900,6 +916,20 @@ vertical-align: middle;
 }
 .menu-dev{
     height: 34px;
+}
+.menu-dev .open .buttom{
+  background: none!important;
+}
+.menu-dev .buttom{
+  background: none;
+  box-shadow: 0 0 0;
+  -webkit-box-shadow: 0 0 0;
+  -moz-box-shadow: 0 0 0;
+  -o-box-shadow: 0 0 0;
+  border: 0;
+  padding: 0!important;
+  text-shadow: 0 0 0!important;
+  color: white!important;
 }
 .divider-one{
     height: 11px!important;
