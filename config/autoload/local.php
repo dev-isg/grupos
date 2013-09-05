@@ -15,7 +15,7 @@ return array(
 
 //   'facebook' => array(
 //        'appId' => '171038663080276',
-//        'secret' => '6ae99781de7ed810fb4713032a068e3a',
+//        'secret' => '5739ee928ea9149e62096e9bb91c501f',
 //        'pass'=>'123456789159753'
 //    ),
 //    
