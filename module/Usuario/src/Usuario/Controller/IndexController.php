@@ -298,10 +298,6 @@ public function getAuthService() {
 //                          }                       
 //                        }
 //                      }else{  }
-<<<<<<< HEAD
-=======
-
->>>>>>> 54c62d86c3f8a4e391946293a34d0fc46d2f67f7
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
