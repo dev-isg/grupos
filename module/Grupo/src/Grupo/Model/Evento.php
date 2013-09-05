@@ -23,6 +23,7 @@ class Evento implements InputFilterAwareInterface
     public $va_max;
     public $va_min;
     public $va_duracion;
+//    public $va_fecha_ingreso;
     //foraneas
     public $ta_usuario_in_id;
 //    public $ta_categoria_in_id;   
