@@ -298,7 +298,10 @@ public function getAuthService() {
 //                          }                       
 //                        }
 //                      }else{  }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 54c62d86c3f8a4e391946293a34d0fc46d2f67f7
                       
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
@@ -328,12 +331,13 @@ public function getAuthService() {
             $form->setData($data); // $request->getPost()
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
+               
                 $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email'));
                 if (count($email) <= 0) {
                     if ($File['name'] != '') {
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id = null)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
-                            $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
+                            $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
 
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                         } else {
@@ -341,8 +345,8 @@ public function getAuthService() {
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($nom));
-                        $this->correo($usuario->va_email, $usuario->va_nombre, md5($nom));
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
+                        $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                     }
@@ -361,11 +365,11 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-            'user_profile' => $user_profile,
-            'user' => $user,
-            'logoutUrl'  =>$logoutUrl,
-            'loginUrl'  =>$loginUrl,
-            'naitik' =>$naitik
+//            'user_profile' => $user_profile,
+//            'user' => $user,
+//            'logoutUrl'  =>$logoutUrl,
+//            'loginUrl'  =>$loginUrl,
+//            'naitik' =>$naitik
             
         );
         // return array();
