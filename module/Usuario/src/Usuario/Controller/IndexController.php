@@ -252,7 +252,7 @@ public function getAuthService() {
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
-            if ($user) {echo 'entrastee';exit;
+            if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
                  } 
