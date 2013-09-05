@@ -42,6 +42,7 @@ class IndexController extends AbstractActionController
     }
 
     public function indexAction() {
+
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
                 ->setScript('jQuery(document).ready(function(){valUsuario();});')

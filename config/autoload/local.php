@@ -19,7 +19,7 @@ return array(
 //        'pass'=>'123456789159753'
 //    ),
 //    
-//
+
    'host' => array(
         'base' => 'http://dev.juntate.pe',
         'static' => 'http://dev.juntate.pe',
