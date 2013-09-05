@@ -28,6 +28,11 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+    
+    function onDispatchError(MvcEvent $e) {
+        $vm = $e->getViewModel();
+        $vm->setTemplate('layout/layout-error');
+    }
 
     public function getConfig()
     {

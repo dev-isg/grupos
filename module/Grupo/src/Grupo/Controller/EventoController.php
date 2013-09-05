@@ -380,8 +380,34 @@ class EventoController extends AbstractActionController
         $iduser = $storage->read()->in_id; 
         $idevent = $this->params()->fromQuery('idE');
         $unir = $this->params()->fromQuery('act');
+        $iduserevent=$this->getEventoTable()->getEvento($idevent)->ta_usuario_in_id;
+         
+       $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+       $usuariocrear= $this->getGrupoTable()->getNotifiacionesxUsuario($iduserevent)->toArray();
+       $arr=array();
+        foreach ($usuariosesion as $value) {
+            $arr[]=$value['ta_notificacion_in_id'];
+        }
+            if (in_array(1,$arr)) {
+                $correoe = true;
+            }
+            if (in_array(2,$arr)) {
+                $correos = true;
+            }
+            $arrc=array();
+        foreach ($usuariocrear as $values) {
+            $arrc[]=$values['ta_notificacion_in_id'];
+        }
+             if (in_array(1,$arrc)) {
+                $correoec = true;
+            }
+            if (in_array(2,$arrc)) {
+                $correosc = true;
+            }
+            
         if ($unir == 1) {
             if ($this->getEventoTable()->unirseEvento($idevent, $iduser)) {
+                if($correoe){
                 $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -398,6 +424,8 @@ class EventoController extends AbstractActionController
                                                </html>';
                 
                 $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al evento');
+                }
+                if($correoec){
                 $usuario = $this->getEventoTable()->eventoxUsuario($idevent) ->toArray();
                 $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -413,12 +441,14 @@ class EventoController extends AbstractActionController
                 if ($usuario) {
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                 }
+                }
                 $activo=1;
                 $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
             }
             
         }elseif ($unir==0){
             if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
+                if($correos){
                 $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -436,6 +466,8 @@ class EventoController extends AbstractActionController
                                                </html>';
                 
                 $this->mensaje($storage->read()->va_email, $bodyHtml, 'Has abandonado un evento');
+                }
+                if($correosc){
                 $usuario = $this->getEventoTable()
                 ->eventoxUsuario($idevent)
                 ->toArray();
@@ -453,7 +485,7 @@ class EventoController extends AbstractActionController
                 if ($usuario) {
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Abandonaron tu evento');
                 }
-            
+                }
             }
             $activo=0;
             $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
