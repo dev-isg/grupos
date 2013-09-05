@@ -209,14 +209,12 @@ class IndexController extends AbstractActionController
         
         // $local = (int) $this->params()->fromQuery('id');
         $user_info = $this->getGrupoTable()->misgrupos($storage->read()->in_id);//usuarioxGrupo($storage->read()->in_id);
-        // var_dump($user_info);Exit;
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->get('submit')->setValue('Crear Grupo');
         $request = $this->getRequest();
+        $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
-        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-       
         if ($request->isPost()) {
 
             $File = $this->params()->fromFiles('va_imagen');
@@ -249,7 +247,7 @@ class IndexController extends AbstractActionController
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
-                   if($this->params()->fromPost('url')=='/usuario/index/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
+                   if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        
                    }else{

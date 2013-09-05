@@ -25,13 +25,13 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                                </select>
                             </div>
                             <p class="activar-agregar" style="margin-top:10px;margin-left:10px;">
-                                <a href="/grupo" class="btn btn-primary btn-agregar">Agregar un nuevo grupo</a>
+                                <a href="<?php echo $this->host('base').$this->url('agregar-grupo');?>" class="btn btn-primary btn-agregar">Agregar un nuevo grupo</a>
                             </p>
                         </div>
                     </div>
                     <!--Crear grupo o agregar-->
                     <p class="next-space" style="display:none;">
-                        <a href="/agregar-evento/" class="btn btn-warning next-grupo">Siguiente</a>
+                        <a href="<?php echo $this->host('base').$this->url('agregar-evento');?>" class="btn btn-warning next-grupo">Siguiente</a>
                     </p>
                 </div>    
 

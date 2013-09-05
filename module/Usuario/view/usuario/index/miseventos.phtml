@@ -20,12 +20,12 @@
 		                    <article id="post-9" class="img-dev-evento post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope itemtype="http://schema.org/BlogPosting">
 		                        <div class="post-block three_columns">
 		                            <div class="entry-thumb">
-		                                <a href="/evento/<?php echo $this->escapeHtml($miseventos->in_id); ?>" class="preview" data-ui-lightbox>
+		                                <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($miseventos->in_id); ?>" class="preview" data-ui-lightbox>
 			                                <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($miseventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
 			                            </a>
 			                            <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
-						                    <div class="content-edit">
-						                      <a href="/evento/editar/<?php echo $this->escapeHtml($miseventos->in_id);?>" title="Editar detalle de evento">
+						                    <div class="content-edit">                             
+						                      <a href="<?php echo $this->host('base').$this->url('editar-evento').'/'.$this->escapeHtml($miseventos->in_id);?>" title="Editar detalle de evento">
 						                        <img src="/img/edit-2.png">
 						                      </a>
 						                    </div>
@@ -39,7 +39,7 @@
 		                                      </div>
 		                                </div>
 		                                <h2>
-		                                	<a href="/evento/<?php echo $this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a>
+		                                	<a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($miseventos->in_id); ?>"><?php echo  $this->escapeHtml($miseventos->va_nombre);?></a>
 		                                </h2>
 		                                <div class="divider-1px-meta"></div>
 		                                <footer class="entry-extra clearfix">

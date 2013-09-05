@@ -43,6 +43,16 @@ return array(
                     ),
                 ),
             ),
+            'buscar' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/buscar',//[/:in_id]
+                    'defaults' => array(
+                        'controller' => 'Grupo\Controller\Index',
+                        'action' => 'index'
+                    )
+                ),
+               ),
             'elegir-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -56,7 +66,7 @@ return array(
             'detalle-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/detalle-grupo[/:in_id]',
+                    'route' => '/grupo[/:in_id]',//'/detalle-grupo[/:in_id]',
                     'defaults' => array(
                         'controller' => 'Grupo\Controller\Index',
                         'action' => 'detallegrupo'
@@ -66,7 +76,7 @@ return array(
             'agregar-grupo' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/grupo[/:in_id]',
+                    'route' => '/grupo/agregar[/:in_id]',//'/grupo[/:in_id]',
                     'defaults' => array(
                         'controller' => 'Grupo\Controller\Index',
                         'action' => 'agregargrupo'
