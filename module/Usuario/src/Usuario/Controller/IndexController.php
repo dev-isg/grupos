@@ -76,16 +76,20 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id; // $this->params()->fromQuery('id');
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
-        $categorias = $this->getUsuarioTable()
+        if(count($usuariosgrupos)==0)
+        {$mensaje= 'Aún no participas en ningún grupo, Que esperas para crear uno';}
+       $categorias = $this->getUsuarioTable()
                         ->categoriasunicas($id)->toArray();
         for ($i = 0; $i < count($categorias); $i++) {
             $otrosgrupos = $this->getUsuarioTable()->grupossimilares($categorias[$i]['idcategoria'], $categorias[$i]['id']);
         }
+        
 
         return array(
             'grupo' => $valor,
             'grupospertenece' => $usuariosgrupos,
             'otrosgrupos' => $otrosgrupos,
+            'mensaje'=>$mensaje
         );
     }
 
