@@ -9,7 +9,7 @@
                     <article id="post-9" class="post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope itemtype="http://schema.org/BlogPosting">
                         <div class="post-block three_columns">
                             <div class="entry-thumb">
-                                <a href="/evento/<?php echo $this->escapeHtml($eventos->in_id); ?>">
+                                <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->in_id); ?>">
                                     <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
                                 </a>
                             </div> <!-- .entry-thumb -->
@@ -21,7 +21,7 @@
                                       </div>
                                 </div>
                                 <h2>
-                                    <a href="/evento/<?php echo $this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
+                                    <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
                                 </h2>
                                 <div class="divider-1px-meta"></div>
                                 <footer class="entry-extra clearfix">
@@ -31,7 +31,7 @@
                                     </span>
                                     <span class="meta-views" title="Views">
                                         <i class="icon-tag"></i>
-                                        <a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
                                     </span>
                                 </footer>
                             </div>
@@ -54,7 +54,7 @@
                         <article id="post-9" class="post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope itemtype="http://schema.org/BlogPosting">
                         <div class="post-block three_columns">
                             <div class="entry-thumb">
-                                <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>">
+                                <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupos->in_id); ?>">
                                     <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
                                 </a>
                             </div> <!-- .entry-thumb -->
@@ -67,17 +67,13 @@
                                 </div>
                                 
                                 <h2>
-                                    <a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
+                                    <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupos->in_id); ?>"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
                                 </h2>
                                 <div class="divider-1px-meta"></div>
                                 <footer class="entry-extra clearfix">
-                                    <span class="meta-comments">
-                                        <i class="icon-comment"></i>
-                                        <a href="#" title="comentarios"><?php echo $this->escapeHtml($grupos->va_nombre); ?></a>
-                                    </span>
                                     <span class="meta-views" title="Views">
                                         <i class="icon-tag"></i>
-                                        <a href="<?php echo $this->host('ruta')?>/grupo/index/index?categoria=<?php echo $this->escapeHtml($grupos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>" title="Categoría"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
+                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($grupos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>" title="Categoría"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
                                     </span>
                                 </footer>
                             </div>
