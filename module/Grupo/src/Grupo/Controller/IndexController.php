@@ -447,9 +447,20 @@ class IndexController extends AbstractActionController
         $iduser = $storage->read()->in_id; // 1;
         $idgrup = $this->params()->fromQuery('idE'); // 48;
         $unir = $this->params()->fromQuery('act');
+        
+       $obtnotif = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+        foreach ($obtnotif as $key => $value) {
+            if (in_array($value['ta_notificacion_in_id'], 1)) {
+                $correoe = true;
+            }
+            if (in_array($value['ta_notificacion_in_id'], 2)) {
+                $correos = true;
+            }
+        }
+
         if ($unir == 1) {
-            if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
-                    // $user_info = $this->getGrupoTable()->usuarioxGrupo(1);
+            if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {           
+               if($correoe){
                 $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -481,11 +492,14 @@ class IndexController extends AbstractActionController
                 if ($usuario) {
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
                 }
+               }
                 $activo=1;
                 $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
-            }
+              }
+        
         } elseif ($unir == 0) {
                 if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
+                    if($correos){
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -515,7 +529,8 @@ class IndexController extends AbstractActionController
                                                </html>';
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
-                    }        
+                    }
+                    }
                      $activo=0;
                      $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser); //getGrupoUsuario($idgrup, $iduser);
                     }               
@@ -547,7 +562,6 @@ class IndexController extends AbstractActionController
         $message->addTo($mail, $nombre)
         ->setFrom('listadelsabor@innovationssystems.com', 'listadelsabor.com')
         ->setSubject($subject);
-        // ->setBody($bodyHtml);
         $bodyPart = new \Zend\Mime\Message();
         $bodyMessage = new \Zend\Mime\Part($bodyHtml);
         $bodyMessage->type = 'text/html';
