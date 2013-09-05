@@ -153,9 +153,6 @@ function actualizarDatos(){
           });
           $(".modificardatos").slideDown();
           $(".misdatos span").slideDown();
-          if($("#usuario").length){
-            valactualizar("#usuario");
-          };
         });
 
         $(".misdatos").delegate("span","click",function(){

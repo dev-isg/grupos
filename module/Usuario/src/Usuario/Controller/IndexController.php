@@ -399,7 +399,7 @@ public function getAuthService() {
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-                ->setScript('actualizarDatos();')
+                ->setScript('actualizarDatos();if($("#editarusuario").length){valactualizar("#editarusuario");};')
                 ->prependFile($this->_options->host->base . '/js/main.js')
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
