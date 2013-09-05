@@ -112,6 +112,7 @@ class EventoTable{
      
      
       if ($id == 0) {
+          $data['va_fecha_ingreso']= date("Y-m-d H:i:s");
           $this->tableGateway->insert($data);
           $idevento=$this->tableGateway->getLastInsertValue();
           if($this->unirseEvento($idevento,$iduser)){
@@ -446,7 +447,6 @@ class EventoTable{
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             $resultSet->buffer();
-//             var_dump($resultSet->toArray());Exit;
         return $resultSet;
     }
 

@@ -292,7 +292,7 @@ class EventoController extends AbstractActionController
 
     public function detalleeventoAction()
     {
-        $form = new ComentarioForm();
+//        $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
       
@@ -303,7 +303,7 @@ class EventoController extends AbstractActionController
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id);
-        $comentarios = $this->getEventoTable()->comentariosevento($id);
+//        $comentarios = $this->getEventoTable()->comentariosevento($id);
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
@@ -324,18 +324,18 @@ class EventoController extends AbstractActionController
             $activo=$participa->va_estado=='activo'?true:false;
         }
         
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-            if ($form->isValid()) {
-                $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
-                return $this->redirect()->toUrl('/evento/' . $id);
-            }
-        }
-       
-        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
-        $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
-        $paginator->setItemCountPerPage(10);
+//        $request = $this->getRequest();
+//        if ($request->isPost()) {
+//            $form->setData($request->getPost());
+//            if ($form->isValid()) {
+//                $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
+//                return $this->redirect()->toUrl('/evento/' . $id);
+//            }
+//        }
+//       
+//        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
+//        $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
+//        $paginator->setItemCountPerPage(10);
         
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
@@ -347,12 +347,12 @@ class EventoController extends AbstractActionController
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
-            'usuarios' => $usuarios,
-            'comentarios' => $comentarios,
-            'comentarioform' => $form,
+            'usuarios' => $usuarios,        
+//            'comentarios' => $comentarios,
+//            'comentarioform' => $form,           
             'idevento' => $id,
-            'session'=>$session,
-            'grupocomprueba'=>$grupocompr,
+            'session'=>$session,          
+//            'grupocomprueba'=>$grupocompr,          
             'participa'=>$activo,
             'mensajes'=>$mensajes
             

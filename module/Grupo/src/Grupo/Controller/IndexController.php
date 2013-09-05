@@ -130,7 +130,7 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-
+//var_dump($listagrupos->toArray());exit;
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
