@@ -184,7 +184,47 @@
 
                     <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-                        <p><a href="https://www.facebook.com/dialog/oauth?client_id=171038663080276&redirect_uri=http%3A%2F%2Fdev.juntate.pe%2Fregistrarse&state=3d251eca3c8619715dfc14abcea1140d&scope=email%2Cpublish_stream%2Cread_friendlists"></a></p>
-                    </div>
+                        
+                          <?php
+               require_once'./vendor/facebook/facebook.php';
+               $facebook = new Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream',
+//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+               ));
+                $user = $facebook->getUser();
+                if ($user) {
+                  try {
+                  //  $user_profile = $facebook->api('/me');
+                  } catch (FacebookApiException $e) {
+                    error_log($e);
+                    $user = null;
+                  }
+                }
+                if ($user) {
+                  $logoutUrl = $facebook->getLogoutUrl();
+                } else {
+                  $loginUrl = $facebook->getLoginUrl();
+                }
+               
+                 if ($user): ?>
+            <p><a href="<?php echo $logoutUrl; ?>"></a></p>
+          <?php else: ?>
+               <p><a href="<?php echo $loginUrl; ?>"></a></p>
+          <?php endif ?>  
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                     </div>
             </div>
 	</div>
