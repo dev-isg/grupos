@@ -252,7 +252,6 @@ public function getAuthService() {
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
-           // $session = $facebook->getSession();
             if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
