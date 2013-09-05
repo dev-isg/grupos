@@ -186,10 +186,12 @@
                         <p>Ingresa rápido por:</p>
                         
                           <?php
+                          
+                          
                require_once'./vendor/facebook/facebook.php';
                $facebook = new Facebook(array(
-                 'appId'  => $this->_options->facebook->appId,
-                 'secret' => $this->_options->facebook->secret,
+                 'appId'  => '171038663080276',
+                 'secret' => '6ae99781de7ed810fb4713032a068e3a',
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
