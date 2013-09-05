@@ -184,10 +184,7 @@
 
                     <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-                        
-                          <?php
-                          
-                          
+               <?php           
                require_once'./vendor/facebook/facebook.php';
                $facebook = new Facebook(array(
                  'appId'  => '171038663080276',
@@ -199,34 +196,18 @@
                 $user = $facebook->getUser();
                 if ($user) {
                   try {
-                  //  $user_profile = $facebook->api('/me');
                   } catch (FacebookApiException $e) {
                     error_log($e);
-                    $user = null;
-                  }
-                }
+                    $user = null; }  }
                 if ($user) {
                   $logoutUrl = $facebook->getLogoutUrl();
                 } else {
-                  $loginUrl = $facebook->getLoginUrl();
-                }
-               
+                  $loginUrl = $facebook->getLoginUrl(); }
                  if ($user): ?>
-            <p><a href="<?php echo $logoutUrl; ?>"></a></p>
+           <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php else: ?>
                <p><a href="<?php echo $loginUrl; ?>"></a></p>
-          <?php endif ?>  
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+          <?php endif ?>     
                      </div>
             </div>
 	</div>
