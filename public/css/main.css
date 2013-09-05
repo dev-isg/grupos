@@ -588,7 +588,7 @@ div.upload input {
 }
 .login-home {
   padding-bottom: 20px;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid #ccc;
   margin-bottom: 20px;
 }
 .content-login-facebook p{
@@ -931,6 +931,10 @@ vertical-align: middle;
   text-shadow: 0 0 0!important;
   color: white!important;
 }
+.menu-dev .buttom img{
+  width: 27px;
+  height: 27px;
+}
 .divider-one{
     height: 11px!important;
     margin-top: 13px!important;
@@ -966,7 +970,7 @@ vertical-align: middle;
   height: 327px;
   width: 100%;
   float: left;
-  background: url(../img/he.png) repeat-x;
+  background: url(../img/he.jpg) repeat-x;
 }
 .filtrar-home{
   width: 100%;
@@ -1384,9 +1388,9 @@ span.nm{
   bottom: 0;
 }
 .contenedor-back-ho{
-  width: 762px;
+  width: 724px;
   height: 326px;
-  background-image: url(../img/img-banner.jpg);
+  background-image: url(../img/fond.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
   position: absolute;
