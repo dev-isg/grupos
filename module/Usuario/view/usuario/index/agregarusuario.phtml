@@ -81,15 +81,12 @@
       </div>
       <div class="span4 cambiofotouser dev-marca-face">
           <h1>REGISTRARSE CON FACEBOOK</h1>
-          <?php if ($this->user): ?>
+          
+          <?php if(!$this->session) {?>
            <a href="<?php echo $this->loginUrl; ?>">
               <img src="/img/face.png">
             </a>
-          <?php else: ?>
-            <a href="<?php echo $this->loginUrl; ?>">
-              <img src="/img/face.png">
-            </a>
-          <?php endif ?>
+          <?php   }?>
       </div>
     </div>
   </div> <!-- #main -->
