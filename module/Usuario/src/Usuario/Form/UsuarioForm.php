@@ -77,9 +77,11 @@ class UsuarioForm extends Form{
         
         $this->add(array(
             'name' => 'va_descripcion',
-            'type' => 'Text',
+            'type' => 'Textarea',
             'attributes' => array(             
-                'placeholder'=>'Ingrese su descripción... '
+                'placeholder'=>'Ingrese su descripción... ',
+                'cols'=>80,
+                'rows'=>3
             ),
         )); 
          
