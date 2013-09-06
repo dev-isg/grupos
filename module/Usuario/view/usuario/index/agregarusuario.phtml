@@ -83,12 +83,15 @@
           <h1>REGISTRARSE CON FACEBOOK</h1>
       <?php //if ($this->user): ?>
 <!--      <a href="<?php// echo $this->logoutUrl; ?>">Logout</a>-->
-     <?php if(!$this->user) {//session_destroy();?>
+     <?php if($this->user) { session_destroy();?>
         <div>
         <a href="<?php echo $this->loginUrl; ?>"> <img src="/img/face.png"></a>
         </div>
-      <?php } ?>     
-          
+      <?php } else { ?> 
+        <div>
+        <a href="<?php echo $this->loginUrl; ?>"> <img src="/img/face.png"></a>
+        </div>
+       <?php }  ?>      
       </div>
     </div>
   </div> <!-- #main -->
