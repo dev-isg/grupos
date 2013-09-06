@@ -277,7 +277,7 @@ public function getAuthService() {
                       
                       
                       
-     public function agregarusuarioAction() {session_destroy();
+     public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       
           
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
