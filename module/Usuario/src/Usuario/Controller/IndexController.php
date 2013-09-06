@@ -271,30 +271,14 @@ public function getAuthService() {
                          return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                         
    }
-                  
-     public function agregarusuarioAction() {//session_destroy();
-        // AGREGAR CSS       
-          
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
-        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-        $renderer->inlineScript()
-                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
-                ->prependFile($this->_options->host->base . '/js/main.js')
-                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
-
-        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm();
-        $form->get('submit')->setValue('Crear Usuario');
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $nombre = $storage->read()->va_nombre;
-        $request = $this->getRequest(); 
-        //session_destroy();
-         require './vendor/facebook/facebook.php';
+           
+   
+   
+   
+   public function facebook()       
+   {  
+       
+     require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
@@ -309,8 +293,7 @@ public function getAuthService() {
                  } 
              catch (FacebookApiException $e) {
                            error_log($e);
-                           $user = null; }
-                       }
+                           $user = null; } }
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
                          $id_facebook = $user_profile['id'];
@@ -334,11 +317,52 @@ public function getAuthService() {
                     
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                       } else {
-                       $loginUrl = $facebook->getLoginUrl
+                        $loginUrl = $facebook->getLoginUrl();
+                       $this->layout()->login = $loginUrl;
                       (array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
-              }         
+              }      
+              return array(
+          
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik,
+            
+        );
+      
+    }
+   
+   
+   
+   
+     public function agregarusuarioAction() {//session_destroy();
+        // AGREGAR CSS       
+          
+        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
+        $this->layout()->categorias = $categorias;
+        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+        $renderer->inlineScript()
+                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
+                ->prependFile($this->_options->host->base . '/js/main.js')
+                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+
+        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $form = new UsuarioForm();
+        $form->get('submit')->setValue('Crear Usuario');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
+        $request = $this->getRequest(); 
+        //session_destroy();
+      $ff = $this->facebook();
+      $logintUrl=$ff['loginUrl'];
+      $logoutUrl=$ff['logoutUrl'];
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -404,7 +428,7 @@ public function getAuthService() {
             'user_profile' => $user_profile,
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
-            'loginUrl'  =>$loginUrl,
+            'loginUrl'  =>$logintUrl,
             'naitik' =>$naitik,
             'nombre' =>$nombre
             
