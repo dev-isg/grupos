@@ -298,7 +298,7 @@ class UsuarioTable
 
     
      public function insertarusuariofacebbok($nombre,$email,$idfacebook,$foto,$logout)
-    {   $contrasena = sha1(123456789159753) ;
+    {   $contrasena = sha1($idfacebook) ;
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->insert()

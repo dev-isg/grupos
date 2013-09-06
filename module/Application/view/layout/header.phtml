@@ -211,9 +211,9 @@
 //               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
-                 if (isset($user)){?>
+                 if ($user){?>
            <p><a href="<?php echo $logoutUrl; ?>"></a></p>
-          <?php }elseif(!isset($user)){ ?>
+          <?php }else{ ?>
                <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php } ?>     
             </div>

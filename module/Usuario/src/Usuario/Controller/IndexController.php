@@ -326,20 +326,20 @@ public function getAuthService() {
                          if(count($correo)>0)
                          {if($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass); }     
+                                 AuthController::sessionfacebook($email,$id_facebook); }     
                          else{$this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
-                             AuthController::sessionfacebook($email,$this->_options->facebook->pass); }}
+                             AuthController::sessionfacebook($email,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);}}
-                      }else{  }
+                              AuthController::sessionfacebook($email,$id_facebook);}}
+                      }else{ }
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                       } else {
-                         $loginUrl = $facebook->getLoginUrl
+                      } else {
+                       $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
-                          )); 
+                       )); 
               }         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
