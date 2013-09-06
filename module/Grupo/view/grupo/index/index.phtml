@@ -1,24 +1,3 @@
-<?php 
-
-//if($_SERVER['REQUEST_URI']!='/'){
-//    $urlact=$_SERVER['REQUEST_URI'].'&';
-//}else{
-//    $urlact='?';
-//}
-$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI']:'?';
-        echo 'url actual: '.$urlact.'</br>';
-        $str=strripos($urlact,'&');
-        $strre=  substr($urlact,0,$str);
-        $strseach=strpos($strre,'categoria');
-        if($strseach!==false){
-            $urlpaginador=$strre;
-        }else{
-            $urlpaginador=$urlact;
-        }
-        echo $strre.'</br>';
-        echo 'url paginador: '.$urlpaginador;
-        
-?>
 <div class="main-container">
     <div class="container">
         <?php if(count($this->grupos)<=0) { ?>
