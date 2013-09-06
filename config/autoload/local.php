@@ -13,20 +13,20 @@
 
 return array(
 
-//   'facebook' => array(
-//        'appId' => '171038663080276',
-//        'secret' => '5739ee928ea9149e62096e9bb91c501f',
-//        'pass'=>'123456789159753'
-//    ),
-//    
+   'facebook' => array(
+        'appId' => '171038663080276',
+        'secret' => '5739ee928ea9149e62096e9bb91c501f',
+        'pass'=>'123456789159753'
+    ),
+    
 
-//   'host' => array(
-//        'base' => 'http://dev.juntate.pe',
-//        'static' => 'http://dev.juntate.pe',
-//        'images' => 'http://192.168.1.50:82/imagenes',
-//        'img'=>'http://192.168.1.50:82/img',
-//        'ruta' => 'http://dev.juntate.pe',
-//        'version'=>1,
-//    ),
+   'host' => array(
+        'base' => 'http://dev.juntate.pe',
+        'static' => 'http://dev.juntate.pe',
+        'images' => 'http://192.168.1.50:82/imagenes',
+        'img'=>'http://192.168.1.50:82/img',
+        'ruta' => 'http://dev.juntate.pe',
+        'version'=>1,
+    ),
 
 );
