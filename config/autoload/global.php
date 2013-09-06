@@ -31,7 +31,7 @@ return array(
         'pass'=>'123456789159753'
     ),
 
-//
+
 // 'host' => array(
 //        'base' => 'http://192.168.1.25:8081',
 //        'static' => 'http://192.168.1.25:8081',
@@ -40,6 +40,7 @@ return array(
 //        'ruta' => 'http://192.168.1.25:8081',
 //        'version'=>1,
 //    ),
+
 
     
         'mail' => array(
