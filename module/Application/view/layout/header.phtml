@@ -201,7 +201,8 @@
                     error_log($e);
                     $user = null; }  }
                 if ($user) {
-               $this->coneccion();     
+                    $hola = 'probando';
+               $this->coneccion($hola);     
                   //$logoutUrl = $facebook->getLogoutUrl();
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }

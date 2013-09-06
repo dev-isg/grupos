@@ -241,8 +241,9 @@ public function getAuthService() {
         return $this->storage;
     }
     
-    public function coneccion()
-    { require './vendor/facebook/facebook.php';
+    public function coneccion($hola)
+    {
+        require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
@@ -250,6 +251,8 @@ public function getAuthService() {
                  'scope'  => 'email,publish_stream',
 //                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
+               
+       var_dump($hola);
             $user = $facebook->getUser();
             if ($user) {
              try {
