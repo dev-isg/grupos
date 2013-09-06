@@ -295,7 +295,8 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
         $request = $this->getRequest(); 
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
@@ -408,9 +409,10 @@ public function getAuthService() {
             'mensaje' => $mensaje,
             'user_profile' => $user_profile,
             'user' => $user,
-          //  'logoutUrl'  =>$logoutUrl,
+            'logoutUrl'  =>$logoutUrl,
             'loginUrl'  =>$loginUrl,
-            'naitik' =>$naitik
+            'naitik' =>$naitik,
+            'nombre' =>$nombre
             
         );
         // return array();
