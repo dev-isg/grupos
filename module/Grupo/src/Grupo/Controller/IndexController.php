@@ -86,7 +86,7 @@ class IndexController extends AbstractActionController
                  //    'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }      
-         $url = $this->_options->host->ruta.'/registrarse/';
+         //$url = $this->_options->host->ruta.'/registrarse/';
                  return array(
           
             'user_profile' => $user_profile,
@@ -94,7 +94,7 @@ class IndexController extends AbstractActionController
             'logoutUrl'  =>$logoutUrl,
             'loginUrl' => $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists,offline_access',
-                  'redirect_uri' =>$url
+                  'redirect_uri' =>'http://dev.juntate.pe/registrarse'
                        )),
  
             'naitik' =>$naitik
