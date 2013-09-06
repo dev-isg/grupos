@@ -27,8 +27,7 @@ return array(
 
     'facebook' => array(
         'appId' => '171038663080276',
-        'secret' => '5739ee928ea9149e62096e9bb91c501f',
-        'pass'=>'123456789159753'
+        'secret' => '5739ee928ea9149e62096e9bb91c501f'
     ),
 
 
