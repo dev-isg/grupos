@@ -43,7 +43,8 @@
         </div>
         <div class="row-fluid">
             <div class="span12" id="pagina">
-                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?')):""; ?>
+                <?php $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'&';?>
+                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$urlact)):"";//'variable'=>'/grupo/index/index?' ?>
             </div>
         </div>  
         <?php } else { ?>
@@ -85,7 +86,7 @@
         </div>
         <div class="row-fluid">
             <div class="span12" id="pagina">
-                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'/grupo/index/index?tipo=Grupos&')):""; ?>
+                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$urlact)):"";//'/grupo/index/index?tipo=Grupos&' ?>
             </div>
         </div>
         <?php }?>
