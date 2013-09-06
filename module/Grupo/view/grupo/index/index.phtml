@@ -1,3 +1,24 @@
+<?php 
+
+//if($_SERVER['REQUEST_URI']!='/'){
+//    $urlact=$_SERVER['REQUEST_URI'].'&';
+//}else{
+//    $urlact='?';
+//}
+$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI']:'?';
+        echo 'url actual: '.$urlact.'</br>';
+        $str=strripos($urlact,'&');
+        $strre=  substr($urlact,0,$str);
+        $strseach=strpos($strre,'categoria');
+        if($strseach!==false){
+            $urlpaginador=$strre;
+        }else{
+            $urlpaginador=$urlact;
+        }
+        echo $strre.'</br>';
+        echo 'url paginador: '.$urlpaginador;
+        
+?>
 <div class="main-container">
     <div class="container">
         <?php if(count($this->grupos)<=0) { ?>
@@ -47,7 +68,7 @@
                         $str=strpos($urlact,'&page=');
                         $strre=  substr($urlact, $start);
                 ?>
-                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->host('base').$urlact)):"";//'variable'=>'/grupo/index/index?' ?>
+                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'buscar?')):"";//$this->host('base').$urlact ?>
             </div>
         </div>  
         <?php } else { ?>
@@ -90,7 +111,7 @@
         <div class="row-fluid">
             <div class="span12" id="pagina">
                  <?php $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
-                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->host('base').$urlact)):"";//'/grupo/index/index?tipo=Grupos&' ?>
+                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'buscar?tipo=Grupos&')):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
             </div>
         </div>
         <?php }?>
