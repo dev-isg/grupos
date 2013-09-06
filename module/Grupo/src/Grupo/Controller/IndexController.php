@@ -86,13 +86,13 @@ class IndexController extends AbstractActionController
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }      
-              
+            
                  return array(
           
             'user_profile' => $user_profile,
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
-            'loginUrl'  =>$loginUrl,
+            'loginUrl' => $facebook->getLoginUrl(array('redirect_uri' => 'http://dev.juntate/registrarse/', 'scope' => 'email,publish_stream, offline_access')),
             'naitik' =>$naitik
             
         );
