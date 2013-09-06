@@ -59,7 +59,6 @@ class IndexController extends AbstractActionController
                            error_log($e);
                            $user = null; } }
                        if ($user) {
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                          $logoutUrl = $facebook->getLogoutUrl();
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
@@ -82,13 +81,12 @@ class IndexController extends AbstractActionController
                     
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                       } else {
-                          //$ruta = $this->_options->host->ruta;
                         $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
                  //    'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }      
-            //$url = $this->_options->host->ruta.'/grupo/index/facebook';
+         $url = $this->_options->host->ruta.'/registrarse/';
                  return array(
           
             'user_profile' => $user_profile,
@@ -96,7 +94,7 @@ class IndexController extends AbstractActionController
             'logoutUrl'  =>$logoutUrl,
             'loginUrl' => $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists,offline_access',
-                  'redirect_uri' => 'http://dev.juntate.pe/'
+                  'redirect_uri' =>$url
                        )),
  
             'naitik' =>$naitik
