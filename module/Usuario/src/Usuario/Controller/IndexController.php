@@ -374,7 +374,12 @@ public function getAuthService() {
 
 
     public function editarusuarioAction() {
+        
+        
+       
+        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -502,7 +507,8 @@ public function getAuthService() {
             'form' => $form,
             'usuario' => $usuario,
             'valor' => $valor,
-            'formnotif' => $formNotif
+            'formnotif' => $formNotif,
+            'session'  =>$session
         );
     }
 
@@ -529,11 +535,9 @@ public function getAuthService() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
-        
         if($storage->read()->va_foto==null)
        {$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
        else{  $imagen=$storage->read()->va_foto;}
-      
         $accion=$this->params('action');
          if($accion=='misgrupos'){
            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  

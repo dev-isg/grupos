@@ -40,11 +40,19 @@
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
-                                                <?php if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
+                                                                                
+                                              <?php  if($session->id_facebook!=null) { ?>  
+
+ <img src="<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">                                            
+  <?php       }  else {if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
                                                     <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
                                                 <?php }else{?>
                                                     <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
-                                                <?php }?>
+                                                <?php }  }?>
+                                                    
+                                                    
+                                                    
+                                                    
 								            </div>
 							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
 								            <div class="detalle-img">
