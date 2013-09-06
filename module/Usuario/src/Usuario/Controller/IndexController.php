@@ -408,7 +408,7 @@ public function getAuthService() {
             'mensaje' => $mensaje,
             'user_profile' => $user_profile,
             'user' => $user,
-            'logoutUrl'  =>$logoutUrl,
+          //  'logoutUrl'  =>$logoutUrl,
             'loginUrl'  =>$loginUrl,
             'naitik' =>$naitik
             
