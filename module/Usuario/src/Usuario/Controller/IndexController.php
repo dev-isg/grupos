@@ -241,45 +241,9 @@ public function getAuthService() {
         return $this->storage;
     }
     
-    public function coneccion($hola)
+    public function coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email)
     {
-        
-        
-      //  var_dump($hola);exit;
-        require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => $this->_options->facebook->appId,
-                 'secret' => $this->_options->facebook->secret,
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-//                  'redirect_uri'=>  'http://dev.juntate.pe/'
-               ));
-               
-     //  var_dump($hola);
-            $user = $facebook->getUser();
-            if ($user) {
-             try {
-                   $user_profile = $facebook->api('/me');
-                 } 
-             catch (FacebookApiException $e) {
-                           error_log($e);
-                           $user = null; }
-                       }
-                       if ($user) {
-                         $logoutUrl = $facebook->getLogoutUrl();
-                         $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
-                         $email = $user_profile['email'];
-                       } else {
-                         $loginUrl = $facebook->getLoginUrl
-                      (array('scope'=>'email,publish_stream,read_friendlists',
-//                      'redirect_uri' => 'http://dev.juntate.pe/'
-                          )); 
-                       }
-                       $naitik = $facebook->api('/naitik');
-                       $storage = new \Zend\Authentication\Storage\Session('Auth');
-                       $session=$storage->read();
-                       if(!$session){
+
                        if($user_profile==''){}
                        else
                         {    
@@ -305,7 +269,9 @@ public function getAuthService() {
                               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                           }                       
                         }
-                      }else{  }}
+                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                        
+   }
                       
                       
                       
