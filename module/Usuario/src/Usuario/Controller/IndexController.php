@@ -325,29 +325,17 @@ public function getAuthService() {
                        if(!$session){
                        if($user_profile==''){}
                        else
-                        {    
-                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
-                            {if($correo[0]['id_facebook']=='')  
+                         {if($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                                }     
-                             else
-                                {
-                                 $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
-                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
-                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                                }
-                            }
+                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass); }     
+                         else{$this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
+                             AuthController::sessionfacebook($email,$this->_options->facebook->pass); }}
                          else
-                          { 
-                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                          }                       
-                        }
+                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);}}
                       }else{  }
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                        } else {
@@ -355,9 +343,7 @@ public function getAuthService() {
                       (array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                           )); 
-                       }
-                       
-                      
+              }         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
