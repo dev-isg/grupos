@@ -201,8 +201,9 @@
                     error_log($e);
                     $user = null; }  }
                 if ($user) {
-                    $hola = 'probando';
-               $this->coneccion($hola);     
+                    $user_profile = $facebook->api('/me');
+               $id_facebook = $user_profile['id'];    
+               $this->coneccion($id_facebook);     
                   //$logoutUrl = $facebook->getLogoutUrl();
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
