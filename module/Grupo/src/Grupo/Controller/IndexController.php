@@ -92,7 +92,7 @@ class IndexController extends AbstractActionController
             'user_profile' => $user_profile,
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
-            'loginUrl' => $facebook->getLoginUrl(array('redirect_uri' => 'http://dev.juntate/registrarse/', 'scope' => 'email,publish_stream, offline_access')),
+            'loginUrl' => $facebook->getLoginUrl(array('redirect_uri' => 'http://dev.juntate/registrarse/', 'scope'=>'email,publish_stream,read_friendlists')),
             'naitik' =>$naitik
             
         );
