@@ -202,23 +202,23 @@
                     error_log($e);
                     $user = null; }  }
                 if ($user) {
-                    $user_profile = $facebook->api('/me');
+//                    $user_profile = $facebook->api('/me');
                     $logoutUrl = $facebook->getLogoutUrl();
-               $id_facebook = $user_profile['id'];    
-               $name = $user_profile['name']; 
-               $email = $user_profile['email'];
-               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);  
-               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+//               $id_facebook = $user_profile['id'];    
+//               $name = $user_profile['name']; 
+//               $email = $user_profile['email'];
+//               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);  
+//               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
                  if (isset($user)){?>
-           <p><a href="<?php echo $loginUrl; ?>"></a></p>
+           <p><a href="<?php echo $logoutUrl; ?>"></a></p>
           <?php }elseif(!isset($user)){ ?>
                <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php } ?>     
-        </div>
             </div>
-	</div>
+                </div>
+            </div>
 
         
         
