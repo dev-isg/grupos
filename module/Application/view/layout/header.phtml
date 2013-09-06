@@ -210,11 +210,11 @@
 //                  //$logoutUrl = $facebook->getLogoutUrl();
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
-                 if ($user): ?>
+                 if (isset($user)){?>
            <p><a href="<?php echo $loginUrl; ?>"></a></p>
-          <?php else: ?>
+          <?php }elseif(!isset($user)){ ?>
                <p><a href="<?php echo $loginUrl; ?>"></a></p>
-          <?php endif ?>     
+          <?php } ?>     
         </div>
             </div>
 	</div>
