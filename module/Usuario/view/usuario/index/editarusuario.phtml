@@ -55,7 +55,10 @@
                                                     
 								            </div>
 							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
-								            <div class="detalle-img">
+								          
+                                                               <?php  if($session->id_facebook!=null) { ?>   
+                                                                                              
+                                                                        <div class="detalle-img">
 								              	<strong class="btn-file">
 									              	<strong class="btn fileupload-new">Cargar una imagen</strong>
 									              	<strong class="btn fileupload-exists">Cambiar Imagen </strong>
@@ -63,6 +66,8 @@
 								               	</strong>
 								              	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
 								            </div>
+                                                                        
+                                                                        <?php  } ?>
 							          	</div>
 							        </div>
 		                        	<h5>Mis datos personales </h5>
