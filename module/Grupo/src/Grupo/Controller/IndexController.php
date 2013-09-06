@@ -192,11 +192,47 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-//var_dump($listagrupos->toArray());exit;
+        $cant=strlen($_SERVER['REQUEST_URI']);
+        $url=$_SERVER['REQUEST_URI'];//($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'';
+        $var=strripos($url,'&');
+        $var2=$var-$cant;
+        $url=substr($url,0,$var2);
+        $strseach=strpos($url,'categoria');
+        $strseacht=strpos($url,'tipo');
+        $con=0;
+        $con2=0;
+        if($strseach!==false || $strseacht!==false){
+            if($con<1){
+            $un='&';
+            $con++;
+            }
+
+        }else{
+            if($con2<1){
+             $un='?';
+             $con2++;
+            }
+
+        }
+        $quitar=strpos($url,'page=');
+        if($quitar){
+            $urlf=substr($url,0,$quitar);
+            
+        }else{
+            $urlf=$url;
+        }
+        
+//        var_dump($url);
+//        var_dump($quitar);
+//        var_dump($urlf);exit;
+//        $str=strripos($url,'&');
+//        $urlenviar= substr($url,0,$str);     
+//        $urlverd=substr($urlenviar,0,$quitar);
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
-            'dato' => $valor
+            'dato' => $valor,
+            'urlac'=>$urlf.$un//$urlverd
         );
     }
 

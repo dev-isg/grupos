@@ -1,3 +1,25 @@
+
+<?php 
+         
+//         $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?'; 
+//         $str=strripos($urlact,'&');
+//         
+//         $urlenviar= substr($urlact,0,$str);
+//         $cant=$str-strlen($urlact);
+//         $pag=substr($urlact,$cant);
+//         
+//         $seach=  strpos($urlact,'categoria');
+//         if($seach!==false){
+//              $url= $urlact;
+//         }else{
+//             $url=$urlenviar.'?';
+//         }
+//         echo $url.'</br>';
+//         echo $cant.'</br>';
+//         echo $pag.'</br>';
+         echo $this->urlac;
+         
+?>
 <div class="main-container">
     <div class="container">
         <?php if(count($this->grupos)<=0) { ?>
@@ -43,11 +65,7 @@
         </div>
         <div class="row-fluid">
             <div class="span12" id="pagina">
-                <?php $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';
-                        $str=strpos($urlact,'&page=');
-                        $strre=  substr($urlact, $start);
-                ?>
-                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'buscar?')):"";//$this->host('base').$urlact ?>
+                <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";//$this->host('base').$urlact ?>
             </div>
         </div>  
         <?php } else { ?>
@@ -94,8 +112,12 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span12" id="pagina">
-                <?php $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
-                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>'buscar?tipo=Grupos&')):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
+
+                <?php // echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$url)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
+
+                <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
+                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
+   
             </div>
         </div>
     </div>
