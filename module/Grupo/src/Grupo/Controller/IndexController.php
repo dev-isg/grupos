@@ -86,7 +86,7 @@ class IndexController extends AbstractActionController
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }      
-            $url = APPLICATION_URL . '/grupos/index/facebook';
+            $url = $this->_options->host->base.'/grupo/index/facebook';
                  return array(
           
             'user_profile' => $user_profile,
