@@ -317,9 +317,7 @@ public function getAuthService() {
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
                          $naitik = $facebook->api('/naitik');
-                       $storage = new \Zend\Authentication\Storage\Session('Auth');
-                       $session=$storage->read();
-                       if(!$session){
+                  
                        if($user_profile==''){}
                        else
                         { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
@@ -333,7 +331,7 @@ public function getAuthService() {
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
                               AuthController::sessionfacebook($email,$id_facebook);}}
-                      }else{ }
+                    
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                       } else {
                        $loginUrl = $facebook->getLoginUrl
