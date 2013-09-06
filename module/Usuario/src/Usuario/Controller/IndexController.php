@@ -337,7 +337,7 @@ public function getAuthService() {
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+                  'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
             $user = $facebook->getUser();
             if ($user) {
