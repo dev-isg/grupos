@@ -113,8 +113,8 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
-        $facebook = $this->facebook();
-        $this->layout()->login = $facebook['loginUrl'];
+//        $facebook = $this->facebook();
+//        $this->layout()->login = $facebook['loginUrl'];
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
