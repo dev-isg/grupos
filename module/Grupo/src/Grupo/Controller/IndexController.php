@@ -81,7 +81,7 @@ class IndexController extends AbstractActionController
                     
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                       } else {
-                          $ruta = $this->_options->host->ruta.'/registrarse';
+                          $ruta = $this->_options->host->ruta.'/';
                         $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists','redirect_uri'=>$ruta ,
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
