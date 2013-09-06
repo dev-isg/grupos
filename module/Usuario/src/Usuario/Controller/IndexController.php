@@ -240,53 +240,17 @@ public function getAuthService() {
 
         return $this->storage;
     }
-    
-    public function coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email)
-    {
-                       if($user_profile==''){}
-                       else
-                        {    
-                         $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-                         if(count($correo)>0)
-                            {if($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                                }     
-                             else
-                                {
-                                 $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
-                                  AuthController::sessionfacebook($email,$this->_options->facebook->pass); 
-                                  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                                }
-                            }
-                         else
-                          { 
-                              $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);
-                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                          }                       
-                        }
-                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                        
-   }
-           
-   
-   
-   
+         
    public function facebook()       
    {  
-       
      require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-                  'redirect_uri'=>  'http://dev.juntate.pe/'
-    ));
-            $user = $facebook->getUser();
+                  'redirect_uri'=>  'http://dev.juntate.pe/' ));
+        $user = $facebook->getUser();
             if ($user) {
              try {
                    $user_profile = $facebook->api('/me');
@@ -335,9 +299,6 @@ public function getAuthService() {
         );
       
     }
-   
-   
-   
    
      public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       

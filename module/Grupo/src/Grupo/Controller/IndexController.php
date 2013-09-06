@@ -40,7 +40,64 @@ class IndexController extends AbstractActionController
     {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
     }
-
+ public function facebook()       
+   {  
+     require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream',
+                  'redirect_uri'=>  'http://dev.juntate.pe/' ));
+        $user = $facebook->getUser();
+            if ($user) {
+             try {
+                   $user_profile = $facebook->api('/me');
+                 } 
+             catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null; } }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         $naitik = $facebook->api('/naitik');
+                  
+                       if($user_profile==''){}
+                       else
+                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+                         if(count($correo)>0)
+                         {if($correo[0]['id_facebook']=='')  
+                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
+                                 AuthController::sessionfacebook($email,$id_facebook); }     
+                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
+                             AuthController::sessionfacebook($email,$id_facebook); }}
+                         else
+                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
+                              AuthController::sessionfacebook($email,$id_facebook);}}
+                    
+                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                      } else {
+                        $loginUrl = $facebook->getLoginUrl();
+                       $this->layout()->login = $loginUrl;
+                      (array('scope'=>'email,publish_stream,read_friendlists',
+//                      'redirect_uri' => 'http://dev.juntate.pe/'
+                       )); 
+              }      
+              
+                 return array(
+          
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl'  =>$loginUrl,
+            'naitik' =>$naitik
+            
+        );
+      
+    }
     public function indexAction() {
 
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -57,11 +114,11 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
+        $facebook = $this->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
-
-
         setcookie('dato', $nombre);
         $submit = $this->params()->fromPost('submit');
 
