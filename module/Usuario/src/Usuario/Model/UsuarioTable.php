@@ -285,7 +285,7 @@ class UsuarioTable
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
     
-    public function idfacebook($id,$idfacebook=null,$logout)
+    public function idfacebook($id,$idfacebook,$logout)
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
@@ -295,10 +295,19 @@ class UsuarioTable
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
-
+public function idfacebook2($id,$logout)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->update('ta_usuario')
+                ->set(array('va_logout'=>$logout))
+                ->where(array('in_id'=>$id));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+                   $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+    }
     
      public function insertarusuariofacebbok($nombre,$email,$idfacebook,$foto,$logout)
-    {   $contrasena = sha1(123456789159753) ;
+    {   $contrasena = sha1($idfacebook) ;
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->insert()

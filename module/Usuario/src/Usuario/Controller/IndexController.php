@@ -243,7 +243,6 @@ public function getAuthService() {
     
     public function coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email)
     {
-
                        if($user_profile==''){}
                        else
                         {    
@@ -272,12 +271,8 @@ public function getAuthService() {
                          return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                         
    }
-                      
-                      
-                      
-                      
-                      
-     public function agregarusuarioAction() {
+                  
+     public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       
           
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -295,8 +290,10 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
-        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $nombre = $storage->read()->va_nombre;
         $request = $this->getRequest(); 
+        //session_destroy();
          require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
@@ -320,29 +317,27 @@ public function getAuthService() {
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
                          $naitik = $facebook->api('/naitik');
-                       $storage = new \Zend\Authentication\Storage\Session('Auth');
-                       $session=$storage->read();
-                       if(!$session){
+                  
                        if($user_profile==''){}
                        else
                         { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
                          if(count($correo)>0)
                          {if($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$this->_options->facebook->pass); }     
-                         else{$this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
-                             AuthController::sessionfacebook($email,$this->_options->facebook->pass); }}
+                                 AuthController::sessionfacebook($email,$id_facebook); }     
+                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
+                             AuthController::sessionfacebook($email,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$this->_options->facebook->pass);}}
-                      }else{  }
+                              AuthController::sessionfacebook($email,$id_facebook);}}
+                    
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                       } else {
-                         $loginUrl = $facebook->getLoginUrl
+                      } else {
+                       $loginUrl = $facebook->getLoginUrl
                       (array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
-                          )); 
+                       )); 
               }         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
@@ -410,7 +405,8 @@ public function getAuthService() {
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
             'loginUrl'  =>$loginUrl,
-            'naitik' =>$naitik
+            'naitik' =>$naitik,
+            'nombre' =>$nombre
             
         );
         // return array();

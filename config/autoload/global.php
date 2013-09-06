@@ -27,12 +27,11 @@ return array(
 
     'facebook' => array(
         'appId' => '171038663080276',
-        'secret' => '5739ee928ea9149e62096e9bb91c501f',
-        'pass'=>'123456789159753'
+        'secret' => '5739ee928ea9149e62096e9bb91c501f'
     ),
 
-//
- 'host' => array(
+
+    'host' => array(
         'base' => 'http://192.168.1.50:82',
         'static' => 'http://192.168.1.50:82',
         'images' => 'http://192.168.1.50:82/imagenes',
@@ -40,6 +39,7 @@ return array(
         'ruta' => 'http://192.168.1.50:82',
         'version'=>1,
     ),
+
 
     
         'mail' => array(

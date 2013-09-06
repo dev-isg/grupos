@@ -284,6 +284,7 @@ class AuthController extends AbstractActionController {
     }
 
     public function logoutAction() {
+        session_destroy();
         $finsesion=  $this->params()->fromRoute('in_id_face');
 
         if ($this->getAuthService()->hasIdentity()) {

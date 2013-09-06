@@ -40,13 +40,13 @@
                     <li class="dropdown">
                       <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>
                           
-                 <?php if($this->session->id_facebook!=='') {?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt="">
+                 <?php if($this->session->id_facebook==null) {?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt="">
                       <?php } else{  ?><img src="<?php echo $this->session->va_foto?>" alt=""> <?php } ?>
                       </a>
 
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo $this->host('base');?>/micuenta">Mi perfil</a></li>
-							<li><a href="<?php echo $this->host('base');?>/cuenta/miseventos">Mis eventos</a></li>
+							<li><a href="<?php echo $this->host('base');?>/cuenta/miseventos">Mis eventos </a></li>
 							<li><a href="<?php echo $this->host('base');?>/cuenta/misgrupos">Mis grupos</a></li>
 							<li class="divider"></li>
                             <?php // if($this->session->va_logout!=='') 
@@ -184,15 +184,15 @@
 
                    <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-               <?php           
-               require_once'./vendor/facebook/facebook.php';
-               $facebook = new Facebook(array(
-                 'appId'  => '171038663080276',
-                 'secret' => '5739ee928ea9149e62096e9bb91c501f',
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-                'redirect_uri'=>  'http://dev.juntate.pe/'
-               ));
+                <?php           
+                require_once'./vendor/facebook/facebook.php';
+                $facebook = new Facebook(array(
+                    'appId'  => '171038663080276',
+                    'secret' => '5739ee928ea9149e62096e9bb91c501f',
+                    'cookie' => true ,
+                    'scope'  => 'email,publish_stream',
+                    'redirect_uri'=>  'http://dev.juntate.pe/'
+                ));
                
                 $user = $facebook->getUser();
                 if ($user) {
@@ -202,22 +202,22 @@
                     $user = null; }  }
                 if ($user) {
 //                    $user_profile = $facebook->api('/me');
-//                    $logoutUrl = $facebook->getLogoutUrl();
+                    $logoutUrl = $facebook->getLogoutUrl();
 //               $id_facebook = $user_profile['id'];    
 //               $name = $user_profile['name']; 
 //               $email = $user_profile['email'];
-//               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);     
-//                  //$logoutUrl = $facebook->getLogoutUrl();
+//               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);  
+//               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
-                 if ($user): ?>
-           <p><a href="<?php echo $loginUrl; ?>"></a></p>
-          <?php else: ?>
-               <p><a href="<?php echo $logoutUrl; ?>"></a></p>
-          <?php endif ?>     
-        </div>
+                 if ($user){?>
+           <p><a href="<?php echo $logoutUrl; ?>"></a></p>
+          <?php }else{ ?>
+               <p><a href="<?php echo $loginUrl; ?>"></a></p>
+          <?php } ?>     
             </div>
-	</div>
+                </div>
+            </div>
 
         
         
