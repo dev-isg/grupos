@@ -59,6 +59,7 @@ class IndexController extends AbstractActionController
                            error_log($e);
                            $user = null; } }
                        if ($user) {
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                          $logoutUrl = $facebook->getLogoutUrl();
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
@@ -97,9 +98,7 @@ class IndexController extends AbstractActionController
                       (array('scope'=>'email,publish_stream,read_friendlists,offline_access',
                   'redirect_uri' => 'http://dev.juntate.pe/'
                        )),
-                     
-                     
-                     
+ 
             'naitik' =>$naitik
             
         );
