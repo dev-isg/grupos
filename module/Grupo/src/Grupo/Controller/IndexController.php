@@ -24,7 +24,7 @@ use Application\Model\EventoTable;
 use Zend\Mail\Message;
 use Zend\Session\Container;
 use Zend\View\Model\JsonModel;
-
+use SanAuth\Controller\AuthController; 
 class IndexController extends AbstractActionController
 {
 
@@ -86,13 +86,13 @@ class IndexController extends AbstractActionController
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }      
-            
+            $url = APPLICATION_URL . '/grupos/index/facebook';
                  return array(
           
             'user_profile' => $user_profile,
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
-            'loginUrl' => $facebook->getLoginUrl(array('redirect_uri' => 'http://dev.juntate/registrarse/', 'scope'=>'email,publish_stream,read_friendlists')),
+            'loginUrl' => $facebook->getLoginUrl(array('redirect_uri' => $url, 'scope'=>'email,publish_stream,read_friendlists')),
             'naitik' =>$naitik
             
         );
