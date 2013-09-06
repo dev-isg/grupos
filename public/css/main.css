@@ -588,7 +588,7 @@ div.upload input {
 }
 .login-home {
   padding-bottom: 20px;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid #ccc;
   margin-bottom: 20px;
 }
 .content-login-facebook p{
@@ -931,6 +931,10 @@ vertical-align: middle;
   text-shadow: 0 0 0!important;
   color: white!important;
 }
+.menu-dev .buttom img{
+  width: 27px;
+  height: 27px;
+}
 .divider-one{
     height: 11px!important;
     margin-top: 13px!important;
@@ -966,7 +970,7 @@ vertical-align: middle;
   height: 327px;
   width: 100%;
   float: left;
-  background: url(../img/he.png) repeat-x;
+  background: url(../img/he.jpg) repeat-x;
 }
 .filtrar-home{
   width: 100%;
@@ -1310,7 +1314,7 @@ span.nm{
 .event-group{
   padding: 10px;
 }
-.event-group h1{
+.event-group h1.title-ji{
   margin: 0;
   font-size: 18px;
   color: #333;
@@ -1360,6 +1364,9 @@ span.nm{
   line-height: 18px;
   color: #363636;
 }
+#event-description-wrap p img{
+  padding: 5px;
+}
 #map{
   margin-top: 10px;
 }
@@ -1384,9 +1391,9 @@ span.nm{
   bottom: 0;
 }
 .contenedor-back-ho{
-  width: 762px;
+  width: 724px;
   height: 326px;
-  background-image: url(../img/img-banner.jpg);
+  background-image: url(../img/fond.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
   position: absolute;
@@ -1632,9 +1639,12 @@ a.tab-home-g-b:hover .pinchitob{
 .gg{
   margin-top: 7px;
 }
-.event-group h2{
+.event-group h2.gh{
   font-size: 16px!important;
   margin-top: 20px!important;
+}
+.marker{
+
 }
 .cont-eve{
   padding: 0 10px;
@@ -2703,3 +2713,90 @@ ul.score-list li:first-child {
     }
 }
 
+.cke_editable
+{
+  font-size: 13px;
+  line-height: 1.6em;
+}
+
+blockquote
+{
+  font-style: italic;
+  font-family: Georgia, Times, "Times New Roman", serif;
+  padding: 2px 0;
+  border-style: solid;
+  border-color: #ccc;
+  border-width: 0;
+}
+
+.cke_contents_ltr blockquote
+{
+  padding-left: 20px;
+  padding-right: 8px;
+  border-left-width: 5px;
+}
+
+.cke_contents_rtl blockquote
+{
+  padding-left: 8px;
+  padding-right: 20px;
+  border-right-width: 5px;
+}
+
+a
+{
+  color: #0782C1;
+}
+
+ol,ul,dl
+{
+  /* IE7: reset rtl list margin. (#7334) */
+  *margin-right: 0px;
+  /* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+  padding: 0 40px;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+  font-weight: normal;
+  line-height: 1.2em;
+}
+
+hr
+{
+  border: 0px;
+  border-top: 1px solid #ccc;
+}
+
+img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
+}
+
+img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
+}
+
+img:hover {
+  opacity: .9;
+  filter: alpha(opacity = 90);
+}
+
+pre
+{
+  white-space: pre-wrap; /* CSS 2.1 */
+  word-wrap: break-word; /* IE7 */
+}
+
+.marker {
+    background-color: Yellow;
+}
+#event-description-wrap ol{
+  margin-left: 0;
+  padding-left: 20px
+}
