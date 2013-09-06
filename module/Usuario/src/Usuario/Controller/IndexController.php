@@ -243,143 +243,143 @@ public function getAuthService() {
          
 
    
-     public function agregarusuarioAction() {//session_destroy();
-        // AGREGAR CSS       
-          
-        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
-        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
-        $categorias = $this->getGrupoTable()->tipoCategoria();
-        $this->layout()->categorias = $categorias;
-        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
-        $renderer->inlineScript()
-                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
-                ->prependFile($this->_options->host->base . '/js/main.js')
-                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
-
-        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm();
-        $form->get('submit')->setValue('Crear Usuario');
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $nombre = $storage->read()->va_nombre;
-        $request = $this->getRequest(); 
-        //session_destroy();
-         require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => $this->_options->facebook->appId,
-                 'secret' => $this->_options->facebook->secret,
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-                  'redirect_uri'=>  'http://dev.juntate.pe/'
-               ));
-            $user = $facebook->getUser();
-            if ($user) {
-             try {
-                   $user_profile = $facebook->api('/me');
-                 } 
-             catch (FacebookApiException $e) {
-                           error_log($e);
-                           $user = null; } }
-                       if ($user) {
-                         $logoutUrl = $facebook->getLogoutUrl();
-                         $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
-                         $email = $user_profile['email'];
-                         $naitik = $facebook->api('/naitik');
-                  
-                       if($user_profile==''){}
-                       else
-                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-                         if(count($correo)>0)
-                         {if($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$id_facebook); }     
-                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
-                             AuthController::sessionfacebook($email,$id_facebook); }}
-                         else
-                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$id_facebook);}}
-                    
-                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                      } else {
-                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
-//                      'redirect_uri' => 'http://dev.juntate.pe/'
-                       )); 
-              }         
-        if ($request->isPost()) {
-            $File = $this->params()->fromFiles('va_foto');
-            $nonFile = $this->params()->fromPost('va_nombre');
-            if ($File['name'] != '') {
-                //   codigo de guardar imagen con apodo
-                require './vendor/Classes/Filter/Alnum.php';
-                $imf = $File['name'];
-                $info = pathinfo($File['name']);
-                $valor = uniqid();
-                $nom = $nonFile;
-                $imf2 = $valor . '.' . $info['extension'];
-                $filter = new \Filter_Alnum();
-                $filtered = $filter->filter($nom);
-                $imagen = $filtered . '-' . $imf2;
-            } else {
-                $imagen = 'foto-carnet.jpg';
-            }
-
-            $data = array_merge_recursive($this->getRequest()
-                            ->getPost()
-                            ->toArray(), $this->getRequest()
-                            ->getFiles()
-                            ->toArray());
-            $usuario = new Usuario();
-            $form->setInputFilter($usuario->getInputFilter());
-            $form->setData($data); // $request->getPost()
-            if ($form->isValid()) {
-                $usuario->exchangeArray($form->getData());
-               
-                $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email'));
-                if (count($email) <= 0) {
-                    if ($File['name'] != '') {
-                        if ($this->redimensionarFoto($File, $nonFile, $imagen, $id = null)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
-                            $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
-
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
-                        } else {
-                            echo 'problemas con el redimensionamiento';
-                            exit();
-                        }
-                    } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
-                        $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
-
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
-                    }
-                } else {
-
-                    $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
-                    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
-                }
-            } else {
-                foreach ($form->getInputFilter()->getInvalidInput() as $error) {
-                    print_r($error->getMessages()); // $inputFilter->getInvalidInput()
-                }
-            }
-        }
-
-        return array(
-            'form' => $form,
-            'mensaje' => $mensaje,
-            'user_profile' => $user_profile,
-            'user' => $user,
-            'logoutUrl'  =>$logoutUrl,
-            'loginUrl'  =>$loginUrl,
-            'naitik' =>$naitik,
-            'nombre' =>$nombre
-            
-        );
-        // return array();
-    }
+//     public function agregarusuarioAction() {//session_destroy();
+//        // AGREGAR CSS       
+//          
+//        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+//        $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
+//        $categorias = $this->getGrupoTable()->tipoCategoria();
+//        $this->layout()->categorias = $categorias;
+//        // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
+//        $renderer->inlineScript()
+//                ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')
+//                ->prependFile($this->_options->host->base . '/js/main.js')
+//                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+//                ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+//                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+//
+//        $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+//        $form = new UsuarioForm();
+//        $form->get('submit')->setValue('Crear Usuario');
+//        $storage = new \Zend\Authentication\Storage\Session('Auth');
+//        $nombre = $storage->read()->va_nombre;
+//        $request = $this->getRequest(); 
+//        //session_destroy();
+//         require './vendor/facebook/facebook.php';
+//               $facebook = new \Facebook(array(
+//                 'appId'  => $this->_options->facebook->appId,
+//                 'secret' => $this->_options->facebook->secret,
+//                 'cookie' => true ,
+//                 'scope'  => 'email,publish_stream',
+//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+//               ));
+//            $user = $facebook->getUser();
+//            if ($user) {
+//             try {
+//                   $user_profile = $facebook->api('/me');
+//                 } 
+//             catch (FacebookApiException $e) {
+//                           error_log($e);
+//                           $user = null; } }
+//                       if ($user) {
+//                         $logoutUrl = $facebook->getLogoutUrl();
+//                         $id_facebook = $user_profile['id'];
+//                         $name = $user_profile['name']; 
+//                         $email = $user_profile['email'];
+//                         $naitik = $facebook->api('/naitik');
+//                  
+//                       if($user_profile==''){}
+//                       else
+//                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
+//                         if(count($correo)>0)
+//                         {if($correo[0]['id_facebook']=='')  
+//                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
+//                                 AuthController::sessionfacebook($email,$id_facebook); }     
+//                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
+//                             AuthController::sessionfacebook($email,$id_facebook); }}
+//                         else
+//                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+//                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
+//                              AuthController::sessionfacebook($email,$id_facebook);}}
+//                    
+//                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+//                      } else {
+//                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
+////                      'redirect_uri' => 'http://dev.juntate.pe/'
+//                       )); 
+//              }         
+//        if ($request->isPost()) {
+//            $File = $this->params()->fromFiles('va_foto');
+//            $nonFile = $this->params()->fromPost('va_nombre');
+//            if ($File['name'] != '') {
+//                //   codigo de guardar imagen con apodo
+//                require './vendor/Classes/Filter/Alnum.php';
+//                $imf = $File['name'];
+//                $info = pathinfo($File['name']);
+//                $valor = uniqid();
+//                $nom = $nonFile;
+//                $imf2 = $valor . '.' . $info['extension'];
+//                $filter = new \Filter_Alnum();
+//                $filtered = $filter->filter($nom);
+//                $imagen = $filtered . '-' . $imf2;
+//            } else {
+//                $imagen = 'foto-carnet.jpg';
+//            }
+//
+//            $data = array_merge_recursive($this->getRequest()
+//                            ->getPost()
+//                            ->toArray(), $this->getRequest()
+//                            ->getFiles()
+//                            ->toArray());
+//            $usuario = new Usuario();
+//            $form->setInputFilter($usuario->getInputFilter());
+//            $form->setData($data); // $request->getPost()
+//            if ($form->isValid()) {
+//                $usuario->exchangeArray($form->getData());
+//               
+//                $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email'));
+//                if (count($email) <= 0) {
+//                    if ($File['name'] != '') {
+//                        if ($this->redimensionarFoto($File, $nonFile, $imagen, $id = null)) {
+//                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
+//                            $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
+//
+//                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
+//                        } else {
+//                            echo 'problemas con el redimensionamiento';
+//                            exit();
+//                        }
+//                    } else {
+//                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, md5($usuario->va_nombre));
+//                        $this->correo($usuario->va_email, $usuario->va_nombre, md5($usuario->va_nombre));
+//
+//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
+//                    }
+//                } else {
+//
+//                    $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
+//                    // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
+//                }
+//            } else {
+//                foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+//                    print_r($error->getMessages()); // $inputFilter->getInvalidInput()
+//                }
+//            }
+//        }
+//
+//        return array(
+//            'form' => $form,
+//            'mensaje' => $mensaje,
+//            'user_profile' => $user_profile,
+//            'user' => $user,
+//            'logoutUrl'  =>$logoutUrl,
+//            'loginUrl'  =>$loginUrl,
+//            'naitik' =>$naitik,
+//            'nombre' =>$nombre
+//            
+//        );
+//        // return array();
+//    }
 
 
     public function editarusuarioAction() {

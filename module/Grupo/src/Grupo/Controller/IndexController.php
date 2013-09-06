@@ -96,9 +96,7 @@ class IndexController extends AbstractActionController
                       (array('scope'=>'email,publish_stream,read_friendlists,offline_access',
                   'redirect_uri' =>'http://dev.juntate.pe/registrarse'
                        )),
- 
-            'naitik' =>$naitik
-            
+            'naitik' =>$naitik 
         );
       
     }
