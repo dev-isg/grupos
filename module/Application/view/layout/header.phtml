@@ -184,15 +184,15 @@
 
                    <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-               <?php           
-               require_once'./vendor/facebook/facebook.php';
-               $facebook = new Facebook(array(
-                 'appId'  => '171038663080276',
-                 'secret' => '5739ee928ea9149e62096e9bb91c501f',
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-                'redirect_uri'=>  'http://dev.juntate.pe/'
-               ));
+                <?php           
+                require_once'./vendor/facebook/facebook.php';
+                $facebook = new Facebook(array(
+                    'appId'  => '171038663080276',
+                    'secret' => '5739ee928ea9149e62096e9bb91c501f',
+                    'cookie' => true ,
+                    'scope'  => 'email,publish_stream',
+                    'redirect_uri'=>  'http://dev.juntate.pe/'
+                ));
                
                 $user = $facebook->getUser();
                 if ($user) {
@@ -213,7 +213,7 @@
                  if (isset($user)){?>
            <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php }elseif(!isset($user)){ ?>
-               <p><a href="<?php echo $loginUrl; ?>"></a></p>
+            <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php } ?>     
         </div>
             </div>
