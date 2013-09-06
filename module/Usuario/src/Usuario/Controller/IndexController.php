@@ -529,7 +529,11 @@ public function getAuthService() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
-        $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;
+        
+        if($storage->read()->va_foto==null)
+       {$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
+       else{  $imagen=$storage->read()->va_foto;}
+      
         $accion=$this->params('action');
          if($accion=='misgrupos'){
            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
