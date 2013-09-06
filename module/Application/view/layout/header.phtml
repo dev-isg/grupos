@@ -189,9 +189,10 @@
                $facebook = new Facebook(array(
                  'appId'  => '171038663080276',
                  'secret' => '5739ee928ea9149e62096e9bb91c501f',
-                 'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-                'redirect_uri'=>  'http://dev.juntate.pe/'
+                'redirect_uri'=>  'http://dev.juntate.pe/',
+                  'cookie' => true                
+                   
                ));
                
                 $user = $facebook->getUser();
@@ -201,13 +202,13 @@
                     error_log($e);
                     $user = null; }  }
                 if ($user) {
-//                    $user_profile = $facebook->api('/me');
-//                    $logoutUrl = $facebook->getLogoutUrl();
-//               $id_facebook = $user_profile['id'];    
-//               $name = $user_profile['name']; 
-//               $email = $user_profile['email'];
-//               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);     
-//                  //$logoutUrl = $facebook->getLogoutUrl();
+                    $user_profile = $facebook->api('/me');
+                    $logoutUrl = $facebook->getLogoutUrl();
+               $id_facebook = $user_profile['id'];    
+               $name = $user_profile['name']; 
+               $email = $user_profile['email'];
+               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);  
+               return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
                  if (isset($user)){?>

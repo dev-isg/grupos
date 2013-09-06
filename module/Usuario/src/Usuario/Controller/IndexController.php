@@ -243,7 +243,6 @@ public function getAuthService() {
     
     public function coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email)
     {
-
                        if($user_profile==''){}
                        else
                         {    
@@ -272,11 +271,7 @@ public function getAuthService() {
                          return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                         
    }
-                      
-                      
-                      
-                      
-                      
+                  
      public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       
           
