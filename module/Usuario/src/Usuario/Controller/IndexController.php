@@ -304,9 +304,7 @@ public function getAuthService() {
                     
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                       } else {
-                       $loginUrl = $facebook->getLoginUrl();
-                       $this->layout()->login = $loginUrl;
-                      (array('scope'=>'email,publish_stream,read_friendlists',
+                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
               }         
