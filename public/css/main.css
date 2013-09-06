@@ -2748,14 +2748,6 @@ a
   color: #0782C1;
 }
 
-ol,ul,dl
-{
-  /* IE7: reset rtl list margin. (#7334) */
-  *margin-right: 0px;
-  /* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
-  padding: 0 40px;
-}
-
 h1,h2,h3,h4,h5,h6
 {
   font-weight: normal;
