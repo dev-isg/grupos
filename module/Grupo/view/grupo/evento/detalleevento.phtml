@@ -52,13 +52,11 @@
               <p class="desc gh">
                 <?php echo $this->eventos[0]['descripcion']; ?> <br>
               </p>
-              <p class="gh ft"><a class="dp" href="#"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></a></p>
-              <p class="gh ft"><a class="dp" href="#"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></a></p>
+              <p class="gh ft"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></p>
+              <p class="gh ft"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></p>
               <p class="gh ft">
-                <a class="dp" href="#">
-                  <span class="cant-evento-p ab">Evento pasados</span> 
-                  <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span>
-                </a>
+                <span class="cant-evento-p ab">Evento pasados</span> 
+                <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span>
               </p>
               <!--<h3 class="title-si">Organizador</h3>
               <ul>
@@ -240,7 +238,7 @@
                       <?php }?>
                             </div>
                             <div class="span8 desc-user">
-                                <h3><a href="#"><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></a></h3>
+                                <h3><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></h3>
                                <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
                             </div>
                         </div>
@@ -295,7 +293,7 @@
                     '<img src="'+hostUrl+data.userestado["imagen"]+'" alt="">'+
                   '</div>'+
                   '<div class="span8 desc-user">'+
-                    '<h3><a href="#">'+data.userestado["nombre_usuario"]+'</a></h3>'+
+                    '<h3>'+data.userestado["nombre_usuario"]+'</h3>'+
                     '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
                   '</div>'+
                 '</div>'+

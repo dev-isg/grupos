@@ -1306,10 +1306,14 @@ p.ft{
 span.ab{
   width: 70%;
   float: left;
+  color: #c2374c;
+  font-size: 13px;
 }
 span.nm{
   display: block;
   text-align: right;
+  color: #c2374c;
+  font-size: 13px;
 }
 .event-group{
   padding: 10px;
@@ -1621,6 +1625,10 @@ a.tab-home-g-b:hover .pinchitob{
   font-size: 20px;
 }
 .desc-user h3 a{
+  color: #005580;
+  font-size: 14px;
+}
+.desc-user h3{
   color: #005580;
   font-size: 14px;
 }
@@ -2023,9 +2031,12 @@ p.pp{
 }
 .category-home{
   float: left;
-  color: #bbb;
-  line-height: 46px;
-  margin-left: 40px;
+  color: white;
+  line-height: 31px;
+}
+.category-home span{
+  font-weight: bold;
+  font-size: 14px;
 }
 .overall_score {
   font-size: 17.5px;
@@ -2746,14 +2757,6 @@ blockquote
 a
 {
   color: #0782C1;
-}
-
-ol,ul,dl
-{
-  /* IE7: reset rtl list margin. (#7334) */
-  *margin-right: 0px;
-  /* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
-  padding: 0 40px;
 }
 
 h1,h2,h3,h4,h5,h6
