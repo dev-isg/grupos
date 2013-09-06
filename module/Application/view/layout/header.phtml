@@ -41,7 +41,7 @@
                       <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>
                           
                  <?php if($this->session->id_facebook!=='') {?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt="">
-                      <?php } else{  ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?>
+                      <?php } else{  ?><img src="<?php echo $this->session->va_foto?>" alt=""> <?php } ?>
                       </a>
 
 						<ul class="dropdown-menu">
@@ -182,9 +182,8 @@
         			</div>
                     <?php  echo $this->form()->closeTag(); ?>
 
-                    <div class="content-login-facebook">
+                   <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-                        
                <?php           
                require_once'./vendor/facebook/facebook.php';
                $facebook = new Facebook(array(
@@ -192,8 +191,9 @@
                  'secret' => '5739ee928ea9149e62096e9bb91c501f',
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+                'redirect_uri'=>  'http://dev.juntate.pe/'
                ));
+               
                 $user = $facebook->getUser();
                 if ($user) {
                   try {
@@ -201,14 +201,24 @@
                     error_log($e);
                     $user = null; }  }
                 if ($user) {
-                  $logoutUrl = $facebook->getLogoutUrl();
+//                    $user_profile = $facebook->api('/me');
+//                    $logoutUrl = $facebook->getLogoutUrl();
+//               $id_facebook = $user_profile['id'];    
+//               $name = $user_profile['name']; 
+//               $email = $user_profile['email'];
+//               $this->coneccion($logoutUrl,$user,$id_facebook,$user_profile,$name,$email);     
+//                  //$logoutUrl = $facebook->getLogoutUrl();
                 } else {
                   $loginUrl = $facebook->getLoginUrl(); }
                  if ($user): ?>
            <p><a href="<?php echo $loginUrl; ?>"></a></p>
           <?php else: ?>
-               <p><a href="<?php echo $loginUrl; ?>"></a></p>
+               <p><a href="<?php echo $logoutUrl; ?>"></a></p>
           <?php endif ?>     
-                     </div>
+        </div>
             </div>
 	</div>
+
+        
+        
+        
