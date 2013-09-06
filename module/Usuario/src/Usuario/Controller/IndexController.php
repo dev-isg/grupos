@@ -327,7 +327,7 @@ public function getAuthService() {
                          {if($correo[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
                                  AuthController::sessionfacebook($email,$id_facebook); }     
-                         else{$this->getUsuarioTable()->idfacebook($correo[0]['in_id'],'',$logoutUrl);
+                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
                              AuthController::sessionfacebook($email,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
