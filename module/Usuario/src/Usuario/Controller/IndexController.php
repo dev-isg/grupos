@@ -245,7 +245,7 @@ public function getAuthService() {
     {
         
         
-        //var_dump($hola);exit;
+        var_dump($hola);exit;
         require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
