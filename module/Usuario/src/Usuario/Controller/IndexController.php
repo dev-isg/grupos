@@ -543,7 +543,10 @@ public function getAuthService() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
-        if($storage->read()->va_foto==null)
+       
+       
+         $valor = explode('/',$storage->read()->va_foto);
+            if($valor[0]=='https:')
        {$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
        else{  $imagen=$storage->read()->va_foto;}
         $accion=$this->params('action');
