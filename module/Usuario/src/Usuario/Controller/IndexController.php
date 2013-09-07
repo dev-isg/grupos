@@ -283,17 +283,23 @@ public function getAuthService() {
                        else
                         { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
                          if(count($id_face)>0)
-                         {if($id_face[0]['id_facebook']=='')  
+                         {   $correo = $id_face[0]['va_email'];
+                         if($id_face[0]['id_facebook']=='')  
                                 { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($email,$id_facebook); }     
+                                 AuthController::sessionfacebook($correo,$id_facebook); }     
                          else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
-                             AuthController::sessionfacebook($email,$id_facebook); }}
+                             AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$id_facebook);}}
+                              AuthController::sessionfacebook($email,$id_facebook);
+                              
+                              }
+                              
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+                              }
                     
-                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                       
                       } 
                       
                       else {
