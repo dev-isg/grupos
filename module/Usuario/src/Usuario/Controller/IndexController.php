@@ -281,12 +281,12 @@ public function getAuthService() {
                   
                        if($user_profile==''){}
                        else
-                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-                         if(count($correo)>0)
-                         {if($correo[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
+                        { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
+                         if(count($id_face)>0)
+                         {if($id_face[0]['id_facebook']=='')  
+                                { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
                                  AuthController::sessionfacebook($email,$id_facebook); }     
-                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
+                         else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
                              AuthController::sessionfacebook($email,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
@@ -294,7 +294,9 @@ public function getAuthService() {
                               AuthController::sessionfacebook($email,$id_facebook);}}
                     
                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-                      } else {
+                      } 
+                      
+                      else {
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
                        )); 
