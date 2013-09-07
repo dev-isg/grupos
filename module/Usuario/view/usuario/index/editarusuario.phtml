@@ -41,7 +41,7 @@
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
                                                                                 
-                                              <?php  if($session->id_facebook!=null) { ?>  
+                                              <?php $valor = explode('/',$this->usuario->va_foto); if($valor[0]=='https:'){ ?>  
 
  <img src="<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">                                            
   <?php       }  else {if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>

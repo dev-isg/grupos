@@ -546,9 +546,10 @@ public function getAuthService() {
        
        
          $valor = explode('/',$storage->read()->va_foto);
-            if($valor[0]=='https:')
-       {$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
-       else{  $imagen=$storage->read()->va_foto;}
+      if($valor[0]=='https:')
+       {   
+       $imagen=$storage->read()->va_foto;}
+       else{ $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
         $accion=$this->params('action');
          if($accion=='misgrupos'){
            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
