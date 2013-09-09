@@ -29,6 +29,7 @@ class Evento implements InputFilterAwareInterface
 //    public $ta_categoria_in_id;   
     public $ta_ubigeo_in_id;
     public $ta_grupo_in_id;
+    public $va_tipo;
     
 //    public $pais;
 //    public $departamento;
@@ -60,6 +61,7 @@ class Evento implements InputFilterAwareInterface
 //            $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
             $this->ta_grupo_in_id=(!empty($data['ta_grupo_in_id'])) ? $data['ta_grupo_in_id'] : null;//2
+            $this->va_tipo=(!empty($data['va_tipo'])) ? $data['va_tipo'] : null;
 
 //            $this->pais = (!empty($data['pais'])) ? $data['pais'] : null;
 //            $this->departamento = (!empty($data['departamento'])) ? $data['departamento'] : null;
@@ -234,6 +236,15 @@ class Evento implements InputFilterAwareInterface
 //              
                 $inputFilter->add($factory->createInput(array(
                 'name'     => 'ta_ubigeo_in_id',//distrito
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+            )));
+                
+             $inputFilter->add($factory->createInput(array(
+                'name'     => 'va_tipo',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),

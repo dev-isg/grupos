@@ -175,13 +175,14 @@ class EventoController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-
+        
             $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
             $fecha=date('d F Y - H:i', strtotime($fecha_esp));
             $evento->va_fecha=$fecha;
             
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
+        $evento->va_tipo=($evento->va_tipo=='publico')?1:2;
         $form->bind($evento);
 
         $form->get('submit')->setAttribute('value', 'Editar');

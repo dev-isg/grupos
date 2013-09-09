@@ -132,7 +132,7 @@ class IndexController extends AbstractActionController {
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-        $id = $this->params()->fromQuery('id');
+//        $id = $this->params()->fromQuery('id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $id = $storage->read()->in_id;
 

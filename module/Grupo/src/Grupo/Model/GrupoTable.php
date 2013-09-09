@@ -378,25 +378,43 @@ class GrupoTable{
     
     }
     
+//    public function getEventoxUsuario($iduser){
+//        $adapter = $this->tableGateway->getAdapter();
+//        $sql = new Sql($adapter);
+//        $select = $sql->select();
+//        $select->from('ta_evento')->where(''=>$iduser);
+//        $selectString = $sql->getSqlStringForSqlObject($select);
+//        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//        return $resultSet;      
+//    }
     
-      public function eventosgrupo($id)
-    {  
-         //$fecha = date("Y-m-d h:m:s"); 
-         $adapter = $this->tableGateway->getAdapter();
-            $sql = new Sql($adapter);
-            $select = $sql->select();
-                 $select->from('ta_evento')
-         ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_usuario_in_id)')),'left')                
-       //  ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array(),'left')                
-         ->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_estado'=>'activo'))
-                         ->group('in_id')
-                 ->order('va_fecha desc');
-            $selectString = $sql->getSqlStringForSqlObject($select);
-            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+    
+      public function eventosgrupo($id, $iduser = null) {
+        //$fecha = date("Y-m-d h:m:s"); 
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('ta_evento')
+                ->join('ta_usuario_has_ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_usuario_in_id)')), 'left');
+                          
+        if($iduser !=null){
+            if($this->getGrupoUsuario($id, $iduser)){
+                $select->where(array('ta_evento.ta_grupo_in_id' => $id, 'ta_evento.va_estado' => 'activo'));
+//            $select->where(array('ta_evento.va_tipo'=>'privado'));
+            }else{
+                $select->where(array('ta_evento.va_tipo'=>'publico'));
+            }
+        }else{
+            $select->where(array('ta_evento.va_tipo'=>'publico'));
+        }
+                $select->group('in_id')
+                ->order('va_fecha desc');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
     }
-    
-public function misgrupos($id)
+
+    public function misgrupos($id)
     {
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);

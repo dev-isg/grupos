@@ -115,7 +115,7 @@ class Grupo implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 3,
-                            'max'      => 200,
+                            'max'      => 500,
                         ),
                     ),
                 ),
