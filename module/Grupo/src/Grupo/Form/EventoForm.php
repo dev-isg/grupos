@@ -213,6 +213,20 @@ class EventoForm extends Form
                    
              )
         ));
+          
+           $this->add(array(
+            'name' => 'va_tipo',
+            'type' => 'Select',
+             'attributes' => array(               
+                'class' => 'input-block-level',
+                'id'   => 'cityId'
+            ),
+           'options' => array(
+                     'value_options' =>array(1=>'Pública',2=>'Privada'),                                               
+                    'empty_option'  => '--- Seleccionar ---',
+                   
+             )
+        ));
             
 //            $this->add(array(
 //            'name' => 'provincia',

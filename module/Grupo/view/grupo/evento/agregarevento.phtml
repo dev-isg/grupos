@@ -159,6 +159,15 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                 <?php echo $this->formRow($form->get('va_latitud'));?>
                 <?php echo $this->formRow($form->get('va_longitud'));?>       
             </div>
+            <!--Provicional -->
+            <div class="span3 lugar-nm event-padding">
+                <div id="cityId-label" class="item-label">
+                    <label for="cityId" class="required">Tipo de evento</label>
+                </div>
+                    <div class="form-item">
+                         <?php echo $this->formRow($form->get('va_tipo'));?>                      
+                    </div>
+            </div>
         </div>
         <p class="crear-evento box">
             <?php echo $this->formSubmit($form->get('submit'));?>

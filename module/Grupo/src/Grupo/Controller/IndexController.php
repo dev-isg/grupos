@@ -424,7 +424,6 @@ class IndexController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-        
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter);
         $form->bind($grupo);
@@ -509,19 +508,24 @@ class IndexController extends AbstractActionController
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
-        $eventospasados = $this->getEventoTable()->eventospasados($id);
-        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
-        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
-        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
-        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
-        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(4); 
+        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if ($session) {            
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
         }
+        
+        $eventospasados = $this->getEventoTable()->eventospasados($id);
+        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
+        //listar usuarios solo si estas unido al grupo
+        if($participa->va_estado=='activo'){
+        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
+        }
+        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
+        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
+        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator2->setItemCountPerPage(4); 
         
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
