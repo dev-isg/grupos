@@ -519,6 +519,12 @@ class IndexController extends AbstractActionController
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
+       $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        if (!isset($session)) {
+        $facebook = $this->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user']; }
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
