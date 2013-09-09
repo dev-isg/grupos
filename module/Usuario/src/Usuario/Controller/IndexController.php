@@ -27,7 +27,7 @@ use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
-use Grupo\Controller\IndexController;
+//use Grupo\Controller\IndexController;
 
 class IndexController extends AbstractActionController {
 

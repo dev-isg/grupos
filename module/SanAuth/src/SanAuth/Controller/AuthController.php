@@ -13,7 +13,7 @@ use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
 use Zend\View\Model\JsonModel;
-use Grupo\Controller\IndexController;
+//use Grupo\Controller\IndexController;
 
 // SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;

@@ -23,7 +23,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
 use Zend\View\Model\JsonModel;
 use Grupo\Form\ComentarioForm;
-use Grupo\Controller\IndexController;
+//use Grupo\Controller\IndexController;
 
 use Usuario\Controller\IndexController as metodo;
 
