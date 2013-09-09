@@ -279,6 +279,10 @@ public function getAuthService() {
                          $id_facebook = $user_profile['id'];
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
+                         $generoface = $user_profile['gender'];
+                         if($generoface=='male')
+                          {$genero=='masculino';}
+                     else{$genero=='femenino';}
                          $naitik = $facebook->api('/naitik');
                        if($user_profile==''){}
                        else
@@ -292,7 +296,7 @@ public function getAuthService() {
                              AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }} 
                       else {
@@ -579,7 +583,7 @@ public function getAuthService() {
             <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
          }
         $estados = '<div class="span12 menu-login">
-          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenido<br> ' . $nombre . '</span>
+          <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenid@<br> ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
