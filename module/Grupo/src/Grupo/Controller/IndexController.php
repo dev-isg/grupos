@@ -75,9 +75,12 @@ class IndexController extends AbstractActionController
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
                               AuthController::sessionfacebook($email,$id_facebook); }
-                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }} 
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
+                             
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
+                             } 
                       else {
-                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));    }         
+                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  'redirect_uri'=>  'http://dev.juntate.pe/'));    }         
          //$url = $this->_options->host->ruta.'/registrarse/';
                  return array(
             'user_profile' => $user_profile,
