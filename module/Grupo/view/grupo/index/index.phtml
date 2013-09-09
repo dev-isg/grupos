@@ -1,25 +1,3 @@
-
-<?php 
-         
-//         $urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?'; 
-//         $str=strripos($urlact,'&');
-//         
-//         $urlenviar= substr($urlact,0,$str);
-//         $cant=$str-strlen($urlact);
-//         $pag=substr($urlact,$cant);
-//         
-//         $seach=  strpos($urlact,'categoria');
-//         if($seach!==false){
-//              $url= $urlact;
-//         }else{
-//             $url=$urlenviar.'?';
-//         }
-//         echo $url.'</br>';
-//         echo $cant.'</br>';
-//         echo $pag.'</br>';
-         echo $this->urlac;
-         
-?>
 <div class="main-container">
     <div class="container">
         <?php if(count($this->grupos)<=0) { ?>
