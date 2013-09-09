@@ -40,7 +40,7 @@ class IndexController extends AbstractActionController
     {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
     }
- public function facebook()       
+ public  function facebook()       
    {  
     require './vendor/facebook/facebook.php';
                $facebook = new \Facebook(array(
