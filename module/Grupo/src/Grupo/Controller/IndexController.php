@@ -48,7 +48,8 @@ class IndexController extends AbstractActionController
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-                  'redirect_uri'=>  'http://dev.juntate.pe/' ));
+//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+                   ));
             $user = $facebook->getUser();
             if ($user) {
              try { $user_profile = $facebook->api('/me'); } 
@@ -89,7 +90,7 @@ class IndexController extends AbstractActionController
             'loginUrl' => $loginUrl,
             'naitik' =>$naitik 
         );
-      
+      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
     }
     
     
