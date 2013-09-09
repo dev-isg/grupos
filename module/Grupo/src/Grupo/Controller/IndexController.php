@@ -31,7 +31,7 @@ class IndexController extends AbstractActionController
     protected $grupoTable;
    // protected $categorias;
     protected $usuarioTable;
-
+    static $rutaStatic;
     protected $authservice;
 
     protected $_options;
@@ -720,6 +720,8 @@ class IndexController extends AbstractActionController
         if (! $this->grupoTable) {
             $sm = $this->getServiceLocator();
             $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
+            $config=$sm->get('Config');  
+            self::$rutaStatic=$config['host']['ruta'];
         }
         return $this->grupoTable;
     }
@@ -895,7 +897,7 @@ class IndexController extends AbstractActionController
                              } 
                       else {
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                           'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
+                           'redirect_uri'=>  self::$rutaStatic.'/registrarse'
                            ));    }         
          //$url = $this->_options->host->ruta.'/registrarse/';
                  return array(

@@ -27,8 +27,7 @@ use Zend\Http\Header\Cookie;
 use Zend\Http\Header;
 use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
-
-
+use Grupo\Controller\IndexController;
 
 class IndexController extends AbstractActionController {
 
@@ -255,54 +254,13 @@ public function getAuthService() {
         $form = new UsuarioForm();
         $form->get('submit')->setValue('Crear Usuario');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $nombre = $storage->read()->va_nombre;
+        $session=$storage->read();
+        if (!isset($session)) {
+        $face = new \Grupo\Controller\IndexController();
+        $facebook = $face->facebook();
+        $loginUrl = $facebook['loginUrl'];
+        $user = $facebook['user']; }
         $request = $this->getRequest(); 
-        //session_destroy();
-         require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => $this->_options->facebook->appId,
-                 'secret' => $this->_options->facebook->secret,
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-                  'redirect_uri'=>  'http://dev.juntate.pe/'
-               ));
-            $user = $facebook->getUser();
-            if ($user) {
-             try {
-                   $user_profile = $facebook->api('/me');
-                 } 
-             catch (FacebookApiException $e) {
-                           error_log($e);
-                           $user = null; } }
-                       if ($user) {
-                         $logoutUrl = $facebook->getLogoutUrl();
-                         $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
-                         $email = $user_profile['email'];
-                         $generoface = $user_profile['gender'];
-                         if($generoface=='male')
-                          {$genero=='masculino';}
-                     else{$genero=='femenino';}
-                         $naitik = $facebook->api('/naitik');
-                       if($user_profile==''){}
-                       else
-                        { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
-                         if(count($id_face)>0)
-                         {   $correo = $id_face[0]['va_email'];
-                         if($id_face[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($correo,$id_facebook); }     
-                         else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
-                             AuthController::sessionfacebook($correo,$id_facebook); }}
-                         else
-                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
-                              AuthController::sessionfacebook($email,$id_facebook); }
-                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }} 
-                      else {
-                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
-//                      'redirect_uri' => 'http://dev.juntate.pe/'
-  ));    }         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -365,12 +323,8 @@ public function getAuthService() {
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-            'user_profile' => $user_profile,
             'user' => $user,
-            'logoutUrl'  =>$logoutUrl,
             'loginUrl'  =>$loginUrl,
-            'naitik' =>$naitik,
-            'nombre' =>$nombre
             
         );
         // return array();

@@ -65,7 +65,7 @@ class AuthController extends AbstractActionController {
         ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias =  $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-       $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if (!isset($session)) {
         $face = new \Grupo\Controller\IndexController();
