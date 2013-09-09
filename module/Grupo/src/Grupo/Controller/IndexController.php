@@ -40,64 +40,7 @@ class IndexController extends AbstractActionController
     {
         $this->_options = new \Zend\Config\Config(include APPLICATION_PATH . '/config/autoload/global.php');
     }
- public  function facebook()       
-   {  
-    require './vendor/facebook/facebook.php';
-               $facebook = new \Facebook(array(
-                 'appId'  => $this->_options->facebook->appId,
-                 'secret' => $this->_options->facebook->secret,
-                 'cookie' => true ,
-                 'scope'  => 'email,publish_stream'
-                   ));
-            $user = $facebook->getUser();
-            if ($user) {
-             try { $user_profile = $facebook->api('/me'); } 
-             catch (FacebookApiException $e) {
-                           error_log($e);
-                           $user = null; } }
-                       if ($user) {
-                         $logoutUrl = $facebook->getLogoutUrl();
-                         $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
-                         $email = $user_profile['email'];
-                         $naitik = $facebook->api('/naitik');
-                          $generoface = $user_profile['gender'];
-                         if($generoface=='male')
-                          {$genero=='masculino';}
-                     else{$genero=='femenino';}
-                       if($user_profile==''){}
-                       else
-                        { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
-                         if(count($id_face)>0)
-                         {   $correo = $id_face[0]['va_email'];
-                         if($id_face[0]['id_facebook']=='')  
-                                { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
-                                 AuthController::sessionfacebook($correo,$id_facebook); }     
-                         else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
-                             AuthController::sessionfacebook($correo,$id_facebook); }}
-                         else
-                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
-                              AuthController::sessionfacebook($email,$id_facebook); }
-                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
-                             
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
-                             } 
-                      else {
-                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                           'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
-                           ));    }         
-         //$url = $this->_options->host->ruta.'/registrarse/';
-                 return array(
-            'user_profile' => $user_profile,
-            'user' => $user,
-            'logoutUrl'  =>$logoutUrl,
-            'loginUrl' => $loginUrl,
-            'naitik' =>$naitik 
-        );
-      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
-    }
-    
+ 
     
     public function indexAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -905,4 +848,64 @@ class IndexController extends AbstractActionController
             return false;
         }
     }
+    
+    
+    public  function facebook()       
+   {  
+    require './vendor/facebook/facebook.php';
+               $facebook = new \Facebook(array(
+                 'appId'  => $this->_options->facebook->appId,
+                 'secret' => $this->_options->facebook->secret,
+                 'cookie' => true ,
+                 'scope'  => 'email,publish_stream'
+                   ));
+            $user = $facebook->getUser();
+            if ($user) {
+             try { $user_profile = $facebook->api('/me'); } 
+             catch (FacebookApiException $e) {
+                           error_log($e);
+                           $user = null; } }
+                       if ($user) {
+                         $logoutUrl = $facebook->getLogoutUrl();
+                         $id_facebook = $user_profile['id'];
+                         $name = $user_profile['name']; 
+                         $email = $user_profile['email'];
+                         $naitik = $facebook->api('/naitik');
+                          $generoface = $user_profile['gender'];
+                         if($generoface=='male')
+                          {$genero=='masculino';}
+                     else{$genero=='femenino';}
+                       if($user_profile==''){}
+                       else
+                        { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
+                         if(count($id_face)>0)
+                         {   $correo = $id_face[0]['va_email'];
+                         if($id_face[0]['id_facebook']=='')  
+                                { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
+                                 AuthController::sessionfacebook($correo,$id_facebook); }     
+                         else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
+                             AuthController::sessionfacebook($correo,$id_facebook); }}
+                         else
+                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
+                              AuthController::sessionfacebook($email,$id_facebook); }
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
+                             
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
+                             } 
+                      else {
+                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
+                           'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
+                           ));    }         
+         //$url = $this->_options->host->ruta.'/registrarse/';
+                 return array(
+            'user_profile' => $user_profile,
+            'user' => $user,
+            'logoutUrl'  =>$logoutUrl,
+            'loginUrl' => $loginUrl,
+            'naitik' =>$naitik 
+        );
+      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+    }
+    
 }
