@@ -115,10 +115,10 @@ class IndexController extends AbstractActionController
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $value = $storage->read()->va_nombre;
-        { if($value){}else{ $facebook = $this->facebook();
+        if (!$storage) {
+        $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
-        $this->layout()->user = $facebook['user'];}}
+        $this->layout()->user = $facebook['user']; }
         $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
