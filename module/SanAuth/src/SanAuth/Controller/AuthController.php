@@ -72,7 +72,7 @@ class AuthController extends AbstractActionController {
         $facebook = $face->facebook();
         $this->layout()->login = $facebook['loginUrl'];
         $this->layout()->user = $facebook['user']; }
-         $token = $this->params()->fromQuery('token');
+        $token = $this->params()->fromQuery('token');
      //var_dump($token);exit;
         if($token)
         {$usuario = $this->getUsuarioTable()->usuario($token);
