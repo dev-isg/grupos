@@ -186,7 +186,11 @@
 
                    <div class="content-login-facebook">
                         <p>Ingresa rápido por:</p>
-           <p><a href="<?php echo $this->login; ?>"></a></p>
+                     <?php if($this->user) {?>
+           <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+             <?php  } else {?>
+          <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+           <?php  }?>
             </div>
                 </div>
             </div>

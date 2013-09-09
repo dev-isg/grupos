@@ -23,6 +23,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
 use Zend\View\Model\JsonModel;
 use Grupo\Form\ComentarioForm;
+//use Grupo\Controller\IndexController;
 
 use Usuario\Controller\IndexController as metodo;
 
@@ -296,7 +297,6 @@ class EventoController extends AbstractActionController
 //        $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-      
         $id = $this->params()->fromRoute('in_id');
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
@@ -318,6 +318,11 @@ class EventoController extends AbstractActionController
        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
+        if (!isset($session)) {
+        $face = new \Grupo\Controller\IndexController();
+        $facebook = $face->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user']; }
         $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
       
         if ($session) {
