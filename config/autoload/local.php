@@ -25,5 +25,5 @@ return array(
 //        'ruta' => 'http://dev.juntate.pe',
 //        'version'=>1,
 //    ),
-//    
+    
 );

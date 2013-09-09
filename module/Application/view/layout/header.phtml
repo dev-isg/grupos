@@ -40,8 +40,10 @@
                     <li class="dropdown">
                       <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>
                           
-                 <?php if($this->session->id_facebook==null) {?> <img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt="">
-                      <?php } else{  ?><img src="<?php echo $this->session->va_foto?>" alt=""> <?php } ?>
+                 <?php $valor = explode('/',$this->session->va_foto);
+       if($valor[0]=='https:'){?> <img src="<?php echo $this->session->va_foto?>" alt="">
+       <?php } elseif($this->session->va_foto=='foto-carnet.jpg'){ ?><img src="<?php echo $this->host('img').'/foto-carnet.jpg'?>" alt=""> <?php }
+       else { ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?>
                       </a>
 
 						<ul class="dropdown-menu">

@@ -125,11 +125,13 @@
                             <div class="users">
                                     <div class="row-fluid">
                                         <div class="span4 img-user-ev">
-    <?php if (($usuarios->imagen) != "foto-carnet.jpg") { ?>
-                                                <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen; ?>" alt="">
-    <?php } else { ?>
-                                                <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" alt="">
-    <?php } ?>
+       <?php $valor = explode('/',$usuarios->imagen); if($valor[0]=='https:'){ ?>  
+ <img src="<?php echo $usuarios->imagen ;?>">                                            
+  <?php       }  else {if(($usuarios->imagen)!="foto-carnet.jpg"){?>
+                                                    <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >
+                                                <?php }else{?>
+                                                    <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
+                                                <?php }  }?>  
                                         </div>
                                         <div class="span8 desc-user">
                                             <h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3>

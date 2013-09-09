@@ -40,14 +40,25 @@
 		                        	<div class="cambiofoto2">
 							        	<div class="fileupload fileupload-new" data-provides="fileupload">
 								            <div class="img-thu-user fileupload-new thumbnail">
-                                                <?php if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
+                                                                                
+                                              <?php $valor = explode('/',$this->usuario->va_foto); if($valor[0]=='https:'){ ?>  
+
+ <img src="<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">                                            
+  <?php       }  else {if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
                                                     <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
                                                 <?php }else{?>
                                                     <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
-                                                <?php }?>
+                                                <?php }  }?>
+                                                    
+                                                    
+                                                    
+                                                    
 								            </div>
 							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
-								            <div class="detalle-img">
+								          
+                                                            
+                                                                                              
+                                                                        <div class="detalle-img">
 								              	<strong class="btn-file">
 									              	<strong class="btn fileupload-new">Cargar una imagen</strong>
 									              	<strong class="btn fileupload-exists">Cambiar Imagen </strong>
@@ -55,6 +66,8 @@
 								               	</strong>
 								              	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
 								            </div>
+                                                                        
+                                                           
 							          	</div>
 							        </div>
 		                        	<h5>Mis datos personales </h5>

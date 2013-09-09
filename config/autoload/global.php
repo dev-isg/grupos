@@ -22,7 +22,8 @@ return array(
         )
     ),
    'upload' => array(
-        'images' => APPLICATION_PATH . '/public/imagenes'
+        'images' => APPLICATION_PATH . '/public/imagenes',
+       
     ),
 
     'facebook' => array(
