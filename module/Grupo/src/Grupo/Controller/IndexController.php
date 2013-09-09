@@ -224,23 +224,23 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
         
-        $url=$_SERVER['REQUEST_URI'];
-        $buscatipo=strpos($url,'tipo');
-        $buscavalor=strpos($url,'valor');
-        $buscadata=strpos($url,'data');
-        if($buscatipo || $buscavalor || $buscadata){
-            $page=strpos($url,'&');
-            if($page){
-              $urlf=substr($url,0,$page);
-            }else{
-              $urlf=$url;
-            }
-        }else{
-            
-        }
-        var_dump($page);    
-        var_dump($page);
-        var_dump($urlf);Exit;
+//        $url=$_SERVER['REQUEST_URI'];
+//        $buscatipo=strpos($url,'tipo');
+//        $buscavalor=strpos($url,'valor');
+//        $buscadata=strpos($url,'data');
+//        if($buscatipo || $buscavalor || $buscadata){
+//            $page=strpos($url,'&');
+//            if($page){
+//              $urlf=substr($url,0,$page);
+//            }else{
+//              $urlf=$url;
+//            }
+//        }else{
+//            
+//        }
+//        var_dump($page);    
+//        var_dump($page);
+//        var_dump($urlf);Exit;
         
 //        $find=strrpos($string,'&');
 //        $cortar=substr($string,0,$find);
