@@ -105,11 +105,9 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
-
         $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
         $buscar = $this->params()->fromQuery('dato');
-
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
         setcookie('dato', $nombre);
@@ -117,7 +115,6 @@ class IndexController extends AbstractActionController
         setcookie('tipo', $valor);
         $tipo = $this->params()->fromQuery('categoria');
         $this->params()->fromQuery('nombre');
-
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
         
