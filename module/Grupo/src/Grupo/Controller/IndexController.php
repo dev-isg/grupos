@@ -224,69 +224,35 @@ class IndexController extends AbstractActionController
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
         
-//        $url=$_SERVER['REQUEST_URI'];
-//        $buscatipo=strpos($url,'tipo');
-//        $buscavalor=strpos($url,'valor');
-//        $buscadata=strpos($url,'data');
-//        if($buscatipo || $buscavalor || $buscadata){
-//            $page=strpos($url,'&');
-//            if($page){
-//              $urlf=substr($url,0,$page);
-//            }else{
-//              $urlf=$url;
-//            }
-//        }else{
-//            
-//        }
-//        var_dump($page);    
-//        var_dump($page);
-//        var_dump($urlf);Exit;
+        $url = $_SERVER['REQUEST_URI'];
+        if ($url != '/') {
+            $buscatipo = strpos($url, 'tipo');
+            $buscavalor = strpos($url, 'valor');
+            $buscacateg = strpos($url, 'categoria');
+            $buscadata = strpos($url, 'dato');
+            if ($buscatipo || $buscavalor || $buscadata || $buscacateg) {
+                $page = strpos($url, 'page=');
+                if ($page) {
+                    $urlf = substr($url, 0, $page - 1);
+                } else {
+                    $urlf = $url;
+                }
+                $urlf=$urlf.'&';
+            }else{
+                $urlf=$urlf.'?';
+            } 
+            
+        } else {
+            $auxurl = strpos($url, '/');
+            $urlf=substr($url,0,$auxurl);
+            $urlf=$urlf.'?';
+        }
         
-//        $find=strrpos($string,'&');
-//        $cortar=substr($string,0,$find);
-//        $strseach=strpos($string,'ciudad');
-//
-//        $cant=strlen($_SERVER['REQUEST_URI']);
-//        $url=$_SERVER['REQUEST_URI'];
-//        $var=strripos($url,'&');
-//        $var2=$var-$cant;
-//        $url=substr($url,0,$var2);
-//        $strseach=strpos($url,'categoria');
-//        $strseacht=strpos($url,'tipo');
-//        $con=0;
-//        $con2=0;
-//        if($strseach!==false || $strseacht!==false){
-//            if($con<1){
-//            $un='&';
-//            $con++;
-//            }
-//
-//        }else{
-//            if($con2<1){
-//             $un='?';
-//             $con2++;
-//            }
-//
-//        }
-//        $quitar=strpos($url,'page=');
-//        if($quitar){
-//            $urlf=substr($url,0,$quitar);
-//            
-//        }else{
-//            $urlf=$url;
-//        }
-        
-//        var_dump($url);
-//        var_dump($quitar);
-//        var_dump($urlf);exit;
-//        $str=strripos($url,'&');
-//        $urlenviar= substr($url,0,$str);     
-//        $urlverd=substr($urlenviar,0,$quitar);
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
             'dato' => $valor,
-            'urlac'=>$urlf.$un//$urlverd
+            'urlac'=>$urlf
         );
     }
 

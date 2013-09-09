@@ -89,9 +89,9 @@
                         <form method="get" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
                             <input type="text"
                                 value="<?php
-                                if ($_POST['dato']) {
+                                if ($_GET['dato']) {
                                         $filter = new \Zend\I18n\Filter\Alnum(true);
-                                        $nombre = trim($filter->filter($_POST['dato']));
+                                        $nombre = trim($filter->filter($_GET['dato']));
                                         echo $nombre;
                                     } else {
                                         echo $_COOKIE['dato'];
