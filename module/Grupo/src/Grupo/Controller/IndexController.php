@@ -115,7 +115,8 @@ class IndexController extends AbstractActionController
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        if (!$storage) {
+        $session=$storage->read();
+        if (!isset($session)) {
         $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
         $this->layout()->user = $facebook['user']; }
