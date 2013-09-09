@@ -897,7 +897,7 @@ class IndexController extends AbstractActionController
                              } 
                       else {
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                           'redirect_uri'=>  self::$rutaStatic.'/registrarse'
+                           'redirect_uri'=>  $this->_options->host->ruta.'/registrarse'
                            ));    }   
                  return array(
             'user_profile' => $user_profile,
