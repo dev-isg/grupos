@@ -258,6 +258,8 @@ public function getAuthService() {
         if (!isset($session)) {
         $face = new \Grupo\Controller\IndexController();
         $facebook = $face->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user']; 
         $loginUrl = $facebook['loginUrl'];
         $user = $facebook['user']; }
         $request = $this->getRequest(); 
