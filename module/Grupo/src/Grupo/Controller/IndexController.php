@@ -47,8 +47,7 @@ class IndexController extends AbstractActionController
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
-                 'scope'  => 'email,publish_stream',
-                 'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
+                 'scope'  => 'email,publish_stream'
                    ));
             $user = $facebook->getUser();
             if ($user) {
@@ -86,7 +85,7 @@ class IndexController extends AbstractActionController
                              } 
                       else {
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                       //    'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
+                           'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
                            ));    }         
          //$url = $this->_options->host->ruta.'/registrarse/';
                  return array(
@@ -117,6 +116,7 @@ class IndexController extends AbstractActionController
         $this->layout()->categorias = $categorias;
         $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user'];
         $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
