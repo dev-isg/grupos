@@ -36,6 +36,7 @@ class IndexController extends AbstractActionController {
     static $usuarioTableStatic;
     protected $ruta;
     static $rutaStatic;
+    static $rutaStatic2;
     protected $_options;
    protected $storage;
     protected $authservice;
@@ -543,13 +544,14 @@ public function getAuthService() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
+        $config2 = self::$rutaStatic2;
        
        
          $valor = explode('/',$storage->read()->va_foto);
-      if($valor[0]=='https:')
-       {   
-       $imagen=$storage->read()->va_foto;}
-       else{ $imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;}
+       if($valor[0]=='https:')
+       {$imagen=$storage->read()->va_foto;}
+       elseif($storage->read()->va_foto=='foto-carnet.jpg'){ $imagen = $config2 .'/foto-carnet.jpg';}
+       else{$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;  }
         $accion=$this->params('action');
          if($accion=='misgrupos'){
            $class='<li class="center-li"><a href=" ' . $ruta . '/cuenta/grupoparticipo "><i class="hh icon-myevent"></i><p>Grupos donde participo</p></a></li>  
@@ -616,6 +618,8 @@ public function getAuthService() {
             $this->grupoTable = $sm->get('Grupo\Model\GrupoTable');
             $config=$sm->get('Config');  
             self::$rutaStatic=$config['host']['images'];
+            self::$rutaStatic2=$config['host']['img'];
+            
         }
         return $this->grupoTable;
     }
