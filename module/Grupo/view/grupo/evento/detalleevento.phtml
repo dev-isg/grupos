@@ -234,9 +234,9 @@
                             <?php $valor = explode('/',$usuarios->imagen); if($valor[0]=='https:'){ ?>  
  <img src="<?php echo $usuarios->imagen ;?>" >                                            
   <?php       }  else {if(($usuarios->imagen)!="foto-carnet.jpg"){?>
-                                                    <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" style="width:130px;height:130px;">
+                                                    <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >
                                                 <?php }else{?>
-                                                    <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
+                                                    <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
                                                 <?php }  }?>  
                             </div>
                             <div class="span8 desc-user">

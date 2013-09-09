@@ -42,19 +42,16 @@ class IndexController extends AbstractActionController
     }
 // public function facebook()       
 //   {  
-//     require './vendor/facebook/facebook.php';
+//    require './vendor/facebook/facebook.php';
 //               $facebook = new \Facebook(array(
 //                 'appId'  => $this->_options->facebook->appId,
 //                 'secret' => $this->_options->facebook->secret,
 //                 'cookie' => true ,
 //                 'scope'  => 'email,publish_stream',
-////                 'redirect_uri'=>  'http://dev.juntate.pe/' 
-//                   ));
-//        $user = $facebook->getUser();
+//                  'redirect_uri'=>  'http://dev.juntate.pe/' ));
+//            $user = $facebook->getUser();
 //            if ($user) {
-//             try {
-//                   $user_profile = $facebook->api('/me');
-//                 } 
+//             try { $user_profile = $facebook->api('/me'); } 
 //             catch (FacebookApiException $e) {
 //                           error_log($e);
 //                           $user = null; } }
@@ -64,31 +61,25 @@ class IndexController extends AbstractActionController
 //                         $name = $user_profile['name']; 
 //                         $email = $user_profile['email'];
 //                         $naitik = $facebook->api('/naitik');
-//                  
 //                       if($user_profile==''){}
 //                       else
-//                        { $correo=$this->getUsuarioTable()->usuariocorreo($email);  
-//                         if(count($correo)>0)
-//                         {if($correo[0]['id_facebook']=='')  
-//                                { $this->getUsuarioTable()->idfacebook($correo[0]['in_id'],$id_facebook,$logoutUrl);
-//                                 AuthController::sessionfacebook($email,$id_facebook); }     
-//                         else{$this->getUsuarioTable()->idfacebook2($correo[0]['in_id'],$logoutUrl);
-//                             AuthController::sessionfacebook($email,$id_facebook); }}
+//                        { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
+//                         if(count($id_face)>0)
+//                         {   $correo = $id_face[0]['va_email'];
+//                         if($id_face[0]['id_facebook']=='')  
+//                                { $this->getUsuarioTable()->idfacebook($id_face[0]['in_id'],$id_facebook,$logoutUrl);
+//                                 AuthController::sessionfacebook($correo,$id_facebook); }     
+//                         else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
+//                             AuthController::sessionfacebook($correo,$id_facebook); }}
 //                         else
 //                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
 //                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-//                              AuthController::sessionfacebook($email,$id_facebook);}}
-//                    
-//                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
-//                      } else {
-//                        $loginUrl = $facebook->getLoginUrl
-//                      (array('scope'=>'email,publish_stream,read_friendlists',
-//                 //    'redirect_uri' => 'http://dev.juntate.pe/'
-//                       )); 
-//              }      
+//                              AuthController::sessionfacebook($email,$id_facebook); }
+//                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }} 
+//                      else {
+//                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists'));    }         
 //         //$url = $this->_options->host->ruta.'/registrarse/';
 //                 return array(
-//          
 //            'user_profile' => $user_profile,
 //            'user' => $user,
 //            'logoutUrl'  =>$logoutUrl,
@@ -112,9 +103,9 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
-        $this->layout()->categorias = $categorias;
+//        $this->layout()->categorias = $categorias;
 //        $facebook = $this->facebook();
-//        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->login = $facebook['loginUrl'];
         $buscar = $this->params()->fromPost('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
