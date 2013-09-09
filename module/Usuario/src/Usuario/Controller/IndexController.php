@@ -37,6 +37,7 @@ class IndexController extends AbstractActionController {
     protected $ruta;
     static $rutaStatic;
     static $rutaStatic2;
+    static $rutaStatic3;
     protected $_options;
    protected $storage;
     protected $authservice;
@@ -199,9 +200,9 @@ class IndexController extends AbstractActionController {
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
-            Tu cuenta en <a href="' . $this->_options->host->ruta . '">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
-            <a href="' . $this->_options->host->ruta . '/auth?token=' . $valor . ' ">' . $this->_options->host->ruta . '/auth?token=' . $valor . '</a><br />
-             <img src="'.$this->_options->host->img.'/juntate.png" title="juntate.pe"/>
+            Tu cuenta en <a href="' .self::$rutaStatic3. '">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
+            <a href="' .self::$rutaStatic3. '/auth?token=' . $valor . ' ">' .self::$rutaStatic3. '/auth?token=' . $valor . '</a><br />
+             <img src="'.self::$rutaStatic2.'/juntate.png" title="juntate.pe"/>
                                                      </div>
                                                </body>
                                                </html>';
@@ -279,7 +280,6 @@ public function getAuthService() {
                          $name = $user_profile['name']; 
                          $email = $user_profile['email'];
                          $naitik = $facebook->api('/naitik');
-                  
                        if($user_profile==''){}
                        else
                         { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
@@ -293,21 +293,12 @@ public function getAuthService() {
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl); 
-                              AuthController::sessionfacebook($email,$id_facebook);
-                              
-                              }
-                              
-                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
-                              }
-                    
-                       
-                      } 
-                      
+                              AuthController::sessionfacebook($email,$id_facebook); }
+                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }} 
                       else {
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',
 //                      'redirect_uri' => 'http://dev.juntate.pe/'
-                       )); 
-              }         
+  ));    }         
         if ($request->isPost()) {
             $File = $this->params()->fromFiles('va_foto');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -619,6 +610,7 @@ public function getAuthService() {
             $config=$sm->get('Config');  
             self::$rutaStatic=$config['host']['images'];
             self::$rutaStatic2=$config['host']['img'];
+            self::$rutaStatic3=$config['host']['ruta'];
             
         }
         return $this->grupoTable;
