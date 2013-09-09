@@ -22,7 +22,8 @@ return array(
         )
     ),
    'upload' => array(
-        'images' => APPLICATION_PATH . '/public/imagenes'
+        'images' => APPLICATION_PATH . '/public/imagenes',
+       
     ),
 
     'facebook' => array(
@@ -30,7 +31,6 @@ return array(
         'secret' => '5739ee928ea9149e62096e9bb91c501f'
     ),
 
-//
     'host' => array(
         'base' => 'http://192.168.1.50:82',
         'static' => 'http://192.168.1.50:82',
@@ -42,7 +42,6 @@ return array(
 
 
 
-    
         'mail' => array(
         'transport' => array(
             'options' => array(
