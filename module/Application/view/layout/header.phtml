@@ -85,7 +85,7 @@
                          <?php }else{?>
                         <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt">CREA UN EVENTO</a>
                         <?php }?>
-                        <form method="post" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
+                        <form method="get" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
                             <input type="text"
                                 value="<?php
                                 if ($_POST['dato']) {
@@ -105,7 +105,7 @@
                                         ?>
                                     <li class="man-dev">
                                         <ul>  
-                                            <li><a href="<?php echo $this->host('ruta')?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                            <li><a href="<?php echo $this->host('ruta')?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php if($_COOKIE['tipo']){echo '&valor='.$_COOKIE['tipo'];}else {echo '&valor='.$_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                         </ul>
                                     </li> 
                                      <?php endforeach; ?>  
