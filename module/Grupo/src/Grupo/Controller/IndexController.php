@@ -48,7 +48,7 @@ class IndexController extends AbstractActionController
                  'secret' => $this->_options->facebook->secret,
                  'cookie' => true ,
                  'scope'  => 'email,publish_stream',
-//                  'redirect_uri'=>  'http://dev.juntate.pe/'
+                 'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
                    ));
             $user = $facebook->getUser();
             if ($user) {
@@ -85,7 +85,9 @@ class IndexController extends AbstractActionController
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
                              } 
                       else {
-                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  'redirect_uri'=>  'http://dev.juntate.pe/registrarse/'));    }         
+                       $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
+                       //    'redirect_uri'=>  'http://dev.juntate.pe/registrarse'
+                           ));    }         
          //$url = $this->_options->host->ruta.'/registrarse/';
                  return array(
             'user_profile' => $user_profile,
