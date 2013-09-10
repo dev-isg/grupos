@@ -115,13 +115,13 @@ class IndexController extends AbstractActionController
                  if ($valor == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->fetchAll();
                 } else {
-                    $storage = new \Zend\Authentication\Storage\Session('Auth');
-                    if ($storage) {
-                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
-                    }else{
-                     $listaEventos = $this->getEventoTable()->listadoEvento();
-                    }
-//                    $listaEventos = $this->getEventoTable()->listadoEvento();
+//                    $storage = new \Zend\Authentication\Storage\Session('Auth');
+//                    if ($storage) {
+//                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
+//                    }else{
+//                     $listaEventos = $this->getEventoTable()->listadoEvento();
+//                    }
+                    $listaEventos = $this->getEventoTable()->listadoEvento();
                 }
             }
        }
@@ -476,8 +476,14 @@ class IndexController extends AbstractActionController
         $this->layout()->user = $facebook['user']; }
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
-        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
-        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
+        
+        if($session->in_id){
+        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id,$session->in_id);
+        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
+        }else{
+            $usuarios = $this->getGrupoTable()->usuariosgrupo($id,null);
+            $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,null);
+        }
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator2->setItemCountPerPage(4); 
