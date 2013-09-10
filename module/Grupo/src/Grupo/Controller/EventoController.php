@@ -294,11 +294,34 @@ class EventoController extends AbstractActionController
 
     public function detalleeventoAction()
     {
+
 //        $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = $this->params()->fromRoute('in_id');
+        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        
         $evento = $this->getEventoTable()->Evento($id);
+        if($evento){
+            if($evento[0]['va_tipo']=='privado'){
+                   $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
+                   if ($eventofind) {
+                       if ($eventofind->tipo == 'privado') {
+                           $tipo = true;
+                       } else {
+                           $tipo = false;
+                       }
+                   }else{
+                       $tipo = false;
+                   }
+            }else{
+                $tipo=true;
+            }
+      
+        }
+        
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
@@ -316,8 +339,7 @@ class EventoController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
        
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+
         if (!isset($session)) {
         $face = new \Grupo\Controller\IndexController();
         $facebook = $face->facebook();
@@ -347,7 +369,7 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-        
+
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -360,7 +382,8 @@ class EventoController extends AbstractActionController
             'session'=>$session,          
 //            'grupocomprueba'=>$grupocompr,          
             'participa'=>$activo,
-            'mensajes'=>$mensajes
+            'mensajes'=>$mensajes,
+            'privado'=>$tipo
             
         )
         ;

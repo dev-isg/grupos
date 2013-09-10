@@ -115,12 +115,18 @@ class IndexController extends AbstractActionController
                  if ($valor == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->fetchAll();
                 } else {
-                    $listaEventos = $this->getEventoTable()->listadoEvento();
+                    $storage = new \Zend\Authentication\Storage\Session('Auth');
+                    if ($storage) {
+                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
+                    }else{
+                     $listaEventos = $this->getEventoTable()->listadoEvento();
+                    }
+//                    $listaEventos = $this->getEventoTable()->listadoEvento();
                 }
             }
        }
      }else{
-         $listaEventos = $this->getEventoTable()->listadoEvento();
+            $listagrupos = $this->getGrupoTable()->fetchAll();
      }
      
 //        if ($request->isPost()) {
