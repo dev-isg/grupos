@@ -920,7 +920,7 @@ class IndexController extends AbstractActionController
                            ));   
 
                        }   
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+                     
                  return array(
          //   'user_profile' => $user_profile,
             'user' => $user,
