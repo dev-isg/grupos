@@ -179,29 +179,44 @@ class EventoTable{
     
         }
 ////////////////////////////////////////////////////////////FIN////////////////////////////////////////////////
-    public function getEventoUsuario($idevent, $iduser)
-    {
+    public function getEventoUsuario($idevent, $iduser) {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->select()
-            ->from('ta_usuario_has_ta_evento')
-            ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', 
-                array('idgrup'=>'ta_grupo_in_id'), 'LEFT')
-        // ->join('ta_grupo','ta_evento.ta_grupo_in_id=ta_grupo_in_id',array(),'LEFT')
-            ->where(array(
-                'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
-                'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
-                'ta_evento.ta_grupo_in_id is not null'
-                    ));
+                ->from('ta_usuario_has_ta_evento')
+                ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('idgrup' => 'ta_grupo_in_id','tipo'=>'va_tipo'), 'LEFT')
+                ->where(array(
+            'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
+            'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+            'ta_evento.ta_grupo_in_id is not null'
+                ));
         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
-        
+
         $adapter = $this->tableGateway->getAdapter();
         $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        if (! $row) {
+        if (!$row) {
             throw new \Exception("No se encontro evento");
-         }
-         return $row->current();
-     }
+        }
+        return $row->current();
+    }
+    
+   public function getEventosxUsuario($iduser) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+                ->from('ta_usuario_has_ta_evento')
+                ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('idgrup' => 'ta_grupo_in_id','tipo'=>'va_tipo'), 'LEFT')
+                ->where(array(
+            'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+            'ta_evento.ta_grupo_in_id is not null','ta_evento.va_tipo'=>'privado'
+                ));
+        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+        $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        if (!$row) {
+            throw new \Exception("No se encontro evento");
+        }
+        return $row->current();
+    }
      public function unirseEvento($idevent,$iduser){
          if($this->getEventoUsuario($idevent,$iduser)){
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
@@ -279,26 +294,34 @@ class EventoTable{
             
      }
      
-       public function listadoEvento()
-    {    
-    $fecha = date("Y-m-d h:m:s"); 
-    $adapter = $this->tableGateway->getAdapter();
-    $sql = new Sql($adapter);
-    $selecttot = $sql->select()
-      ->from('ta_evento')
-                   ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')            
-    ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
-    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')
-   ->join(array('c' => 'ta_comentario'), 'c.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(c.in_id)')), 'left')          
-    ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha))           
-    ->order('in_id desc')
-            ->group('in_id');  
-    $selectString = $sql->getSqlStringForSqlObject($selecttot);
+    public function listadoEvento($iduser=null) {
+        $fecha = date("Y-m-d h:m:s");
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+                ->from('ta_evento')
+                ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
+                ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
+                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
+                ->join(array('c' => 'ta_comentario'), 'c.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(c.in_id)')), 'left');
+        if($iduser != null){
+            if($this->getEventosxUsuario($iduser)){
+            $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
+            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
+                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));  
+            }else{
+                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado'));
+            }
+        }else{
+            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
+        }
+        $selecttot->order('in_id desc')->group('in_id');
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);      
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->buffer();
+    }
 
-    $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
-    return $resultSet->buffer();
-    }    
-       public function listadocategoriasEvento($categoria)
+    public function listadocategoriasEvento($categoria)
     {
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
