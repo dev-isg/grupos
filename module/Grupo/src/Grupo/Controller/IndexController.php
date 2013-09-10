@@ -912,7 +912,7 @@ class IndexController extends AbstractActionController
                           'redirect_uri'=>  $this->_options->host->ruta.'/'
                            
                            )); 
-                      // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');    
+                       return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');    
                        }   
                  return array(
             'user_profile' => $user_profile,
