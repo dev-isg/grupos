@@ -921,13 +921,13 @@ class IndexController extends AbstractActionController
 
                        }   
                  return array(
-            'user_profile' => $user_profile,
+         //   'user_profile' => $user_profile,
             'user' => $user,
             'logoutUrl'  =>$logoutUrl,
             'loginUrl' => $loginUrl,
-            'naitik' =>$naitik 
+          //  'naitik' =>$naitik 
         );
-      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+     // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
     }
     
 }
