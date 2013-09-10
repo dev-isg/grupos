@@ -91,7 +91,6 @@ class IndexController extends AbstractActionController
     
     
     public function indexAction() {
-
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
                 ->setScript('jQuery(document).ready(function(){valUsuario();});')
@@ -108,45 +107,37 @@ class IndexController extends AbstractActionController
         $this->layout()->categorias = $categorias;
         $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
-        $buscar = $this->params()->fromPost('dato');
+        $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
         setcookie('dato', $nombre);
-        $submit = $this->params()->fromPost('submit');
-
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo', $valor);
         $tipo = $this->params()->fromQuery('categoria');
         $this->params()->fromQuery('nombre');
-
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-
-        if (empty($valor) and empty($tipo) and !$request->isPost()) {
-
-            $listaEventos = $this->getEventoTable()->listadoEvento();
-        }
-        if ($request->isPost()) {
-            if ($nombre) {
+        
+     if ($valor || $tipo || $nombre) {
+        if ($nombre) {
+            if (isset($nombre)) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                 if (count($grupo) > 0) {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
                 } else {
                     $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-
                     if (count($listaEventos) > 0) {
                         $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                     } else {
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
                     }
                 }
-            } else {
-                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
             }
         }
-
-        if ($tipo) {//var_dump($rango);exit;
-            if (!empty($rango)) {
+        
+        if ($tipo) {
+            if (isset($tipo)) {
+              if (!empty($rango)) {
                 if ($rango == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
                     if (count($listagrupos) <= 0) {
@@ -160,15 +151,64 @@ class IndexController extends AbstractActionController
                 }
             } else {
                 $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+            }       
             }
         }
-        if ($valor) {
-            if ($valor == 'Grupos') {
-                $listagrupos = $this->getGrupoTable()->fetchAll();
-            } else {
-                $listaEventos = $this->getEventoTable()->listadoEvento();
+       if ($valor) {
+            if (isset($valor)) {
+                 if ($valor == 'Grupos') {
+                    $listagrupos = $this->getGrupoTable()->fetchAll();
+                } else {
+                    $listaEventos = $this->getEventoTable()->listadoEvento();
+                }
             }
-        }
+       }
+     }else{
+         $listaEventos = $this->getEventoTable()->listadoEvento();
+     }
+     
+//        if ($request->isPost()) {
+//            if ($nombre) {
+//                $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+//                if (count($grupo) > 0) {
+//                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+//                } else {
+//                    $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+//                    if (count($listaEventos) > 0) {
+//                        $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+//                    } else {
+//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+//                    }
+//                }
+//            } else {
+//                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+//            }
+//        }
+//
+//        if ($tipo) {
+//            if (!empty($rango)) {
+//                if ($rango == 'Grupos') {
+//                    $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+//                    if (count($listagrupos) <= 0) {
+//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+//                    }
+//                } else {
+//                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
+//                    if (count($listaEventos) <= 0) {
+//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+//                    }
+//                }
+//            } else {
+//                $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+//            }
+//        }
+//        if ($valor) {
+//            if ($valor == 'Grupos') {
+//                $listagrupos = $this->getGrupoTable()->fetchAll();
+//            } else {
+//                $listaEventos = $this->getEventoTable()->listadoEvento();
+//            }
+//        }
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -180,35 +220,58 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-        $cant=strlen($_SERVER['REQUEST_URI']);
-        $url=$_SERVER['REQUEST_URI'];//($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'';
-        $var=strripos($url,'&');
-        $var2=$var-$cant;
-        $url=substr($url,0,$var2);
-        $strseach=strpos($url,'categoria');
-        $strseacht=strpos($url,'tipo');
-        $con=0;
-        $con2=0;
-        if($strseach!==false || $strseacht!==false){
-            if($con<1){
-            $un='&';
-            $con++;
-            }
-
-        }else{
-            if($con2<1){
-             $un='?';
-             $con2++;
-            }
-
-        }
-        $quitar=strpos($url,'page=');
-        if($quitar){
-            $urlf=substr($url,0,$quitar);
-            
-        }else{
-            $urlf=$url;
-        }
+        
+//        $url=$_SERVER['REQUEST_URI'];
+//        $buscatipo=strpos($url,'tipo');
+//        $buscavalor=strpos($url,'valor');
+//        $buscadata=strpos($url,'data');
+//        if($buscatipo || $buscavalor || $buscadata){
+//            $page=strpos($url,'&');
+//            if($page){
+//              $urlf=substr($url,0,$page);
+//            }else{
+//              $urlf=$url;
+//            }
+//        }else{
+//            
+//        }
+//        var_dump($page);    
+//        var_dump($page);
+//        var_dump($urlf);Exit;
+        
+//        $find=strrpos($string,'&');
+//        $cortar=substr($string,0,$find);
+//        $strseach=strpos($string,'ciudad');
+//
+//        $cant=strlen($_SERVER['REQUEST_URI']);
+//        $url=$_SERVER['REQUEST_URI'];
+//        $var=strripos($url,'&');
+//        $var2=$var-$cant;
+//        $url=substr($url,0,$var2);
+//        $strseach=strpos($url,'categoria');
+//        $strseacht=strpos($url,'tipo');
+//        $con=0;
+//        $con2=0;
+//        if($strseach!==false || $strseacht!==false){
+//            if($con<1){
+//            $un='&';
+//            $con++;
+//            }
+//
+//        }else{
+//            if($con2<1){
+//             $un='?';
+//             $con2++;
+//            }
+//
+//        }
+//        $quitar=strpos($url,'page=');
+//        if($quitar){
+//            $urlf=substr($url,0,$quitar);
+//            
+//        }else{
+//            $urlf=$url;
+//        }
         
 //        var_dump($url);
 //        var_dump($quitar);

@@ -17,13 +17,15 @@ return array(
 //        'secret' => '5739ee928ea9149e62096e9bb91c501f',
 //    ),
 //    
-//        'host' => array(
-//        'base' => 'http://dev.juntate.pe',
-//        'static' => 'http://dev.juntate.pe',
-//        'images' => 'http://192.168.1.50:82/imagenes',
-//        'img'=>'http://192.168.1.50:82/img',
-//        'ruta' => 'http://dev.juntate.pe',
-//        'version'=>1,
-//    ),
+
+        'host' => array(
+        'base' => 'http://dev.juntate.pe',
+        'static' => 'http://dev.juntate.pe',
+        'images' => 'http://192.168.1.50:82/imagenes',
+        'img'=>'http://192.168.1.50:82/img',
+        'ruta' => 'http://dev.juntate.pe',
+        'version'=>1,
+    ),
+
     
 );
