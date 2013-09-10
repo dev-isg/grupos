@@ -13,6 +13,7 @@ use Zend\Session\Container;
 use Zend\Mail\Message;
 use Usuario\Model\Usuario;
 use Zend\View\Model\JsonModel;
+//use Grupo\Controller\IndexController;
 
 // SanAuth\Controller\UpdatepassForm;
 // use SanAuth\Model\User;
@@ -64,7 +65,14 @@ class AuthController extends AbstractActionController {
         ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias =  $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-         $token = $this->params()->fromQuery('token');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        if (!isset($session)) {
+        $face = new \Grupo\Controller\IndexController();
+        $facebook = $face->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user']; }
+        $token = $this->params()->fromQuery('token');
      //var_dump($token);exit;
         if($token)
         {$usuario = $this->getUsuarioTable()->usuario($token);

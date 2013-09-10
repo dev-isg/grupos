@@ -1,7 +1,3 @@
-<?php 
-    //echo $this->urlac;       
-?>
-
 <div class="main-container">
     <div class="container">
         <?php if(count($this->grupos)<=0) { ?>
@@ -57,7 +53,7 @@
                                 <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupos->in_id); ?>">
                                     <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
                                 </a>
-                            </div> <!-- .entry-thumb -->
+                            </div> <!--entry-thumb -->
                             <div class="content">
                                 <div class="entry-post-date" style="border-top-color: #2999b5">
                                     <div class="date-month">

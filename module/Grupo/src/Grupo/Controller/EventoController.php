@@ -23,6 +23,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Mail\Message;
 use Zend\View\Model\JsonModel;
 use Grupo\Form\ComentarioForm;
+//use Grupo\Controller\IndexController;
 
 use Usuario\Controller\IndexController as metodo;
 
@@ -174,13 +175,14 @@ class EventoController extends AbstractActionController
                 'action' => 'index'
             ));
         }
-
+        
             $fecha_esp=preg_replace('/\s+/',' ', $evento->va_fecha);
             $fecha=date('d F Y - H:i', strtotime($fecha_esp));
             $evento->va_fecha=$fecha;
             
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new EventoForm($adpter);
+        $evento->va_tipo=($evento->va_tipo=='publico')?1:2;
         $form->bind($evento);
 
         $form->get('submit')->setAttribute('value', 'Editar');
@@ -292,12 +294,34 @@ class EventoController extends AbstractActionController
 
     public function detalleeventoAction()
     {
+
 //        $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-      
         $id = $this->params()->fromRoute('in_id');
+        
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session=$storage->read();
+        
         $evento = $this->getEventoTable()->Evento($id);
+        if($evento){
+            if($evento[0]['va_tipo']=='privado'){
+                   $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
+                   if ($eventofind) {
+                       if ($eventofind->tipo == 'privado') {
+                           $tipo = true;
+                       } else {
+                           $tipo = false;
+                       }
+                   }else{
+                       $tipo = false;
+                   }
+            }else{
+                $tipo=true;
+            }
+      
+        }
+        
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
@@ -315,8 +339,12 @@ class EventoController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
        
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+
+        if (!isset($session)) {
+        $face = new \Grupo\Controller\IndexController();
+        $facebook = $face->facebook();
+        $this->layout()->login = $facebook['loginUrl'];
+        $this->layout()->user = $facebook['user']; }
         $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
       
         if ($session) {
@@ -341,7 +369,7 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-        
+
         return array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -354,7 +382,8 @@ class EventoController extends AbstractActionController
             'session'=>$session,          
 //            'grupocomprueba'=>$grupocompr,          
             'participa'=>$activo,
-            'mensajes'=>$mensajes
+            'mensajes'=>$mensajes,
+            'privado'=>$tipo
             
         )
         ;
