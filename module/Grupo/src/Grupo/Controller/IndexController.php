@@ -920,6 +920,7 @@ class IndexController extends AbstractActionController
                            ));   
 
                        }   
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
                  return array(
          //   'user_profile' => $user_profile,
             'user' => $user,
@@ -927,7 +928,7 @@ class IndexController extends AbstractActionController
             'loginUrl' => $loginUrl,
           //  'naitik' =>$naitik 
         );
-     // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+      return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
     }
     
 }
