@@ -914,10 +914,11 @@ class IndexController extends AbstractActionController
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
                              } 
                       else {
-                          $url  = $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
+                         // $url  = $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                          'redirect_uri'=> $url
+                          'redirect_uri'=>$this->_options->host->ruta.'/'
                            ));   
+
                        }   
                  return array(
             'user_profile' => $user_profile,
