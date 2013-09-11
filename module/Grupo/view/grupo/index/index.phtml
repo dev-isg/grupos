@@ -37,12 +37,8 @@
                             </div>
                         </div> <!-- .post-block -->  
                     </article><!-- #post-ID -->
-                    <?php endforeach; ?>-->
+                    <?php endforeach; ?>
                 </div>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12" id="pagina">
                 <?php echo (count($this->eventos)> 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";//$this->host('base').$urlact ?>
             </div>
         </div>  
@@ -57,7 +53,7 @@
                                 <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupos->in_id); ?>">
                                     <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
                                 </a>
-                            </div> <!-- .entry-thumb -->
+                            </div> <!--entry-thumb -->
                             <div class="content">
                                 <div class="entry-post-date" style="border-top-color: #2999b5">
                                     <div class="date-month">
@@ -90,9 +86,6 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span12" id="pagina">
-
-                <?php // echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$url)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
-
                 <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
                 <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
    
@@ -120,8 +113,8 @@
             // Infinite Scroll
 
             $container.infinitescroll({
-                navSelector  : '.row-fluid #pagina .pagination',    // selector for the paged navigation 
-                nextSelector : '.row-fluid #pagina .pagination a',  // selector for the NEXT link (to page 2)
+                navSelector  : '.pagination',    // selector for the paged navigation 
+                nextSelector : '.pagination a',  // selector for the NEXT link (to page 2)
                 itemSelector : '.masonry-box',     // selector for all items you'll retrieve
                 loading: {
                     finishedMsg: 'No more posts to load.',

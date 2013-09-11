@@ -967,10 +967,16 @@ vertical-align: middle;
   margin-top: 15px;
 }
 .search{
-  height: 327px;
+  height: 326px;
   width: 100%;
   float: left;
   background: url(../img/he.jpg) repeat-x;
+}
+.event-header{
+  border-bottom: 2px solid #00A6E1;
+}
+.group-header{
+  border-bottom: 2px solid #98CD34;  
 }
 .filtrar-home{
   width: 100%;
@@ -1591,6 +1597,56 @@ a.tab-home-g-b:hover .pinchitob{
   margin-top: 0px;
   margin-left: 0;
   margin-bottom: 0;
+}
+.marcar-user{
+  float: left;
+}
+.locator-view{
+  display: none!important;
+}
+.route-map{
+  display: none!important;
+}
+
+.user-list-group ul{
+  list-style: none;
+  margin-left: 0;
+}
+.user-list-group h3{
+  margin: 0;
+  font-size: 16px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+.img-cargar-usuarios{
+  cursor: default;
+}
+.img-cargar-usuarios img{
+  width: 35px;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 4px;
+}
+.user-list-group ul{
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-top: 0;
+  max-height: 270px;
+  overflow-y: scroll;
+}
+.img-cargar-usuarios p{
+  font-size: 11px;
+  line-height: 13px;
+  padding-left: 40px;
+}
+.user-list-group .span12{
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .lista-usuario ul li{
   border-top: 1px dotted #cbcbcb;

@@ -23,7 +23,7 @@
         <?php echo $this->headLink(); ?>
         		
         <script src="<?php echo $this->host('ruta')?>/js/modernizr.js"></script>
-        <script src="<?php echo $this->host('ruta')?>/js/vendor/jquery.js"></script>
+        <script src="<?php echo $this->host('ruta')?>/js/jquery.min.js"></script>
 </head>
 <body id="blog">
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
@@ -115,19 +115,19 @@
                         </form>
                     </div>
                 </div>
-                <div class="span3 btn-evento">
-                    <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                        <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
-                            EVENTOS
-                            <div class="pinchitoa"></div>
-                        </a>
-                        <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
-                            GRUPOS
-                            <div class="pinchitob"></div>
-                        </a>
+                    <div class="span3 btn-evento">
+                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
+                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
+                                EVENTOS
+                                <div class="pinchitoa"></div>
+                            </a>
+                            <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
+                                GRUPOS
+                                <div class="pinchitob"></div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="contenedor-back-ho"></div>
+                    <div class="contenedor-back-ho"></div>
                 </div>
             </div>
         </div>
@@ -137,14 +137,7 @@
             <div id="inline_evento" style="padding:10px; background:#fff;">
                 <h3>Iniciar sesión</h3>
                 <div class="span4 cambiofotouser dev-marca-face">
-                <!--<h1>INICIAR CON FACEBOOK</h1>-->
-                <?php // if ($this->user): ?>
-                  <!--<a href="<?php echo $this->logoutUrl; ?>">Logout</a>-->
-                <?php // else: ?>
-<!--                  <a href="https://www.facebook.com/dialog/oauth?client_id=171038663080276&redirect_uri=http%3A%2F%2Fdev.juntate.pe%2Fregistrarse&state=e9c59e51d167dd4f29e13536a4930380&scope=email%2Cpublish_stream%2Cread_friendlists">
-                    <img src="/img/face.png">
-                  </a>-->
-                <?php // endif ?>
+               
               </div>
                 <?php
                 $form = $this->formlogeo;
@@ -184,16 +177,30 @@
         			</div>
                     <?php  echo $this->form()->closeTag(); ?>
 
-                   <div class="content-login-facebook">
-                        <p>Ingresa rápido por:</p>
-                     <?php if($this->user) {?>
-           <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
-             <?php  } else {?>
-          <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
-           <?php  }?>
-            </div>
+
+                <div class="content-login-facebook">
+                    <p>Ingresa rápido por:</p>
+                 <?php if($this->user) {?>
+                   <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+                     <?php  } else {?>
+                  <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+                   <?php  }?>
                 </div>
             </div>
+        </div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery(".tab-home-g-b").hover(function () {
+            jQuery(".search").addClass("group-header");
+            jQuery(".search").removeClass("event-header");
+        });
+        jQuery(".tab-home-g-a").hover(function () {
+            jQuery(".search").addClass("event-header");
+            jQuery(".search").removeClass("group-header");
+        });
+    });
+</script>
 
         
         

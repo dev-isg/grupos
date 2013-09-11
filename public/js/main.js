@@ -107,35 +107,33 @@ function cargarFecha(){
 }
 
 function cargarMapa(){
-    $(document).on('ready', function(){
-        //var addresspicker = $( "#addresspicker" ).addresspicker();
-        var addresspickerMap = $("#addresspicker_map" ).addresspicker({
-            regionBias: "fr",
-        //updateCallback: showCallback,
-          elements: {
-            map:      "#map",
-            lat:      "#mapLocationLat",
-            lng:      "#mapLocationLon",
-            street_number: '#street_number',
-            route: '#route',
-            locality: '#locality',
-            administrative_area_level_2: '#administrative_area_level_2',
-            administrative_area_level_1: '#administrative_area_level_1',
-            country:  '#country',
-            postal_code: '#postal_code',
-            type:    '#type' 
-          }
-        });
-
-        var gmarker = addresspickerMap.addresspicker( "marker");    
-        gmarker.setVisible(true);
-        addresspickerMap.addresspicker("updatePosition");
-
-        $("#addresspicker_map").addresspicker(
-            "option", 
-            "reverseGeocode", 
-            "true"
-        ); 
+    $(document).ready(function(){
+        
+      $("#map").juGoogleMap({
+        editable:true,
+        dataBound:{
+            lat:'#mapLocationLat',
+            lng:'#mapLocationLon',
+            city:'#cityId',
+            address:'#address',
+            addressRef:'#addressReference'
+          },
+        center:{lat:-12.047816, lng:-77.062203},
+        zoom:12  });
+      
+      $("input[type='text'],input[type='checkbox'],input[type='file'],select").bind('keypress', function(){
+          
+        var e = event;
+        if ((e.keyCode || e.which || e.charCode || 0) !== 13)
+          return true;
+        else
+        {
+          var nextInput = $(":input:eq(" + ($(":input").index(this) + 1) + ")").first();
+          nextInput.focus();
+          event.preventDefault();
+          return false;
+        }
+      });
 
     });
 }
