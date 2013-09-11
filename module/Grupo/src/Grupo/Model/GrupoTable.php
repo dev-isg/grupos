@@ -18,13 +18,22 @@ class GrupoTable{
             $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
+//                    ->columns(array('fecha_ingreso'=>'va_fecha_ingreso'))
+//                    ->from('ta_evento')
+//                    ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('*'),'left')
+//                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',
+//                            array('nombre_categ'=>'va_nombre','idcategoria'=>'in_id'),'left')
+//                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',
+//                            array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
+//                    ->order('ta_evento.va_fecha_ingreso desc');
+                    
                     ->columns(array('unin_id'=>new \Zend\Db\Sql\Expression('DISTINCT(ta_grupo.in_id)'),'*'))
                     ->from('ta_grupo')
                     ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre','idcategoria'=>'in_id'),'left')
                     ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left')
                     ->join('ta_evento','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('fecha_ingreso'=>'va_fecha_ingreso'),'left')
                     ->where(array('ta_grupo.va_estado'=>'activo'));
-                   $selecttot ->order('ta_evento.va_fecha_ingreso desc');//->group('ta_grupo.in_id')
+                   $selecttot->group('ta_grupo.in_id')->order('ta_evento.va_fecha_ingreso desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //            VAR_DUMP($selectString);eXIT;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
@@ -364,13 +373,16 @@ class GrupoTable{
                         ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left');        
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
-                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,'ta_usuario_has_ta_grupo.va_estado'=>'activo'));
+                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
+                       'ta_usuario_has_ta_grupo.va_estado'=>'activo',
+                       ));//'ta_usuario_has_ta_grupo.va_aceptado'=>'si'
              }else{
                    $select->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
                        'ta_usuario_has_ta_grupo.va_estado'=>'activo'))->order('ta_usuario_has_ta_grupo.va_fecha DESC');
              }
 
             $selectString = $sql->getSqlStringForSqlObject($select);
+//            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }

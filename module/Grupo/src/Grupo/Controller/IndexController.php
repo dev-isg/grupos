@@ -477,19 +477,17 @@ class IndexController extends AbstractActionController
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         
-        if($session->in_id){
-        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id,$session->in_id);
-        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
-        }else{
-            $usuarios = $this->getGrupoTable()->usuariosgrupo($id,null);
-            $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,null);
-        }
-        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
-        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(4); 
+//        if($session->in_id){
+//        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id,$session->in_id);
+//        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
+//        } else{
+//            $usuarios = $this->getGrupoTable()->usuariosgrupo($id,null);
+//            $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,null);
+//        }
+//        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
+//        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+//        $paginator2->setItemCountPerPage(4); 
 
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
         if ($session) {            
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
@@ -498,8 +496,11 @@ class IndexController extends AbstractActionController
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         //listar usuarios solo si estas unido al grupo
+//        var_dump($participa->va_estado);Exit;
         if($participa->va_estado=='activo'){
-        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
+        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id);//usuariosgrupo($id);
+        }else{
+         $usuarios = null;   
         }
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));

@@ -19,7 +19,7 @@ class Usuario implements InputFilterAwareInterface{
     public $va_foto;
     public $va_genero;
     public $va_descripcion;
-//    public $ta_ubigeo_in_id;
+    public $ta_ubigeo_in_id;
     
     protected $inputFilter;  
     
@@ -33,7 +33,7 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : 'foto-carnet.jpg';
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-//            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
+            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -133,6 +133,11 @@ class Usuario implements InputFilterAwareInterface{
                     ), 
                 ), 
             )));
+            
+                $inputFilter->add($factory->createInput(array(
+                        'name' => 'ta_ubigeo_in_id',
+                        'required' => false
+                    )));
              
 //             $inputFilter->add($factory->createInput(array(
 //                        'name' => 'va_dni',
@@ -358,6 +363,11 @@ class Usuario implements InputFilterAwareInterface{
                     ),
                 ),
             )));
+              
+                  $inputFilter->add($factory->createInput(array(
+                        'name' => 'ta_ubigeo_in_id',
+                        'required' => false
+                   )));
               
               
              $this->inputFilter = $inputFilter;
