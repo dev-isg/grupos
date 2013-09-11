@@ -73,7 +73,7 @@ class IndexController extends AbstractActionController
         $this->params()->fromQuery('nombre');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-        
+         
      if ($valor || $tipo || $nombre) {
         if ($nombre) {
             if (isset($nombre)) {
@@ -91,7 +91,7 @@ class IndexController extends AbstractActionController
             }
         }
         
-        if ($tipo) {
+        if ($tipo) {    
             if (isset($tipo)) {
               if (!empty($rango)) {
                 if ($rango == 'Grupos') {
@@ -114,19 +114,22 @@ class IndexController extends AbstractActionController
             if (isset($valor)) {
                  if ($valor == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->fetchAll();
-                } else {
+                     $this->layout()->search='group-header';
+                } else {                       
 //                    $storage = new \Zend\Authentication\Storage\Session('Auth');
 //                    if ($storage) {
 //                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
 //                    }else{
 //                     $listaEventos = $this->getEventoTable()->listadoEvento();
 //                    }
+                     $this->layout()->search='event-header';
                     $listaEventos = $this->getEventoTable()->listadoEvento();
                 }
             }
        }
      }else{
             $listagrupos = $this->getGrupoTable()->fetchAll();
+            $this->layout()->active='active';
      }
      
 //        if ($request->isPost()) {
