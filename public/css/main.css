@@ -1592,6 +1592,12 @@ a.tab-home-g-b:hover .pinchitob{
   margin-left: 0;
   margin-bottom: 0;
 }
+.locator-view{
+  display: none!important;
+}
+.route-map{
+  display: none!important;
+}
 .lista-usuario ul li{
   border-top: 1px dotted #cbcbcb;
 }
