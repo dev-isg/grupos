@@ -67,7 +67,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="search">
+    <?php if($this->search){?>
+	<div class="search <?php echo $this->search;?>">
+            <?php }else{ ?>
+            <div class="search">
+            <?php } ?>
 		<div class="container">
 			<div class="row-fluid" style="position:relative;">
 				<div class="span9 form-search">
@@ -121,7 +125,7 @@
                                 EVENTOS
                                 <div class="pinchitoa"></div>
                             </a>
-                            <a class="btn btn-primary <?php if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
+                            <a class="btn btn-primary <?php if(!$this->active){if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}}else{echo $this->active;}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
                                 GRUPOS
                                 <div class="pinchitob"></div>
                             </a>

@@ -123,8 +123,8 @@ class UsuarioTable
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion,
             'va_verificacion' => $valor,
-            'va_estado' =>'desactivo'
-        // 'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
+            'va_estado' =>'desactivo',
+            'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id
                 );
         $id = (int) $usuario->in_id;
         
@@ -135,6 +135,7 @@ class UsuarioTable
        }
 
         if ($id == 0) {
+            $data['va_fecha_ingreso']= date("Y-m-d H:i:s");
             $this->tableGateway->insert($data);
             $iduser=$this->tableGateway->getLastInsertValue();
                      $adapter = $this->tableGateway->getAdapter();

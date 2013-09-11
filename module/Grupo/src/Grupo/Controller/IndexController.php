@@ -73,7 +73,7 @@ class IndexController extends AbstractActionController
         $this->params()->fromQuery('nombre');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-        
+         
      if ($valor || $tipo || $nombre) {
         if ($nombre) {
             if (isset($nombre)) {
@@ -91,7 +91,7 @@ class IndexController extends AbstractActionController
             }
         }
         
-        if ($tipo) {
+        if ($tipo) {    
             if (isset($tipo)) {
               if (!empty($rango)) {
                 if ($rango == 'Grupos') {
@@ -114,19 +114,22 @@ class IndexController extends AbstractActionController
             if (isset($valor)) {
                  if ($valor == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->fetchAll();
-                } else {
-                    $storage = new \Zend\Authentication\Storage\Session('Auth');
-                    if ($storage) {
-                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
-                    }else{
-                     $listaEventos = $this->getEventoTable()->listadoEvento();
-                    }
-//                    $listaEventos = $this->getEventoTable()->listadoEvento();
+                     $this->layout()->search='group-header';
+                } else {                       
+//                    $storage = new \Zend\Authentication\Storage\Session('Auth');
+//                    if ($storage) {
+//                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
+//                    }else{
+//                     $listaEventos = $this->getEventoTable()->listadoEvento();
+//                    }
+                     $this->layout()->search='event-header';
+                    $listaEventos = $this->getEventoTable()->listadoEvento();
                 }
             }
        }
      }else{
             $listagrupos = $this->getGrupoTable()->fetchAll();
+            $this->layout()->active='active';
      }
      
 //        if ($request->isPost()) {
@@ -476,14 +479,18 @@ class IndexController extends AbstractActionController
         $this->layout()->user = $facebook['user']; }
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
-        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
-        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id);
-        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
-        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator2->setItemCountPerPage(4); 
+        
+//        if($session->in_id){
+//        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id,$session->in_id);
+//        $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
+//        } else{
+//            $usuarios = $this->getGrupoTable()->usuariosgrupo($id,null);
+//            $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,null);
+//        }
+//        $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
+//        $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+//        $paginator2->setItemCountPerPage(4); 
 
-        $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
         if ($session) {            
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
             $activo=$participa->va_estado=='activo'?true:false;
@@ -492,8 +499,11 @@ class IndexController extends AbstractActionController
         $eventospasados = $this->getEventoTable()->eventospasados($id);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         //listar usuarios solo si estas unido al grupo
+//        var_dump($participa->va_estado);Exit;
         if($participa->va_estado=='activo'){
-        $usuarios = $this->getGrupoTable()->usuariosgrupo($id);
+        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id);//usuariosgrupo($id);
+        }else{
+         $usuarios = null;   
         }
         $proximos_eventos = $this->getGrupoTable()->eventosgrupo($id,$session->in_id);
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));

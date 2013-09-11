@@ -1,49 +1,52 @@
 <?php
+
 namespace Usuario\Form;
 
 use Zend\Form\Form;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Adapter\AdapterInterface;
-
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
+class UsuarioForm extends Form {
 
-class UsuarioForm extends Form{
-     
-    public function __construct($name = null)
-    {
+    protected $dbAdapter;
+
+    public function __construct($name = null, AdapterInterface $dbAdapter = null) {
+        if ($dbAdapter != null) {
+            $this->setDbAdapter($dbAdapter);
+        }
         parent::__construct('usuario');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
-        
-        
+
+
         $this->add(array(
             'name' => 'in_id',
             'type' => 'Hidden',
-           'attributes' => array(               
-                'id'   => 'in_id',         
+            'attributes' => array(
+                'id' => 'in_id',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'va_nombre',
             'type' => 'Text',
-            'attributes' => array(   
+            'attributes' => array(
                 'class' => 'span10',
-                'placeholder'=>'Ingrese el nombre de usario…'
+                'placeholder' => 'Ingrese el nombre de usario…'
             ),
-        ));  
-        
+        ));
+
         $this->add(array(
             'name' => 'va_email',
             'type' => 'Text',
             'attributes' => array(
                 'class' => 'span10',
-                'placeholder'=>'Ingrese el mail... '
+                'placeholder' => 'Ingrese el mail... '
             ),
-        )); 
-        
+        ));
+
 //        $this->add(array(
 //            'name' => 'va_dni',
 //            'type' => 'Text',
@@ -51,7 +54,7 @@ class UsuarioForm extends Form{
 //                'placeholder'=>'Ingrese el dni... '
 //            ),
 //        )); 
-        
+
         $this->add(array(
             'name' => 'va_genero',
             'type' => 'Select',
@@ -59,57 +62,69 @@ class UsuarioForm extends Form{
 //                'placeholder'=>'Ingrese el dni... '
 //            ),
             'options' => array(
-                'label' => '', 
+                'label' => '',
                 'value_options' => array(
-                    'masculino'=>'masculino','femenino'=>'femenino'
-                    )
+                    'masculino' => 'masculino', 'femenino' => 'femenino'
+                )
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'va_foto',
             'type' => 'File',
-            'attributes' => array(               
-                'placeholder'=>'Ingrese el mail... '
+            'attributes' => array(
+                'placeholder' => 'Ingrese el mail... '
             ),
-        )); 
-        
-        
+        ));
+
+
         $this->add(array(
             'name' => 'va_descripcion',
             'type' => 'Textarea',
-            'attributes' => array(             
-                'placeholder'=>'Ingrese su descripción... ',
-                'cols'=>80,
-                'rows'=>3
+            'attributes' => array(
+                'placeholder' => 'Ingrese su descripción... ',
+                'cols' => 80,
+                'rows' => 3
             ),
-        )); 
-         
-         $this->add(array(
+        ));
+
+        $this->add(array(
             'name' => 'va_contrasena',
             'type' => 'Password',
-          
 //            'options' => array(
 //                'label' => 'Password:',          
 //            ),
             'attributes' => array(
-                'id'=>'va_contrasena',
+                'id' => 'va_contrasena',
                 'class' => 'span10',
-                'placeholder'=>'Ingrese la contraseña…'
+                'placeholder' => 'Ingrese la contraseña…'
             ),
         ));
-         
-         $this->add(array(
+
+        $this->add(array(
             'name' => 'verificar_contrasena',
             'type' => 'password',
-          
             'options' => array(
-                'label' => '',          
+                'label' => '',
             ),
-            'attributes' => array(               
+            'attributes' => array(
                 'class' => 'span10',
-                'placeholder'=>'Confirme la contraseña…'
+                'placeholder' => 'Confirme la contraseña…'
             ),
+        ));
+
+        $this->add(array(
+            'name' => 'ta_ubigeo_in_id', //distrito
+            'type' => 'Select',
+            'attributes' => array(
+                'class' => 'span10',
+                'id' => 'ta_ubigeo_in_id'
+            ),
+            'options' => array(
+                'label' => 'Distrito',
+                     'value_options' =>$this->Distrito(),                                               
+                'empty_option' => '--- Seleccionar ---',
+            )
         ));
 ////          
 //        $this->add(array(
@@ -126,7 +141,7 @@ class UsuarioForm extends Form{
 //                )
 //        ));
 //          
-        
+
 
         $this->add(array(
             'name' => 'submit',
@@ -138,5 +153,35 @@ class UsuarioForm extends Form{
             ),
         ));
     }
+
+    public function Distrito() {
+        $this->dbAdapter = $this->getDbAdapter();
+        $adapter = $this->dbAdapter;
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('in_iddistrito', 'va_distrito'))
+                        ->from('ta_ubigeo')
+                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        $distrito = $results->toArray();
+        
+        $auxtipo = array();
+        foreach ($distrito as $tipo) {
+            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
+        }
+        return $auxtipo;
+    }
+
+    public function setDbAdapter(AdapterInterface $dbAdapter) {
+        $this->dbAdapter = $dbAdapter;
+
+        return $this;
+    }
+
+    public function getDbAdapter() {
+        return $this->dbAdapter;
+    }
+
 }
 

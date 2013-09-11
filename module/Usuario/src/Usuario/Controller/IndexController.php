@@ -335,9 +335,6 @@ public function getAuthService() {
 
     public function editarusuarioAction() {
         
-        
-       
-        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -365,7 +362,7 @@ public function getAuthService() {
         }
         $valor = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm($adpter);
+        $form = new UsuarioForm(null,$adpter);
         $form->bind($usuario);
         $form->get('submit')->setAttribute('value', 'Editar');
 
@@ -547,6 +544,8 @@ public function getAuthService() {
         </div>';
         return $estados;
     }
+    
+    
 
     public function fooAction() {
         // This shows the :controller and :action parameters in default route
