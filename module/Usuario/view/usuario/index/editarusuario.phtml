@@ -34,81 +34,71 @@
                             echo $this->form()->openTag($form);
                             ?>
                          	<div class="actualizar">
-                                    <?php echo $this->formHidden($form->get('in_id'));?>
+                                <?php echo $this->formHidden($form->get('in_id'));?>
 		                        <h1>Actualizar Cuenta</h1>		                        
-		                        	<h5>Cambiar mi imagen de perfil</h5>
-		                        	<div class="cambiofoto2">
-							        	<div class="fileupload fileupload-new" data-provides="fileupload">
-								            <div class="img-thu-user fileupload-new thumbnail">
-                                              <?php $valor = explode('/',$this->usuario->va_foto); if($valor[0]=='https:'){ ?>  
-                                                    <img src="<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">                                            
-  <?php       }  else {if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
-                                                    <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
-                                                <?php }else{?>
-                                                    <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
-                                                <?php }  }?>
-                                                    
-                                                    
-                                                    
-                                                    
-								            </div>
-							            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
-								          
-                                                            
-                                                                                              
-                                                                        <div class="detalle-img">
-								              	<strong class="btn-file">
-									              	<strong class="btn fileupload-new">Cargar una imagen</strong>
-									              	<strong class="btn fileupload-exists">Cambiar Imagen </strong>
-									               	<input type="file" name="va_foto" class="" id="va_foto">              
-								               	</strong>
-								              	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
-								            </div>
-                                                                        
-                                                           
-							          	</div>
-							        </div>
-		                        	<h5>Mis datos personales </h5>
-		                            <p>
-		                            	<label for="">Nombre Completo</label>
-                                        <?php echo $this->formRow($form->get('va_nombre'));?>
-		                            </p>                         
-		                            <p>
-		                            	<label for="">Correo Electrónico</label>
-                                        <?php echo $this->formRow($form->get('va_email'));?>
-		                            </p>
-		                            <p>
-                                        <label for="">Género</label>
-                                                
-                                        <?php if (($this->usuario->va_genero)==''){ ?>
-                                            <label for="">Seleccionar un género</label>
-                                        <?php   }?>
-                                            
-                                        <?php echo $this->formRow($form->get('va_genero'));?>
- 
-		                            </p>
-                                        <p>
-		                            	<label for="">Ubicación</label>
-                                        <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
-		                            </p>
-		                            <h5>Mis Intereses </h5>
-		                            <div class="int">
-		                              	<label for="">Ingresar Intereses</label>
-		                              	<?php echo $this->formRow($form->get('va_descripcion'));?>
-	                              	</div>                               
-		                            <p>
-                                                <?php echo $this->formSubmit($form->get('submit'));?>
-		                            </p>
-		                             <?php echo $this->form()->closeTag();?> 	    
-                                </div> 
-                        
+	                        	<h5>Cambiar mi imagen de perfil</h5>
+	                        	<div class="cambiofoto2">
+						        	<div class="fileupload fileupload-new" data-provides="fileupload">
+							            <div class="img-thu-user fileupload-new thumbnail">
+                                          <?php $valor = explode('/',$this->usuario->va_foto); if($valor[0]=='https:'){ ?>  
+                                                <img src="<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">                                            
+                                                <?php } else {if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
+                                                <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto ;?>" style="width:130px;height:130px;">
+                                            <?php }else{ ?>
+                                                <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
+                                            <?php }  
+                                            }?>
+							            </div>
+						            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
+							          
+                                                        
+                                                                                          
+                                                                    <div class="detalle-img">
+							              	<strong class="btn-file">
+								              	<strong class="btn fileupload-new">Cargar una imagen</strong>
+								              	<strong class="btn fileupload-exists">Cambiar Imagen </strong>
+								               	<input type="file" name="va_foto" class="" id="va_foto">              
+							               	</strong>
+							              	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
+							            </div>
+                                                                    
+                                                       
+						          	</div>
+						        </div>
+	                        	<h5>Mis datos personales </h5>
+	                            <p>
+	                            	<label for="">Nombre Completo</label>
+                                    <?php echo $this->formRow($form->get('va_nombre'));?>
+	                            </p>                         
+	                            <p>
+	                            	<label for="">Correo Electrónico</label>
+                                    <?php echo $this->formRow($form->get('va_email'));?>
+	                            </p>
+	                            <p>
+                                    <label for="">Género</label>
+                                    <?php if (($this->usuario->va_genero)==''){ ?>
+                                        <label for="">Seleccionar un género</label>
+                                    <?php   }?>
+                                    <?php echo $this->formRow($form->get('va_genero'));?>
+	                            </p>
+                                <p>
+	                            	<label for="">Ubicación</label>
+                                    <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
+	                            </p>
+	                            <h5>Mis Intereses </h5>
+	                            <div class="int">
+	                              	<label for="">Ingresar Intereses</label>
+	                              	<?php echo $this->formRow($form->get('va_descripcion'));?>
+                              	</div>                               
+	                            <p>
+                                    <?php echo $this->formSubmit($form->get('submit'));?>
+	                            </p>
+	                          <?php echo $this->form()->closeTag();?> 	    
+                            </div>
                     	</div>                    
                     </div>
                     <div class="span6 cuenta noti">
-	                    <div class="ocultarnoti">
-	                    <i class="icon-noti ico-noti"></i>
-	                    <p id="inoti">NOTIFICACIONES</p> 
-	                    </div>
+	                    <div class="ocultarnoti"><i class="icon-noti ico-noti"></i><p id="inoti">NOTIFICACIONES</p></div>
 	                    <span>x</span>
 	                    <div class="notificaciones">
 	                                <?php
