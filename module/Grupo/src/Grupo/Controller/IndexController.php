@@ -73,7 +73,7 @@ class IndexController extends AbstractActionController
         $this->params()->fromQuery('nombre');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-         
+         $this->layout()->search='group-header';
      if ($valor || $tipo || $nombre) {
         if ($nombre) {
             if (isset($nombre)) {
