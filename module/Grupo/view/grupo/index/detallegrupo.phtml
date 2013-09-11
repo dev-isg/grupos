@@ -92,64 +92,279 @@
             </div>
             <div class="span3 group-sidebar">
                 <div class="row-fluid">
-            
-                            <div class="span12">
-                                
-                    <div class="span12 unete-grupo"> 
-                        <?php 
-                      if($this->grupo[0]['ta_usuario_in_id']!=$session->in_id){
-                        if ($session) { ?>
-                            <?php if ($participa) { ?>
-                                <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el Grupo</a> 
-                                <a href="#" class="btn btn-success uneteEvent" id="uneteEvent" style="display:none;">Unete al Grupo</a> 
+                    <div class="span12">         
+                        <div class="span12 unete-grupo"> 
+                            <?php 
+                          if($this->grupo[0]['ta_usuario_in_id']!=$session->in_id){
+                            if ($session) { ?>
+                                <?php if ($participa) { ?>
+                                    <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el Grupo</a> 
+                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent" style="display:none;">Unete al Grupo</a> 
+                                <?php } else { ?>
+                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al Grupo</a>
+                                    <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent" style="display:none;">Abandona el Grupo</a> 
+                            <?php } ?>
                             <?php } else { ?>
-                                <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al Grupo</a>
-                                <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent" style="display:none;">Abandona el Grupo</a> 
-                        <?php } ?>
-                    <?php } else { ?>
-                            <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al Grupo</a> 
-                                <?php } ?> 
-                            
+                                <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al Grupo</a> 
+                                    <?php } ?> 
+                                
                             <?php }else{?>
                             <?php }?>
+                        </div>
+                    </div>      
+                </div>
+
+                <div class="row-fluid user-espera user-list-group">
+                    <div class="span12">
+                        <h3>Usuarios en espera</h3>
+                        <ul>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="user1"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user2" data-user="user2"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user3" data-user="user3"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user4" data-user="user4"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user5" data-user="user5"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user6" data-user="user6"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user7" data-user="user7"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user8" data-user="user8"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user9" data-user="user9"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li>
+                                <input class="marcar-user" type="checkbox" name="user10" data-user="user10"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                    
-  </div>
+
+                <div class="row-fluid user-espera user-list-group">
+                    <div class="span12">
+                        <h3>Usuarios aprobados</h3>
+                        <ul>
+                            <li id="user-1111">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1111"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1112">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1112"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1113">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1113"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1114">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1114"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1115">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1115"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1116">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1116"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1117">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1117"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1118">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1118"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1119">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1119"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                            <li id="user-1110">
+                                <input class="marcar-user" type="checkbox" name="user1" data-user="1110"> 
+                                <label class="checkbox img-cargar-usuarios">
+                                    <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/jesser-pariona-huarcaya-5227ba8650875.jpg" title="jesser pariona">
+                                    <a href="#">Jesser pariona</a>
+                                    <p>
+                                        esto es una pequeña descripción del usuario en cuestión.
+                                    </p>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <?php if($this->usuarios ){?>
                 <div class="lista-usuario">
                     <ul>
-
-                                        <?php foreach ($this->usuarios as $usuarios) : ?>
+                        <?php foreach ($this->usuarios as $usuarios) : ?>
                        <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
                             <div class="users">
-                                    <div class="row-fluid">
-                                        <div class="span4 img-user-ev">
-       <?php $valor = explode('/',$usuarios->imagen); if($valor[0]=='https:'){ ?>  
- <img src="<?php echo $usuarios->imagen ;?>">                                            
-  <?php       }  else {if(($usuarios->imagen)!="foto-carnet.jpg"){?>
-                                                    <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >
-                                                <?php }else{?>
-                                                    <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
-                                                <?php }  }?>  
-                                        </div>
-                                        <div class="span8 desc-user">
-                                            <h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3>
-                                            <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?></p>
-                                        </div>
+                                <div class="row-fluid">
+                                    <div class="span4 img-user-ev">
+                                    <?php $valor = explode('/',$usuarios->imagen);
+                                    if($valor[0]=='https:'){ ?>  
+                                        <img src="<?php echo $usuarios->imagen ;?>">                                            
+                                    <?php } else {
+                                        if(($usuarios->imagen)!="foto-carnet.jpg"){?>
+                                            <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >
+                                        <?php }else{?>
+                                            <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
+                                        <?php } 
+                                    }?>  
                                     </div>
-                                    <div class="row-fluid unio">
-                                        <p class="span12">Se unió el <?php
-                                        $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
-                                        $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                                        echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
-                                        ?></p>
+                                    <div class="span8 desc-user">
+                                        <h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3>
+                                        <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?></p>
                                     </div>
-                               </div>
+                                </div>
+                                <div class="row-fluid unio">
+                                    <p class="span12">Se unió el <?php
+                                    $fecha = date_create($this->escapeHtml($usuarios->va_fecha));
+                                    $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                                    echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
+                                    ?></p>
+                                </div>
+                            </div>
                         </li>
-<?php endforeach; ?>
-
+                        <?php endforeach; ?>
                     </ul>
                 </div>
                  <?php }?>
@@ -166,6 +381,12 @@
 <script type="text/javascript">
 	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
     $(document).on('ready', function(){		
+
+        $('.user-espera input').click(function(){
+           var data = $(this).attr('data-user');
+            alert(data);
+        });
+
         enviarDatos();
         abandonarDatos();
     });
