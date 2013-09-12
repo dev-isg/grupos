@@ -12,38 +12,55 @@
 			<?php echo $this->valor;  ?>
     		<div class="row-fluid"> 
                 <div class="span12 dta-user contenido-cuenta box" style="margin-top:15px;">
-                    <form action="" name="usuario" class="form-horizontal usuario-actualizar" id="editarusuario">
+                  <?php
+                    $usuario = $this->usuario;
+                    $form = $this->form;
+                    $form->setAttributes(array(
+                        'action' => $this->url . '/usuario/index/editarusuario/' . $this->in_id,
+                        'method' => 'post',
+                        'class' => 'form-horizontal usuario-actualizar',
+                        'id' => 'editarusuario'
+                    ));
+
+                    $form->prepare();
+                    echo $this->form()->openTag($form);
+                    ?>
+                    <!--<form action="" name="usuario" class="form-horizontal usuario-actualizar" id="editarusuario">-->
                         <h3>Datos generales</h3>
                         <div class="row-fluid">
                             <div class="span8">
                                 <div class="control-group">
+                                    <?php echo $this->formHidden($form->get('in_id'));?>
                                     <label class="control-label" for="va_nombre">Nombre</label>
                                     <div class="controls">
-                                        <input type="text" id="va_nombre" name="va_nombre" placeholder="Nombre completo">
+                                        <?php echo $this->formRow($form->get('va_nombre'));?>
+<!--                                        <input type="text" id="va_nombre" name="va_nombre" placeholder="Nombre completo">-->
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="va_email">Correo electrónico</label>
                                     <div class="controls">
-                                        <input type="text" id="va_email" name="va_email" placeholder="Ingrese email">
+                                        <?php echo $this->formRow($form->get('va_email'));?>
+<!--                                        <input type="text" id="va_email" name="va_email" placeholder="Ingrese email">-->
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="va_genero">Genero</label>
                                     <div class="controls">
-                                        <select name="va_genero" class="valid">
+                                        <?php if (($this->usuario->va_genero) == '') { ?>
+                                            <label for="">Seleccionar un género</label>
+                                        <?php } ?>
+                                        <?php echo $this->formRow($form->get('va_genero')); ?>
+<!--                                        <select name="va_genero" class="valid">
                                             <option value="masculino" selected="selected">masculino</option>
                                             <option value="femenino">femenino</option>
-                                        </select>
+                                        </select>-->
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="ta_ubigeo_in_id">Distrito</label>
                                     <div class="controls">
-                                        <select name="ta_ubigeo_in_id" class="valid" id="ta_ubigeo_in_id">
-                                            <option value="masculino" selected="selected">masculino</option>
-                                            <option value="femenino">femenino</option>
-                                        </select>
+                                         <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
                                     </div>
                                 </div>
                             </div>
@@ -51,6 +68,31 @@
                                 <div class="control-group">                                    
                                     <div class="controls" style="margin-left:0;">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="img-thu-user fileupload-new thumbnail">
+                                                <?php $valor = explode('/', $this->usuario->va_foto);
+                                                if ($valor[0] == 'https:') { ?>  
+                                                    <img src="<?php echo $this->usuario->va_foto; ?>" style="width:130px;height:130px;">                                            
+                                                <?php } else {
+                                                    if (($this->usuario->va_foto) != "foto-carnet.jpg") { ?>
+                                                        <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto; ?>" style="width:130px;height:130px;">
+                                                    <?php } else { ?>
+                                                        <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" style="width:130px;height:130px;">
+                                                    <?php }
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
+                                            <div class="detalle-img">
+                                                <strong class="btn-file">
+                                                    <strong class="btn fileupload-new">Cargar una imagen</strong>
+                                                    <strong class="btn fileupload-exists">Cambiar Imagen </strong>
+                                                    <input type="file" name="va_foto" class="" id="va_foto">              
+                                                </strong>
+                                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
+                                            </div>
+                                        </div>
+
+<!--                                        <div class="fileupload fileupload-new" data-provides="fileupload">
                                             <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
                                                 <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
                                             </div>
@@ -60,7 +102,7 @@
                                                    <input type="file" name="va_imagen" class="" id="va_imagen">                                </span>
                                                 <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Eliminar</a>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
 
@@ -72,15 +114,18 @@
                                 <div class="control-group">
                                     <label class="control-label" for="va_descripcion">Mis intereses</label>
                                     <div class="controls">
-                                        <textarea name="va_descripcion" placeholder="Ingrese su descripción... " cols="80" rows="3"></textarea>
+                                        <?php echo $this->formRow($form->get('va_descripcion'));?>
+                                        <!--<textarea name="va_descripcion" placeholder="Ingrese su descripción... " cols="80" rows="3"></textarea>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <p class="crear-evento box">
-                            <input type="submit" name="submit" class="btn btn-info btn-large" id="submitPerfil" value="Actualizar">                            
+                             <?php echo $this->formSubmit($form->get('submit'));?>
+                            <!--<input type="submit" name="submit" class="btn btn-info btn-large" id="submitPerfil" value="Actualizar">-->                            
                         </p>
-                    </form>    
+                         <?php echo $this->form()->closeTag();?> 
+                    <!--</form>-->    
                 </div>
 
                 <!--<div class="span12 contenido-cuenta">
@@ -193,19 +238,25 @@
         <div class="row-fluid">
             <div class="span12 notifi contenido-cuenta box" style="margin-top:15px;">
                 <h3>Tu configuración</h3>
-                <form action="/usuario/index/notificar" method="post" name="cambio" class="form-horizontal" id="cambio">
-                    <label class="checkbox">
-                        <input type="checkbox" value="">
-                        Recibir avisos por email cuando ingresa al Grupo
-                    </label>
-                    <label class="checkbox">
-                        <input type="checkbox" value="">
-                        Recibir avisos por email cuando sale del Grupo
-                    </label>
+                <?php
+                $formnotif = $this->formnotif;
+
+                $formnotif->setAttributes(array(
+                    'action' => $this->url . '/usuario/index/notificar',
+                    'method' => 'post',
+                    'class' => 'form-horizontal'
+                ));
+
+                $formnotif->prepare();
+                echo $this->form()->openTag($formnotif);
+                ?>     
+                <?php echo $this->formRow($formnotif->get('tipo_notificacion'));?>  
+
                     <p class="crear-evento box">
-                        <input type="submit" name="submit" class="btn btn-info btn-large" value="Guardar">                            
+                         <?php echo $this->formSubmit($formnotif->get('submit'));?>                            
                     </p>
-                </form>
+                    <?php echo $this->form()->closeTag();?>
+
             </div>
         </div>
            

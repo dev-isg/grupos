@@ -18,12 +18,12 @@ class NotificacionForm extends Form
                    'name' => 'tipo_notificacion',
                    'type' => 'MultiCheckbox',
                     'attributes' => array(
-//                        'value' => array('1', '2'),
-                       'class' => 'checkbox inline',
+//                       'class' => 'checkbox inline',
                        'id'   => 'en_destaque',
-                        'placeholder'=>'Ingrese su destaque'
+                       'placeholder'=>'Ingrese su destaque'
                    ),
                    'options' => array(
+                       'label_attributes' => array('class' => 'checkbox'),
                          'value_options' => array(
                             '1'=>'Recibir avisos por email cuando ingresa al Grupo',
                             '2'=>'Recibir avisos por email cuando sale del Grupo',
@@ -36,6 +36,8 @@ class NotificacionForm extends Form
         $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',
+            'attributes'=>array(
+                'class'=>'btn btn-info btn-large')
         ));
         $this->setInputFilter($this->validadores());
     }

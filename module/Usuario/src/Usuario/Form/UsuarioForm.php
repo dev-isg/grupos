@@ -121,8 +121,7 @@ class UsuarioForm extends Form {
                 'id' => 'ta_ubigeo_in_id'
             ),
             'options' => array(
-                'label' => 'Distrito',
-                     'value_options' =>$this->Distrito(),                                               
+                'value_options' =>$this->Distrito(),                                               
                 'empty_option' => '--- Seleccionar ---',
             )
         ));
@@ -148,7 +147,7 @@ class UsuarioForm extends Form {
             'type' => 'Submit',
             'attributes' => array(
                 'value' => 'Ingresar',
-                'class' => 'btn btn-primary'//'btn btn-info btn-large',
+                'class' => 'btn btn-info btn-large',//'btn btn-primary'
 //                'id' => 'submitbutton',
             ),
         ));

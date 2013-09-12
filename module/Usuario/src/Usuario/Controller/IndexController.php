@@ -364,11 +364,11 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
         $form->bind($usuario);
-        $form->get('submit')->setAttribute('value', 'Editar');
+        $form->get('submit')->setAttribute('value', 'Actualizar');
 
         //formulario para la notificacion
         $formNotif = new NotificacionForm();
-        $formNotif->get('submit')->setAttribute('value', 'Editar');
+        $formNotif->get('submit')->setAttribute('value', 'Guardar');
         //populate elementos del check
         $not = $this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
         $aux = array();
