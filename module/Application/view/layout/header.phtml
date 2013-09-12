@@ -195,14 +195,53 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery(".tab-home-g-b").hover(function () {
-            jQuery(".search").addClass("group-header");
-            jQuery(".search").removeClass("event-header");
-        });
-        jQuery(".tab-home-g-a").hover(function () {
-            jQuery(".search").addClass("event-header");
-            jQuery(".search").removeClass("group-header");
-        });
+        
+        if(jQuery(".tab-home-g-b").hasClass('active')){
+            jQuery(".tab-home-g-a").hover(
+                function(){
+                    jQuery(".search").removeClass("group-header");
+                    jQuery(".search").addClass("event-header");
+                    jQuery('.tab-home-g-b .pinchitob').remove();
+                },
+                function(){
+                    jQuery(".search").removeClass("event-header");
+                    jQuery(".search").addClass("group-header");
+                    jQuery(".tab-home-g-b").append('<div class="pinchitob"></div>');
+                }
+            ); 
+            jQuery(".tab-home-g-b").hover(
+                function(){
+                    jQuery(".search").addClass("group-header");
+                },
+                function(){
+                    
+                }
+            );  
+        }
+
+        if(jQuery(".tab-home-g-a").hasClass('active')){
+            jQuery(".tab-home-g-a").hover(
+                function(){
+                    jQuery(".search").addClass("event-header");
+                },
+                function(){
+                    
+                }
+            ); 
+            jQuery(".tab-home-g-b").hover(
+                function(){
+                    jQuery(".search").addClass("group-header");
+                    jQuery(".search").removeClass("event-header");
+                    jQuery('.tab-home-g-a .pinchitoa').remove();
+                },
+                function(){
+                    jQuery(".search").removeClass("group-header");
+                    jQuery(".search").addClass("event-header");
+                    jQuery(".tab-home-g-a").append('<div class="pinchitoa"></div>');
+                }
+            );
+        }
+        
     });
 </script>
 
