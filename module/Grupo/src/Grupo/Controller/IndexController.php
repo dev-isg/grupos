@@ -70,7 +70,7 @@ class IndexController extends AbstractActionController
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo', $valor);
         $tipo = $this->params()->fromQuery('categoria');
-        $this->params()->fromQuery('nombre');
+//        $tipo =$this->params()->fromQuery('nombre');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
          $this->layout()->search='group-header';
@@ -78,7 +78,7 @@ class IndexController extends AbstractActionController
         if ($nombre) {
             if (isset($nombre)) {
                 $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-                if (count($grupo) > 0) {
+                if (count($grupo->toArray()) > 0) {//
                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
                 } else {
                     $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
@@ -90,7 +90,7 @@ class IndexController extends AbstractActionController
                 }
             }
         }
-        
+
         if ($tipo) {    
             if (isset($tipo)) {
               if (!empty($rango)) {
@@ -513,7 +513,7 @@ class IndexController extends AbstractActionController
          *compara el estado del usuario
          */
         if($grupo[0]['ta_usuario_in_id']==$session->in_id){
-                $usuariosaceptado=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'aceptado');
+                $usuariosaceptado=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'activo');
                 $usuariospendiente=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'pendiente');
          
         }
@@ -523,7 +523,7 @@ class IndexController extends AbstractActionController
             $mensajes = $flashMessenger->getMessages();
         }
         
-        return array(
+        return new ViewModel(array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
@@ -535,7 +535,8 @@ class IndexController extends AbstractActionController
             'mensajes'=>$mensajes,
             'usuariosaceptado'=>$usuariosaceptado,
             'usuariospendiente'=>$usuariospendiente
-        );
+        ));
+     
     }
     
     
@@ -625,46 +626,45 @@ class IndexController extends AbstractActionController
         return $result;
     }
 
-    public function unirAction()
-    {
+    public function unirAction() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        if (! $storage) {
+        if (!$storage) {
             return $this->redirect()->toRoute('grupo');
         }
-        
+
         $iduser = $storage->read()->in_id; // 1;
         $idgrup = $this->params()->fromQuery('idE'); // 48;
         $unir = $this->params()->fromQuery('act');
-        $idusergrup=$this->getGrupoTable()->getGrupo($idgrup)->ta_usuario_in_id;
-        
-       $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
-       $usuariocrear= $this->getGrupoTable()->getNotifiacionesxUsuario($idusergrup)->toArray();
-       $arr=array();
+        $idusergrup = $this->getGrupoTable()->getGrupo($idgrup)->ta_usuario_in_id;
+
+        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+        $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($idusergrup)->toArray();
+        $arr = array();
         foreach ($usuariosesion as $value) {
-            $arr[]=$value['ta_notificacion_in_id'];
+            $arr[] = $value['ta_notificacion_in_id'];
         }
-            if (in_array(1,$arr)) {
-                $correoe = true;
-            }
-            if (in_array(2,$arr)) {
-                $correos = true;
-            }
-            $arrc=array();
+        if (in_array(1, $arr)) {
+            $correoe = true;
+        }
+        if (in_array(2, $arr)) {
+            $correos = true;
+        }
+        $arrc = array();
         foreach ($usuariocrear as $values) {
-            $arrc[]=$values['ta_notificacion_in_id'];
+            $arrc[] = $values['ta_notificacion_in_id'];
         }
-             if (in_array(1,$arrc)) {
-                $correoec = true;
-            }
-            if (in_array(2,$arrc)) {
-                $correosc = true;
-            }
+        if (in_array(1, $arrc)) {
+            $correoec = true;
+        }
+        if (in_array(2, $arrc)) {
+            $correosc = true;
+        }
 
         if ($unir == 1) {
-            if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {           
-               if($correoe){
-                $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
-                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+            if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
+                if ($correoe) {
+                    $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
+                    $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
@@ -675,14 +675,14 @@ class IndexController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-                
-                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al grupo');
-               }
-                if($correoec){
-                $usuario = $this->getGrupoTable()
-                    ->grupoxUsuario($idgrup)
-                    ->toArray();
-                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+
+                    $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al grupo');
+                }
+                if ($correoec) {
+                    $usuario = $this->getGrupoTable()
+                            ->grupoxUsuario($idgrup)
+                            ->toArray();
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
@@ -693,17 +693,16 @@ class IndexController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-                if ($usuario) {
-                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
+                    if ($usuario) {
+                        $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
+                    }
                 }
-               }
-                $activo=1;
-                $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser);//getGrupoUsuario($idgrup, $iduser);
-              }
-        
+                $activo = 1;
+                $userestado = $this->getGrupoTable()->usuariosgrupo($idgrup, $iduser); //getGrupoUsuario($idgrup, $iduser);
+            }
         } elseif ($unir == 0) {
-                if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
-                    if($correos){
+            if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
+                if ($correos) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -717,12 +716,12 @@ class IndexController extends AbstractActionController
                                                </body>
                                                </html>';
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
-                    }
-                    if($correosc){
+                }
+                if ($correosc) {
                     $usuario = $this->getGrupoTable()
-                    ->grupoxUsuario($idgrup)
-                    ->toArray();
-                    $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                            ->grupoxUsuario($idgrup)
+                            ->toArray();
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
@@ -736,33 +735,31 @@ class IndexController extends AbstractActionController
                     if ($usuario) {
                         $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Dejaron a tu grupo');
                     }
-                    }
-                     $activo=0;
-                     $userestado=$this->getGrupoTable()->usuariosgrupo($idgrup, $iduser); //getGrupoUsuario($idgrup, $iduser);
-                    }               
+                }
+                $activo = 0;
+                $userestado = $this->getGrupoTable()->usuariosgrupo($idgrup, $iduser); //getGrupoUsuario($idgrup, $iduser);
             }
-           $userestado=$userestado->current();
-           $arruser['id']=$iduser;
-           setlocale(LC_TIME, "es_ES.UTF-8"); 
-           foreach($userestado as $key=>$value){
-               if($key=='va_fecha'){  
-                    $fecha=str_replace("/", "-",$value);
-                    $date = strtotime($fecha);     
-                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+        }
+        $userestado = $userestado->current();
+        $arruser['id'] = $iduser;
+        setlocale(LC_TIME, "es_ES.UTF-8");
+        foreach ($userestado as $key => $value) {
+            if ($key == 'va_fecha') {
+                $fecha = str_replace("/", "-", $value);
+                $date = strtotime($fecha);
+                $arruser[$key] = 'Se unio el ' . date("d", $date) . ' de ' . date("F", $date) . ' del ' . date("Y", $date); //                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+            } else {
+                $arruser[$key] = $value;
+            }
+        }
+        $result = new JsonModel(array(
+                    'estado' => $activo,
+                    'userestado' => $arruser
+                ));
 
-               }else{
-                   $arruser[$key]=$value;
-               }
-           }
-            $result = new JsonModel(array(
-                'estado' =>$activo,
-                'userestado'=>$arruser
-            ));
-            
-            return $result;
+        return $result;
     }
-    
-    
+
     public function mensaje($mail,$bodyHtml,$subject){
         $message = new Message();
         $message->addTo($mail, $nombre)

@@ -109,10 +109,16 @@
                                     foreach ($this->categorias as $categorias) :
                                         ?>
                                     <li class="man-dev">
-                                        <ul>  
-                                            <li><a href="<?php echo $this->host('ruta')?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php if($_COOKIE['tipo']){echo '&valor='.$_COOKIE['tipo'];}else {echo '&valor='.$_GET['tipo'];} ;?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                                        </ul>
-                                    </li> 
+                                            <ul>  
+                                                <li><a href="<?php echo $this->host('ruta') ?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php
+                                    if ($_COOKIE['tipo']) {
+                                        echo '&valor=' . $_COOKIE['tipo'];
+                                    } else {
+                                        echo '&valor=' . $_GET['tipo'];
+                                    };
+                                        ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                            </ul>
+                                        </li> 
                                      <?php endforeach; ?>  
                                 </ul>
                             <input type="submit"  class="btn btn-primary btn-evento-i" value=""/>

@@ -35,7 +35,6 @@ class GrupoTable{
                     ->where(array('ta_grupo.va_estado'=>'activo'));
                    $selecttot->group('ta_grupo.in_id')->order('ta_evento.va_fecha_ingreso desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//            VAR_DUMP($selectString);eXIT;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
        }
@@ -59,12 +58,12 @@ class GrupoTable{
 //            $selecttot ->order('ta_evento.va_fecha_ingreso desc');//->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
              $selecttot ->order('ta_grupo.in_id DESC');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            $resultSet =  $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$resultSet) {
             throw new \Exception("Could not find row");
         }
             
-            return $resultSet->buffer();
+            return $resultSet->buffer();//->buffer();
         
     }
     public function getGrupo($id)
@@ -135,7 +134,7 @@ class GrupoTable{
       if ($id == 0) {
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
-          if($this->unirseGrupo($idgrupo,$iduser)){
+          if($this->aprobarUsuario($idgrupo,$iduser, 'activo')){// $this->unirseGrupo($idgrupo,$iduser)
               return $idgrupo;
           }        
 //             if($notificacion!=null){
@@ -298,7 +297,7 @@ class GrupoTable{
     public function aprobarUsuario($idgrupo, $idusuario, $aprobar) {
         if ($this->getGrupoUsuario($idgrupo, $idusuario)) {
             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                    ->set(array('va_estado' => 'activo', 'va_aceptado' => $aprobar))
+                    ->set(array('va_estado' => $aprobar))//, 'va_aceptado' => $aprobar
                     ->where(array('ta_usuario_in_id' => $idusuario, 'ta_grupo_in_id' => $idgrupo));
         }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
@@ -317,12 +316,12 @@ class GrupoTable{
      public function unirseGrupo($idgrup,$iduser){
          if($this->getGrupoUsuario($idgrup,$iduser)){
             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                    ->set(array('va_estado'=>'activo'))
+                    ->set(array('va_estado'=>'pendiente'))//activo
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup)); 
 
          }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
-                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo','va_fecha'=>date('c')));
+                   ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'pendiente','va_fecha'=>date('c')));
          }
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
            $adapter=$this->tableGateway->getAdapter();
@@ -405,6 +404,9 @@ class GrupoTable{
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+    /*
+     * Obtiene informacion del usuario segun su id y el estado que tiene
+     */
     
     public function estadoUsuariosxGrupo($id,$estado) {
         $adapter = $this->tableGateway->getAdapter();
@@ -415,7 +417,7 @@ class GrupoTable{
                         array('nombre_usuario' => 'va_nombre', 'imagen' => 'va_foto', 
                             'descripcion_usuario' => 'va_descripcion'), 'left')
                 ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
-                    'ta_usuario_has_ta_grupo.va_estado' => 'activo', 'ta_usuario_has_ta_grupo.va_aceptado' =>$estado
+                    'ta_usuario_has_ta_grupo.va_estado' => $estado//'activo', 'ta_usuario_has_ta_grupo.va_aceptado' =>$estado
                 ));
 
         $selectString = $sql->getSqlStringForSqlObject($select);
