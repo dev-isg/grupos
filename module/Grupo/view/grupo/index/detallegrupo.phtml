@@ -120,7 +120,7 @@
                         <h3>Usuarios en espera</h3>
                         <ul>
                             <?php foreach($this->usuariospendiente as $usuariopendiente){ ?>
-                            <li>
+                            <li id="user-<?php echo $usuariopendiente->ta_usuario_in_id;?>">
                                 <input class="marcar-user" type="checkbox"  data-user="<?php echo $usuariopendiente->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuariopendiente->imagen;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>">
