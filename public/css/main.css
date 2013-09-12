@@ -1634,6 +1634,38 @@ a.tab-home-g-b:hover .pinchitob{
 .user-list-group ul{
   list-style: none;
   margin-left: 0;
+  margin-bottom: 0;
+}
+.user-back-1{
+  position: relative;
+}
+.img-loading-dep{
+  background: #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  border-radius: 8px;
+  width: 50px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.img-loading-dep img{
+  vertical-align: middle;
+}
+.loading-usuario{
+  background: url(../img/overlay-user.png) repeat;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.user-back-1{
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 .user-list-group ul li{
   float: left;

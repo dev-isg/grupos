@@ -116,7 +116,7 @@
        <?php if($this->grupo[0]['ta_usuario_in_id']==$session->in_id){?>
                 <?php if(!empty($this->usuariospendiente)){ ?>
                 <div class="row-fluid user-espera user-list-group">
-                    <div class="span12">
+                    <div class="span12 user-back-1">
                         <h3>Usuarios en espera</h3>
                         <ul>
                             <?php foreach($this->usuariospendiente as $usuariopendiente){ ?>
@@ -132,6 +132,11 @@
                             </li>
                             <?php } ?>
                         </ul>
+                        <div class="loading-usuario">
+                            <div class="img-loading-dep">
+                                <img src="/img/loading.gif">
+                            </div>
+                        </div>
                     </div>
                 </div>
                <?php } ?>
@@ -212,15 +217,50 @@
     $(document).on('ready', function(){		
 
         usuarioEspera();
+        usuarioAprobados();
         enviarDatos();
         abandonarDatos();
     });
 
     function usuarioEspera(){
+        var even = <?php echo $this->in_id; ?>;
         $('.user-espera input').click(function(e){
             e.preventDefault();
             var data = $(this).attr('data-user');
-            alert(data);
+            var activo = 2;
+            $.ajax({
+                url: '/grupo/index/aprobar',
+                type: 'get',
+                data: 'id_grupo='+even+'&id_usuario='+data +'&act='+activo,
+                dataType: "json",
+                success: function(data){
+                    alert('dato enviado');
+                },
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
+                }
+            });
+        });
+    }
+
+    function usuarioAprobados(){
+        var even = <?php echo $this->in_id; ?>;
+        $('.user-espera input').click(function(e){
+            e.preventDefault();
+            var data = $(this).attr('data-user');
+            var activo = 1;
+            $.ajax({
+                url: '/grupo/index/aprobar',
+                type: 'get',
+                data: 'id_grupo='+even+'&id_usuario='+data +'&act='+activo,
+                dataType: "json",
+                success: function(data){
+                    alert('dato enviado');
+                },
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
+                }
+            });
         });
     }
 
