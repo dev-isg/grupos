@@ -141,6 +141,7 @@
                         <h3>Usuarios aprobados</h3>
                         <ul>
                             <?php foreach($this->usuariosaceptado as $usuarioaceptado){ ?>
+                            <?php if($usuarioaceptado->ta_usuario_in_id != $this->grupo[0]['ta_usuario_in_id']){?>
                             <li id="user-<?php echo $usuarioaceptado->ta_usuario_in_id;?>">
                                 <input class="marcar-user" type="checkbox" data-user="<?php echo $usuarioaceptado->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
@@ -151,6 +152,7 @@
                                     </p>
                                 </label>
                             </li>
+                            <?php } ?>
                              <?php } ?>
                         </ul>
                     </div>
