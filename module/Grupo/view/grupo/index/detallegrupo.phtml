@@ -161,7 +161,7 @@
                 <div class="lista-usuario">
                     <ul>
                         <?php foreach ($this->usuarios as $usuarios) : ?>
-                       <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
+                        <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
                             <div class="users">
                                 <div class="row-fluid">
                                     <div class="span4 img-user-ev">
@@ -189,8 +189,8 @@
                                     echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
                                     ?></p>
                                 </div>
-                            </div>
-                        </li>
+                                </div>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -211,14 +211,18 @@
 	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
     $(document).on('ready', function(){		
 
-        $('.user-espera input').click(function(){
-           var data = $(this).attr('data-user');
-            alert(data);
-        });
-
+        usuarioEspera();
         enviarDatos();
         abandonarDatos();
     });
+
+    function usuarioEspera(){
+        $('.user-espera input').click(function(e){
+            e.preventDefault();
+            var data = $(this).attr('data-user');
+            alert(data);
+        });
+    }
 
     function enviarDatos(){
         var even = <?php echo $this->in_id; ?>;
@@ -288,5 +292,6 @@
             });
         });
     }
+
 
 </script>

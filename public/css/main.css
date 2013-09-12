@@ -1635,6 +1635,10 @@ a.tab-home-g-b:hover .pinchitob{
   list-style: none;
   margin-left: 0;
 }
+.user-list-group ul li{
+  float: left;
+  width: 100%;
+}
 .user-list-group h3{
   margin: 0;
   font-size: 16px;
