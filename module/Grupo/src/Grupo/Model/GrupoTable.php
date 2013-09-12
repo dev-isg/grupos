@@ -66,6 +66,9 @@ class GrupoTable{
             return $resultSet->buffer();//->buffer();
         
     }
+    /*
+     * Obtiene la inforamacion de un grupo
+     */
     public function getGrupo($id)
     {
         $id  = (int) $id;
@@ -273,7 +276,9 @@ class GrupoTable{
          }
          return $row->current();
      }
-     
+     /*
+      * Obtiene datos del grupo y del usuario al que se unio
+      */
      public function getGrupoUsuario($idgrupo,$iduser){
          $adapter = $this->tableGateway->getAdapter();
          $sql = new Sql($adapter);
@@ -416,9 +421,10 @@ class GrupoTable{
                 ->join('ta_usuario', 'ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id', 
                         array('nombre_usuario' => 'va_nombre', 'imagen' => 'va_foto', 
                             'descripcion_usuario' => 'va_descripcion'), 'left')
+                ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
                 ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
                     'ta_usuario_has_ta_grupo.va_estado' => $estado//'activo', 'ta_usuario_has_ta_grupo.va_aceptado' =>$estado
-                ));
+                    ));
 
         $selectString = $sql->getSqlStringForSqlObject($select);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
