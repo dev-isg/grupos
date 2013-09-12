@@ -567,11 +567,11 @@ class IndexController extends AbstractActionController
         if (in_array(2, $arr)) {
             $correos = true;
         }
-        
-      $usuario = $this->getUsuarioTable()->getUsuario($idusuario);//$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
-      $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
-        if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {       
-            if($correoe){   
+
+        $usuario = $this->getUsuarioTable()->getUsuario($idusuario); //$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
+        $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
+        if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {
+            if ($correoe) {
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
@@ -583,12 +583,12 @@ class IndexController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-                
+
                 $this->mensaje($usuario->va_email, $bodyHtml, 'Se ha unido al grupo');
-                
+                $activo = 1;
             }
-            if($correos){
-                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+            if ($correos) {
+                $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
@@ -599,12 +599,30 @@ class IndexController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-             
-                    $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
-                     
+
+                $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
+            }
+            $activo = 0;
+        }
+
+        $userestado = $this->getGrupoTable()->usuariosgrupo($idgrupo, $idusuario)->current();
+        $arruser['id'] = $idusuario;
+        setlocale(LC_TIME, "es_ES.UTF-8");
+        foreach ($userestado as $key => $value) {
+            if ($key == 'va_fecha') {
+                $fecha = str_replace("/", "-", $value);
+                $date = strtotime($fecha);
+                $arruser[$key] = 'Se unio el ' . date("d", $date) . ' de ' . date("F", $date) . ' del ' . date("Y", $date); //                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+            } else {
+                $arruser[$key] = $value;
             }
         }
-        
+        $result = new JsonModel(array(
+                    'estado' => $activo,
+                    'userestado' => $arruser
+                ));
+
+        return $result;
     }
 
     public function unirAction()
