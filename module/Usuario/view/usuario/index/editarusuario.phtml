@@ -10,8 +10,80 @@
 
         <div class="row-fluid">
 			<?php echo $this->valor;  ?>
-    		<div class="row-fluid">       
-                <div class="span12 contenido-cuenta">
+    		<div class="row-fluid"> 
+                <div class="span12 dta-user contenido-cuenta box" style="margin-top:15px;">
+                    <form action="" name="usuario" class="form-horizontal usuario-actualizar" id="editarusuario">
+                        <h3>Datos generales</h3>
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <div class="control-group">
+                                    <label class="control-label" for="va_nombre">Nombre</label>
+                                    <div class="controls">
+                                        <input type="text" id="va_nombre" name="va_nombre" placeholder="Nombre completo">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="va_email">Correo electrónico</label>
+                                    <div class="controls">
+                                        <input type="text" id="va_email" name="va_email" placeholder="Ingrese email">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="va_genero">Genero</label>
+                                    <div class="controls">
+                                        <select name="va_genero" class="valid">
+                                            <option value="masculino" selected="selected">masculino</option>
+                                            <option value="femenino">femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="ta_ubigeo_in_id">Distrito</label>
+                                    <div class="controls">
+                                        <select name="ta_ubigeo_in_id" class="valid" id="ta_ubigeo_in_id">
+                                            <option value="masculino" selected="selected">masculino</option>
+                                            <option value="femenino">femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4">
+                                <div class="control-group">                                    
+                                    <div class="controls" style="margin-left:0;">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                            <div>
+                                                <span class="btn btn-file"><span class="fileupload-new">Selecione una imagen</span><span class="fileupload-exists">Cambiar</span>
+                                                   <input type="file" name="va_imagen" class="" id="va_imagen">                                </span>
+                                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <h3>Datos de interes</h3>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <label class="control-label" for="va_descripcion">Mis intereses</label>
+                                    <div class="controls">
+                                        <textarea name="va_descripcion" placeholder="Ingrese su descripción... " cols="80" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="crear-evento box">
+                            <input type="submit" name="submit" class="btn btn-info btn-large" id="submitPerfil" value="Actualizar">                            
+                        </p>
+                    </form>    
+                </div>
+
+                <!--<div class="span12 contenido-cuenta">
                     <div class="row-fluid">
                     <div class="span6 cuenta misdatos">
                         <div class="ocultar">
@@ -50,10 +122,7 @@
                                             }?>
 							            </div>
 						            	<div class="img-thu-user fileupload-preview fileupload-exists thumbnail" style="height: 130px;"></div>
-							          
-                                                        
-                                                                                          
-                                                                    <div class="detalle-img">
+                                        <div class="detalle-img">
 							              	<strong class="btn-file">
 								              	<strong class="btn fileupload-new">Cargar una imagen</strong>
 								              	<strong class="btn fileupload-exists">Cambiar Imagen </strong>
@@ -61,8 +130,6 @@
 							               	</strong>
 							              	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>         
 							            </div>
-                                                                    
-                                                       
 						          	</div>
 						        </div>
 	                        	<h5>Mis datos personales </h5>
@@ -112,19 +179,35 @@
 
                             $formnotif->prepare();
                             echo $this->form()->openTag($formnotif);
-                            ?>
-<!-- 	                        <form action="" id="notificaciones">  -->
+                            ?>                            
 	                        <h3>Notificaciones</h3>
 	                        <?php echo $this->formRow($formnotif->get('tipo_notificacion'));?>                           
 
 	                        <?php echo $this->formSubmit($formnotif->get('submit'));?>
 	                         <?php echo $this->form()->closeTag();?> 
-<!-- 	                        </form> -->
 	                    </div>                   
 	                </div>
             </div>                                   
-           </div>
-    	</div>  
+           </div>-->
+    	</div>
+        <div class="row-fluid">
+            <div class="span12 notifi contenido-cuenta box" style="margin-top:15px;">
+                <h3>Tu configuración</h3>
+                <form action="/usuario/index/notificar" method="post" name="cambio" class="form-horizontal" id="cambio">
+                    <label class="checkbox">
+                        <input type="checkbox" value="">
+                        Recibir avisos por email cuando ingresa al Grupo
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" value="">
+                        Recibir avisos por email cuando sale del Grupo
+                    </label>
+                    <p class="crear-evento box">
+                        <input type="submit" name="submit" class="btn btn-info btn-large" value="Guardar">                            
+                    </p>
+                </form>
+            </div>
+        </div>
            
         </div>
     </div> <!-- #main -->
