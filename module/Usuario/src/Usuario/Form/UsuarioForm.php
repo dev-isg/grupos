@@ -157,6 +157,7 @@ class UsuarioForm extends Form {
     public function Distrito() {
         $this->dbAdapter = $this->getDbAdapter();
         $adapter = $this->dbAdapter;
+        if($adapter){
         $sql = new Sql($adapter);
         $select = $sql->select()
                         ->columns(array('in_iddistrito', 'va_distrito'))
@@ -171,6 +172,9 @@ class UsuarioForm extends Form {
             $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
         }
         return $auxtipo;
+        }else{
+            return;
+        }
     }
 
     public function setDbAdapter(AdapterInterface $dbAdapter) {

@@ -59,7 +59,6 @@ class GrupoTable{
 //            $selecttot ->order('ta_evento.va_fecha_ingreso desc');//->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
              $selecttot ->order('ta_grupo.in_id DESC');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//          var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$resultSet) {
             throw new \Exception("Could not find row");
@@ -73,9 +72,6 @@ class GrupoTable{
         $id  = (int) $id;
         $row = $this->tableGateway->select(array('in_id' => $id));
         $row = $row->current();
-//        $row = $this->fetchAll($id);
-
-//var_dump($row->current());exit;
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
@@ -294,6 +290,29 @@ class GrupoTable{
          }
          return $row->current();
      }
+     /*
+      * Cambia de estado a los usuarios pendientes de confirmacion
+      * @return bolean
+      */
+     
+    public function aprobarUsuario($idgrupo, $idusuario, $aprobar) {
+        if ($this->getGrupoUsuario($idgrupo, $idusuario)) {
+            $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                    ->set(array('va_estado' => 'activo', 'va_aceptado' => $aprobar))
+                    ->where(array('ta_usuario_in_id' => $idusuario, 'ta_grupo_in_id' => $idgrupo));
+        }else{
+           $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
+                   ->values(array('ta_usuario_in_id'=>$idusuario,'ta_grupo_in_id'=>$idgrupo,'va_estado'=>'activo', 
+                       'va_aceptado' => $aprobar,'va_fecha'=>date('c')));
+         }
+            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
+            $adapter = $this->tableGateway->getAdapter();
+            $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            if (!$row) {
+                throw new \Exception("No se puede unir/dejar al grupo");
+            }
+            return true;
+    }
      
      public function unirseGrupo($idgrup,$iduser){
          if($this->getGrupoUsuario($idgrup,$iduser)){
@@ -384,6 +403,23 @@ class GrupoTable{
             $selectString = $sql->getSqlStringForSqlObject($select);
 //            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+    public function estadoUsuariosxGrupo($id,$estado) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('ta_usuario_has_ta_grupo')
+                ->join('ta_usuario', 'ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id', 
+                        array('nombre_usuario' => 'va_nombre', 'imagen' => 'va_foto', 
+                            'descripcion_usuario' => 'va_descripcion'), 'left')
+                ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                    'ta_usuario_has_ta_grupo.va_estado' => 'activo', 'ta_usuario_has_ta_grupo.va_aceptado' =>$estado
+                ));
+
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
      

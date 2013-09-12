@@ -477,8 +477,8 @@ class IndexController extends AbstractActionController
         $facebook = $this->facebook();
         $this->layout()->login = $facebook['loginUrl'];
         $this->layout()->user = $facebook['user']; }
-        $eventospasados = $this->getEventoTable()->eventospasados($id);
-        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
+//        $eventospasados = $this->getEventoTable()->eventospasados($id);
+//        $eventosfuturos = $this->getEventoTable()->eventosfuturos($id);
         
 //        if($session->in_id){
 //        $usuarios = $this->getGrupoTable()->usuariosgrupodetalle($id,$session->in_id);
@@ -509,7 +509,15 @@ class IndexController extends AbstractActionController
         $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($proximos_eventos));
         $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator2->setItemCountPerPage(4); 
-        
+        /*
+         *compara el estado del usuario
+         */
+        if($grupo[0]['ta_usuario_in_id']==$session->in_id){
+                $usuariosaceptado=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'aceptado');
+                $usuariospendiente=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'pendiente');
+         
+        }
+  
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
@@ -524,9 +532,12 @@ class IndexController extends AbstractActionController
             'session'=>$session,
             'in_id'=>$id,
             'participa'=>$activo,
-            'mensajes'=>$mensajes
+            'mensajes'=>$mensajes,
+            'usuariosaceptado'=>$usuariosaceptado,
+            'usuariospendiente'=>$usuariospendiente
         );
     }
+    
     
     public function usergrupoAction(){
         $request=$this->getRequest();
@@ -538,6 +549,62 @@ class IndexController extends AbstractActionController
                 'usuarios'=>$usuarios->toArray()
             )); 
             return $result;
+    }
+    
+    public function aprobarAction() {
+        $idgrupo = $this->params()->fromQuery('id_grupo');
+        $idusuario = $this->params()->fromQuery('id_usuario');
+        $aprobar = $this->params()->fromQuery('act');
+
+        $usuarioapro = $this->getGrupoTable()->getNotifiacionesxUsuario($idusuario)->toArray();
+        $arr = array();
+        foreach ($usuarioapro as $value) {
+            $arr[] = $value['ta_notificacion_in_id'];
+        }
+        if (in_array(1, $arr)) {
+            $correoe = true;
+        }
+        if (in_array(2, $arr)) {
+            $correos = true;
+        }
+        
+      $usuario = $this->getUsuarioTable()->getUsuario($idusuario);//$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
+      $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
+        if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {       
+            if($correoe){   
+                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Uds. se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+    
+                                                     </div>
+                                               </body>
+                                               </html>';
+                
+                $this->mensaje($usuario->va_email, $bodyHtml, 'Se ha unido al grupo');
+                
+            }
+            if($correos){
+                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                    Lo sentimos pero ha sido retirado del grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+    
+                                                     </div>
+                                               </body>
+                                               </html>';
+             
+                    $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
+                     
+            }
+        }
+        
     }
 
     public function unirAction()
