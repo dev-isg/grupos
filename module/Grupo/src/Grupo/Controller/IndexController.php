@@ -493,7 +493,7 @@ class IndexController extends AbstractActionController
 
         if ($session) {            
             $participa=$this->getGrupoTable()->compruebarUsuarioxGrupo($session->in_id,$id);
-            $activo=$participa->va_estado=='activo'?true:false;
+            $activo=$participa->va_estado;//=='activo'?true:false;
         }
         
         $eventospasados = $this->getEventoTable()->eventospasados($id);
