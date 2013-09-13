@@ -572,6 +572,7 @@ class IndexController extends AbstractActionController
         $usuario = $this->getUsuarioTable()->getUsuario($idusuario); //$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
         $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
         if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {
+            if($aprobar==2){
             if ($correoe) {
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -588,6 +589,8 @@ class IndexController extends AbstractActionController
                 $this->mensaje($usuario->va_email, $bodyHtml, 'Se ha unido al grupo');
                 $activo = 1;
             }
+            }
+           if($aprobar==1){
             if ($correos) {
                 $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -604,6 +607,7 @@ class IndexController extends AbstractActionController
                 $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
             }
             $activo = 0;
+        }
         }
 
         $userestado = $this->getGrupoTable()->usuariosgrupo($idgrupo, $idusuario)->current();
@@ -670,13 +674,13 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+                                                     Uds. esta pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
     
                                                      </div>
                                                </body>
                                                </html>';
 
-                    $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al grupo');
+                    $this->mensaje($storage->read()->va_email, $bodyHtml, 'Pendiente de unirse al grupo');
                 }
                 if ($correoec) {
                     $usuario = $this->getGrupoTable()
