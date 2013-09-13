@@ -104,7 +104,7 @@
                                     <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Haz una reservación</a>
     
                             <?php }elseif($participa=='pendiente'){ ?>
-                                    <a href="#" class="btn btn-success uneteEvent disabled" id="uneteEvent" disabled="disabled">Pendiente</a>
+                                    <a href="#" class="btn btn-success disabled" id="uneteEvent" disabled="disabled">Pendiente</a>
                                     <?php }?>
                             <?php } else { ?>
                                 <a href="#inline_evento" class="btn btn-success inlineEvento">Haz una reservación</a> 
@@ -310,14 +310,19 @@
                                     '</div>'+
                                     '</li>';
                     $(".lista-usuario ul").prepend(dataPer);
-                    $(".uneteEvent").addClass( "disabled" );
+                    $(".uneteEvent").addClass("disabled");
                     $(".uneteEvent").attr("disabled", "disabled");
                     $("a.uneteEvent").text("Pendiente");
+                    $("#uneteEvent").removeClass("uneteEvent");
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
                 }
             });
+        });
+        
+        $("#uneteEvent").click(function(e){
+            e.preventDefault();
         });
     }
 
