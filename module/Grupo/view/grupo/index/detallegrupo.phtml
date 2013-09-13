@@ -116,7 +116,7 @@
        <?php if($this->grupo[0]['ta_usuario_in_id']==$session->in_id){?>
                 <?php if(!empty($this->usuariospendiente)){ ?>
                 <div class="row-fluid user-espera user-list-group">
-                    <div class="span12">
+                    <div class="span12 user-back-1">
                         <h3>Usuarios en espera</h3>
                         <ul>
                             <?php foreach($this->usuariospendiente as $usuariopendiente){ ?>
@@ -136,8 +136,8 @@
                 </div>
                <?php } ?>
                 <?php if(!empty($this->usuariosaceptado)){ ?>
-                <div class="row-fluid user-espera user-list-group">
-                    <div class="span12">
+                <div class="row-fluid user-aprobado user-list-group">
+                    <div class="span12 user-back-2">
                         <h3>Usuarios aprobados</h3>
                         <ul>
                             <?php foreach($this->usuariosaceptado as $usuarioaceptado){ ?>
@@ -163,7 +163,7 @@
                 <div class="lista-usuario">
                     <ul>
                         <?php foreach ($this->usuarios as $usuarios) : ?>
-                       <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
+                        <li id="user-<?php echo $usuarios->ta_usuario_in_id;?>">
                             <div class="users">
                                 <div class="row-fluid">
                                     <div class="span4 img-user-ev">
@@ -191,8 +191,8 @@
                                     echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y");
                                     ?></p>
                                 </div>
-                            </div>
-                        </li>
+                                </div>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -213,14 +213,68 @@
 	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
     $(document).on('ready', function(){		
 
-        $('.user-espera input').click(function(){
-           var data = $(this).attr('data-user');
-            alert(data);
-        });
-
+        usuarioEspera();
+        usuarioAprobados();
         enviarDatos();
         abandonarDatos();
     });
+
+    function usuarioEspera(){
+        var even = <?php echo $this->in_id; ?>;
+        $('.user-espera input').click(function(e){
+            e.preventDefault();
+            var agregarLoading = '<div class="loading-usuario"><div class="img-loading-dep"><img src="/img/loading.gif"></div></div>';
+            $(".user-back-1").append(agregarLoading);
+            var dataUser = $(this).attr('data-user');
+            var activo = 2;
+            $.ajax({
+                url: '/grupo/index/aprobar',
+                type: 'get',
+                data: 'id_grupo='+even+'&id_usuario='+dataUser +'&act='+activo,
+                dataType: "json",
+                success: function(data){
+                    $(".user-back-1 .loading-usuario").remove();
+                    $(".user-back-1 ul li#user-"+dataUser).remove();
+                    var dataUsuario = '<li id="user-'+data.userestado["id"]+'">'+
+                                '<input class="marcar-user" type="checkbox" data-user="'+data.userestado["id"]+'">'+
+                                '<label class="checkbox img-cargar-usuarios">'+
+                                    '<img src="'+hostUrl+data.userestado["imagen"]+'" title="">'+
+                                    '<a href="#">'+data.userestado["nombre_usuario"]+'</a>'+
+                                    '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
+                                '</label>'+
+                            '</li>';
+                    $(".user-back-2 ul").prepend(dataUsuario);
+                },
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
+                }
+            });
+        });
+    }
+
+    function usuarioAprobados(){
+        var even = <?php echo $this->in_id; ?>;
+        $('.user-aprobado input').click(function(e){
+            e.preventDefault();
+            var agregarLoading = '<div class="loading-usuario"><div class="img-loading-dep"><img src="/img/loading.gif"></div></div>';
+            $(".user-back-2").append(agregarLoading);
+            var dataUser = $(this).attr('data-user');
+            var activo = 1;
+            $.ajax({
+                url: '/grupo/index/aprobar',
+                type: 'get',
+                data: 'id_grupo='+even+'&id_usuario='+dataUser +'&act='+activo,
+                dataType: "json",
+                success: function(data){
+                    $(".user-back-2 .loading-usuario").remove();
+                    $(".user-back-2 ul li#user-"+dataUser).remove();
+                },
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
+                }
+            });
+        });
+    }
 
     function enviarDatos(){
         var even = <?php echo $this->in_id; ?>;
@@ -290,5 +344,6 @@
             });
         });
     }
+
 
 </script>
