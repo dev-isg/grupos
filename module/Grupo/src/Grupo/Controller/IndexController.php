@@ -522,7 +522,7 @@ class IndexController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-//        var_dump($usuariosaceptado->toArray());exit;
+        
         return new ViewModel(array(
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
