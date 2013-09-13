@@ -1639,6 +1639,9 @@ a.tab-home-g-b:hover .pinchitob{
 .user-back-1{
   position: relative;
 }
+.user-back-2{
+  position: relative;
+}
 .img-loading-dep{
   background: #fff;
   -webkit-border-radius: 8px;
@@ -1664,6 +1667,10 @@ a.tab-home-g-b:hover .pinchitob{
   top: 0;
 }
 .user-back-1{
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.user-back-2{
   overflow: hidden;
   margin-bottom: 10px;
 }

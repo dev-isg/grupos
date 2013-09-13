@@ -132,17 +132,12 @@
                             </li>
                             <?php } ?>
                         </ul>
-                        <div class="loading-usuario">
-                            <div class="img-loading-dep">
-                                <img src="/img/loading.gif">
-                            </div>
-                        </div>
                     </div>
                 </div>
                <?php } ?>
                 <?php if(!empty($this->usuariosaceptado)){ ?>
-                <div class="row-fluid user-espera user-list-group">
-                    <div class="span12">
+                <div class="row-fluid user-aprobado user-list-group">
+                    <div class="span12 user-back-2">
                         <h3>Usuarios aprobados</h3>
                         <ul>
                             <?php foreach($this->usuariosaceptado as $usuarioaceptado){ ?>
@@ -228,15 +223,27 @@
         var even = <?php echo $this->in_id; ?>;
         $('.user-espera input').click(function(e){
             e.preventDefault();
-            var data = $(this).attr('data-user');
+            var agregarLoading = '<div class="loading-usuario"><div class="img-loading-dep"><img src="/img/loading.gif"></div></div>';
+            $(".user-back-1").append(agregarLoading);
+            var dataUser = $(this).attr('data-user');
             var activo = 2;
             $.ajax({
                 url: '/grupo/index/aprobar',
                 type: 'get',
-                data: 'id_grupo='+even+'&id_usuario='+data +'&act='+activo,
+                data: 'id_grupo='+even+'&id_usuario='+dataUser +'&act='+activo,
                 dataType: "json",
                 success: function(data){
-                    alert('dato enviado');
+                    $(".user-back-1 .loading-usuario").remove();
+                    $(".user-back-1 ul li#user-"+dataUser).remove();
+                    var dataUsuario = '<li id="user-'+data.userestado["id"]+'">'+
+                                '<input class="marcar-user" type="checkbox" data-user="'+data.userestado["id"]+'">'+
+                                '<label class="checkbox img-cargar-usuarios">'+
+                                    '<img src="'+hostUrl+data.userestado["imagen"]+'" title="">'+
+                                    '<a href="#">'+data.userestado["nombre_usuario"]+'</a>'+
+                                    '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
+                                '</label>'+
+                            '</li>';
+                    $(".user-back-2 ul").prepend(dataUsuario);
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
@@ -247,17 +254,20 @@
 
     function usuarioAprobados(){
         var even = <?php echo $this->in_id; ?>;
-        $('.user-espera input').click(function(e){
+        $('.user-aprobado input').click(function(e){
             e.preventDefault();
-            var data = $(this).attr('data-user');
+            var agregarLoading = '<div class="loading-usuario"><div class="img-loading-dep"><img src="/img/loading.gif"></div></div>';
+            $(".user-back-2").append(agregarLoading);
+            var dataUser = $(this).attr('data-user');
             var activo = 1;
             $.ajax({
                 url: '/grupo/index/aprobar',
                 type: 'get',
-                data: 'id_grupo='+even+'&id_usuario='+data +'&act='+activo,
+                data: 'id_grupo='+even+'&id_usuario='+dataUser +'&act='+activo,
                 dataType: "json",
                 success: function(data){
-                    alert('dato enviado');
+                    $(".user-back-2 .loading-usuario").remove();
+                    $(".user-back-2 ul li#user-"+dataUser).remove();
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
