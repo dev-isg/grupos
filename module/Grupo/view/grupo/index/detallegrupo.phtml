@@ -101,7 +101,7 @@
                                     <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el Grupo</a> 
                                     <a href="#" class="btn btn-success uneteEvent" id="uneteEvent" style="display:none;">Unete al Grupo</a> 
                                 <?php } else { ?>
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al Grupo</a>
+                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Haz una reservación</a>
                                     <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent" style="display:none;">Abandona el Grupo</a> 
                             <?php } ?>
                             <?php } else { ?>
@@ -282,7 +282,6 @@
             e.preventDefault();
             var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
             $(".unete-grupo").append(addLoading);
-            $(".uneteEvent").hide();
             $(".uneteAbEvent").hide();
             var activo = 1;
             $.ajax({
@@ -291,8 +290,7 @@
                 data: 'act=' + activo +'&idE='+even,
                 dataType: "json",
                 success: function(data){
-                    $(".img-lo").hide();
-                    $(".uneteAbEvent").show();                    
+                    $(".img-lo").hide();                    
                     var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
                                     '<div class="users">'+
                                         '<div class="row-fluid">'+
@@ -310,6 +308,9 @@
                                     '</div>'+
                                     '</li>';
                     $(".lista-usuario ul").prepend(dataPer);
+                    $(".uneteEvent").addClass( "disabled" );
+                    $(".uneteEvent").attr("disabled", "disabled");
+                    $("a.uneteEvent").text("Pendiente");
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
