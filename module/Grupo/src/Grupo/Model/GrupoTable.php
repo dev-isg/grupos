@@ -449,7 +449,6 @@ class GrupoTable{
         ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrupo));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-    
         return $resultSet->current();
     
     }
