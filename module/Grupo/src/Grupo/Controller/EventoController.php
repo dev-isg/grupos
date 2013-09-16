@@ -390,6 +390,9 @@ class EventoController extends AbstractActionController
     }
     
     public function comentariosAction() {
+        $view=new ViewModel();
+        $view->setTerminal(true);
+        
         $form = new ComentarioForm();
         $id = $this->params()->fromQuery('in_id');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -412,13 +415,13 @@ class EventoController extends AbstractActionController
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
-       
-        return array(
+       $view->setVariables(array(
             'idevento' => $id,
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'grupocomprueba' => $grupocompr,
-        );
+        ));
+        return $view;
     }
     
      public function usereventoAction(){
