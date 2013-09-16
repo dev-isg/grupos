@@ -319,6 +319,7 @@ class EventoTable{
          
      }
      
+     
       public function tipoCategoria()
    {   
         $adapter = $this->tableGateway->getAdapter();
@@ -475,10 +476,25 @@ class EventoTable{
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
              }                                                                          
             $selectString = $sql->getSqlStringForSqlObject($select);
-//            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
+    
+     public function usuarioGrupo($id,$iduser=null){
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->columns(array('va_fecha'))
+                    ->from('ta_usuario_has_ta_grupo')
+                    ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
+                   
+                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+         
+     }
     
     public function eventoxUsuario($idevent)
     {
@@ -536,10 +552,13 @@ class EventoTable{
         $insert=$sql->insert()->into('ta_comentario')->values($values);
         $selectString = $sql->getSqlStringForSqlObject($insert);
         $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+
         if (!$row) {
             throw new \Exception("No se encontro evento");
+            return false;
+           
         }      
-//        return $row;
+         return true;
     }
 
 

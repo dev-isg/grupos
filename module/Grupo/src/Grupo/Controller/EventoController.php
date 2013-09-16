@@ -421,9 +421,9 @@ class EventoController extends AbstractActionController
 //        $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
 //        $comentarios = $this->getEventoTable()->comentariosevento($id);
 //        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-
-         if($this->getEventoTable()->guardarComentario($descript,$storage->read()->in_id, $id)){
-           $userestado=$this->getEventoTable()->usuariosevento($id, $storage->read()->in_id)->current();
+          $coment=$this->getEventoTable()->guardarComentario($descript,$storage->read()->in_id, $id);
+         if($coment===true){
+           $userestado=$this->getEventoTable()->usuarioGrupo($id_grupo, $storage->read()->in_id)->current();//usuariosevento($id, $storage->read()->in_id)->current();
            setlocale(LC_TIME, "es_ES.UTF-8"); 
            $arruser['id']=$storage->read()->in_id;
            foreach($userestado as $key=>$value){
