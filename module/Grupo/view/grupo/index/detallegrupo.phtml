@@ -21,7 +21,7 @@
                     <a href="/grupo/editar/<?php echo $this->in_id ?>" class="btn btn-success">Editar</a>
                 </div>
                 <?php }?>
-                <h2 class="gh"><a href="#"><?php echo $this->grupo[0]['va_nombre']; ?></a></h2>
+                <h2 class="gh"><?php echo $this->grupo[0]['va_nombre']; ?></h2>
                 <p class="fund gh"><em>Fundado el <?php
                 $fecha = date_create($this->grupo[0]['va_fecha']);
                 $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',

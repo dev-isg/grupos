@@ -78,7 +78,7 @@
                    <?php $fecha_actual = date("Y-m-d h:m:s"); 
                     if ( $this->eventos[0]['va_fecha'] >= $fecha_actual)
                     {}
-                   else{?> <h2>EVENTO CADUCADO</h2> <?php } ?> 
+                   else{?> <h2 class="event-caducado">EVENTO CADUCADO</h2> <?php } ?> 
                     <div class="review-block">
                       <div class="overall_score">
                         <h1 class="title-ji"><?php echo $this->eventos[0]['va_nombre']; ?></h1>
@@ -231,7 +231,6 @@
                           </div>
 
                   <div class="row-fluid cometarios-detalle">
-<!--  LISTADO COMENTARIOS-->
                     <ul>
                         <?php  foreach ($this->comentarios  as $comentarios) :?>
                       <li> 

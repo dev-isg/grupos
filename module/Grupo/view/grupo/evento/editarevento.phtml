@@ -134,7 +134,7 @@
 					<h2>Elige el lugar del evento</h2>
 					<div class="span12 event-padding dev-padd">
 						<input type="text" id="addresspicker_map" />
-						<div id="map" class="span12 event-padding height-evento" style="border: 1px solid #eee;"></div>
+						<div id="map" class="span12 height-evento" style="border: 1px solid #eee;"></div>
 					</div>
 					<div class="span3 lugar-nm event-padding">
 						<div class="form-item">
@@ -178,14 +178,13 @@
                          <?php echo $this->formRow($form->get('va_tipo'));?>                      
                     </div>
             </div>
-				</div>
+		</div>
 				<p class="crear-evento box">
 	            	<?php echo $this->formSubmit($form->get('submit'));?>
 	            	<a href="#" class="btn btn-inverse btn-cancelar">Cancelar</a>
 	        	</p>
 	            <?php echo $this->form()->closeTag();?>
     		</div>
-
 		</div>
 	</div>
 </div>

@@ -1276,6 +1276,8 @@ p.crear-evento{
   line-height: 16px;
   margin-top: 0;
   margin-bottom: 8px;
+  font-size: 22px;
+  font-weight: bold;
 }
 .group-sidebar h2 a{
   color: #363636;
@@ -1773,6 +1775,11 @@ a.tab-home-g-b:hover .pinchitob{
 .event-group h2.gh{
   font-size: 16px!important;
   margin-top: 20px!important;
+}
+.event-group h2.event-caducado{
+  font-size: 14px;
+  margin-bottom: 0;
+  color: red;
 }
 .marker{
 
