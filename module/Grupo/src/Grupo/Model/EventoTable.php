@@ -476,6 +476,7 @@ class EventoTable{
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
              }                                                                          
             $selectString = $sql->getSqlStringForSqlObject($select);
+//            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
     }
