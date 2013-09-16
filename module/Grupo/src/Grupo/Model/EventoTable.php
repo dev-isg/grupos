@@ -197,6 +197,7 @@ class EventoTable{
             }
           return true;
      }
+
 //     public function retiraGrupo($idgrup,$iduser){
 //            if($this->getGrupoUsuario($idgrup,$iduser)){
 //                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
@@ -261,14 +262,14 @@ class EventoTable{
          if($this->getEventoUsuario($idevent,$iduser)){
              $this->unirseGrupo($idgrup,$iduser);
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
-             ->set(array('va_estado'=>'desactivo','va_fecha'=>date('c')))//activo
+             ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))//activo
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
              
          }else{   
              //agrege al grupo cuando se une al evento
              $this->unirseGrupo($idgrup,$iduser);   
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'desactivo','va_fecha'=>date('c')));//activo
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));//activo
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);

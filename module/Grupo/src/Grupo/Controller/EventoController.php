@@ -328,6 +328,10 @@ class EventoController extends AbstractActionController
 
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
+        
+        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
+
+        
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id);
@@ -366,6 +370,8 @@ class EventoController extends AbstractActionController
                 return $this->redirect()->toUrl('/evento/' . $id);
             }
         }
+        
+
        
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
@@ -389,12 +395,12 @@ class EventoController extends AbstractActionController
             'idevento' => $id,
             'session'=>$session,      
             
-            'grupocomprueba'=>$activo,//$grupocompr,  
+//            'grupocomprueba'=>$activo,//$grupocompr,  
             
             'participa'=>$activo,
             'mensajes'=>$mensajes,
             'privado'=>$tipo,
-            
+            'grupoestado'=>$grupoestado
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         )
@@ -457,6 +463,7 @@ class EventoController extends AbstractActionController
         $idevent = $this->params()->fromQuery('idE');
         $unir = $this->params()->fromQuery('act');
         $iduserevent=$this->getEventoTable()->getEvento($idevent)->ta_usuario_in_id;
+        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
          
        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
        $usuariocrear= $this->getGrupoTable()->getNotifiacionesxUsuario($iduserevent)->toArray();
@@ -483,6 +490,7 @@ class EventoController extends AbstractActionController
             
         if ($unir == 1) {
             if ($this->getEventoTable()->unirseEvento($idevent, $iduser)) {
+                if($grupoestado=='activo'){
                 if($correoe){
                 $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
@@ -518,12 +526,14 @@ class EventoController extends AbstractActionController
                     $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                 }
                 }
+                            }
                 $activo=1;
                 $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
-            }
-            
+
+            }  
         }elseif ($unir==0){
             if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
+                if($grupoestado=='activo'){
                 if($correos){
                 $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
@@ -563,10 +573,11 @@ class EventoController extends AbstractActionController
                 }
                 }
             }
+                    }
             $activo=0;
             $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
+
         }
-        
            $userestado=$userestado->current();
            
            setlocale(LC_TIME, "es_ES.UTF-8"); 
