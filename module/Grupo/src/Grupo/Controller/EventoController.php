@@ -421,7 +421,8 @@ class EventoController extends AbstractActionController
         $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         $request = $this->getRequest();
-
+        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
+         
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -438,6 +439,7 @@ class EventoController extends AbstractActionController
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'grupocomprueba' => $grupocompr,
+           'grupoestado'=>$grupoestado
         ));
         return $view;
     }
