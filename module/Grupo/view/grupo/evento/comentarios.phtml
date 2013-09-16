@@ -47,9 +47,33 @@
                     <?php }?>
                   </div>
 <!-- FIN DE FORMULARIO COMENTARIO-->
-<div class="row-fluid cometarios-detalle">
-                   
+<div class="row-fluid cometarios-detalle">                   
 <!--  LISTADO COMENTARIOS -->
+                    <ul>
+                        <?php  foreach ($this->comentarios  as $comentarios) :?>
+                      <li> 
+                        <div class="content-comentario">
+                          <div class="span2">
+                       <?php if(($comentarios->imagen)!="foto-carnet.jpg"){?>
+                     <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $comentarios->imagen ;?>" alt="">
+                     <?php }else{?>
+                      <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" alt="">
+                      <?php }?>
+                          </div>
+                          <div class="span10 ti-coment">
+                            <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
+                            <p><?php echo  $this->escapeHtml($comentarios->va_descripcion);?></p>
+                            <p class="small muted">
+                             <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
+                                         $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                       <?php endforeach;  ?>
+                    </ul>
 <!-- FIN DE LISTADO COMENTARIOS-->
                   </div>
                 </div>

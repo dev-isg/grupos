@@ -408,11 +408,13 @@ class EventoController extends AbstractActionController
     }
     
     public function comentariosAction() {
+      
         $view=new ViewModel();
         $view->setTerminal(true);
         
         $form = new ComentarioForm();
         $id = $this->params()->fromQuery('in_id');
+        $descript['va_descripcion']=$this->params()->fromQuery('va_descripcion');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session = $storage->read();
         $evento = $this->getEventoTable()->Evento($id);
@@ -420,27 +422,44 @@ class EventoController extends AbstractActionController
 
         $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
         $comentarios = $this->getEventoTable()->comentariosevento($id);
-        $request = $this->getRequest();
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
          
-        if ($request->isPost()) {
-            $form->setData($request->getPost());
-            if ($form->isValid()) {
-                $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
-//                return $this->redirect()->toUrl('/evento/' . $id);
-            }
-        }
+         if($this->getEventoTable()->guardarComentario($descript,$storage->read()->in_id, $id)){
+           $userestado=$this->getEventoTable()->usuariosevento($id, $storage->read()->in_id)->current();
+           setlocale(LC_TIME, "es_ES.UTF-8"); 
+           $arruser['id']=$storage->read()->in_id;
+           foreach($userestado as $key=>$value){
+               if($key=='va_fecha'){  
+                    $fecha=str_replace("/", "-",$value);
+                    $date = strtotime($fecha);     
+                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+
+               }else{
+                   $arruser[$key]=$value;
+               }
+           }
+             $result = new JsonModel(array(
+                        'descripcion' =>$descript,
+                        'userestado'=>$arruser
+                    ));
+         }
+            
 
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
+        
+
+                
        $view->setVariables(array(
             'idevento' => $id,
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'grupocomprueba' => $grupocompr,
-           'grupoestado'=>$grupoestado
+           'grupoestado'=>$grupoestado,
+            $result
         ));
+       
         return $view;
     }
     
