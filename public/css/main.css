@@ -1379,6 +1379,14 @@ span.nm{
   color: #666;
   font-size: 12px;
 }
+.cometarios-detalle h3{
+  font-size: 18px;
+  color: #777;
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
 #event-description-wrap p{
   font-family: arial;
   font-size: 13px;
@@ -1977,6 +1985,16 @@ p.pp{
   padding-left: 10px;
   color: #333;
   padding-bottom: 5px;
+}
+.comentar-form{
+  background: #eee;
+  padding: 10px;
+}
+.comentar-form h4{
+  margin-top: 0;
+}
+#form-comente{
+  margin-bottom: 0;
 }
 .event-comentario{
   padding: 10px;
