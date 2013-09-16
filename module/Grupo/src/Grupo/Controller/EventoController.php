@@ -408,13 +408,10 @@ class EventoController extends AbstractActionController
     }
     
     public function comentariosAction() {
-      
-//        $view=new ViewModel();
-//        $view->setTerminal(true);
-        
+   
 //        $form = new ComentarioForm();
-        $id = $this->params()->fromQuery('in_id');
-        $descript['va_descripcion']=$this->params()->fromQuery('va_descripcion');
+        $id = $this->params()->fromPost('in_id');
+        $descript['va_descripcion']=$this->params()->fromPost('va_descripcion');
        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session = $storage->read();
