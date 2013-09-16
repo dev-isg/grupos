@@ -26,6 +26,42 @@
         <script src="<?php echo $this->host('ruta')?>/js/jquery.min.js"></script>
 </head>
 <body id="blog">
+    <!--<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <?php if($_GET['nombre']) {?> <span class="category-home"><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span><?php } ?>
+          <div class="nav-collapse in collapse" style="height: auto;">
+            <ul class="nav pull-right">
+                <?php if(!$this->session){?>
+                  <li><a href="#inline_evento">Iniciar sesion</a></li>
+                  <li><a href="/registrarse">Registrarse</a></li>
+                <?php }else{?>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>                          
+                        <?php $valor = explode('/',$this->session->va_foto);
+                            if($valor[0]=='https:'){?> <img src="<?php echo $this->session->va_foto?>" alt="">
+                            <?php } elseif($this->session->va_foto=='foto-carnet.jpg'){ ?><img src="<?php echo $this->host('img').'/foto-carnet.jpg'?>" alt=""> <?php }
+                            else { ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Mi perfil</a></li>
+                      <li><a href="#">Mis eventos</a></li>
+                      <li><a href="#">Mis grupos</a></li>
+                      <li class="divider"></li>
+                      <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión</a></li>
+                    </ul>
+                  </li>
+                <?php }?>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
 	<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
 		<div class="navbar-inner">
 			<div class="container">
@@ -41,9 +77,9 @@
                       <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>
                           
                  <?php $valor = explode('/',$this->session->va_foto);
-       if($valor[0]=='https:'){?> <img src="<?php echo $this->session->va_foto?>" alt="">
-       <?php } elseif($this->session->va_foto=='foto-carnet.jpg'){ ?><img src="<?php echo $this->host('img').'/foto-carnet.jpg'?>" alt=""> <?php }
-       else { ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?>
+                    if($valor[0]=='https:'){?> <img src="<?php echo $this->session->va_foto?>" alt="">
+                <?php } elseif($this->session->va_foto=='foto-carnet.jpg'){ ?><img src="<?php echo $this->host('img').'/foto-carnet.jpg'?>" alt=""> <?php }
+                            else { ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?>
                       </a>
 
 						<ul class="dropdown-menu">
