@@ -470,7 +470,8 @@ class EventoTable{
              
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
-                        'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser));
+                        'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+                       'ta_usuario_has_ta_evento.va_estado'=>'activo'));
              }else{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
@@ -531,7 +532,8 @@ class EventoTable{
             $select = $sql->select();
                  $select->from('ta_comentario')
               ->join('ta_usuario','ta_usuario.in_id=ta_comentario.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
-            ->where(array('ta_comentario.ta_evento_in_id' => $id));
+            ->where(array('ta_comentario.ta_evento_in_id' => $id))
+            ->order('ta_comentario.in_id DESC');
             $selectString = $sql->getSqlStringForSqlObject($select);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             $resultSet->buffer();
