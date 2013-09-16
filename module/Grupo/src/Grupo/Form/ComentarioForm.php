@@ -29,7 +29,7 @@ class ComentarioForm extends Form
             'type' => 'Submit',
             'attributes' => array(
                 'value' => 'Ingresar',
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-primary btn-enviar-mensaje'
             ),
         ));
         
