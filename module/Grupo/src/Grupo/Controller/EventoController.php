@@ -413,8 +413,8 @@ class EventoController extends AbstractActionController
         $view->setTerminal(true);
         
         $form = new ComentarioForm();
-        $id = $this->params()->fromQuery('in_id');
-        $descript['va_descripcion']=$this->params()->fromQuery('va_descripcion');
+        $id = $this->params()->fromPost('in_id');
+        $descript['va_descripcion']=$this->params()->fromPost('va_descripcion');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session = $storage->read();
         $evento = $this->getEventoTable()->Evento($id);
@@ -438,10 +438,11 @@ class EventoController extends AbstractActionController
                    $arruser[$key]=$value;
                }
            }
-             $result = new JsonModel(array(
+           $result =new JsonModel(array(
                         'descripcion' =>$descript,
                         'userestado'=>$arruser
                     ));
+           $view->addChild($result); 
          }
             
 
@@ -450,14 +451,14 @@ class EventoController extends AbstractActionController
         $paginator->setItemCountPerPage(10);
         
 
-                
+               
        $view->setVariables(array(
             'idevento' => $id,
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'grupocomprueba' => $grupocompr,
            'grupoestado'=>$grupoestado,
-            $result
+            'result'=>$result
         ));
        
         return $view;
