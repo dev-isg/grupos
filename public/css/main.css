@@ -1323,6 +1323,15 @@ span.nm{
   color: #c2374c;
   font-size: 13px;
 }
+.pendiente-revicion{
+  background:#bbb;
+
+}
+.pendiente-revicion p{
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+}
 .event-group{
   padding: 10px;
 }
@@ -1895,9 +1904,9 @@ p.pp{
   padding: 0 10px;
 }
 .unete-grupo{
-  margin-top: 20px;
+  margin-top: 15px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .editarGrupo{
   text-align: center;

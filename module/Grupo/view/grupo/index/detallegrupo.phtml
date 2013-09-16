@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="span3 group-sidebar">
+            <div class="span3 group-sidebar sidebar-user-grupo">
                     <?php 
                       if($this->grupo[0]['ta_usuario_in_id']!=$session->in_id){
                         if ($session) { ?>
@@ -108,13 +108,14 @@
                                 </div>      
                             </div>
                             <?php }elseif($participa=='pendiente'){ ?>
-                            <div class="row-fluid">
+                            <div class="row-fluid pendiente-revicion">
                                 <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success disabled" id="uneteEvent" disabled="disabled">Pendiente</a>
+                                    <p>TU SOLICITUD ESTA EN ESTADO</p>
+                                    <span class="btn btn-success disabled" id="uneteEvent">Pendiente</span>
                                 </div>      
                             </div>
                                 <?php }else{?>
-                            <div class="row-fluid">
+                            <div class="row-fluid evento-desactivo">
                                 <div class="span12 unete-grupo">
                                     <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a>
                                 </div>      
@@ -299,9 +300,9 @@
             var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
             $(".unete-grupo").append(addLoading);
             $(".uneteAbEvent").hide();
-            $(".uneteEvent").addClass("disabled");
-            $("a.uneteEvent").text("Pendiente");
-            $("#uneteEvent").removeClass("uneteEvent");
+            $(".uneteEvent").remove();
+            //$("a.uneteEvent").text("Pendiente");
+            //$("#uneteEvent").removeClass("uneteEvent");
             var activo = 1;
             $.ajax({
                 url: '/grupo/index/unir',
@@ -309,7 +310,8 @@
                 data: 'act=' + activo +'&idE='+even,
                 dataType: "json",
                 success: function(data){
-                    $(".img-lo").hide();                    
+                    $(".img-lo").hide();   
+                    $(".evento-desactivo").remove();
                     var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
                                     '<div class="users">'+
                                         '<div class="row-fluid">'+
@@ -327,8 +329,8 @@
                                     '</div>'+
                                     '</li>';
                     $(".lista-usuario ul").prepend(dataPer);
-                    $(".unete-grupo").append('<a href="#" class="btn btn-success disabled" id="uneteEvent">Pendiente</a>');
-                    $(".unete-grupo .uneteEvent").remove();
+                    $(".sidebar-user-grupo").append('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-success disabled" id="uneteEvent">Pendiente</span></div></div>');
+                    //$(".unete-grupo .uneteEvent").remove();
                     clickUnir();
                 },
                 error: function(){

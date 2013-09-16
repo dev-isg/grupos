@@ -193,9 +193,8 @@
                             <h4><?php echo ucwords($this->session->va_nombre); ?>, ¡Comente aqui!</h4>
                               <?php
                               $form = $this->comentarioform;
-
                               $form->setAttributes(array(
-                                  'action' => 'grupo/evento/comentarios' . $this->idevento,
+                                  'action' => $this->url.'/evento/'.$this->idevento,
                                   'method' => 'post',
                                   'id' => 'form-comente'
                               ));
@@ -230,7 +229,8 @@
                           <?php } ?>
                           </div>
 
-                  <div class="row-fluid cometarios-detalle">
+                  <?php if($this->privado){ ?>
+                  <div class="row-fluid cometarios-detalle">    
                     <ul>
                         <?php  foreach ($this->comentarios  as $comentarios) :?>
                       <li> 
@@ -258,6 +258,7 @@
                     </ul>
 
                   </div>
+<?php } ?>
                 </div>
             </div>
             <div class="span3 group-sidebar grupo-right-sidebar">
