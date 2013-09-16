@@ -18,7 +18,7 @@ class ComentarioForm extends Form
              'attributes' => array(
                  'class' => '',
                  'id' => 'texto-comentar',
-                 'placeholder' => 'Ingrese su comentario aquí.',
+                 'placeholder' => 'Ingrese su comentario aqui',
                  'cols' => 30,
                  'rows' => 5
             ),

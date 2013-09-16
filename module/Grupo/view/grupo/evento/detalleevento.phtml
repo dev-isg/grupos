@@ -433,17 +433,24 @@
       var addLoadingCom = '<img class="img-lo" src="/img/cargando.gif" />';
       $(".img-loader-coment").prepend(addLoadingCom);
       var coment = $("#texto-comentar").val();
+      var coment = $("#texto-comentar").val();
+      var idEventoC = <?php echo $this->idevento; ?>; 
+      var data_obj = { 
+        'id_id' : idEventoC,
+        'va_descripcion' : coment
+      }
+
       $.ajax({
         url: '/grupo/evento/comentarios',
-        type: 'get',
-        data: 'coment='+coment,
+        type: 'post',
+        data: data_obj,
         dataType: "json",
         success: function(data){
           //var datoId = data.userestado["id"];
           var comentarioF = '<li>'+
                               '<div class="content-comentario">'+
                                 '<div class="span2">'+
-                                  '<img src=" http://192.168.1.25:8081/imagenes/usuario/comentarios/ssssss-5217b5435f82e.jpg" alt="">'+
+                                  '<img src="http://192.168.1.25:8081/imagenes/usuario/comentarios/ssssss-5217b5435f82e.jpg" alt="">'+
                                 '</div>'+
                                 '<div class="span10 ti-coment">'+
                                   '<h4><a href="#">ssssss</a></h4>'+
