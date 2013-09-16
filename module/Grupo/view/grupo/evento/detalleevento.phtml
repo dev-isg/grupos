@@ -183,12 +183,8 @@
                       </div>
                   </div>
                 </div>
-                <div class="event-comentario">
-<!-- FORMULARIO COMENTARIO-->
-                  <div class="row-fluid cometarios-detalle">
-                    
-<!--  LISTADO COMENTARIOS-->
-                  </div>
+                <div id="comentarioR">
+
                 </div>
             </div>
             <div class="span3 group-sidebar grupo-right-sidebar">
@@ -307,6 +303,10 @@
             '</div>'+
             '</li>';
           $(".lista-usuario ul").prepend(dataPer);
+
+          $("#comentarioR").load("/grupo/evento/comentarios", '', function(){
+            alert("recibidos los datos por ajax");
+          });
         },
         error: function(){
             console.log('Fallo conectando con el servidor')
