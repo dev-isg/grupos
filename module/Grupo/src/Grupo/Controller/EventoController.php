@@ -305,24 +305,27 @@ class EventoController extends AbstractActionController
         $session=$storage->read();
         
         $evento = $this->getEventoTable()->Evento($id);
+
         if($evento){
             if($evento[0]['va_tipo']=='privado'){
                    $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
+                  
                    if ($eventofind) {
-                       if ($eventofind->tipo == 'privado') {
+                       if ($eventofind->tipo == 'privado' && $eventofind->va_estado =='activo') {
                            $tipo = true;
                        } else {
-                           $tipo = false;
+                           $tipo = false;      
                        }
+
                    }else{
                        $tipo = false;
-                   }
+                   } 
             }else{
                 $tipo=true;
+
             }
-      
         }
-   
+
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
@@ -348,7 +351,7 @@ class EventoController extends AbstractActionController
         $facebook = $face->facebook();
         $this->layout()->login = $facebook['loginUrl'];
         $this->layout()->user = $facebook['user']; }
-        $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
+//        $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
       
         if ($session) {
             $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
@@ -386,12 +389,14 @@ class EventoController extends AbstractActionController
             'idevento' => $id,
             'session'=>$session,      
             
-            'grupocomprueba'=>$grupocompr,  
+            'grupocomprueba'=>$activo,//$grupocompr,  
             
             'participa'=>$activo,
             'mensajes'=>$mensajes,
-            'privado'=>$tipo
+            'privado'=>$tipo,
             
+//            'tipoprivado'=>$tipoprivado,
+//            'tipopublico'=>$tipopublico
         )
         ;
     }

@@ -289,8 +289,8 @@ class GrupoTable{
                     ->where(array('ta_usuario_in_id' => $idusuario, 'ta_grupo_in_id' => $idgrupo));
         }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
-                   ->values(array('ta_usuario_in_id'=>$idusuario,'ta_grupo_in_id'=>$idgrupo,'va_estado'=>'activo', 
-                       'va_aceptado' => $aprobar,'va_fecha'=>date('c')));
+                   ->values(array('ta_usuario_in_id'=>$idusuario,'ta_grupo_in_id'=>$idgrupo,'va_estado'=>$aprobar, 
+                      'va_fecha'=>date('c')));
          }
             $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
             $adapter = $this->tableGateway->getAdapter();
@@ -320,6 +320,49 @@ class GrupoTable{
           return true;
 
      }
+     
+     
+     public function unirseEvento($idevent,$iduser){
+
+         if($this->getEventoUsuario($idevent,$iduser)){
+             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
+             ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))
+             ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
+             
+         }else{   
+             //agrege al grupo cuando se une al evento  
+             $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));
+         }
+
+           $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
+           $adapter=$this->tableGateway->getAdapter(); 
+           $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+          if (!$row) {
+            throw new \Exception("No se puede unir al evento");
+            }
+          return true;
+
+     }
+     
+     public function getEventoUsuario($idevent, $iduser) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+                ->from('ta_usuario_has_ta_evento')
+                ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('idgrup' => 'ta_grupo_in_id','tipo'=>'va_tipo'), 'LEFT')
+                ->where(array(
+            'ta_usuario_has_ta_evento.ta_evento_in_id' => $idevent,
+            'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+            'ta_evento.ta_grupo_in_id is not null'
+                ));
+        $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+        $row = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        if (!$row) {
+            throw new \Exception("No se encontro evento");
+        }
+        return $row->current();
+    }
      
      public function retiraGrupo($idgrup,$iduser){
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')

@@ -123,7 +123,6 @@ class EventoTable{
           
       }else {
             if ($this->getEvento($id)) {
-//                var_dump($data);Exit;
                 $this->tableGateway->update($data, array('in_id' => $id));       
             } else {
                 throw new \Exception('no existe el evento');
@@ -157,27 +156,66 @@ class EventoTable{
             }
             return $row->current();
         }
-     
+     /*
+      * unirse al grupo
+      * 
+      */
         public function unirseGrupo($idgrup,$iduser){
             if($this->getGrupoUsuario($idgrup,$iduser)){
-                return true;
-//                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-//                 ->set(array('va_estado'=>'activo'))
-//                 ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
+//                return true;
+                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                 ->set(array('va_estado'=>'pendiente'))
+                 ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
     
             }else{
                 $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
-                ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'activo','va_fecha'=>date('c')));
+                ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'pendiente','va_fecha'=>date('c')));
             }
             $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
+//            var_dump($selectString);
             $adapter=$this->tableGateway->getAdapter();
             $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             if (!$row) {
                 throw new \Exception("No se puede unir al grupo");
             }
+//            var_dump($row->current());Exit;
             return true;
     
         }
+        /*
+         * retira del grupo
+         */
+        public function retiraGrupo($idgrup,$iduser){
+            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                    ->set(array('va_estado'=>'desactivo'))
+                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
+           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+           $adapter=$this->tableGateway->getAdapter();
+           $row=$adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);  
+            if (!$row) {
+            throw new \Exception("No se puede retirar al grupo");
+            }
+          return true;
+     }
+//     public function retiraGrupo($idgrup,$iduser){
+//            if($this->getGrupoUsuario($idgrup,$iduser)){
+//                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+//                 ->set(array('va_estado'=>'pendiente'))
+//                 ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
+//    
+//            }else{
+//                $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
+//                ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'pendiente','va_fecha'=>date('c')));
+//            }
+//            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
+//            $adapter=$this->tableGateway->getAdapter();
+//            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//            if (!$row) {
+//                throw new \Exception("No se puede unir al grupo");
+//            }
+//            return true;
+//    
+//        }
 ////////////////////////////////////////////////////////////FIN////////////////////////////////////////////////
     public function getEventoUsuario($idevent, $iduser) {
         $adapter = $this->tableGateway->getAdapter();
@@ -218,18 +256,19 @@ class EventoTable{
         return $row->current();
     }
      public function unirseEvento($idevent,$iduser){
+             $evento=$this->getEvento($idevent);
+             $idgrup=$evento->ta_grupo_in_id;
          if($this->getEventoUsuario($idevent,$iduser)){
+             $this->unirseGrupo($idgrup,$iduser);
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
-             ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))
+             ->set(array('va_estado'=>'desactivo','va_fecha'=>date('c')))//activo
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
              
          }else{   
              //agrege al grupo cuando se une al evento
-             $evento=$this->getEvento($idevent);
-             $idgrup=$evento->ta_grupo_in_id;
              $this->unirseGrupo($idgrup,$iduser);   
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'desactivo','va_fecha'=>date('c')));//activo
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
@@ -243,6 +282,8 @@ class EventoTable{
      }
      
      public function retiraEvento($idevent,$iduser){
+            $idgrup=$this->getEvento($idevent)->ta_grupo_in_id;
+            $this->retiraGrupo($idgrup, $iduser);
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
                     ->set(array('va_estado'=>'desactivo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));  
