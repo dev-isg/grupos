@@ -414,6 +414,7 @@ class EventoController extends AbstractActionController
         $paginator->setItemCountPerPage(10);
        
         return array(
+            'idevento' => $id,
             'comentarios' => $comentarios,
             'comentarioform' => $form,
             'grupocomprueba' => $grupocompr,
