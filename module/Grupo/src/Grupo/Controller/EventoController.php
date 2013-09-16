@@ -321,7 +321,7 @@ class EventoController extends AbstractActionController
             }
       
         }
-        
+   
         $id_grupo = $evento[0]['id_grupo'];
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
@@ -387,6 +387,37 @@ class EventoController extends AbstractActionController
             
         )
         ;
+    }
+    
+    public function comentariosAction() {
+        $form = new ComentarioForm();
+        $id = $this->params()->fromQuery('in_id');
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $session = $storage->read();
+        $evento = $this->getEventoTable()->Evento($id);
+        $id_grupo = $evento[0]['id_grupo'];
+
+        $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
+        $comentarios = $this->getEventoTable()->comentariosevento($id);
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $this->getEventoTable()->guardarComentario($form->getData(), $storage->read()->in_id, $id);
+//                return $this->redirect()->toUrl('/evento/' . $id);
+            }
+        }
+
+        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator->setItemCountPerPage(10);
+       
+        return array(
+            'comentarios' => $comentarios,
+            'comentarioform' => $form,
+            'grupocomprueba' => $grupocompr,
+        );
     }
     
      public function usereventoAction(){
