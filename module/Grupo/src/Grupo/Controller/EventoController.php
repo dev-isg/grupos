@@ -409,21 +409,22 @@ class EventoController extends AbstractActionController
     
     public function comentariosAction() {
       
-        $view=new ViewModel();
-        $view->setTerminal(true);
+//        $view=new ViewModel();
+//        $view->setTerminal(true);
         
-        $form = new ComentarioForm();
-        $id = $this->params()->fromPost('in_id');
-        $descript['va_descripcion']=$this->params()->fromPost('va_descripcion');
+//        $form = new ComentarioForm();
+        $id = $this->params()->fromQuery('in_id');
+        $descript['va_descripcion']=$this->params()->fromQuery('va_descripcion');
+       
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session = $storage->read();
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
 
-        $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
-        $comentarios = $this->getEventoTable()->comentariosevento($id);
-        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-         
+//        $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
+//        $comentarios = $this->getEventoTable()->comentariosevento($id);
+//        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
+          
          if($this->getEventoTable()->guardarComentario($descript,$storage->read()->in_id, $id)){
            $userestado=$this->getEventoTable()->usuariosevento($id, $storage->read()->in_id)->current();
            setlocale(LC_TIME, "es_ES.UTF-8"); 
@@ -438,30 +439,13 @@ class EventoController extends AbstractActionController
                    $arruser[$key]=$value;
                }
            }
+           }
            $result =new JsonModel(array(
                         'descripcion' =>$descript,
                         'userestado'=>$arruser
                     ));
-           $view->addChild($result); 
-         }
-            
-
-        $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
-        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-        $paginator->setItemCountPerPage(10);
         
-
-               
-       $view->setVariables(array(
-            'idevento' => $id,
-            'comentarios' => $comentarios,
-            'comentarioform' => $form,
-            'grupocomprueba' => $grupocompr,
-           'grupoestado'=>$grupoestado,
-            'result'=>$result
-        ));
-       
-        return $view;
+        return $result;
     }
     
      public function usereventoAction(){
