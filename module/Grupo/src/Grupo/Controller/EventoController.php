@@ -334,7 +334,7 @@ class EventoController extends AbstractActionController
         
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-        $usuarios = $this->getEventoTable()->usuariosevento($id);
+        $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id);
         
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         
@@ -421,7 +421,7 @@ class EventoController extends AbstractActionController
 //        $grupocompr = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id);
 //        $comentarios = $this->getEventoTable()->comentariosevento($id);
 //        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-          
+
          if($this->getEventoTable()->guardarComentario($descript,$storage->read()->in_id, $id)){
            $userestado=$this->getEventoTable()->usuariosevento($id, $storage->read()->in_id)->current();
            setlocale(LC_TIME, "es_ES.UTF-8"); 
