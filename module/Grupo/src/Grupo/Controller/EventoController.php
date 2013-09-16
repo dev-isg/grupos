@@ -330,8 +330,6 @@ class EventoController extends AbstractActionController
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-
-        
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id);
