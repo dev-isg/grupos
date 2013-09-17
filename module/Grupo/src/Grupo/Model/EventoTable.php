@@ -162,10 +162,10 @@ class EventoTable{
       */
         public function unirseGrupo($idgrup,$iduser){
             if($this->getGrupoUsuario($idgrup,$iduser)){
-//                return true;
-                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                 ->set(array('va_estado'=>'activo'))
-                 ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
+                return true;
+//                 $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+//                 ->set(array('va_estado'=>'pendiente'))//activo
+//                 ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
     
             }else{
                 $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
@@ -387,7 +387,7 @@ class EventoTable{
           ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
           ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')   
-          ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha)) 
+          ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_tipo'=>'publico','ta_evento.va_fecha>=?'=>$fecha)) 
           ->order('in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //            var_dump($selectString);Exit;

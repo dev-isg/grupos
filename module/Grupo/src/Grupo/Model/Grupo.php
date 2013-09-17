@@ -28,6 +28,7 @@ class Grupo implements InputFilterAwareInterface
     public $departamento;
     public $provincia;
     public $distrito;
+    public $va_fecha;
     
 //    public $tipo_notificacion;
    

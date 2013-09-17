@@ -43,6 +43,35 @@ class UsuarioTable
         }
         return $row->current();;
     }
+    
+     public function Distrito($id) {
+        $adapter = $this->tableGateway->getAdapter();
+        if($adapter){
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('in_iddistrito', 'va_distrito'))
+                        ->from('ta_ubigeo')
+                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        $distrito = $results->toArray();
+        
+        $auxtipo = array();
+        foreach ($distrito as $tipo) {
+            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
+        }
+       
+        foreach($auxtipo as $key=>$value){
+            if($key==$id){
+            $auxdistrito=$auxtipo[$key];
+            }
+        }
+        return $auxdistrito;
+        }else{
+            return;
+        }
+    }
+    
 
     public function getUsuarioxEmail($email)
     {
@@ -124,7 +153,9 @@ class UsuarioTable
             'va_descripcion' => $usuario->va_descripcion,
             'va_verificacion' => $valor,
             'va_estado' =>'desactivo',
-            'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id
+            'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
+            'va_facebook' => $usuario->va_facebook,
+            'va_twitter' => $usuario->va_twitter
                 );
         $id = (int) $usuario->in_id;
         

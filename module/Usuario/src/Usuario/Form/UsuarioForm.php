@@ -46,6 +46,22 @@ class UsuarioForm extends Form {
                 'placeholder' => 'Ingrese el mail... '
             ),
         ));
+        
+         $this->add(array(
+            'name' => 'va_facebook',
+            'type' => 'Text',
+            'attributes' => array(
+                'class' => 'span10'
+            ),
+        ));
+                
+         $this->add(array(
+            'name' => 'va_twitter',
+            'type' => 'Text',
+            'attributes' => array(
+                'class' => 'span10'
+            ),
+        ));
 
 //        $this->add(array(
 //            'name' => 'va_dni',
