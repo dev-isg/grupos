@@ -474,9 +474,10 @@ public function getAuthService() {
         $usuario=$this->getUsuarioTable()->getUsuario($id);
         $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
         $usuario->ta_ubigeo_in_id=$auxdistri;
-        $usergroup=$this->getUsuarioTable()->UsuariosxGrupo($usuario->in_id);
-        var_dump($usergroup->toArray());Exit;
-        return array('usuario'=>$usuario);
+        $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
+  
+//        var_dump($usergroup->count());Exit;
+        return array('usuario'=>$usuario,'mienbros'=>$usergroup);
     }
 
     public function notificarAction() {
