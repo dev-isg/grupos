@@ -271,8 +271,6 @@
             <div class="span3 group-sidebar grupo-right-sidebar">
               <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
               <div class="asistir-event">
-                <div class="row-fluid">
-                  <div class="span12">
                     <?php $fecha_actual = date("Y-m-d h:m:s"); 
                       if ($this->eventos[0]['va_fecha'] >= $fecha_actual)
                     {?>
@@ -317,11 +315,9 @@
                             <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al evento</a>
                             </div>
                           </div> 
-                          <?php }
-                      }?>                   
+                        <?php }
+                      }?>
                     <?php }?>
-                  </div>     
-                </div>
               </div>
               <?php } ?>
               <div class="lista-usuario">
@@ -378,9 +374,8 @@
     $(".uneteEvent").on('click', function(e){
       e.preventDefault();    
       var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
-      $(".btn-unete").append(addLoading);
-      $(".uneteEvent").hide();
-      $(".uneteAbEvent").hide();
+      $(".unete-grupo").empty();
+      $(".unete-grupo").append(addLoading);
       var activo = 1;
       $.ajax({
         url: '/grupo/evento/unir',
@@ -388,8 +383,9 @@
         data: 'act=' + activo +'&idE='+even,
         dataType: "json",
         success: function(data){
-          $(".img-lo").hide();
-          $(".uneteAbEvent").show();
+          $(".unete-grupo").remove();
+          var elemetoAbandonar = '<div class="row-fluid"><div class="span12 unete-grupo"><a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el evento</a></div></div>';
+          $(".asistir-event").prepend(elemetoAbandonar);
           var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
             '<div class="users">'+
                 '<div class="row-fluid">'+
@@ -425,9 +421,8 @@
     $(".uneteAbEvent").on('click', function(e){
       e.preventDefault();    
       var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
-      $(".btn-unete").append(addLoading);
-      $(".uneteAbEvent").hide();
-      $(".uneteEvent").hide();
+      $(".unete-grupo").empty();
+      $(".unete-grupo").append(addLoading);
       var activo = 0;
       $.ajax({
         url: '/grupo/evento/unir',
@@ -436,8 +431,9 @@
         dataType: "json",
         success: function(data){
           var datoId = data.userestado["id"];          
-          $(".img-lo").hide();
-          $(".uneteEvent").show();
+          $(".unete-grupo").remove();
+          var addbtnAdd = '<div class="row-fluid"><div class="span12 unete-grupo"><a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al evento</a></div></div>';
+          $(".asistir-event").prepend(addbtnAdd);
           $(".lista-usuario ul li#user-"+datoId).remove();
         },
         error: function(){
