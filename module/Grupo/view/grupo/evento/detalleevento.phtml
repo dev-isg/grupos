@@ -437,7 +437,6 @@
       var addLoadingCom = '<img class="img-lo" src="/img/cargando.gif" />';
       $(".img-loader-coment").prepend(addLoadingCom);
       var coment = $("#texto-comentar").val();
-      var coment = $("#texto-comentar").val();
       var idEventoC = <?php echo $this->idevento; ?>; 
       var data_obj = { 
         'in_id' : idEventoC,
@@ -454,16 +453,17 @@
           var comentarioF = '<li>'+
                               '<div class="content-comentario">'+
                                 '<div class="span2">'+
-                                  '<img src="http://192.168.1.25:8081/imagenes/usuario/comentarios/ssssss-5217b5435f82e.jpg" alt="">'+
+                                  '<img src="'+hostUrl+data.userestado["imagen"]+'" alt="">'+
                                 '</div>'+
                                 '<div class="span10 ti-coment">'+
-                                  '<h4><a href="#">ssssss</a></h4>'+
-                                  '<p>sss</p>'+
-                                  '<p class="small muted">23 de Septiembre del 2013</p>'+
+                                  '<h4><a href="#">'+data.userestado["nombre_usuario"]+'</a></h4>'+
+                                  '<p>'+data.descripcion["va_descripcion"]+'</p>'+
+                                  '<p class="small muted">'+data.userestado["va_fecha"]+'</p>'+
                                 '</div>'+
                               '</div>'+
                             '</li>';
           $(".cometarios-detalle ul").prepend(comentarioF);
+          $('#texto-comentar').val('');
           $(".img-lo").hide();
         },
         error: function(){
