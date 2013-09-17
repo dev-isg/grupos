@@ -10,10 +10,11 @@
     					<div class="row-fluid">
     						<div class="span12 title-miembro">
     							<h4>Miembro desde:</h4>
-    							<span><?php echo $this->usuario->va_fecha_ingreso;?></span>
+    							<span><?php echo date("d",$this->usuario->va_fecha_ingreso).' de '.date("F",$this->usuario->va_fecha_ingreso).' del '.date("Y",$this->usuario->va_fecha_ingreso);?></span>
                                                         <!--6 de mayo de 2012-->
     						</div>
     					</div>
+                                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
     					<h4>Redes sociales</h4>
     					<div class="social-net">
     						<ul>
@@ -21,6 +22,7 @@
     							<?php if($this->usuario->va_twitter){?><li class="twitter-dev"><a href="http://www.twitter.com/<?php echo $this->usuario->va_twitter;?>" target="_blank"></a></li><?php }?>
     						</ul>
     					</div>
+                                        <?php } ?>
     					<p>
                                                 <?php echo $this->usuario->va_descripcion;?>
 <!--    						What is your business?, Aún no hay respuestas. What do you need to take your business to the next level?, Aún no hay respuestas. Who told you about us? Google? Yahoo? Homer Simpson? We ask so we can give them credit. Thank you in advance.-->
