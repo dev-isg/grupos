@@ -119,6 +119,7 @@ class GrupoTable{
       }
      
       if ($id == 0) {
+          $data['va_fecha']=date('c');
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
           if($this->aprobarUsuario($idgrupo,$iduser, 'activo')){// $this->unirseGrupo($idgrupo,$iduser)
@@ -365,6 +366,7 @@ class GrupoTable{
     }
      
      public function retiraGrupo($idgrup,$iduser){
+//         $this->eventosgrupo($idgrup, $iduser);
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
                     ->set(array('va_estado'=>'desactivo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
@@ -375,6 +377,24 @@ class GrupoTable{
             throw new \Exception("No se puede retirar al grupo");
             }
           return true;
+     }
+     /*
+      * Obtiene los eventos de los grupos
+      */
+        public function getEventoGrupo($idgrupo,$iduser){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+         $selecttot = $sql->select()
+         ->from('ta_usuario_has_ta_evento')
+         ->join('ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')        
+         ->where(array('ta_evento.ta_grupo_in_id'=>$idgrupo,'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,
+             'va_estado'=>'activo'));
+         $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
+         $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+         if (!$row) {
+             throw new \Exception("No se encontro evento");
+         }
+         return $row->current();
      }
      
      public function usuarioxGrupo($iduser=null){
@@ -438,7 +458,7 @@ class GrupoTable{
      * Obtiene informacion del usuario segun su id y el estado que tiene
      */
     
-    public function estadoUsuariosxGrupo($id,$estado) {
+    public function estadoUsuariosxGrupo($id,$estado,$iduser=null) {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select();
@@ -448,6 +468,7 @@ class GrupoTable{
                             'descripcion_usuario' => 'va_descripcion'), 'left')
                 ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
                 ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                    'ta_usuario_has_ta_grupo.ta_usuario_in_id !=?'=>$iduser,
                     'ta_usuario_has_ta_grupo.va_estado' => $estado//'activo', 'ta_usuario_has_ta_grupo.va_aceptado' =>$estado
                     ));
 
@@ -540,7 +561,8 @@ class GrupoTable{
           ->from('ta_grupo')      
       //   ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('monbregrupo' =>'va_nombre','idgrupo' =>'in_id','describe' =>'va_descripcion','imagen' =>'va_imagen'), 'left') 
           ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')              
-         ->where(array('ta_grupo.ta_usuario_in_id'=>$id,'ta_grupo.va_estado'=>'activo'));
+          ->where(array('ta_grupo.ta_usuario_in_id'=>$id,'ta_grupo.va_estado'=>'activo'))
+          ->order('ta_grupo.va_fecha DESC');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
             return $resultSet->buffer();

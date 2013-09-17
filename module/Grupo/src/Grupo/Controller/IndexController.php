@@ -513,8 +513,8 @@ class IndexController extends AbstractActionController
          *compara el estado del usuario
          */
         if($grupo[0]['ta_usuario_in_id']==$session->in_id){
-                $usuariosaceptado=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'activo');
-                $usuariospendiente=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'pendiente');
+                $usuariosaceptado=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'activo',$grupo[0]['ta_usuario_in_id']);
+                $usuariospendiente=$this->getGrupoTable()->estadoUsuariosxGrupo($id,'pendiente',$grupo[0]['ta_usuario_in_id']);
          
         }
   
@@ -553,6 +553,7 @@ class IndexController extends AbstractActionController
     }
     
     public function aprobarAction() {
+         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $idgrupo = $this->params()->fromQuery('id_grupo');
         $idusuario = $this->params()->fromQuery('id_usuario');
         $aprobar = $this->params()->fromQuery('act');
@@ -579,9 +580,12 @@ class IndexController extends AbstractActionController
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
-                                                    <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
+                                                    <div style="color: #7D7D7D"><br />                                                       
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',
+                                                     Usted se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+                                                     Si desea mas información del grupo dar <a href="' . $this->_options->host->base . '/grupo/' . $idgrupo . '">Clic Aquí</a> <br />Equipo Juntate.pe     
+                                                     </div>       
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
                                                      </div>
                                                </body>
                                                </html>';
@@ -714,8 +718,10 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha dejado al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-            
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',
+                                                    Usted ha abandonado el grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+                                                    Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br />
+                                                    Equipo Juntate.pe            
                                                      </div>
                                                </body>
                                                </html>';

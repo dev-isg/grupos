@@ -464,7 +464,9 @@ class EventoController extends AbstractActionController
         $idevent = $this->params()->fromQuery('idE');
         $unir = $this->params()->fromQuery('act');
         $iduserevent = $this->getEventoTable()->getEvento($idevent)->ta_usuario_in_id;
-        $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id)->va_estado;
+        
+        $id_grupo = $this->getEventoTable()->getEvento($idevent)->ta_grupo_in_id;
+        $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $storage->read()->in_id)->va_estado;
 
         $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
         $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($iduserevent)->toArray();
@@ -518,8 +520,7 @@ class EventoController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     El siguiente usuario se ha unido a tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
-                
+                                                     El siguiente usuario se ha unido a tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />            
                                                      </div>
                                                </body>
                                                </html>';

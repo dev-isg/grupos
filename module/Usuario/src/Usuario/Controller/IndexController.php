@@ -470,7 +470,12 @@ public function getAuthService() {
     }
     
     public function verusuarioAction(){
-        return;
+        $id=$this->params()->fromQuery('in_id',221);
+        $usuario=$this->getUsuarioTable()->getUsuario($id);
+        $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
+        $usuario->ta_ubigeo_in_id=$auxdistri;
+        var_dump($usuario);Exit;
+        return array('usuario'=>$usuario);
     }
 
     public function notificarAction() {
