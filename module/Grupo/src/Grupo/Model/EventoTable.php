@@ -162,9 +162,10 @@ class EventoTable{
       */
         public function unirseGrupo($idgrup,$iduser){
             if($this->getGrupoUsuario($idgrup,$iduser)){
-                //return true;
+
+//                return true;
                  $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                 ->set(array('va_estado'=>'pendiente'))//activo
+                 ->set(array('va_estado'=>'activo'))//'pendiente' activo
                  ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
     
             }else{
@@ -260,7 +261,7 @@ class EventoTable{
              $evento=$this->getEvento($idevent);
              $idgrup=$evento->ta_grupo_in_id;
          if($this->getEventoUsuario($idevent,$iduser)){
-             $this->unirseGrupo($idgrup,$iduser);
+//             $this->unirseGrupo($idgrup,$iduser);
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
              ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))//activo
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
