@@ -468,6 +468,10 @@ public function getAuthService() {
             'session'  =>$session
         );
     }
+    
+    public function verusuarioAction(){
+        return;
+    }
 
     public function notificarAction() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
