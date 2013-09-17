@@ -12,7 +12,7 @@
             </div>
         <?php } ?>
         <div class="row-fluid">
-            <div class="span3 group-sidebar">
+            <div class="span3 group-sidebar" style="padding-bottom:15px;">
                 <div class="img-grupo">
                     <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->grupo[0]['va_imagen'], ENT_QUOTES, 'utf-8'); ?>">
                 </div>
@@ -111,7 +111,7 @@
                             <div class="row-fluid pendiente-revicion">
                                 <div class="span12 unete-grupo">
                                     <p>TU SOLICITUD ESTA EN ESTADO</p>
-                                    <span class="btn btn-success disabled" id="uneteEvent">Pendiente</span>
+                                    <span class="btn btn-warning disabled" id="uneteEvent">Pendiente</span>
                                 </div>      
                             </div>
                                 <?php }else{?>
