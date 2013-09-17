@@ -333,7 +333,6 @@ class EventoController extends AbstractActionController
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id,'activo');
-        
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');

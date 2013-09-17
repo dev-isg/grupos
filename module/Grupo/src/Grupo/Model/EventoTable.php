@@ -466,7 +466,7 @@ class EventoTable{
                    $select->columns(array('va_fecha'));
              }
               $select->from('ta_usuario_has_ta_evento')
-              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left');        
+              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('id_usuario'=>'in_id','nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left');        
              
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
