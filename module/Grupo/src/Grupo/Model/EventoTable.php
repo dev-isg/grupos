@@ -164,7 +164,7 @@ class EventoTable{
             if($this->getGrupoUsuario($idgrup,$iduser)){
 //                return true;
                  $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                 ->set(array('va_estado'=>'pendiente'))
+                 ->set(array('va_estado'=>'activo'))
                  ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
     
             }else{
@@ -284,7 +284,7 @@ class EventoTable{
      
      public function retiraEvento($idevent,$iduser){
             $idgrup=$this->getEvento($idevent)->ta_grupo_in_id;
-            $this->retiraGrupo($idgrup, $iduser);
+//            $this->retiraGrupo($idgrup, $iduser);
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
                     ->set(array('va_estado'=>'desactivo'))
                     ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));  
@@ -457,7 +457,7 @@ class EventoTable{
     
     
     
-     public function usuariosevento($id,$iduser=null)
+     public function usuariosevento($id,$iduser=null,$estado=null)
     {  
          $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
@@ -471,7 +471,7 @@ class EventoTable{
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                         'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
-                       'ta_usuario_has_ta_evento.va_estado'=>'activo'));
+                       'ta_usuario_has_ta_evento.va_estado'=>$estado));//'activo'
              }else{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
