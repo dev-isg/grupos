@@ -283,15 +283,13 @@
                                   <?php if ($participa) { ?>
                                     <div class="row-fluid">
                                       <div class="span12 unete-grupo"> 
-                                        <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el evento</a>
-                                        <a href="#" class="btn btn-success uneteEvent" id="uneteEvent" style="display:none;">Unete al evento</a>
+                                        <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandona el evento</a>                                        
                                       </div>
                                     </div>
                                   <?php } else { ?>
                                     <div class="row-fluid">
                                       <div class="span12 unete-grupo">                                        
                                         <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al evento</a>
-                                        <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent" style="display:none;">Abandona el evento</a>
                                       </div>
                                     </div>
                                   <?php } ?>
@@ -305,7 +303,7 @@
                               <?php } else { ?>
                                 <div class="row-fluid">
                                   <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a> 
+                                    <a href="#" class="btn btn-success uneteGrupo" id="uneteGrupo">¡Unete a nosotros!</a> 
                                   </div>
                                 </div>
                               <?php } ?>
@@ -366,7 +364,8 @@
   $(document).on('ready', function(){   
     enviarDatos();
     abandonarDatos();
-    agregarComentario()
+    agregarComentario();
+    enviarGrupo();
   });
 
   function enviarDatos(){
@@ -403,7 +402,7 @@
             '</div>'+
             '</li>';
           $(".lista-usuario ul").prepend(dataPer);
-
+          abandonarDatos();
           $("#comentarioR").load("/grupo/evento/comentarios", '', function(){
             alert("recibidos los datos por ajax");
           });
@@ -435,6 +434,7 @@
           var addbtnAdd = '<div class="row-fluid"><div class="span12 unete-grupo"><a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al evento</a></div></div>';
           $(".asistir-event").prepend(addbtnAdd);
           $(".lista-usuario ul li#user-"+datoId).remove();
+          enviarDatos();
         },
         error: function(){
           console.log('Fallo conectando con el servidor')
@@ -484,5 +484,50 @@
       });
     });
   }
+
+  function enviarGrupo(){
+        var even = <?php echo $this->idevento; ?>;
+        $(".uneteGrupo").on('click', function(e){
+            e.preventDefault();
+            var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
+            $(".unete-grupo").empty();
+            $(".unete-grupo").append(addLoading);
+            var activo = 1;
+            $.ajax({
+                url: '/grupo/index/unir',
+                type: 'get',
+                data: 'act=' + activo +'&idE='+even,
+                dataType: "json",
+                success: function(data){
+                    $(".img-lo").hide();   
+                    $(".unete-grupo").remove();
+                    var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
+                                    '<div class="users">'+
+                                        '<div class="row-fluid">'+
+                                            '<div class="span4 img-user-ev">'+
+                                                '<img src="'+hostUrl+data.userestado["imagen"]+'" alt="">'+
+                                            '</div>'+
+                                            '<div class="span8 desc-user">'+
+                                                '<h3>'+data.userestado["nombre_usuario"]+'</h3>'+
+                                                '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
+                                            '</div>'+
+                                        '</div>'+
+                                        '<div class="row-fluid unio">'+
+                                            '<p class="span12">'+data.userestado["va_fecha"]+'</p>'+
+                                        '</div>'+
+                                    '</div>'+
+                                  '</li>';
+                    $(".lista-usuario ul").prepend(dataPer);
+                    $(".sidebar-user-grupo").append('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-success disabled" id="uneteEvent">Pendiente</span></div></div>');
+                    //$(".unete-grupo .uneteEvent").remove();
+                    clickUnir();
+                },
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
+                }
+            });
+        });
+        
+    }
 
 </script>

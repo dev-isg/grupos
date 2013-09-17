@@ -299,10 +299,7 @@
             e.preventDefault();
             var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
             $(".unete-grupo").append(addLoading);
-            $(".uneteAbEvent").hide();
             $(".uneteEvent").remove();
-            //$("a.uneteEvent").text("Pendiente");
-            //$("#uneteEvent").removeClass("uneteEvent");
             var activo = 1;
             $.ajax({
                 url: '/grupo/index/unir',
@@ -329,7 +326,7 @@
                                     '</div>'+
                                     '</li>';
                     $(".lista-usuario ul").prepend(dataPer);
-                    $(".sidebar-user-grupo").append('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-success disabled" id="uneteEvent">Pendiente</span></div></div>');
+                    $(".sidebar-user-grupo").append('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-warning disabled" id="uneteEvent">Pendiente</span></div></div>');
                     //$(".unete-grupo .uneteEvent").remove();
                     clickUnir();
                 },
