@@ -214,7 +214,51 @@ class UsuarioTable
             }
         }
     }
+    /*
+     * grupos a los que pertenece el id del usuario
+     */
+        public function UsuariosxGrupo($iduser=null) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('ta_usuario_has_ta_grupo')
+                ->join('ta_usuario', 'ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id', 
+                        array('nombre_usuario' => 'va_nombre', 'imagen' => 'va_foto', 
+                            'descripcion_usuario' => 'va_descripcion'), 'left')
+//                ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
+                ->where(array(//'ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                    'ta_usuario_has_ta_grupo.ta_usuario_in_id'=>$iduser,
+                    'ta_usuario_has_ta_grupo.va_estado' => 'activo'
+                    ));
 
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        var_dump($selectString);Exit;
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+     /*
+     * usuarios a los que pertenecen un grupo
+     */
+        public function UsuariosxGrupoUnidos($iduser=null) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('ta_usuario_has_ta_grupo')
+                ->join('ta_usuario', 'ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id', 
+                        array('nombre_usuario' => 'va_nombre', 'imagen' => 'va_foto', 
+                            'descripcion_usuario' => 'va_descripcion'), 'left')
+                ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
+                ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                    'ta_usuario_has_ta_grupo.ta_usuario_in_id !=?'=>$iduser,
+                    'ta_usuario_has_ta_grupo.va_estado' => 'activo'
+                    ));
+
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        var_dump($selectString);Exit;
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
     
         public function usuariosgrupos($id)
     {

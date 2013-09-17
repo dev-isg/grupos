@@ -22,6 +22,8 @@ class Usuario implements InputFilterAwareInterface{
     public $ta_ubigeo_in_id;
     public $va_facebook;
     public $va_twitter;
+    public $va_fecha_ingreso;
+    
     
     protected $inputFilter;  
     
@@ -38,6 +40,7 @@ class Usuario implements InputFilterAwareInterface{
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
             $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
             $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
+            $this->va_fecha_ingreso=(!empty($data['va_fecha_ingreso'])) ? $data['va_fecha_ingreso'] : null;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {

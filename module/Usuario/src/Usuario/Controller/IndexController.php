@@ -470,11 +470,12 @@ public function getAuthService() {
     }
     
     public function verusuarioAction(){
-        $id=$this->params()->fromQuery('in_id',221);
+        $id=$this->params()->fromQuery('in_id',221);//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
         $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
         $usuario->ta_ubigeo_in_id=$auxdistri;
-        var_dump($usuario);Exit;
+        $usergroup=$this->getUsuarioTable()->UsuariosxGrupo($usuario->in_id);
+        var_dump($usergroup->toArray());Exit;
         return array('usuario'=>$usuario);
     }
 
