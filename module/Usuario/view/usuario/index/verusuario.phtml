@@ -1,0 +1,60 @@
+<div class="main-container">
+    <div class="container">
+    	<div class="row-fluid">
+    		<div class="span12 group-sidebar event-group">
+    			<div class="row-fluid">
+    				<div class="span8 contenido-perfil-usuario">
+    					<h2><?php echo ucwords($this->usuario->va_nombre);?></h2>
+    					<h5>Distrito:</h5>
+                                        <span><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?></span>
+    					<div class="row-fluid">
+    						<div class="span12 title-miembro">
+    							<h4>Miembro desde:</h4>
+    							<span><?php echo date("d",$this->usuario->va_fecha_ingreso).' de '.date("F",$this->usuario->va_fecha_ingreso).' del '.date("Y",$this->usuario->va_fecha_ingreso);?></span>
+                                                        <!--6 de mayo de 2012-->
+    						</div>
+    					</div>
+                                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
+    					<h4>Redes sociales</h4>
+    					<div class="social-net">
+    						<ul>
+    							<?php if($this->usuario->va_facebook){?><li class="facebook-dev"><a href="http://www.facebook.com/<?php echo $this->usuario->va_facebook;?>" target="_blank"></a></li><?php }?>
+    							<?php if($this->usuario->va_twitter){?><li class="twitter-dev"><a href="http://www.twitter.com/<?php echo $this->usuario->va_twitter;?>" target="_blank"></a></li><?php }?>
+    						</ul>
+    					</div>
+                                        <?php } ?>
+    					<p>
+                                                <?php echo $this->usuario->va_descripcion;?>
+<!--    						What is your business?, Aún no hay respuestas. What do you need to take your business to the next level?, Aún no hay respuestas. Who told you about us? Google? Yahoo? Homer Simpson? We ask so we can give them credit. Thank you in advance.-->
+    					</p>
+    				</div>
+    				<div class="span4">
+    					<div class="img-grupo" style="margin-bottom:15px;padding:0;">
+			                <img src="<?php echo $this->host('images');?>/usuario/detalle/<?php echo $this->usuario->va_foto?>">
+			            </div>
+			            <div class="content-grup-j">
+			            	<h3>MIEMBRO DE <?php echo $this->mienbros->count()?> GRUPOS</h3>
+			            	<ul>
+                                            <?php foreach($this->mienbros as $mienbro){ ?>
+                                <li id="user-<?php echo $mienbro->ta_usuario_in_id;?>">
+		                            <div class="users">
+		                                <div class="row-fluid">
+		                                    <div class="span3 img-user-ev">
+		                                    	<img src="<?php echo $this->host('images')?>/grupos/general/<?php echo $mienbro->imagen;?>">
+		                                    </div>
+		                                    <div class="span9 desc-user">
+		                                        <h5><a href="<?php echo $this->url('detalle-grupo')?>/<?php echo $mienbro->ta_grupo_in_id;?>"><?php echo $mienbro->nombre_grupo;?></a></h5>
+		                                        <!--<p>co-fundador</p>-->
+		                                    </div>
+		                                </div>
+		                            </div>
+                            	</li>
+                                <?php } ?>
+                            </ul>
+			            </div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

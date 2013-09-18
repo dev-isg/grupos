@@ -332,8 +332,7 @@ class EventoController extends AbstractActionController
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-        $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id);
-        
+        $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id,'activo');
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -455,111 +454,111 @@ class EventoController extends AbstractActionController
      }
     
     
-    public function unirAction(){
+    public function unirAction() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        if (! $storage) {
+        if (!$storage) {
             return $this->redirect()->toRoute('grupo');
         }
-           
-        $iduser = $storage->read()->in_id; 
+
+        $iduser = $storage->read()->in_id;
         $idevent = $this->params()->fromQuery('idE');
         $unir = $this->params()->fromQuery('act');
-        $iduserevent=$this->getEventoTable()->getEvento($idevent)->ta_usuario_in_id;
-        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-         
-       $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
-       $usuariocrear= $this->getGrupoTable()->getNotifiacionesxUsuario($iduserevent)->toArray();
-       $arr=array();
+        $iduserevent = $this->getEventoTable()->getEvento($idevent)->ta_usuario_in_id;
+        
+        $id_grupo = $this->getEventoTable()->getEvento($idevent)->ta_grupo_in_id;
+        $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $storage->read()->in_id)->va_estado;
+
+        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+        $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($iduserevent)->toArray();
+        $arr = array();
         foreach ($usuariosesion as $value) {
-            $arr[]=$value['ta_notificacion_in_id'];
+            $arr[] = $value['ta_notificacion_in_id'];
         }
-            if (in_array(1,$arr)) {
-                $correoe = true;
-            }
-            if (in_array(2,$arr)) {
-                $correos = true;
-            }
-            $arrc=array();
+        if (in_array(1, $arr)) {
+            $correoe = true;
+        }
+        if (in_array(2, $arr)) {
+            $correos = true;
+        }
+        $arrc = array();
         foreach ($usuariocrear as $values) {
-            $arrc[]=$values['ta_notificacion_in_id'];
+            $arrc[] = $values['ta_notificacion_in_id'];
         }
-             if (in_array(1,$arrc)) {
-                $correoec = true;
-            }
-            if (in_array(2,$arrc)) {
-                $correosc = true;
-            }
-            
+        if (in_array(1, $arrc)) {
+            $correoec = true;
+        }
+        if (in_array(2, $arrc)) {
+            $correosc = true;
+        }
+
         if ($unir == 1) {
             if ($this->getEventoTable()->unirseEvento($idevent, $iduser)) {
-                if($grupoestado=='activo'){
-                if($correoe){
-                $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
-                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                if ($grupoestado == 'activo') {
+                    if ($correoe) {
+                        $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
+                        $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Hola '.ucwords($storage->read()->va_nombre).',
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',
                                                      Usted se ha unido al evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
-                                                     Si desea mas información del evento dar <a href="'.$this->_options->host->base.'/evento/'.$idevent.'">Clic Aquí</a> <br />Equipo Juntate.pe     
+                                                     Si desea mas información del evento dar <a href="' . $this->_options->host->base . '/evento/' . $idevent . '">Clic Aquí</a> <br />Equipo Juntate.pe     
                                                      </div>
-                                                     <img src="'.$this->_options->host->base.'/img/juntate.png" title="juntate.pe"/>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
-                
-                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al evento');
-                }
-                if($correoec){
-                $usuario = $this->getEventoTable()->eventoxUsuario($idevent) ->toArray();
-                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
-                                               <head>
-                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
-                                               </head>
-                                               <body>
-                                                    <div style="color: #7D7D7D"><br />
-                                                     El siguiente usuario se ha unido a tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
-                
-                                                     </div>
-                                               </body>
-                                               </html>';
-                if ($usuario) {
-                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
-                }
-                }
-                            }
-                $activo=1;
-                $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
 
-            }  
-        }elseif ($unir==0){
-            if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
-                if($grupoestado=='activo'){
-                if($correos){
-                $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
-                $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                        $this->mensaje($storage->read()->va_email, $bodyHtml, 'Se ha unido al evento');
+                    }
+                    if ($correoec) {
+                        $usuario = $this->getEventoTable()->eventoxUsuario($idevent)->toArray();
+                        $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                    Hola '.ucwords($storage->read()->va_nombre).',
+                                                     El siguiente usuario se ha unido a tu evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />            
+                                                     </div>
+                                               </body>
+                                               </html>';
+                        if ($usuario) {
+                            $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
+                        }
+                    }
+                }
+                $activo = 1;
+                $userestado = $this->getEventoTable()->usuariosevento($idevent, $iduser,'activo'); //getEventoUsuario($idevent, $iduser);//
+            }
+        } elseif ($unir == 0) {
+            if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
+                if ($grupoestado == 'activo') {
+                    if ($correos) {
+                        $user_info['nom_event'] = $this->getEventoTable()->getEvento($idevent)->va_nombre;
+                        $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',
                                                     Usted ha abandonado el evento <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br />
-                                                    Si desea tener información de otros eventos puede buscarlos en <a href="'.$this->_options->host->base.'">Juntate.pe</a> <br />
+                                                    Si desea tener información de otros eventos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br />
                                                     Equipo Juntate.pe
                                                      </div>
-                                                     <img src="'.$this->_options->host->img.'/juntate.png" title="juntate.pe"/>
+                                                     <img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
-                
-                $this->mensaje($storage->read()->va_email, $bodyHtml, 'Has abandonado un evento');
-                }
-                if($correosc){
-                $usuario = $this->getEventoTable()
-                ->eventoxUsuario($idevent)
-                ->toArray();
-                $bodyHtmlAdmin= '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+
+                        $this->mensaje($storage->read()->va_email, $bodyHtml, 'Has abandonado un evento');
+                    }
+                    if ($correosc) {
+                        $usuario = $this->getEventoTable()
+                                ->eventoxUsuario($idevent)
+                                ->toArray();
+                        $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
@@ -570,49 +569,36 @@ class EventoController extends AbstractActionController
                                                      </div>
                                                </body>
                                                </html>';
-                if ($usuario) {
-                    $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Abandonaron tu evento');
-                }
-                }
-            }
+                        if ($usuario) {
+                            $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Abandonaron tu evento');
+                        }
                     }
-            $activo=0;
-            $userestado=$this->getEventoTable()->usuariosevento($idevent, $iduser);//getEventoUsuario($idevent, $iduser);
-
+                }
+                  $activo = 0;
+                  $userestado = $this->getEventoTable()->usuariosevento($idevent, $iduser,'desactivo'); //getEventoUsuario($idevent, $iduser);//
+                
+            }
         }
-           $userestado=$userestado->current();
-           
-           setlocale(LC_TIME, "es_ES.UTF-8"); 
-           $arruser['id']=$iduser;
-           foreach($userestado as $key=>$value){
-               if($key=='va_fecha'){  
-                    $fecha=str_replace("/", "-",$value);
-                    $date = strtotime($fecha);     
-                   $arruser[$key]='Se unio el '.date("d", $date).' de '.date("F", $date).' del '.date("Y",$date);//                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+        $userestado = $userestado->current();
 
-               }else{
-                   $arruser[$key]=$value;
-               }
-           }
+        setlocale(LC_TIME, "es_ES.UTF-8");
+        $arruser['id'] = $iduser;
+        foreach ($userestado as $key => $value) {
+            if ($key == 'va_fecha') {
+                $fecha = str_replace("/", "-", $value);
+                $date = strtotime($fecha);
+                $arruser[$key] = 'Se unio el ' . date("d", $date) . ' de ' . date("F", $date) . ' del ' . date("Y", $date); //                   $arruser[$key]='Se unio el '.date("d", $date).' de '.strftime("%B", $date).' del '.date("Y",$date);//
+            } else {
+                $arruser[$key] = $value;
+            }
+        }
         $result = new JsonModel(array(
-            'estado' =>$activo,
-            'userestado'=>$arruser
-        ));
+                    'estado' => $activo,
+                    'userestado' => $arruser
+                ));
         return $result;
     }
-    
-//     public function eventouserAction(){
-//         $id=$this->params()->fromQuery('id');
-//         $usuarios = $this->getEventoTable()->usuariosevento($id);
-// //         var_dump($usuarios->toArray());Exit;
-//         $result = new JsonModel(
-//            $usuarios->toArray()
-//         );
-//         return $result;
         
-//     }
-    
-    
     public function mensaje($mail,$bodyHtml,$subject){
         $message = new Message();
         $message->addTo($mail, $nombre)

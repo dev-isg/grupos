@@ -468,6 +468,17 @@ public function getAuthService() {
             'session'  =>$session
         );
     }
+    
+    public function verusuarioAction(){
+        $id=$this->params()->fromQuery('in_id',221);//298
+        $usuario=$this->getUsuarioTable()->getUsuario($id);
+        $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
+        $usuario->ta_ubigeo_in_id=$auxdistri;
+        $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
+  
+//        var_dump($usergroup->count());Exit;
+        return array('usuario'=>$usuario,'mienbros'=>$usergroup);
+    }
 
     public function notificarAction() {
         $storage = new \Zend\Authentication\Storage\Session('Auth');

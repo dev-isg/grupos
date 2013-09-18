@@ -591,6 +591,9 @@ div.upload input {
   border-bottom: 2px solid #ccc;
   margin-bottom: 20px;
 }
+.login-home input{
+  width: 95%;
+}
 .content-login-facebook p{
   text-align: center;
   color: #333;
@@ -1266,17 +1269,16 @@ p.crear-evento{
 .group-sidebar{
   background: #fff;
   margin-bottom: 20px;  
-  margin-top: 10px;
-  padding-bottom: 20px;
+  margin-top: 20px;
   -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
 }
 .group-sidebar h2{
-  line-height: 16px;
+  line-height: 20px;
   margin-top: 0;
   margin-bottom: 8px;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
 }
 .group-sidebar h2 a{
@@ -1331,6 +1333,8 @@ span.nm{
   font-size: 14px;
   color: white;
   font-weight: bold;
+  line-height: 16px;
+  margin-bottom: 5px!important;
 }
 .event-group{
   padding: 10px;
@@ -1404,8 +1408,72 @@ span.nm{
 }
 #map_canvas{
   width: 100%;
-  height: 350px;
+  height: 250px;
   margin-bottom: 20px;
+}
+.social-net ul{
+  list-style: none;
+  overflow: hidden;
+  margin-left: 0;
+}
+.content-grup-j h3{
+  font-size: 16px;
+  background: #ccc;
+  line-height: 45px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #666;
+  margin-bottom: 1px;
+}
+.title-miembro h6{
+  font-size: 18px;
+}
+.contenido-perfil-usuario h4{
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.social-net{
+  float: left;
+  width: 100%;
+}
+.social-net ul li.facebook-dev{
+  background: url(../img/facebook.png) no-repeat;
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 5px;
+}
+.social-net ul li a{
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.social-net ul li.twitter-dev{
+  background: url(../img/twitter.png) no-repeat;
+  width: 24px;
+  height: 24px;
+  float: left;  
+}
+.contenido-perfil-usuario h2{
+  font-size: 25px;
+}
+.contenido-perfil-usuario h5{
+  margin: 0;
+}
+.contenido-perfil-usuario p{
+  line-height: 18px;
+}
+.content-grup-j ul li{
+  background: #eee;
+  padding: 10px;
+  margin-bottom: 1px;
+}
+.content-grup-j ul{
+  list-style: none;
+  margin-left: 0;
+}
+.content-grup-j h5{
+  margin: 0;
 }
 .button-agregar{
   -webkit-border-radius: 5px 5px 0 0;
@@ -2105,7 +2173,7 @@ p.pp{
   text-decoration: underline!important;
 }
 .asistir-event{
-  padding: 10px;
+  padding: 0px;
 }
 .lista-usuario{
   padding: 0px;

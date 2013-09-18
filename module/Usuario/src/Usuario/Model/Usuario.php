@@ -20,6 +20,10 @@ class Usuario implements InputFilterAwareInterface{
     public $va_genero;
     public $va_descripcion;
     public $ta_ubigeo_in_id;
+    public $va_facebook;
+    public $va_twitter;
+    public $va_fecha_ingreso;
+    
     
     protected $inputFilter;  
     
@@ -34,6 +38,9 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
             $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
+            $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
+            $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
+            $this->va_fecha_ingreso=(!empty($data['va_fecha_ingreso'])) ? $data['va_fecha_ingreso'] : null;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -203,6 +210,21 @@ class Usuario implements InputFilterAwareInterface{
                 ),
             )));
               
+            $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_facebook', 
+                'required' => false, 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ))));
+            
+             $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_twitter', 
+                'required' => false, 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ))));
               
              $this->inputFilter = $inputFilter;
          }
@@ -368,7 +390,22 @@ class Usuario implements InputFilterAwareInterface{
                         'name' => 'ta_ubigeo_in_id',
                         'required' => false
                    )));
-              
+                  
+            $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_facebook', 
+                'required' => false, 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ))));
+            
+             $inputFilter->add($factory->createInput(array( 
+                'name' => 'va_twitter', 
+                'required' => false, 
+                'filters' => array( 
+                    array('name' => 'StripTags'), 
+                    array('name' => 'StringTrim'), 
+                ))));
               
              $this->inputFilter = $inputFilter;
          }
