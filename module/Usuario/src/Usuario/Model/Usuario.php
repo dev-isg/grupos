@@ -342,7 +342,7 @@ class Usuario implements InputFilterAwareInterface{
 //                    ),
                     array(
                         'name'    => 'filesize',
-                        'options' =>  array('max' => 204800),
+                        'options' =>  array('max' =>'204800kB'),//
                     ),
                   ),
                ))
