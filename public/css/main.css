@@ -195,6 +195,7 @@ nav a:hover {
   border: none;
   font-weight: normal;
   padding: 10px 15px;
+  height: auto;
 }
 #registro input[type="submit"],
 #login input[type="submit"],
@@ -263,6 +264,7 @@ nav a:hover {
 .dep-ja{
   padding-left: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
 }
 .dep-ja form{
   margin-bottom: 0;
@@ -975,12 +977,12 @@ vertical-align: middle;
   float: left;
   background: url(../img/he.jpg) repeat-x;
 }
-.event-header{
+/*.event-header{
   border-bottom: 2px solid #00A6E1;
 }
 .group-header{
   border-bottom: 2px solid #98CD34;  
-}
+}*/
 .filtrar-home{
   width: 100%;
   float: left;

@@ -3,7 +3,6 @@
         <?php if(count($this->grupos)<=0) { ?>
         <div class="row-fluid">
             <div class="span12 main wrapper" data-ui-scrollbar>
-                <div><?php echo $this->dato;?></div>
                 <div id="content">
                 
                     <?php foreach ($this->eventos  as $eventos) :?>   
@@ -31,7 +30,7 @@
                                         <i class="icon-comment"></i>
                                         <a href="#" title="comentarios"><?php echo  $this->escapeHtml($eventos->comentarios);?></a>
                                     </span>
-                                    <span class="meta-views" title="Views">
+                                    <span class="meta-views" title="Categoria">
                                         <i class="icon-tag"></i>
                                         <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
                                     </span>
@@ -71,7 +70,7 @@
                                 </h2>
                                 <div class="divider-1px-meta"></div>
                                 <footer class="entry-extra clearfix">
-                                    <span class="meta-views" title="Views">
+                                    <span class="meta-views" title="Categoria">
                                         <i class="icon-tag"></i>
                                         <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($grupos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>" title="Categoría"><?php echo  $this->escapeHtml($grupos->nombre_categ);?></a>
                                     </span>

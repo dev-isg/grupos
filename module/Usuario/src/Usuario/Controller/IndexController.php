@@ -406,6 +406,11 @@ public function getAuthService() {
                             ->toArray());
             $form->setInputFilter($usuario->getInputFilter2());
             $form->setData($data);
+            
+            
+//             $adapter = new \Zend\File\Transfer\Adapter\Http();
+//             $adapter->setValidators($adapter,$File['name']);
+  
             if ($form->isValid()) {
 
                 if ($this->params()->fromPost('va_contrasena') == '') {
@@ -421,7 +426,7 @@ public function getAuthService() {
                             $obj->va_nombre=$nombre;
                             $storage->write($obj);
                             
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -433,14 +438,14 @@ public function getAuthService() {
                             $obj->va_nombre=$nombre;
                             $storage->write($obj);
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 } else {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                             $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -448,17 +453,26 @@ public function getAuthService() {
                     } else {
                         $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 }
             } else {
-//                 var_dump($form->isValid());exit;
-                foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                
+        
+//             foreach ($form->getInputFilter()->getInvalidInput() as $value) { 
+//                 if($value->getName()=='va_foto'){
+//                    $error = $value->getMessages();
+//                }
+//             }
+//                 $form->setMessages(array('va_foto'=>$error));
+                foreach ($form->getInputFilter()->getInvalidInput() as $error) {             
                     print_r($error->getMessages());
                 }
+
             }
         }
-
+        
+        
         return array(
             'in_id' => $id,
             'form' => $form,

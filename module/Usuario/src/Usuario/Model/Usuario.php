@@ -165,8 +165,8 @@ class Usuario implements InputFilterAwareInterface{
 //                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
 //                    ),
                     array(
-                        'name'    => 'filesize',
-                        'options' =>  array('max' => '204800kB'),
+                        'name'    => 'File\Size',
+                        'options' =>  array('max' =>'2MB'),//204800kB
                     ),
                   ),
                ))
@@ -341,8 +341,8 @@ class Usuario implements InputFilterAwareInterface{
 //                        'options' =>  array('mimeType' => 'image/jpg,image/jpeg'),
 //                    ),
                     array(
-                        'name'    => 'filesize',
-                        'options' =>  array('max' =>'204800kB'),//
+                        'name'    => 'File\Size',//filesize
+                        'options' =>  array('max' =>'2MB'),//204800kB
                     ),
                   ),
                ))
