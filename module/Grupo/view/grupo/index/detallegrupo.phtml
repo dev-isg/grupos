@@ -142,7 +142,7 @@
                                 <input class="marcar-user" type="checkbox"  data-user="<?php echo $usuariopendiente->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuariopendiente->imagen;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuariopendiente->nombre_usuario;?></a>
+                                    <a href="<?php echo $usuariopendiente->ta_usuario_in_id;?>"><?php echo $usuariopendiente->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuariopendiente->descripcion_usuario;?>
                                     </p>
@@ -164,7 +164,7 @@
                                 <input class="marcar-user" type="checkbox" data-user="<?php echo $usuarioaceptado->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuarioaceptado->imagen;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuarioaceptado->nombre_usuario;?></a>
+                                    <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuarioaceptado->descripcion_usuario;?>
                                     </p>

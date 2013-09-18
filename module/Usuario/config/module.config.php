@@ -111,6 +111,17 @@ return array(
                     )
                 )
             ), 
+            'ver-usuario' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/usuario[/:in_id]',
+                    'defaults' => array(
+                        'controller' => 'Usuario\Controller\Index',
+                        'action' => 'verusuario'
+                    )
+                ),
+            ),
+
                 'agregar' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -122,6 +133,7 @@ return array(
                     )
                 )
             ), 
+
         ),
     ),
     'view_manager' => array(
