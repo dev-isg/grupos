@@ -9,14 +9,14 @@
         <?php } ?>
 
         <div class="row-fluid">
-			<?php echo $this->valor;  ?>
+			<?php //echo $this->valor;  ?>
     		<div class="row-fluid"> 
                 <div class="span12 dta-user contenido-cuenta box" style="margin-top:15px;">
                   <?php
                     $usuario = $this->usuario;
                     $form = $this->form;
                     $form->setAttributes(array(
-                        'action' => $this->url . '/usuario/index/editarusuario/' . $this->in_id,
+                        'action' => $this->url . '/micuenta' ,//. $this->in_id
                         'method' => 'post',
                         'class' => 'form-horizontal usuario-actualizar',
                         'id' => 'editarusuario'

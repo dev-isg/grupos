@@ -421,7 +421,7 @@ public function getAuthService() {
                             $obj->va_nombre=$nombre;
                             $storage->write($obj);
                             
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -433,14 +433,14 @@ public function getAuthService() {
                             $obj->va_nombre=$nombre;
                             $storage->write($obj);
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 } else {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                             $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
@@ -448,7 +448,7 @@ public function getAuthService() {
                     } else {
                         $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
 
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/usuario/index/editarusuario?m=1');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 }
             } else {
