@@ -161,11 +161,12 @@ class EventoTable{
       * 
       */
         public function unirseGrupo($idgrup,$iduser){
-            if($this->getGrupoUsuario($idgrup,$iduser)){
 
-//                return true;
+            $usuario=$this->getGrupoUsuario($idgrup,$iduser);
+            if($usuario){
+                $estado=($usuario->va_estado!='activo')?'pendiente':'activo';
                  $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                 ->set(array('va_estado'=>'activo'))//'pendiente' activo
+                 ->set(array('va_estado'=>$estado))//'pendiente' activo
                  ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));
     
             }else{
@@ -173,13 +174,12 @@ class EventoTable{
                 ->values(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup,'va_estado'=>'pendiente','va_fecha'=>date('c')));
             }
             $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
-//            var_dump($selectString);
             $adapter=$this->tableGateway->getAdapter();
             $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             if (!$row) {
                 throw new \Exception("No se puede unir al grupo");
+                return false;
             }
-//            var_dump($row->current());Exit;
             return true;
     
         }
@@ -261,7 +261,7 @@ class EventoTable{
              $evento=$this->getEvento($idevent);
              $idgrup=$evento->ta_grupo_in_id;
          if($this->getEventoUsuario($idevent,$iduser)){
-//             $this->unirseGrupo($idgrup,$iduser);
+             $this->unirseGrupo($idgrup,$iduser);
              $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
              ->set(array('va_estado'=>'activo','va_fecha'=>date('c')))//activo
              ->where(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent));
@@ -284,7 +284,7 @@ class EventoTable{
      }
      
      public function retiraEvento($idevent,$iduser){
-            $idgrup=$this->getEvento($idevent)->ta_grupo_in_id;
+//            $idgrup=$this->getEvento($idevent)->ta_grupo_in_id;
 //            $this->retiraGrupo($idgrup, $iduser);
             $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
                     ->set(array('va_estado'=>'desactivo'))
@@ -567,26 +567,24 @@ class EventoTable{
 
 
  
-      public function usuarioseventos($id)
-    {
-         $adapter = $this->tableGateway->getAdapter();
-            $sql = new Sql($adapter);
-            $selecttot = $sql->select()
-          ->from('ta_usuario_has_ta_evento')               
-          ->join('ta_evento','ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' =>'va_nombre','descripcion' =>'va_descripcion','imagen' =>'va_imagen','fecha' =>'va_fecha','id' =>'in_id'), 'left')         
-          ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
-         ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array(),'left') 
-          ->join('ta_categoria','ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' =>'va_nombre','idcategoria' =>'in_id'), 'left')                  
-          ->where(array('ta_usuario_has_ta_evento.ta_usuario_in_id'=>$id,'ta_evento.va_estado'=>'activo'
-              ))->where('ta_evento.ta_usuario_in_id !='.$id)
-          ->group('ta_evento.in_id');
-            $selectString = $sql->getSqlStringForSqlObject($selecttot);
-            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);  
-            return $resultSet->buffer();
+      public function usuarioseventos($id) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+                ->from('ta_usuario_has_ta_evento')
+                ->join('ta_evento', 'ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' => 'va_nombre', 'descripcion' => 'va_descripcion', 'imagen' => 'va_imagen', 'fecha' => 'va_fecha', 'id' => 'in_id'), 'left')
+                ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
+                ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array(), 'left')
+                ->join('ta_categoria', 'ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
+                ->where(array('ta_usuario_has_ta_evento.va_estado' => 'activo', 'ta_evento.va_estado' => 'activo', 'ta_usuario_has_ta_evento.ta_usuario_in_id' => $id
+                ))->where('ta_evento.ta_usuario_in_id !=' . $id)
+                ->group('ta_evento.in_id')
+                ->order('ta_usuario_has_ta_evento.va_fecha DESC');
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->buffer();
     }
-    
 
-    
     public function miseventos($id) {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);

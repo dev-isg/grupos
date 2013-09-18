@@ -135,7 +135,7 @@
                                 <input class="marcar-user" type="checkbox"  data-user="<?php echo $usuariopendiente->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuariopendiente->imagen;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuariopendiente->nombre_usuario;?></a>
+                                    <a href="<?php echo $usuariopendiente->ta_usuario_in_id;?>"><?php echo $usuariopendiente->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuariopendiente->descripcion_usuario;?>
                                     </p>
@@ -157,7 +157,7 @@
                                 <input class="marcar-user" type="checkbox" data-user="<?php echo $usuarioaceptado->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuarioaceptado->imagen;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuarioaceptado->nombre_usuario;?></a>
+                                    <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuarioaceptado->descripcion_usuario;?>
                                     </p>
@@ -221,8 +221,7 @@
 
 <script type="text/javascript">
 	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
-    $(document).on('ready', function(){		
-
+    $(document).on('ready', function(){
         usuarioEspera();
         usuarioAprobados();
         enviarDatos();
@@ -339,7 +338,7 @@
                     $(".eliminar-grupo").remove();
                     var addbtnAddGrupo = '<div class="row-fluid eliminar-grupo"><div class="span12 unete-grupo"><a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a></div></div>';
                     $(".sidebar-user-grupo").prepend(addbtnAddGrupo);
-                    $(".lista-usuario ul li").empty();
+                    $(".lista-usuario ul").empty();
                     enviarDatos();
                 },
                 error: function(){

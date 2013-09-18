@@ -42,7 +42,7 @@
                 </a>
               </div>
              
-              <h2 class="gh"><a href="/grupo/index/detallegrupo/<?php echo $this->escapeHtml($this->eventos[0]['id_grupo'], ENT_QUOTES, 'utf-8');  ?>"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
+              <h2 class="gh"><a href="<?php echo $this->url('detalle-grupo').'/'.$this->escapeHtml($this->eventos[0]['id_grupo'], ENT_QUOTES, 'utf-8');  ?>"><?php echo $this->eventos[0]['nombre_grupo']; ?>  </a></h2>
               <p class="fund gh">
                 <em>Fundado el <?php $fecha = date_create($this->eventos[0]['fecha_creacion']); 
                 $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
