@@ -406,6 +406,11 @@ public function getAuthService() {
                             ->toArray());
             $form->setInputFilter($usuario->getInputFilter2());
             $form->setData($data);
+            
+            
+//             $adapter = new \Zend\File\Transfer\Adapter\Http();
+//             $adapter->setValidators($adapter,$File['name']);
+  
             if ($form->isValid()) {
 
                 if ($this->params()->fromPost('va_contrasena') == '') {
@@ -452,13 +457,22 @@ public function getAuthService() {
                     }
                 }
             } else {
-//                 var_dump($form->isValid());exit;
-                foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                
+        
+//             foreach ($form->getInputFilter()->getInvalidInput() as $value) { 
+//                 if($value->getName()=='va_foto'){
+//                    $error = $value->getMessages();
+//                }
+//             }
+//                 $form->setMessages(array('va_foto'=>$error));
+                foreach ($form->getInputFilter()->getInvalidInput() as $error) {             
                     print_r($error->getMessages());
                 }
+
             }
         }
-
+        
+        
         return array(
             'in_id' => $id,
             'form' => $form,
