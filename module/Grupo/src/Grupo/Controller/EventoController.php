@@ -370,7 +370,7 @@ class EventoController extends AbstractActionController
         }
         
 
-       
+        $foto=$participa->va_foto;
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
@@ -398,7 +398,8 @@ class EventoController extends AbstractActionController
             'participa'=>$activo,
             'mensajes'=>$mensajes,
             'privado'=>$tipo,
-            'grupoestado'=>$grupoestado
+            'grupoestado'=>$grupoestado,
+            'foto'=>$foto
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         )
