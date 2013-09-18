@@ -365,19 +365,38 @@ class GrupoTable{
         return $row->current();
     }
      
-     public function retiraGrupo($idgrup,$iduser){
-//         $this->eventosgrupo($idgrup, $iduser);
-            $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
-                    ->set(array('va_estado'=>'desactivo'))
-                    ->where(array('ta_usuario_in_id'=>$iduser,'ta_grupo_in_id'=>$idgrup));  
-           $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
-           $adapter=$this->tableGateway->getAdapter();
-           $row=$adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);  
-            if (!$row) {
-            throw new \Exception("No se puede retirar al grupo");
+     public function retiraGrupo($idgrup, $iduser) {
+        $update = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
+                ->set(array('va_estado' => 'desactivo'))
+                ->where(array('ta_usuario_in_id' => $iduser, 'ta_grupo_in_id' => $idgrup));
+        $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+        $adapter = $this->tableGateway->getAdapter();
+        $row = $adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);
+        
+        $eventos = $this->totalEventosxGrupo($idgrup, $iduser);//eventosgrupo($idgrup, $iduser,'privado')
+ 
+        foreach ($eventos as $evento) {
+            if ($eventos->count() > 0) {
+                if ($evento->va_estado == 'activo') {
+                    $updatevent = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_evento')
+                            ->set(array('va_estado' => 'desactivo'))
+                            ->where(array('ta_usuario_in_id' => $iduser, 'ta_evento_in_id' => $evento->in_id));
+                    $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($updatevent);
+                    $adapter = $this->tableGateway->getAdapter();
+
+                    $rowevent = $adapter->query($selectStringUpdate, $adapter::QUERY_MODE_EXECUTE);
+                    if (!$rowevent) {
+                        throw new \Exception("No se puede retirar de los eventos");
+                    }
+                }
             }
-          return true;
-     }
+        }
+
+        if (!$row) {
+            throw new \Exception("No se puede retirar al grupo");
+        }
+        return true;
+    }
      /*
       * Obtiene los eventos de los grupos
       */
@@ -527,29 +546,50 @@ class GrupoTable{
 //        return $resultSet;      
 //    }
     
+       public function totalEventosxGrupo($id, $iduser) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('ta_evento')
+                ->join('ta_usuario_has_ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', 
+                array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_usuario_in_id)')), 'left');
+
+            if ($this->getGrupoUsuarioDetalle($id, $iduser)) {
+                $select->where(array('ta_evento.ta_grupo_in_id' => $id, 'ta_evento.va_estado' => 'activo'));
+            } else {
+                $select->where(array('ta_evento.va_estado' => 'activo','ta_evento.ta_grupo_in_id' => $id,
+                    'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));
+            }
+   
+        $select->group('in_id')->order('va_fecha desc');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->buffer();
+    }
     
-      public function eventosgrupo($id, $iduser = null) {
+      public function eventosgrupo($id, $iduser = null, $tipo = 'publico') {
         //$fecha = date("Y-m-d h:m:s"); 
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select();
         $select->from('ta_evento')
-                ->join('ta_usuario_has_ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_usuario_in_id)')), 'left');
-                          
-        if($iduser !=null){
-            if($this->getGrupoUsuarioDetalle($id, $iduser)){
+                ->join('ta_usuario_has_ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', 
+                array('miembros' => new \Zend\Db\Sql\Expression('COUNT(ta_usuario_has_ta_evento.ta_usuario_in_id)')), 'left');
+
+        if ($iduser != null) {
+            if ($this->getGrupoUsuarioDetalle($id, $iduser)) {
                 $select->where(array('ta_evento.ta_grupo_in_id' => $id, 'ta_evento.va_estado' => 'activo'));
 //            $select->where(array('ta_evento.va_tipo'=>'privado'));
-            }else{
-                $select->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_tipo'=>'publico'));
+            } else {
+                $select->where(array('ta_evento.ta_grupo_in_id' => $id, 'ta_evento.va_tipo' => $tipo));
             }
-        }else{
-            $select->where(array('ta_evento.ta_grupo_in_id' => $id,'ta_evento.va_tipo'=>'publico'));
+        } else {
+            $select->where(array('ta_evento.ta_grupo_in_id' => $id, 'ta_evento.va_tipo' => $tipo));
         }
-                $select->group('in_id')
-                ->order('va_fecha desc');
+        $select->group('in_id')->order('va_fecha desc');
         $selectString = $sql->getSqlStringForSqlObject($select);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//        var_dump($resultSet->toArray());Exit;
         return $resultSet->buffer();
     }
 

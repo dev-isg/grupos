@@ -470,13 +470,15 @@ public function getAuthService() {
     }
     
     public function verusuarioAction(){
-        $id=$this->params()->fromQuery('in_id',221);//298
+                $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
+        $renderer->inlineScript()
+        ->setScript('$(document).ready(function(){valUsuario();});')
+            ->prependFile($this->_options->host->base . '/js/main.js');
+        $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
         $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
         $usuario->ta_ubigeo_in_id=$auxdistri;
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
-  
-//        var_dump($usergroup->count());Exit;
         return array('usuario'=>$usuario,'mienbros'=>$usergroup);
     }
 

@@ -95,14 +95,13 @@
                       if($this->grupo[0]['ta_usuario_in_id']!=$session->in_id){
                         if ($session) { ?>
                             <?php if ($participa=='activo') { ?>
-                            <div class="row-fluid">
+                            <div class="row-fluid eliminar-grupo">
                                 <div class="span12 unete-grupo"> 
                                     <a href="#" class="btn btn-danger uneteAbEvent" id="uneteAbEvent">Abandonar el Grupo</a> 
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent" style="display:none;">¡Unete a nosotros!</a> 
                                 </div>      
                             </div>
                             <?php } elseif($participa=='desactivo'){ ?>
-                            <div class="row-fluid">
+                            <div class="row-fluid eliminar-grupo">
                                 <div class="span12 unete-grupo">
                                     <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a>
                                 </div>      
@@ -114,14 +113,8 @@
                                     <span class="btn btn-warning disabled" id="uneteEvent">Pendiente</span>
                                 </div>      
                             </div>
-                                <?php }else{?>
-                            <div class="row-fluid evento-desactivo">
-                                <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a>
-                                </div>      
-                            </div>
-                                 <?php }?>
-                            <?php } else { ?>
+                                <?php } 
+                                } else { ?>
                             <div class="row-fluid">
                                 <div class="span12 unete-grupo">
                                     <a href="#inline_evento" class="btn btn-success inlineEvento">¡Unete a nosotros!</a> 
@@ -142,7 +135,7 @@
                                 <input class="marcar-user" type="checkbox"  data-user="<?php echo $usuariopendiente->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuariopendiente->imagen;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuariopendiente->nombre_usuario;?></a>
+                                    <a href="<?php echo $usuariopendiente->ta_usuario_in_id;?>"><?php echo $usuariopendiente->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuariopendiente->descripcion_usuario;?>
                                     </p>
@@ -164,7 +157,7 @@
                                 <input class="marcar-user" type="checkbox" data-user="<?php echo $usuarioaceptado->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     <img src="<?php echo $this->host('images').'/usuario/detalle/'.$usuarioaceptado->imagen;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
-                                    <a href="#"><?php echo $usuarioaceptado->nombre_usuario;?></a>
+                                    <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
                                     <p>
                                         <?php echo $usuarioaceptado->descripcion_usuario;?>
                                     </p>
@@ -228,8 +221,7 @@
 
 <script type="text/javascript">
 	var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
-    $(document).on('ready', function(){		
-
+    $(document).on('ready', function(){
         usuarioEspera();
         usuarioAprobados();
         enviarDatos();
@@ -298,11 +290,8 @@
         $(".uneteEvent").on('click', function(e){
             e.preventDefault();
             var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
+            $(".unete-grupo").empty();
             $(".unete-grupo").append(addLoading);
-            $(".uneteAbEvent").hide();
-            $(".uneteEvent").remove();
-            //$("a.uneteEvent").text("Pendiente");
-            //$("#uneteEvent").removeClass("uneteEvent");
             var activo = 1;
             $.ajax({
                 url: '/grupo/index/unir',
@@ -311,25 +300,8 @@
                 dataType: "json",
                 success: function(data){
                     $(".img-lo").hide();   
-                    $(".evento-desactivo").remove();
-                    var dataPer = '<li id="user-'+data.userestado["id"]+'">'+
-                                    '<div class="users">'+
-                                        '<div class="row-fluid">'+
-                                            '<div class="span4 img-user-ev">'+
-                                                '<img src="'+hostUrl+data.userestado["imagen"]+'" alt="">'+
-                                            '</div>'+
-                                            '<div class="span8 desc-user">'+
-                                                '<h3>'+data.userestado["nombre_usuario"]+'</h3>'+
-                                                '<p>'+data.userestado["descripcion_usuario"]+'</p>'+
-                                            '</div>'+
-                                        '</div>'+
-                                        '<div class="row-fluid unio">'+
-                                            '<p class="span12">'+data.userestado["va_fecha"]+'</p>'+
-                                        '</div>'+
-                                    '</div>'+
-                                    '</li>';
-                    $(".lista-usuario ul").prepend(dataPer);
-                    $(".sidebar-user-grupo").append('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-success disabled" id="uneteEvent">Pendiente</span></div></div>');
+                    $(".eliminar-grupo").remove();
+                    $(".sidebar-user-grupo").prepend('<div class="row-fluid pendiente-revicion"><div class="span12 unete-grupo"><p>TU SOLICITUD ESTA EN ESTADO</p><span class="btn btn-warning disabled" id="uneteEvent">Pendiente</span></div></div>');
                     //$(".unete-grupo .uneteEvent").remove();
                     clickUnir();
                 },
@@ -353,9 +325,8 @@
         $(".uneteAbEvent").on('click', function(e){
             e.preventDefault();
             var addLoading = '<img class="img-lo" src="/img/cargando.gif" />';
+            $(".unete-grupo").empty();
             $(".unete-grupo").append(addLoading);
-            $(".uneteAbEvent").hide();
-            $(".uneteEvent").hide();
             var activo = 0;
             $.ajax({
                 url: '/grupo/index/unir',
@@ -363,10 +334,12 @@
                 data: 'act=' + activo +'&idE='+even,
                 dataType: "json",
                 success: function(data){
-                    var datoId = data.userestado["id"]; 
-                    $(".img-lo").hide();
-                    $(".uneteEvent").show();
-                    $(".lista-usuario ul li#user-"+datoId).remove();
+                    var datoId = data.userestado["id"];
+                    $(".eliminar-grupo").remove();
+                    var addbtnAddGrupo = '<div class="row-fluid eliminar-grupo"><div class="span12 unete-grupo"><a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a></div></div>';
+                    $(".sidebar-user-grupo").prepend(addbtnAddGrupo);
+                    $(".lista-usuario ul").empty();
+                    enviarDatos();
                 },
                 error: function(){
                     console.log('Fallo conectando con el servidor')
