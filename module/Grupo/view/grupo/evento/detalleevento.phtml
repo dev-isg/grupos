@@ -187,8 +187,7 @@
 
 <!-- FORMULARIO COMENTARIO-->
 <div class="row-fluid">
-    <?php if ($this->session && $this->grupoestado=='activo') { ?>
-                  
+    <?php if ($this->session && $this->grupoestado=='activo') { ?>        
         <?php
         $fecha_actual = date("Y-m-d h:m:s");
         if ($this->eventos[0]['va_fecha'] >= $fecha_actual) {

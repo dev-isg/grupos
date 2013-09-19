@@ -575,12 +575,19 @@ class EventoTable{
                 ->join('ta_evento', 'ta_evento.in_id=ta_usuario_has_ta_evento.ta_evento_in_id', array('nombre' => 'va_nombre', 'descripcion' => 'va_descripcion', 'imagen' => 'va_imagen', 'fecha' => 'va_fecha', 'id' => 'in_id'), 'left')
                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
                 ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array(), 'left')
+                ->join('ta_usuario_has_ta_grupo', 
+                       'ta_usuario_has_ta_grupo.ta_grupo_in_id=ta_grupo.in_id', 
+                        array(), 'left')
                 ->join('ta_categoria', 'ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
-                ->where(array('ta_usuario_has_ta_evento.va_estado' => 'activo', 'ta_evento.va_estado' => 'activo', 'ta_usuario_has_ta_evento.ta_usuario_in_id' => $id
+                ->where(array(
+                    'ta_usuario_has_ta_grupo.va_estado' => 'activo',
+                    'ta_grupo.va_estado' => 'activo','ta_usuario_has_ta_evento.va_estado' => 'activo', 
+                    'ta_evento.va_estado' => 'activo', 'ta_usuario_has_ta_evento.ta_usuario_in_id' => $id
                 ))->where('ta_evento.ta_usuario_in_id !=' . $id)
                 ->group('ta_evento.in_id')
                 ->order('ta_usuario_has_ta_evento.va_fecha DESC');
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
+//        var_dump($selectString);Exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
     }
