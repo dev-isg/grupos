@@ -415,11 +415,11 @@ class EventoTable{
                     ->from('ta_evento')
           ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
-          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')   
+          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')   
           ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_tipo'=>'publico','ta_evento.va_fecha>=?'=>$fecha)) 
          ->order('in_id desc')->group('in_id');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-             //var_dump($selectString);exit;
+            //var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
            //  var_dump(count($resultSet->buffer()));exit;
          if (!$resultSet) {
@@ -670,7 +670,7 @@ class EventoTable{
    ->join('ta_comentario','ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')                         
             
           ->join('ta_grupo','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array('categoria'=>'ta_categoria_in_id'),'left')
-          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
+          ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')
          ->where(array('ta_evento.va_estado'=>'activo','ta_evento.va_fecha>=?'=>$fecha,'ta_categoria.in_id'=>$id,
              'ta_evento.va_tipo!=?' => 'privado'))           
           ->order('in_id desc')
