@@ -80,10 +80,10 @@ class UsuarioForm extends Form {
 //                'placeholder'=>'Ingrese el dni... '
 //            ),
             'options' => array(
-                'label' => '',
                 'value_options' => array(
                     'masculino' => 'masculino', 'femenino' => 'femenino'
-                )
+                ),
+                'empty_option' => '--- Seleccionar ---',
             ),
         ));
 
@@ -139,7 +139,7 @@ class UsuarioForm extends Form {
                 'id' => 'ta_ubigeo_in_id'
             ),
             'options' => array(
-                'value_options' =>$this->Distrito(),                                               
+                'value_options' =>$this->Provincia(),                                               
                 'empty_option' => '--- Seleccionar ---',
             )
         ));
@@ -169,6 +169,29 @@ class UsuarioForm extends Form {
 //                'id' => 'submitbutton',
             ),
         ));
+    }
+    
+   public function Provincia() {
+        $this->dbAdapter = $this->getDbAdapter();
+        $adapter = $this->dbAdapter;
+        if($adapter){
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('in_idprovincia', 'va_provincia'))
+                        ->from('ta_ubigeo')
+                        ->where(array('va_departamento' => 'LIMA'))->group('in_idprovincia');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        $distrito = $results->toArray();
+        
+        $auxtipo = array();
+        foreach ($distrito as $tipo) {
+            $auxtipo[$tipo['in_idprovincia']] = $tipo['va_provincia'];
+        }
+        return $auxtipo;
+        }else{
+            return;
+        }
     }
 
     public function Distrito() {

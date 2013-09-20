@@ -25,8 +25,8 @@ class NotificacionForm extends Form
                    'options' => array(
                        'label_attributes' => array('class' => 'checkbox'),
                          'value_options' => array(
-                            '1'=>'Recibir avisos por email cuando ingresa al Grupo',
-                            '2'=>'Recibir avisos por email cuando sale del Grupo',
+                            '1'=>'Recibir avisos por correo electrónico cuando un usuario se une a uno de tus eventos o grupos.',
+                            '2'=>'Recibir avisos por correo electrónico cuando un usuario de tu evento o grupo se retira.',
                          ),
                        ),
                    

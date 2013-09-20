@@ -187,8 +187,7 @@
 
 <!-- FORMULARIO COMENTARIO-->
 <div class="row-fluid">
-    <?php if ($this->session && $this->grupoestado=='activo') { ?>
-                  
+    <?php if ($this->session && $this->grupoestado=='activo') { ?>        
         <?php
         $fecha_actual = date("Y-m-d h:m:s");
         if ($this->eventos[0]['va_fecha'] >= $fecha_actual) {
@@ -228,7 +227,11 @@
                     <p>Debes de unirte al evento para comentar.</p>
                 </div>
 
-        <?php } else { ?>
+        <?php }elseif($this->grupocomprueba=='desactivo'){?> 
+             <div class="span12 login-comentario">
+                    <p>Debes de unirte al evento para comentar.</p>
+                </div>
+        <?php }else { ?>
                 <div class="span12 login-comentario">
                     <p><a href="#inline_evento" class="inlineEventoDet">Iniciar session</a> para comentar.</p>
                 </div>

@@ -78,12 +78,12 @@ class UsuarioTable
         $row = $this->tableGateway->select(array(
             'va_email' => $email
         ));
-        $row = $row->current();
+        $resul = $row->current();
         
-        if (! $row) {
+        if (! $resul) {
             throw new \Exception("Could not find row $email");
         }
-        return $row;
+        return $resul;
     }
 
     public function generarPassword($correo)
@@ -91,7 +91,7 @@ class UsuarioTable
         $mail = $this->getUsuarioxEmail($correo);
         $expFormat = mktime(date("H"), date("i"), date("s"), date("m"), date("d") + 3, date("Y"));
         $expDate = date("Y-m-d H:i:s", $expFormat);
-        $idgenerada = uniqid($mail->in_id . substr($mail->va_nombre, 0, 8) . substr($mail->va_email, 0, 8), 0);
+        $idgenerada = sha1(uniqid($mail->in_id . substr($mail->va_nombre, 0, 8) . substr($mail->va_email, 0, 8).date("Y-m-d H:i:s"), 0));
         $data = array(
             'va_recupera_contrasena' => $idgenerada,
             'va_fecha_exp'=>$expDate
@@ -106,15 +106,23 @@ class UsuarioTable
         return $idgenerada;
     }
 
-    public function cambiarPassword($password, $iduser)
-    {
+    public function cambiarPassword($password, $iduser) {
         $data = array(
             'va_contrasena' => sha1($password)
         );
-        $this->tableGateway->update($data, array(
-            'in_id' => $iduser
-        ));
+
+        $actualiza = $this->tableGateway->getSql()->update()->table('ta_usuario')
+                ->set($data)
+                ->where(array('ta_usuario.in_id' => $iduser));
+        $selectStringNotifca = $this->tableGateway->getSql()->getSqlStringForSqlObject($actualiza);
+        $adapter1 = $this->tableGateway->getAdapter();
+        $row = $adapter1->query($selectStringNotifca, $adapter1::QUERY_MODE_EXECUTE);
+
+        if (!$row) {
+            return false;
+        }
         $this->eliminaPass($iduser);
+        return true;
     }
 
     public function consultarPassword($password)
@@ -366,6 +374,16 @@ class UsuarioTable
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->toArray();
+    }
+        public function verificaCorreo($correo)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()->from('ta_usuario')
+                ->where(array('va_email'=>$correo));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet->current();
     }
     
     public function usuario1($correo)

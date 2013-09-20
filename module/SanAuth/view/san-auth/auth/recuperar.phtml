@@ -1,5 +1,8 @@
 <div class="main-container">
 	<div class="container">
+            		<?php if($this->mensaje[0]){?>
+		 <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
+		 <?php }?>
 		<div class="row-fluid">
 			<div class="span12 recuperacion group-sidebar">
 			<?php 
@@ -29,8 +32,5 @@
 		            <?php echo $this->form()->closeTag();?>
 			</div>
 		</div>
-		<?php if($this->mensaje[0]){?>
-		 <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
-		 <?php }?>
 	</div>
 </div>

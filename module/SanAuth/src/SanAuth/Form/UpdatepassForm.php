@@ -63,7 +63,7 @@ class UpdatepassForm extends Form
                     'name' => 'StringLength',
                     'options' => array(
                         'encoding' => 'UTF-8',
-                        'min'      => 6,
+                        'min'      => 8,
                         'max'      => 128,
                     ),
                 ),
@@ -77,7 +77,7 @@ class UpdatepassForm extends Form
             'validators' => array(
                 array(
                     'name'    => 'StringLength',
-                    'options' => array( 'min' => 6 ),
+                    'options' => array( 'min' => 8 ),
                 ),
                 array(
                     'name' => 'identical',

@@ -104,11 +104,11 @@ class Evento implements InputFilterAwareInterface
             
             $inputFilter->add($factory->createInput(array(
                 'name' => 'va_latitud',
-                'required' => true
+                'required' => false
             )));
             $inputFilter->add($factory->createInput(array(
                 'name' => 'va_longitud',
-                'required' => true
+                'required' => false
             )));
             
             $inputFilter->add($factory->createInput(array(
