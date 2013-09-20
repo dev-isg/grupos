@@ -347,7 +347,7 @@ class EventoTable{
                 ->from('ta_evento')
                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
                 ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
-<<<<<<< HEAD
+
                 ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
                  ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 
                 'ta_evento.va_tipo!=?' => 'privado'))->group('in_id');
@@ -383,26 +383,8 @@ class EventoTable{
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //      var_dump($selectString);exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
-=======
-                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left');               
-        if($iduser != null){
-            if($this->getEventosxUsuario($iduser)){
-            $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
-            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
-                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));  
-            }else{
-                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado',
-                    'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));
-            }
-        }else{
-            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
-        }
 
-        $selecttot->order('in_id desc')->group('in_id');
-        $selectString = $sql->getSqlStringForSqlObject($selecttot);
-     
-        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
->>>>>>> 869ed6ae26b6576f278aafded7af4fef51d56863
+
         return $resultSet->buffer();
     }
 
