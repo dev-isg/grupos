@@ -6,6 +6,15 @@
                 <?php  echo $this->mensaje;?>
             </div>
         </div><?php } ?>
+        <?php if ($this->messages) { ?>
+            <?php foreach ($this->messages as $message) { ?>
+                <div class="row-fluid">
+                    <div class="alert alert-success alert-margin">
+                        <?php echo $message; ?>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php } ?>
         <div class="row-fluid">
             <div class="span12 group-sidebar login-secundario">
                 <h3>Iniciar sesion</h3>
@@ -18,11 +27,6 @@
                     )
                 ));         
                 $form->setAttribute('class','for-ji form-horizontal');
-//                        $this->url('login/process', array(
-//                        'action' => 'authenticate'
-//                    )),
-//                    'class' => 'for-ji form-horizontal'
-//                ));
                 $form->prepare();
                 echo $this->form()->openTag($form);?>
 
@@ -43,25 +47,7 @@
                         <?php  echo $this->formsubmit($form->get('submit'));?>
                     </div>
                 </div>
-
-
-<!--echo $this->form()->openTag($form);
-//echo $this->formCollection($form);
- echo $this->formRow($form->get('va_nombre'));
- echo $this->formRow($form->get('va_contrasena'));
- echo $this->formsubmit($form->get('submit'));
-echo $this->form()->closeTag();-->
-
-                <?php echo $this->form()->closeTag();
-
-                if ($this->messages){
-                    echo '<ul>';
-                    foreach($this->messages as $message)
-                    {
-                        echo '<li>'.$message.'</li>';
-                    }
-                    echo '</ul>';
-                } ?>
+                <?php echo $this->form()->closeTag(); ?>
             </div>
         </div>          
     </div>

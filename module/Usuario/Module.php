@@ -17,6 +17,7 @@ use Usuario\Model\Usuario;
 use Usuario\Model\UsuarioTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Validator\AbstractValidator;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -72,6 +73,14 @@ class Module implements AutoloaderProviderInterface
     {
         // You may not need to do this if you're doing it elsewhere in your
         // application
+        $translator=$e->getApplication()->getServiceManager()->get('translator');
+        $translator->addTranslationFile(
+            'phpArray',
+            './vendor/zendframework/zendframework/resources/languages/es/Zend_Validate.php'
+
+        );
+        AbstractValidator::setDefaultTranslator($translator);
+        
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);

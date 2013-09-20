@@ -45,11 +45,8 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="va_genero">Genero</label>
+                                    <label class="control-label" for="va_genero">Género</label>
                                     <div class="controls">
-                                        <?php if (($this->usuario->va_genero) == '') { ?>
-                                            <label for="">Seleccionar un género</label>
-                                        <?php } ?>
                                         <?php echo $this->formRow($form->get('va_genero')); ?>
 <!--                                        <select name="va_genero" class="valid">
                                             <option value="masculino" selected="selected">masculino</option>

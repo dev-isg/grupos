@@ -58,49 +58,53 @@ class AuthController extends AbstractActionController {
     }
 
 
-    public function loginAction()
-    {  
+    public function loginAction() {
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-        ->prependFile($this->_options->host->base . '/js/main.js');
-        $categorias =  $this->getGrupoTable()->tipoCategoria();
+                ->prependFile($this->_options->host->base . '/js/main.js');
+        $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+        $session = $storage->read();
         if (!isset($session)) {
-        $face = new \Grupo\Controller\IndexController();
-        $facebook = $face->facebook();
-        $this->layout()->login = $facebook['loginUrl'];
-        $this->layout()->user = $facebook['user']; }
+            $face = new \Grupo\Controller\IndexController();
+            $facebook = $face->facebook();
+            $this->layout()->login = $facebook['loginUrl'];
+            $this->layout()->user = $facebook['user'];
+        }
         $token = $this->params()->fromQuery('token');
-     //var_dump($token);exit;
-        if($token)
-        {$usuario = $this->getUsuarioTable()->usuario($token);
-        if(count($usuario)>0)
-           
-         {$this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-//var_dump($usuario[0]['in_id']);exit;
-         $mensaje='tu cuenta ya esta activada';}
-         else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}}
+        if ($token) {
+            $usuario = $this->getUsuarioTable()->usuario($token);
+            if (count($usuario) > 0) {
+                $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
+                $mensaje = 'tu cuenta ya esta activada';
+            } else {
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+            }
+        }
+        
+       $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
+        }
 
-         $form = $this->getForm();
+        $form = $this->getForm();
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
-            'messages' => $this->flashmessenger()->getMessages()
+            'messages' => $mensajes//$this->flashmessenger()->getMessages()
         );
     }
 
 
 
-    public function authenticateAction()
-    {  
+    public function authenticateAction() {
         $form = $this->getForm();
         $redirect = 'login';
         $request = $this->getRequest();
-        
+
         if ($request->isPost()) {
-            
+
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $correo = $request->getPost('va_email');
@@ -110,29 +114,29 @@ class AuthController extends AbstractActionController {
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
 
-                $usuario = $this->getUsuarioTable()->usuario1($correo);               
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
-//                    foreach ($result->getMessages() as $message) {
-//                        $this->flashmessenger()->addMessage($message);
-//                    }
+                    foreach ($result->getMessages() as $message) {
+                       $this->flashmessenger()->addMessage($message);
+                    }
 
                     if ($result->isValid()) {
-                        $urlorigen=$this->getRequest()->getHeader('Referer')->uri()->getPath();
-                        $arrurl=explode('/',$urlorigen);
-                        $id=end($arrurl);
+                        $urlorigen = $this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl = explode('/', $urlorigen);
+                        $id = end($arrurl);
                         $accion = $request->getPost('accion');
-                        $origen = $request->getPost('origen','evento');
+                        $origen = $request->getPost('origen', 'evento');
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
                             $redirect = 'detalle-grupo';
-                        } elseif ($accion == 'index' && $origen!='ingresarPrin') {
-                            $redirect = 'elegir-grupo';//'agregar-grupo';
-                        } elseif($accion=='index' && $origen=='ingresarPrin'){
+                        } elseif ($accion == 'index' && $origen != 'ingresarPrin') {
+                            $redirect = 'elegir-grupo'; //'agregar-grupo';
+                        } elseif ($accion == 'index' && $origen == 'ingresarPrin') {
                             $redirect = 'home';
                         }
-                            
+
                         $storage = $this->getAuthService()->getStorage();
                         $storage->write($this->getServiceLocator()
                                         ->get('TableAuthService')
@@ -145,26 +149,27 @@ class AuthController extends AbstractActionController {
                                             'va_logout',
                                             'id_facebook'
                                         )));
-                       
                     }
-                    } 
                 }
-                else{return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/auth');}
-              
             }
-//            echo $id;
-//            echo $origen;
-//            echo $redirect;exit;
-            if($id){
-                 return $this->redirect()->toRoute($redirect, array('in_id' => $id));
-            }else{
-                
-                 return $this->redirect()->toRoute($redirect);
-            }
+//          else {
+//              foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+//                       foreach($error->getMessages() as $mensaje){
+//                            $this->flashmessenger()->addMessage($mensaje);
+//                       }
+//              }
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+//           }
+        }
+        if ($id) {
+            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+        } else {
+
+            return $this->redirect()->toRoute($redirect);
+        }
     }
-    
-    
-       public function sessionfacebook($email,$pass)
+
+    public function sessionfacebook($email,$pass)
     {  
        
                 $correo = $email;
@@ -324,8 +329,10 @@ class AuthController extends AbstractActionController {
                 try {
                     $results = $this->getUsuarioTable()->generarPassword($mail);
                     $usuario = $this->getUsuarioTable()->getUsuarioxEmail($mail);
+//                    $mensajes='Este correo fue enviado con exito...';
                     $this->flashmessenger()->addMessage('Este correo fue enviado con exito...');
                 } catch (\Exception $e) {
+//                    $mensajes='Este correo no esta registrado...';
                     $this->flashmessenger()->addMessage('Este correo no esta registrado...');
                 }
 
@@ -360,7 +367,8 @@ class AuthController extends AbstractActionController {
                     $transport = $this->getServiceLocator()->get('mail.transport'); // new SendmailTransport();//$this->getServiceLocator('mail.transport')
                     $transport->send($message);
                 }
-                // var_dump($this->flashMessenger()->getMessages());exit;
+                
+            return $this->redirect()->toUrl('/cambio');
             }
         }
         $flashMessenger = $this->flashMessenger();
@@ -377,36 +385,38 @@ class AuthController extends AbstractActionController {
     public function recuperarAction() {
         $password = $this->params()->fromQuery('contrasena');
         $form = new UpdatepassForm();
-        try {
-            $results = $this->getUsuarioTable()->consultarPassword($password);
-        } catch (\Exception $e) {
-            // echo 'aka es';exit;
-            $this->flashMessenger()->addMessage('Este contrase�a temporal no existe...');
-        }
+        $request = $this->getRequest();
+        $form->setData($request->getPost());
 
-        if ($results) {
-            $request = $this->getRequest();
+        if ($request->isPost()) {
+            if ($form->isValid()) {
+                try {
+                    $results = $this->getUsuarioTable()->consultarPassword($password);
+                } catch (\Exception $e) {
+                    $this->flashMessenger()->addMessage('Este contraseña temporal no existe...');
+                }
 
-            // $usuario = new Usuario();
-            // $form = new UsuarioForm();
-            // $form->setInputFilter($usuario->getInputFilter());
-            $form->setData($request->getPost());
-            if ($request->isPost()) {
-                if ($form->isValid()) {
+                if ($results) {
 
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
-                        // $this->flashmessenger()->addMessage('La contrase�a se actualizo correctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se actualizo correctamente...');
                     } else {
-                        // $this->flashmessenger()->addMessage('La contrase�a se no se pudo actualizar correctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar correctamente...');
                     }
+                    return $this->redirect()->toUrl('/cambio-contrasena?contrasena=' . $password);
                 }
             }
+        }
+        
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $mensajes = $flashMessenger->getMessages();
         }
         return array(
             'form' => $form,
             'password' => $password,
-            'mensaje' => $this->flashmessenger()->getMessages()
+            'mensaje' => $mensajes//$this->flashmessenger()->getMessages()
         );
     }
 

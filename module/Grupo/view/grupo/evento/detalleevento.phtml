@@ -227,7 +227,11 @@
                     <p>Debes de unirte al evento para comentar.</p>
                 </div>
 
-        <?php } else { ?>
+        <?php }elseif($this->grupocomprueba=='desactivo'){?> 
+             <div class="span12 login-comentario">
+                    <p>Debes de unirte al evento para comentar.</p>
+                </div>
+        <?php }else { ?>
                 <div class="span12 login-comentario">
                     <p><a href="#inline_evento" class="inlineEventoDet">Iniciar session</a> para comentar.</p>
                 </div>

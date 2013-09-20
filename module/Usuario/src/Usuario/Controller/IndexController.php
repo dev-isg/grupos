@@ -291,8 +291,10 @@ public function getAuthService() {
             $form->setData($data); // $request->getPost()
             if ($form->isValid()) {
                 $usuario->exchangeArray($form->getData());
-               
+                $correo=$this->getUsuarioTable()->verificaCorreo($request->getPost('va_email'));
+                if($correo===false){
                 $email = $this->getUsuarioTable()->usuariocorreo($request->getPost('va_email'));
+               
                 if (count($email) <= 0) {
                     if ($File['name'] != '') {
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id = null)) {
@@ -311,10 +313,12 @@ public function getAuthService() {
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                     }
                 } else {
-
                     $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
                     // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
                 }
+              }else{
+                  $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
+              }
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages()); // $inputFilter->getInvalidInput()
@@ -360,7 +364,7 @@ public function getAuthService() {
                         'action' => 'index'
                     ));
         }
-        $valor = $this->headerAction($id);
+        $header = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
         $form->bind($usuario);
@@ -477,7 +481,7 @@ public function getAuthService() {
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
-            'valor' => $valor,
+            'valor' => $header,
             'formnotif' => $formNotif,
             'session'  =>$session
         );
