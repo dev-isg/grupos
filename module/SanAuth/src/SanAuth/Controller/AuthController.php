@@ -77,7 +77,7 @@ class AuthController extends AbstractActionController {
             $usuario = $this->getUsuarioTable()->usuario($token);
             if (count($usuario) > 0) {
                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-                $mensaje = 'tu cuenta ya esta activada';
+                $mensaje = 'Tu cuenta ya esta lista para usarse';
             } else {
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
             }
@@ -330,7 +330,7 @@ class AuthController extends AbstractActionController {
                     $results = $this->getUsuarioTable()->generarPassword($mail);
                     $usuario = $this->getUsuarioTable()->getUsuarioxEmail($mail);
 //                    $mensajes='Este correo fue enviado con exito...';
-                    $this->flashmessenger()->addMessage('Este correo fue enviado con exito...');
+                    $this->flashmessenger()->addMessage('Este correo fue enviado con éxito...');
                 } catch (\Exception $e) {
 //                    $mensajes='Este correo no esta registrado...';
                     $this->flashmessenger()->addMessage('Este correo no esta registrado...');
@@ -400,9 +400,9 @@ class AuthController extends AbstractActionController {
 
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
-                        $this->flashmessenger()->addMessage('La contraseña se actualizo correctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se actualizo corréctamente...');
                     } else {
-                        $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar correctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar corréctamente...');
                     }
                     return $this->redirect()->toUrl('/cambio-contrasena?contrasena=' . $password);
                 }

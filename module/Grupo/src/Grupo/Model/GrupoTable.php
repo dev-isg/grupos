@@ -31,7 +31,7 @@ class GrupoTable{
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
                     ->from('ta_grupo')
-                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categ'=>'va_nombre'),'left')
+                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre'),'left')
                     ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
 //                    ->join('ta_evento','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array(),'left');
             if($tipo!=null){

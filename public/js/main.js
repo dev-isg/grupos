@@ -80,13 +80,15 @@ function crearevento(){
                 va_nombre: "required",
                 va_direccion: "required",
                 va_referencia: "required",
-                editor1: "required"
+                editor1: "required",
+                va_tipo: "required"
             },
             messages: {
-                va_nombre: "Ingrese un nombre del evento",
-                va_direccion: "Ingrese la dirección del evento",
-                va_referencia : "Ingrese dirección de referencia",
-                editor1 : "Ingrese una descripción del evento"
+              va_nombre: "Ingrese un nombre del evento",
+              va_direccion: "Ingrese la dirección del evento",
+              va_referencia : "Ingrese dirección de referencia",
+              editor1 : "Ingrese una descripción del evento",
+              va_tipo: "Seleccione una categoría"
             }
         });
     });

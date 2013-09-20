@@ -7,7 +7,28 @@
 </style>
 <div class="main-container">
     <div class="container">
-        <?php if(count($this->grupos)<=0) { ?>
+          <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo 'No hay eventos de la categoría'; ?>
+      </div>
+    </div> <?php }elseif ($_GET['m']=='2') {?> <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo 'No hay grupos de la categoría'; ?>
+      </div>
+    </div> <?php }
+    elseif ($_GET['m']=='3') {?> <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en EVENTOS'; ?>
+      </div>
+    </div> <?php }
+    elseif($_GET['m']=='4') {?> <div class="row-fluid">
+      <div class="alert alert-margin">
+        <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en GRUPOS'; ?>
+      </div>
+    </div> <?php }
+    } else {
+    
+        if(count($this->grupos)<=0) { ?>
         <div class="row-fluid">
             <div class="span12 main wrapper" data-ui-scrollbar>
                 <div id="content">
@@ -67,7 +88,7 @@
                             <div class="content">
                                 <div class="entry-post-date" style="border-top-color: #2999b5">
                                     <div class="date-month">
-                                        <?php  $fecha = date_create($eventos->va_fecha);
+                                        <?php  $fecha = date_create($grupos->va_fecha);
                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
                                       </div>
                                 </div>
@@ -89,9 +110,17 @@
                 </div>
             </div>
         </div>
-        <?php }?>
+        <?php }}?>
+    
+    
+    
+    
+    
+    
     </div>
 </div> <!-- #main-container -->
+
+<?php if(!$_GET['m']){ ?>
 <div class="content-pa">
     <div class="container">
         <div class="row-fluid">
@@ -103,7 +132,7 @@
         </div>
     </div>
 </div>
-
+<?php  }?>
 <script type="text/javascript">
             /* <![CDATA[ */
 

@@ -99,7 +99,8 @@ class Module implements AutoloaderProviderInterface
                         }
                  } elseif ($actionName == 'agregargrupo' || $actionName == 'editargrupo' || $actionName == 'agregarevento' ||
                         $actionName == 'editarevento' || $actionName == 'editarusuario' || $actionName == 'miseventos' ||
-                         $actionName == 'misgrupos' || $actionName == 'eventosparticipo' || $actionName == 'grupoparticipo') {     
+                         $actionName == 'misgrupos' || $actionName == 'eventosparticipo' || $actionName == 'grupoparticipo'
+                         || $actionName == 'aprobar') {     
                         if ($authAdapter->hasIdentity() === false) {
                             return $controller->redirect()
                                     ->toRoute('login');

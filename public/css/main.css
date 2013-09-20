@@ -711,6 +711,7 @@ height: 40px;
 }
 .error{
   color:red!important;
+  font-size: 12px;
 }
 .login {
 margin-top: 4em;
@@ -1946,6 +1947,7 @@ a.tab-home-g-b:hover .pinchitob{
   padding: 5px;
   border-bottom: 1px solid #ccc;
   font-weight: bold;
+  background: #eee;
 }
 .img-cargar-usuarios{
   cursor: default;

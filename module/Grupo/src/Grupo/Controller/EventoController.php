@@ -299,6 +299,7 @@ class EventoController extends AbstractActionController
         
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+        $this->layout()->active1='active';
         $id = $this->params()->fromRoute('in_id');
         
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -333,7 +334,17 @@ class EventoController extends AbstractActionController
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-        $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id,'activo');
+         $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//        if($session) {
+//            if ($evento[0]['ta_usuario_in_id'] == $session->in_id) {
+//                $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//            } else {
+//                $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//            }
+//        } else {
+//            $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//        }
+//        var_dump($usuarios->toArray());exit;
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
@@ -370,7 +381,7 @@ class EventoController extends AbstractActionController
         }
         
 
-       
+        $foto=$participa->va_foto;
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
@@ -398,7 +409,8 @@ class EventoController extends AbstractActionController
             'participa'=>$activo,
             'mensajes'=>$mensajes,
             'privado'=>$tipo,
-            'grupoestado'=>$grupoestado
+            'grupoestado'=>$grupoestado,
+            'foto'=>$foto
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         )
