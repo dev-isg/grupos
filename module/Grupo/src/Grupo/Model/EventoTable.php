@@ -102,7 +102,7 @@ class EventoTable{
           'ta_grupo_in_id'=>$idgrupo=($idgrupo!=null)?$idgrupo:$evento->ta_grupo_in_id,//$evento->ta_grupo_in_id
            'va_tipo'=>$evento->va_tipo
           );
-
+//    var_dump($evento->va_descripcion);Exit;
       $id = (int) $evento->in_id;
   
 //      foreach($data as $key=>$value){
@@ -110,7 +110,6 @@ class EventoTable{
 //              $data[$key]=0;
 //          }
 //      }
-     
      
       if ($id == 0) {
           $data['va_fecha_ingreso']= date("Y-m-d H:i:s");
@@ -148,7 +147,6 @@ class EventoTable{
             ->from('ta_usuario_has_ta_grupo')
             ->where(array('ta_grupo_in_id'=>$idgrupo,'ta_usuario_in_id'=>$iduser));
             $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($selecttot);
-    
             $adapter=$this->tableGateway->getAdapter();
             $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
             if (!$row) {
@@ -247,6 +245,7 @@ class EventoTable{
                 ->from('ta_usuario_has_ta_evento')
                 ->join('ta_evento', 'ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id', array('idgrup' => 'ta_grupo_in_id','tipo'=>'va_tipo'), 'LEFT')
                 ->where(array(
+//            'ta_usuario_has_ta_evento.va_estado' => 'activo',
             'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
             'ta_evento.ta_grupo_in_id is not null','ta_evento.va_tipo'=>'privado'
                 ));
@@ -270,7 +269,9 @@ class EventoTable{
              //agrege al grupo cuando se une al evento
              $this->unirseGrupo($idgrup,$iduser);   
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));//activo
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));//desactivo activo
+         
+             
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
@@ -346,21 +347,35 @@ class EventoTable{
                 ->from('ta_evento')
                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
                 ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
-                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
-                ->join(array('c' => 'ta_comentario'), 'c.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(c.in_id)')), 'left');
+                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left');               
         if($iduser != null){
             if($this->getEventosxUsuario($iduser)){
             $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
             ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
-                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));  
+                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));  
             }else{
-                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado'));
+                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado',
+                    'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));
             }
         }else{
             $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
         }
+//        if($iduser != null){
+//         $selectpriva = $sql->select()
+//                ->from('ta_evento')
+//                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
+//                ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
+//                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')              
+//            ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
+//            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
+//                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));
+//         $selecttot->combine($selectpriva);
+//        }else{
+//            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
+//        }
         $selecttot->order('in_id desc')->group('in_id');
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
+      
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
     }
@@ -391,7 +406,6 @@ class EventoTable{
           ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_tipo'=>'publico','ta_evento.va_fecha>=?'=>$fecha)) 
           ->order('in_id desc');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
          if (!$resultSet) {
             throw new \Exception("No se puede encontrar el/los grupo(s)");
@@ -477,6 +491,28 @@ class EventoTable{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
              }                                                                          
+            $selectString = $sql->getSqlStringForSqlObject($select);
+//            var_dump($selectString);Exit;
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
+    
+  public function UsuariosxEvento($id,$iduser)
+    {  
+         $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $select = $sql->select();
+             if($iduser!=null){
+                   $select->columns(array('va_fecha'));
+             }
+              $select->from('ta_usuario_has_ta_evento')
+              ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_evento.ta_usuario_in_id',array('id_usuario'=>'in_id','nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left');        
+
+                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
+                        'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser));
+//                       'ta_usuario_has_ta_evento.va_estado !=?'=>'desactivo'));//'activo'
+                                                                            
             $selectString = $sql->getSqlStringForSqlObject($select);
 //            var_dump($selectString);Exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
@@ -587,7 +623,7 @@ class EventoTable{
                 ->group('ta_evento.in_id')
                 ->order('ta_usuario_has_ta_evento.va_fecha DESC');
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//        var_dump($selectString);Exit;
+
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet->buffer();
     }
@@ -625,6 +661,7 @@ class EventoTable{
           ->order('in_id desc')
                     ->group('in_id');  
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
+//        var_dump($selectString);Exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
         return $resultSet->buffer();
     } 

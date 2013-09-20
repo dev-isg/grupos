@@ -1,4 +1,7 @@
 <div class="main-container">
+    	<?php if($this->mensaje[0]){?>
+	 <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
+	 <?php }?>
 	<div class="container main wrapper clearfix">
 		<div class="row-fluid">
 			<div class="span12 recuperacion group-sidebar">
@@ -26,7 +29,4 @@
 	        </div>      
 		</div>
 	</div>
-	<?php if($this->mensaje[0]){?>
-	 <div class="alert alert-success"><?php echo $this->mensaje[0];?></div>
-	 <?php }?>
 </div> <!-- #main-container -->

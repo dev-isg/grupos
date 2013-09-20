@@ -116,14 +116,9 @@ class IndexController extends AbstractActionController
                     $listagrupos = $this->getGrupoTable()->fetchAll();
                      $this->layout()->search='group-header';
                 } else {                       
-//                    $storage = new \Zend\Authentication\Storage\Session('Auth');
-//                    if ($storage) {
-//                       $listaEventos = $this->getEventoTable()->listadoEvento($storage->read()->in_id);
-//                    }else{
-//                     $listaEventos = $this->getEventoTable()->listadoEvento();
-//                    }
-                     $this->layout()->search='event-header';
-                    $listaEventos = $this->getEventoTable()->listadoEvento();
+
+                        $listaEventos = $this->getEventoTable()->listadoEvento();
+                        $this->layout()->search='event-header';
                 }
             }
        }
@@ -325,7 +320,7 @@ class IndexController extends AbstractActionController
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     // obtiene el identity y consulta el
                    $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
-                   $this->flashMessenger()->addMessage('Su grupo ha sido registrado correctamente');
+                   $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
                    if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
                        

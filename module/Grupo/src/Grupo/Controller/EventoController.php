@@ -305,6 +305,7 @@ class EventoController extends AbstractActionController
         $session=$storage->read();
         
         $evento = $this->getEventoTable()->Evento($id);
+//        var_dump(html_entity_decode($evento[0]['va_descripcion']));exit;
 
         if($evento){
             if($evento[0]['va_tipo']=='privado'){
@@ -330,7 +331,6 @@ class EventoController extends AbstractActionController
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-//        var_dump($grupoestado);Exit;
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
         $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id,'activo');
@@ -531,7 +531,7 @@ class EventoController extends AbstractActionController
                     }
                 }
                 $activo = 1;
-                $userestado = $this->getEventoTable()->usuariosevento($idevent, $iduser,'activo'); //getEventoUsuario($idevent, $iduser);//
+                $userestado = $this->getEventoTable()->UsuariosxEvento($idevent, $iduser);//usuariosevento($idevent, $iduser,'activo'); //getEventoUsuario($idevent, $iduser);//
             }
         } elseif ($unir == 0) {
             if ($this->getEventoTable()->retiraEvento($idevent, $iduser)) {
@@ -576,7 +576,7 @@ class EventoController extends AbstractActionController
                     }
                 }
                   $activo = 0;
-                  $userestado = $this->getEventoTable()->usuariosevento($idevent, $iduser,'desactivo'); //getEventoUsuario($idevent, $iduser);//
+                  $userestado = $this->getEventoTable()->UsuariosxEvento($idevent, $iduser);//usuariosevento($idevent, $iduser,'desactivo'); //getEventoUsuario($idevent, $iduser);//
                 
             }
         }
