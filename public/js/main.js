@@ -14,7 +14,7 @@ function crearevento(){
 
         $("[data-toggle='tooltip']").tooltip();
         $("#imageUrl").juImgPicker({
-            maxFileSize:'4M'
+            maxFileSize:'2M'
         });
         //funcionalidad de crear evento
         $("#crearGrupo").change(function(){

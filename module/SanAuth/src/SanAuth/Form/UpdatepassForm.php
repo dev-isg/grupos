@@ -44,7 +44,7 @@ class UpdatepassForm extends Form
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(
-                'value' => 'Ingresar',
+                'value' => 'Guardar',
                 'class' => 'btn btn-primary'
             ),
         ));

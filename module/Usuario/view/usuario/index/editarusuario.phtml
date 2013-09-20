@@ -16,7 +16,7 @@
                     $usuario = $this->usuario;
                     $form = $this->form;
                     $form->setAttributes(array(
-                        'action' => $this->url . '/usuario/index/editarusuario/' . $this->in_id,
+                        'action' => $this->url . '/micuenta' ,//. $this->in_id
                         'method' => 'post',
                         'class' => 'form-horizontal usuario-actualizar',
                         'id' => 'editarusuario'
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="span4">
-                                <div class="control-group">                                    
+                                <div class="control-group" style="overflow:hidden;">                                    
                                     <div class="controls" style="margin-left:0;">
                                         <div class="fileupload fileupload-new" data-provides="fileupload">
                                             <div class="img-thu-user fileupload-new thumbnail">

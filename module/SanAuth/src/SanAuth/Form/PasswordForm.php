@@ -27,7 +27,7 @@ class PasswordForm extends Form
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(
-                'value' => 'Ingresar',
+                'value' => 'Enviar',
                 'class' => 'btn btn-primary'
             ),
         ));
