@@ -334,7 +334,17 @@ class EventoController extends AbstractActionController
         $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-        $usuarios = $this->getEventoTable()->usuariosevento($id,$session->in_id,'activo');
+         $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//        if($session) {
+//            if ($evento[0]['ta_usuario_in_id'] == $session->in_id) {
+//                $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//            } else {
+//                $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//            }
+//        } else {
+//            $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+//        }
+//        var_dump($usuarios->toArray());exit;
         $comentarios = $this->getEventoTable()->comentariosevento($id);
         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');

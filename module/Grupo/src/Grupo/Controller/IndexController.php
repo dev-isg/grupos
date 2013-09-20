@@ -152,9 +152,18 @@ class IndexController extends AbstractActionController
                     $listagrupos = $this->getGrupoTable()->fetchAll();
                      $this->layout()->search='group-header';
                 } else {                       
-
-                        $listaEventos = $this->getEventoTable()->listadoEvento();
-                        $this->layout()->search='event-header';
+//                    if ($session->in_id) { 
+//                       $listaEventosPriva = $this->getEventoTable()->listadoEvento($session->in_id);
+//                       $listaEventos2 = $this->getEventoTable()->listadoEvento();
+//                       $listaEventos=  array_merge_recursive($listaEventosPriva->toArray(),$listaEventos2->toArray());
+//                     $this->layout()->search='event-header';
+//                    }else{
+//                        $listaEventos = $this->getEventoTable()->listadoEvento();
+//                        $this->layout()->search='event-header';
+//                    }
+                    
+                 $listaEventos = (!$storage)?$this->getEventoTable()->listadoEvento():$this->getEventoTable()->listadoEvento($session->in_id);
+                 $this->layout()->search='event-header';
                 }
             }
        }
@@ -685,13 +694,13 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     El siguiente usuario se ha unido a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
+                                                     El siguiente usuario esta solicitando unirse a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>'.
+                                                           utf8_decode($storage->read()->va_nombre).'<br />
                                                      </div>
                                                </body>
                                                </html>';
                     if ($usuario) {
-                        $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu grupo');
+                        $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Pendiente de unirse al grupo');
                     }
                 }
                 $activo = 1;

@@ -18,7 +18,7 @@ class ComentarioForm extends Form
              'attributes' => array(
                  'class' => '',
                  'id' => 'texto-comentar',
-                 'placeholder' => 'Ingrese su comentario aqui',
+                 'placeholder' => 'Ingrese su comentario aquí',
                  'cols' => 30,
                  'rows' => 5
             ),
@@ -28,7 +28,7 @@ class ComentarioForm extends Form
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => array(
-                'value' => 'Ingresar',
+                'value' => 'Comentar',
                 'class' => 'btn btn-primary btn-enviar-mensaje'
             ),
         ));

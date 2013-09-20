@@ -347,24 +347,44 @@ class EventoTable{
                 ->from('ta_evento')
                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
                 ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
-                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left');               
-        if($iduser != null){
-            if($this->getEventosxUsuario($iduser)){
-            $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
-            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
-                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));  
-            }else{
-                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado',
-                    'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));
-            }
-        }else{
-            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
-        }
 
-        $selecttot->order('in_id desc')->group('in_id');
+                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
+                 ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 
+                'ta_evento.va_tipo!=?' => 'privado'))->group('in_id');
+//        if($iduser != null){
+//            if($this->getEventosxUsuario($iduser)){
+//            $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
+//            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
+//                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));  
+//            }else{
+//                $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado',
+//                    'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser));
+//            }
+//        }else{
+//            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 'ta_evento.va_tipo!=?' => 'privado')); 
+//        }
+        
+        if($iduser != null){
+         $selectpriva = $sql->select()
+                ->from('ta_evento')
+                 ->join('ta_comentario', 'ta_comentario.ta_evento_in_id=ta_evento.in_id', array('comentarios' => new \Zend\Db\Sql\Expression('COUNT(ta_comentario.in_id)')), 'left')
+                ->join('ta_grupo', 'ta_grupo.in_id=ta_evento.ta_grupo_in_id', array('categoria' => 'ta_categoria_in_id'), 'left')
+                ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')              
+            ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
+            ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
+                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'))->group('in_id');
+         $selecttot->combine($selectpriva);
+        }
+//        else{
+//            $selecttot->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 
+//                'ta_evento.va_tipo!=?' => 'privado'))->group('in_id');//->order('in_id desc'); 
+//        }
+//        $selecttot->group('in_id')->order('in_id desc'); 
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-     
-        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//      var_dump($selectString);exit;
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
+
+
         return $resultSet->buffer();
     }
 
@@ -475,7 +495,7 @@ class EventoTable{
              
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
-                        'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
+                        //'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
                        'ta_usuario_has_ta_evento.va_estado'=>$estado));//'activo'
              }else{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
