@@ -231,6 +231,9 @@
 	#menu-categoria{
 		/*width: 100%;*/
 	}
+	.navbar-inverse .navbar-search .search-query{
+		width: 300px;
+	}
 }
 
 @media (max-width: 767px) { 
