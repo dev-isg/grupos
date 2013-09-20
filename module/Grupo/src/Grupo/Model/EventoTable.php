@@ -267,14 +267,19 @@ class EventoTable{
              
          }else{   
              //agrege al grupo cuando se une al evento
+             //comprueba estado de grupo
+             $grupo=$this->usuarioGrupo($idgrup,$iduser)->current();
+
+             $estado=($grupo->va_estado=='activo')?'activo':'desactivo';
              $this->unirseGrupo($idgrup,$iduser);   
              $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_evento')
-             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>'activo','va_fecha'=>date('c')));//desactivo activo
+             ->values(array('ta_usuario_in_id'=>$iduser,'ta_evento_in_id'=>$idevent,'va_estado'=>$estado,'va_fecha'=>date('c')));//desactivo activo
          
              
          }
 
            $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
+
            $adapter=$this->tableGateway->getAdapter(); 
            $row=$adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
           if (!$row) {
@@ -496,7 +501,7 @@ class EventoTable{
              if($iduser!=null){
                    $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                         //'ta_usuario_has_ta_evento.ta_usuario_in_id' => $iduser,
-                       'ta_usuario_has_ta_evento.va_estado'=>$estado));//'activo'
+                       'ta_usuario_has_ta_evento.va_estado'=>$estado))->order('ta_usuario_has_ta_evento.va_fecha DESC');//'activo'
              }else{
                   $select->where(array('ta_usuario_has_ta_evento.ta_evento_in_id' => $id,
                                         'ta_usuario_has_ta_evento.va_estado'=>'activo'))->order('ta_usuario_has_ta_evento.va_fecha DESC');
@@ -529,15 +534,15 @@ class EventoTable{
         return $resultSet;
     }
     
-     public function usuarioGrupo($id,$iduser=null){
+     public function usuarioGrupo($idgrupo,$iduser=null){
             $adapter = $this->tableGateway->getAdapter();
             $sql = new Sql($adapter);
             $selecttot = $sql->select()
-                    ->columns(array('va_fecha'))
+                    ->columns(array('va_fecha','va_estado'))
                     ->from('ta_usuario_has_ta_grupo')
                     ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
                    
-                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $idgrupo,
                         'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
