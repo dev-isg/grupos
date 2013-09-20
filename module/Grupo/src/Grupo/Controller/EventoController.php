@@ -299,6 +299,7 @@ class EventoController extends AbstractActionController
         
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+        $this->layout()->active1='active';
         $id = $this->params()->fromRoute('in_id');
         
         $storage = new \Zend\Authentication\Storage\Session('Auth');

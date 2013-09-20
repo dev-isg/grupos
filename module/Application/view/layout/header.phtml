@@ -127,6 +127,7 @@
                         <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt">CREA UN EVENTO</a>
                         <?php }?>
                         <form method="get" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
+                            
                             <input type="text"
                                 value="<?php
                                 if ($_GET['dato']) {
@@ -147,23 +148,29 @@
                                     <li class="man-dev">
                                             <ul>  
                                                 <li><a href="<?php echo $this->host('ruta') ?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php
-                                    if ($_COOKIE['tipo']) {
-                                        echo '&valor=' . $_COOKIE['tipo'];
-                                    } else {
+                                  if($_GET['tipo']) {
                                         echo '&valor=' . $_GET['tipo'];
-                                    };
+                                    }elseif($_GET['valor']){ echo '&valor=' .$_GET['valor'];}
+                                    elseif($this->active1){echo '&valor=Eventos';}
+                                    else{echo '&valor=Grupos';}
+                                    ;
                                         ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
                                             </ul>
                                         </li> 
                                      <?php endforeach; ?>  
                                 </ul>
+                            <input type="Hidden" name="valor" class="btn btn-primary btn-evento-i" value="<?php  if($_GET['tipo']) {
+                                        echo $_GET['tipo'];
+                                    }elseif($_GET['valor']){ echo $_GET['valor'];}
+                                    else{echo 'Grupos';}
+                                    ; ?>"/>
                             <input type="submit"  class="btn btn-primary btn-evento-i" value=""/>
                         </form>
                     </div>
                 </div>
                     <div class="span3 btn-evento">
                         <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
+                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}elseif($this->active1){echo $this->active1;}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
                                 EVENTOS
                                 <div class="pinchitoa"></div>
                             </a>
