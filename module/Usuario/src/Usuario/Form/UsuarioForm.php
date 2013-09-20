@@ -51,7 +51,8 @@ class UsuarioForm extends Form {
             'name' => 'va_facebook',
             'type' => 'Text',
             'attributes' => array(
-                'class' => 'span10'
+                'class' => 'span10',
+                'placeholder' => 'Ingrese la url de su facebook'
             ),
         ));
                 
@@ -59,7 +60,8 @@ class UsuarioForm extends Form {
             'name' => 'va_twitter',
             'type' => 'Text',
             'attributes' => array(
-                'class' => 'span10'
+                'class' => 'span10',
+                'placeholder' => 'Ingrese la url de su twitter'
             ),
         ));
 
