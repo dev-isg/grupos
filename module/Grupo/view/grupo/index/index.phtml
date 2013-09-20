@@ -64,7 +64,7 @@
                                     </span>
                                     <span class="meta-views" title="Categoria">
                                         <i class="icon-tag"></i>
-                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?nombre=<?php echo  $this->escapeHtml($eventos->nombre_categoria);?>&categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=<?php if($_GET['valor']){echo $_GET['valor'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Eventos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
                                     </span>
                                 </footer>
                             </div>
@@ -104,7 +104,7 @@
                                 <footer class="entry-extra clearfix">
                                     <span class="meta-views" title="Categoria">
                                         <i class="icon-tag"></i>
-                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($grupos->idcategoria); ?>&valor=<?php if($_COOKIE['tipo']){echo $_COOKIE['tipo'];}else {echo $_GET['tipo'];} ;?>" title="Categoría"><?php echo  $this->escapeHtml($grupos->nombre_categoria);?></a>
+                                        <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?nombre=<?php echo  $this->escapeHtml($grupos->nombre_categoria);?>&categoria=<?php echo $this->escapeHtml($grupos->idcategoria); ?>&valor=<?php if($_GET['valor']){echo $_GET['valor'];}elseif($_GET['tipo']){echo $_GET['tipo'];}else{echo 'Grupos';} ;?>" title="Categoría"><?php echo  $this->escapeHtml($grupos->nombre_categoria);?></a>
                                     </span>
                                 </footer>
                             </div>

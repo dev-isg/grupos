@@ -343,6 +343,7 @@ public function getAuthService() {
         $session=$storage->read();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+    //    $this->layout()->active='active';
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
                 ->setScript('actualizarDatos();if($("#editarusuario").length){valactualizar("#editarusuario");};')
