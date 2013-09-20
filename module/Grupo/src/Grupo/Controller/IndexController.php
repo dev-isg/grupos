@@ -70,24 +70,60 @@ class IndexController extends AbstractActionController
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo', $valor);
         $tipo = $this->params()->fromQuery('categoria');
-//        $tipo =$this->params()->fromQuery('nombre');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
          $this->layout()->search='group-header';
      if ($valor || $tipo || $nombre) {
         if ($nombre) {
-            if (isset($nombre)) {
-                $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-                if (count($grupo->toArray()) > 0) {//
-                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                } else {
-                    $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-                    if (count($listaEventos) > 0) {
-                        $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-                    } else {
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
-                    }
-                }
+            if (isset($nombre)) {             
+                         $busqueda = $this->params()->fromQuery('valor'); 
+                         
+                         if($busqueda)
+                              {                            
+                                 if($busqueda=='Eventos')
+                                    {
+                                   $listaEvento = $this->getEventoTable()->listado2Evento($nombre);
+                                                                    $dd=$listaEvento->toArray();      
+                                                                        if ($dd[0]["va_nombre"]!=null) {
+                                                                            $listaEventos = $listaEvento;
+                                                                        } else { 
+                                                                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=3');
+                                                                        }     
+                                    }
+                                    elseif($busqueda=='Grupos'){
+                                     $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
+                                      if (count($grupo->toArray()) > 0) 
+                                       {
+                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                                         }
+                                      else { 
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
+                                     }                            
+
+                                    }
+                                    else{
+
+                                           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
+                                      if (count($grupo->toArray()) > 0) 
+                                       {
+                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                                         }
+                                      else { 
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
+                                     } 
+
+                                    }
+                                       }
+                                       else
+                                   {   $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
+                                      if (count($grupo->toArray()) > 0) 
+                                       {
+                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                                         }
+                                      else { 
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
+                                     }          }
+                                              
             }
         }
 
@@ -97,12 +133,12 @@ class IndexController extends AbstractActionController
                 if ($rango == 'Grupos') {
                     $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
                     if (count($listagrupos) <= 0) {
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=2');
                     }
-                } else {
+                } else { 
                     $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
-                    if (count($listaEventos) <= 0) {
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
+                    if (count($listaEventos) <= 0) {//echo'ma';exit;
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=1');
                     }
                 }
             } else {
@@ -136,48 +172,7 @@ class IndexController extends AbstractActionController
             $this->layout()->active='active';
      }
      
-//        if ($request->isPost()) {
-//            if ($nombre) {
-//                $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
-//                if (count($grupo) > 0) {
-//                    $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-//                } else {
-//                    $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-//                    if (count($listaEventos) > 0) {
-//                        $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
-//                    } else {
-//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
-//                    }
-//                }
-//            } else {
-//                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
-//            }
-//        }
-//
-//        if ($tipo) {
-//            if (!empty($rango)) {
-//                if ($rango == 'Grupos') {
-//                    $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-//                    if (count($listagrupos) <= 0) {
-//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
-//                    }
-//                } else {
-//                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
-//                    if (count($listaEventos) <= 0) {
-//                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/');
-//                    }
-//                }
-//            } else {
-//                $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-//            }
-//        }
-//        if ($valor) {
-//            if ($valor == 'Grupos') {
-//                $listagrupos = $this->getGrupoTable()->fetchAll();
-//            } else {
-//                $listaEventos = $this->getEventoTable()->listadoEvento();
-//            }
-//        }
+
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -474,8 +469,8 @@ class IndexController extends AbstractActionController
         $grupo = $this->getEventoTable()->grupoid($id);
         $categorias = $this->categorias();
         $this->layout()->categorias = $categorias;
-
-       $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $this->layout()->active='active';
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
         if (!isset($session)) {
         $facebook = $this->facebook();

@@ -208,7 +208,16 @@
                 ?>
                 <div class="row-fluid fn-form">
                     <div class="span2">
-                        <img src="../../img/foto-carnet.jpg" alt="">
+                  <?php $valor = explode('/',$this->session->va_foto);
+                                    if($valor[0]=='https:'){ ?>  
+                                        <img src="<?php echo $this->session->va_foto ;?>">                                            
+                                    <?php } else {
+                                        if(($this->session->va_foto)!="foto-carnet.jpg"){?>
+                                            <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $this->session->va_foto ;?>" >
+                                        <?php }else{?>
+                                            <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
+                                        <?php } 
+                                    }?>  
                     </div>
                     <div class="span10">
                       <?php echo $this->formRow($form->get('va_descripcion')); ?>
@@ -247,11 +256,16 @@
                       <li> 
                         <div class="content-comentario">
                           <div class="span2">
-                       <?php if(($comentarios->imagen)!="foto-carnet.jpg"){?>
-                     <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $comentarios->imagen ;?>" alt="">
-                     <?php }else{?>
-                      <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" alt="">
-                      <?php }?>
+                       <?php $valor = explode('/',$comentarios->imagen);
+                                    if($valor[0]=='https:'){ ?>  
+                                        <img src="<?php echo $comentarios->imagen;?>">                                            
+                                    <?php } else {
+                                        if(($comentarios->imagen)!="foto-carnet.jpg"){?>
+                                            <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $comentarios->imagen;?>" >
+                                        <?php }else{?>
+                                            <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
+                                        <?php } 
+                                    }?>
                           </div>
                           <div class="span10 ti-coment">
                             <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
