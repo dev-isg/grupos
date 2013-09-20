@@ -2,14 +2,16 @@
     <div class="container">
         <?php if($this->mensaje){ ?>
         <div class="row-fluid">
-            <div class="alert alert-success alert-margin">
+            <div class="alert alert-success alert-margin alert-message">
+                <button type="button" class="close" data-dismiss="alert">×</button>
                 <?php  echo $this->mensaje;?>
             </div>
         </div><?php } ?>
         <?php if ($this->messages) { ?>
             <?php foreach ($this->messages as $message) { ?>
                 <div class="row-fluid">
-                    <div class="alert alert-success alert-margin">
+                    <div class="alert alert-success alert-margin alert-message">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
                         <?php echo $message; ?>
                     </div>
                 </div>
@@ -52,3 +54,9 @@
         </div>          
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".alert-message").alert();
+        window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+    });
+</script>

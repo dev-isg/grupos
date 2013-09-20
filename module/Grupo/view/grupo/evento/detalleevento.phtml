@@ -26,6 +26,7 @@
         <?php if ($this->mensajes) { ?>
           <div class="row-fluid">
             <div class="alert alert-success alert-margin">
+              <button type="button" class="close" data-dismiss="alert">×</button>
               <?php
               foreach ($this->mensajes as $message) {
                   echo $message;

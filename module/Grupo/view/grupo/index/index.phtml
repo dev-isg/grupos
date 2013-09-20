@@ -8,21 +8,25 @@
 <div class="main-container">
     <div class="container">
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo 'No hay eventos de la categoría'; ?>
       </div>
     </div> <?php }elseif ($_GET['m']=='2') {?> <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo 'No hay grupos de la categoría'; ?>
       </div>
     </div> <?php }
     elseif ($_GET['m']=='3') {?> <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en EVENTOS'; ?>
       </div>
     </div> <?php }
     elseif($_GET['m']=='4') {?> <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en GRUPOS'; ?>
       </div>
     </div> <?php }
@@ -134,6 +138,10 @@
 </div>
 <?php  }?>
 <script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery(".alert-message").alert();
+        window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 7000);
+    });    
             /* <![CDATA[ */
 
             // Masonry
