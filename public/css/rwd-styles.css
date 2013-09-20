@@ -228,6 +228,9 @@
 	.archive #content{
 
 	}
+	#menu-categoria{
+		/*width: 100%;*/
+	}
 }
 
 @media (max-width: 767px) { 
@@ -396,6 +399,13 @@
 	}
 	.form-search-dev{
 		margin-bottom: 0;
+	}
+	#menu-categoria{
+		width: 100%;
+	}
+	#menu-categoria li ul{
+		width: 100%;
+		text-align: left;
 	}
 }
 

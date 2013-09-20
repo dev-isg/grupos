@@ -1787,6 +1787,35 @@ a.tab-home-g-b:hover .pinchitob{
 .tab-home-g-b:hover{
   background: #98CD34;
 }
+.logo-res{
+  line-height: 30px;
+  font-size: 20px;
+}
+.menu-juntate form{
+  margin-top: 2px;
+}
+.menu-juntate form input{  
+  border: 1px solid white!important;
+  background-color: white!important;
+  -webkit-box-shadow:0 0 0!important;
+  -moz-box-shadow:0 0 0!important;
+  -o-box-shadow:0 0 0!important;
+  box-shadow:0 0 0!important;
+  line-height: 30px!important;
+}
+.navbar-inverse .navbar-search .search-query:focus,
+.navbar-inverse .navbar-search .search-query.focused {
+  padding: 4px 14px;
+  color: #333333;
+  text-shadow: 0 1px 0 #ffffff;
+  background-color: #ffffff;
+  border: 0;
+  outline: 0;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+}
+
 #inline_evento h3{
   font-size: 20px;
   line-height: 20px;
