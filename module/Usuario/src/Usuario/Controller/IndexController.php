@@ -266,6 +266,11 @@ public function getAuthService() {
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+        if($_COOKIE['tipo'] or $_GET['tipo'] or $_GET['valor'])
+         { if($_COOKIE['tipo']=='Eventos' or $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos')
+         {  $this->layout()->active1='active';}
+         else{$this->layout()->active='active';}
+         }else{$this->layout()->active='active';}
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
                 ->setScript('if( $("#registro").length){valregistro("#registro");}valUsuario();')

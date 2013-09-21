@@ -64,6 +64,11 @@ class AuthController extends AbstractActionController {
                 ->prependFile($this->_options->host->base . '/js/main.js');
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
+        if($_COOKIE['tipo'] or $_GET['tipo'] or $_GET['valor'])
+         { if($_COOKIE['tipo']=='Eventos' or $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos')
+         {  $this->layout()->active1='active';}
+         else{$this->layout()->active='active';}
+         }else{$this->layout()->active='active';}
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session = $storage->read();
         if (!isset($session)) {
