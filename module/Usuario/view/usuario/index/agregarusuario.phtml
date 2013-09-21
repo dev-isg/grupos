@@ -1,13 +1,15 @@
 <div class="main-container">
   <div class="container">
 <?php if ($_GET['m']==1) { ?> <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo 'Tu cuenta está casi lista para usarse. solo tienes que activarla desde tu correo electrónico'; ?>
       </div>
     </div> <?php } ?>
     <?php if($this->mensaje){?>
     <div class="row-fluid">
-      <div class="alert alert-margin">
+      <div class="alert alert-margin alert-message">
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <?php  echo $this->mensaje; ?>
       </div>
     </div>
@@ -97,3 +99,9 @@
   </div> <!-- #main -->
 </div> <!-- #main-container -->
    
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".alert-message").alert();
+    window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+  });
+</script>

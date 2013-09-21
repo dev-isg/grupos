@@ -2495,6 +2495,12 @@ ul.score-list li:first-child {
 .usuario-actualizar{
   overflow: hidden;
 }
+.center-view{
+  -webkit-border-radius: 4px!important;
+  -moz-border-radius: 4px!important;
+  -o-border-radius: 4px!important;
+  border-radius: 4px!important;
+}
 /* ==========================================================================
    Estilo de icono styles
    ========================================================================== */

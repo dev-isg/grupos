@@ -21,7 +21,8 @@ class UpdatepassForm extends Form
 //                'label' => 'Nombre de usario:',          
 //            ),
             'attributes' => array(               
-               'class' => 'span10',
+                'class' => 'span10',
+                'id' => 'va_contrasena',
                 'placeholder'=>'Ingrese su contraseña'
             ),
         ));  
@@ -35,6 +36,7 @@ class UpdatepassForm extends Form
              ),
              'attributes' => array(
                  'class' => 'span10',
+                 'id' => 'verificar_contrasena',
                  'placeholder'=>'Vuelva a ingresar su contraseña'
              ),
          ));
