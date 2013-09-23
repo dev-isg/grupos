@@ -109,7 +109,12 @@ class IndexController extends AbstractActionController
                         if (count($grupo->toArray()) > 0) {
                             $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
                         } else {
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
+                            $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+                            if (count($listaEventos) > 0) {
+                                $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
+                            }
                         }
                     }
                 }
