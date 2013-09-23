@@ -32,13 +32,11 @@ return array(
     ),
 
     'host' => array(
-
         'base' => 'http://192.168.1.25:8081',
         'static' => 'http://192.168.1.25:8081',
         'images' => 'http://192.168.1.25:8081/imagenes',
         'img'=>'http://192.168.1.25:8081/img',
         'ruta' => 'http://192.168.1.25:8081',
-
         'version'=>1,
     ),
 
@@ -48,9 +46,8 @@ return array(
                 'host'              => 'smtp.innovationssystems.com',
                 'connection_class'  => 'login',
                 'connection_config' => array(
-                    'username' => 'listadelsabor@innovationssystems.com',
-                    'password' => 'L1st@d3ls@b0r',
-                    // 'ssl' => 'tls'
+                    'username' => 'juntate@innovationssystems.com',//'listadelsabor@innovationssystems.com',
+                    'password' => 'Juntate123',//'L1st@d3ls@b0r',
                 ),
             ),
         ),

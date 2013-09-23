@@ -435,7 +435,13 @@ public function getAuthService() {
             $aux[$value['ta_notificacion_in_id']] = $value['ta_notificacion_in_id'];
             $formNotif->get('tipo_notificacion')->setAttribute('value', $aux);
         }
-
+        //populate elemento del multi select categoria
+        $catg = $this->getUsuarioTable()->getCategoriaxUsuario($storage->read()->in_id)->toArray();
+        $aux_categ = array();
+        foreach ($catg as $valuec) {
+            $aux_categ[$valuec['ta_categoria_in_id']] = $valuec['ta_categoria_in_id'];
+            $form->get('select2')->setAttribute('value', $aux_categ);
+        }
 
         $request = $this->getRequest();
 
@@ -469,9 +475,9 @@ public function getAuthService() {
             
 //             $adapter = new \Zend\File\Transfer\Adapter\Http();
 //             $adapter->setValidators($adapter,$File['name']);
-  
+ 
             if ($form->isValid()) {
-
+                $catg_ingresada=$this->params()->fromPost('select2');
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
                     $pass = $dataa->va_contrasena;
@@ -479,7 +485,7 @@ public function getAuthService() {
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                  
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass);
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
@@ -491,7 +497,7 @@ public function getAuthService() {
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass);
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
@@ -503,14 +509,14 @@ public function getAuthService() {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada);
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen);
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
@@ -531,14 +537,15 @@ public function getAuthService() {
             }
         }
         
-        
+       $categ = $this->getGrupoTable()->tipoCategoria();
         return array(
             'in_id' => $id,
             'form' => $form,
             'usuario' => $usuario,
             'valor' => $header,
             'formnotif' => $formNotif,
-            'session'  =>$session
+            'session'  =>$session,
+            'catego'=>$categ
         );
     }
     

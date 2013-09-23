@@ -269,7 +269,7 @@
                                     }?>
                           </div>
                           <div class="span10 ti-coment">
-                            <h4><a href="#"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
+                            <h4><a href="/usuario/<?php echo $comentarios->ta_usuario_in_id;?>"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
                             <p><?php echo  $this->escapeHtml($comentarios->va_descripcion);?></p>
                             <p class="small muted">
                              <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
@@ -353,7 +353,7 @@
                               <?php }  }?>  
                             </div>
                             <div class="span8 desc-user">
-                                <h3><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></h3>
+                                <a href="/usuario/<?php echo $usuarios->id_usuario;?>"><h3><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></h3></a>
                                <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
                             </div>
                         </div>

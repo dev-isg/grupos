@@ -56,13 +56,14 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
-        $this->layout()->categorias = $categorias;
+//        $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+        $session = $storage->read();
         if (!isset($session)) {
-        $facebook = $this->facebook();
-        $this->layout()->login = $facebook['loginUrl'];
-        $this->layout()->user = $facebook['user']; }
+            $facebook = $this->facebook();
+            $this->layout()->login = $facebook['loginUrl'];
+            $this->layout()->user = $facebook['user'];
+        }
         $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
@@ -72,86 +73,73 @@ class IndexController extends AbstractActionController
         $tipo = $this->params()->fromQuery('categoria');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-         $this->layout()->search='group-header';
-     if ($valor || $tipo || $nombre) {
-        if ($nombre) {
-            if (isset($nombre)) {             
-                         $busqueda = $this->params()->fromQuery('valor'); 
-                         
-                         if($busqueda)
-                              {                            
-                                 if($busqueda=='Eventos')
-                                    {
-                                   $listaEvento = $this->getEventoTable()->listado2Evento($nombre);
-                                                                    $dd=$listaEvento->toArray();      
-                                                                        if ($dd[0]["va_nombre"]!=null) {
-                                                                            $listaEventos = $listaEvento;
-                                                                        } else { 
-                                                                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=3');
-                                                                        }     
-                                    }
-                                    elseif($busqueda=='Grupos'){
-                                     $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
-                                     }                            
+        $this->layout()->search = 'group-header';
+        if ($valor || $tipo || $nombre) {
+            if ($nombre) {
+                if (isset($nombre)) {
+                    $busqueda = $this->params()->fromQuery('valor');
 
-                                    }
-                                    else{
+                    if ($busqueda) {
+                        if ($busqueda == 'Eventos') {
+                            $listaEvento = $this->getEventoTable()->listado2Evento($nombre);
+                            $dd = $listaEvento->toArray();
+                            if ($dd[0]["va_nombre"] != null) {
+                                $listaEventos = $listaEvento;
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=3');
+                            }
+                        } elseif ($busqueda == 'Grupos') {
+                            $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                            if (count($grupo->toArray()) > 0) {
+                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
+                            }
+                        } else {
 
-                                           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
-                                     } 
-
-                                    }
-                                       }
-                                       else
-                                   {   $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
-                                     }          }
-                                              
-            }
-        }
-
-        if ($tipo) {    
-            if (isset($tipo)) {
-              if (!empty($rango)) {
-                if ($rango == 'Grupos') {
-                    $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-                    if (count($listagrupos) <= 0) {
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=2');
-                    }
-                } else { 
-                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
-                    if (count($listaEventos) <= 0) {//echo'ma';exit;
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=1');
+                            $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                            if (count($grupo->toArray()) > 0) {
+                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
+                            }
+                        }
+                    } else {
+                        $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                        if (count($grupo->toArray()) > 0) {
+                            $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                        } else {
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
+                        }
                     }
                 }
-            } else {
-                $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-            }       
             }
-        }
-       if ($valor) {
-            if (isset($valor)) {
-                 if ($valor == 'Grupos') {
-                    $listagrupos = $this->getGrupoTable()->fetchAll();
-                     $this->layout()->search='group-header';
-                } else {                       
+
+            if ($tipo) {
+                if (isset($tipo)) {
+                    if (!empty($rango)) {
+                        if ($rango == 'Grupos') {
+                            $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                            if (count($listagrupos) <= 0) {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=2');
+                            }
+                        } else {
+                            $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
+                            if (count($listaEventos) <= 0) {//echo'ma';exit;
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=1');
+                            }
+                        }
+                    } else {
+                        $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                    }
+                }
+            }
+            if ($valor) {
+                if (isset($valor)) {
+                    if ($valor == 'Grupos') {
+                        $listagrupos = $this->getGrupoTable()->fetchAll();
+                        $this->layout()->search = 'group-header';
+                    } else {
 //                    if ($session->in_id) { 
 //                       $listaEventosPriva = $this->getEventoTable()->listadoEvento($session->in_id);
 //                       $listaEventos2 = $this->getEventoTable()->listadoEvento();
@@ -161,17 +149,17 @@ class IndexController extends AbstractActionController
 //                        $listaEventos = $this->getEventoTable()->listadoEvento();
 //                        $this->layout()->search='event-header';
 //                    }
-                    
-                 $listaEventos = (!$storage)?$this->getEventoTable()->listadoEvento():$this->getEventoTable()->listadoEvento($session->in_id);
-                 $this->layout()->search='event-header';
+
+                        $listaEventos = (!$storage) ? $this->getEventoTable()->listadoEvento() : $this->getEventoTable()->listadoEvento($session->in_id);
+                        $this->layout()->search = 'event-header';
+                    }
                 }
             }
-       }
-     }else{
+        } else {
             $listagrupos = $this->getGrupoTable()->fetchAll();
-            $this->layout()->active='active';
-     }
-     
+            $this->layout()->active = 'active';
+        }
+
 
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
@@ -184,7 +172,7 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-        
+
         $url = $_SERVER['REQUEST_URI'];
         if ($url != '/') {
             $buscatipo = strpos($url, 'tipo');
@@ -198,26 +186,26 @@ class IndexController extends AbstractActionController
                 } else {
                     $urlf = $url;
                 }
-                $urlf=$urlf.'&';
-            }else{
-                $urlf=$urlf.'?';
-            } 
-            
+                $urlf = $urlf . '&';
+            } else {
+                $urlf = $urlf . '?';
+            }
         } else {
             $auxurl = strpos($url, '/');
-            $urlf=substr($url,0,$auxurl);
-            $urlf=$urlf.'?';
+            $urlf = substr($url, 0, $auxurl);
+            $urlf = $urlf . '?';
         }
-        
+
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
             'dato' => $valor,
-            'urlac'=>$urlf
+            'urlac' => $urlf,
+            'categorias'=>$categorias
         );
     }
 
-     public function categorias()
+    public function categorias()
     {        
         $categorias = $this->getGrupoTable()->tipoCategoria();
         return $categorias;
@@ -556,58 +544,116 @@ class IndexController extends AbstractActionController
         $idusuario = $this->params()->fromQuery('id_usuario');
         $aprobar = $this->params()->fromQuery('act');
 
-        $usuarioapro = $this->getGrupoTable()->getNotifiacionesxUsuario($idusuario)->toArray();
-        $arr = array();
-        foreach ($usuarioapro as $value) {
-            $arr[] = $value['ta_notificacion_in_id'];
+//        $usuarioapro = $this->getGrupoTable()->getNotifiacionesxUsuario($idusuario)->toArray();
+//        $arr = array();
+//        foreach ($usuarioapro as $value) {
+//            $arr[] = $value['ta_notificacion_in_id'];
+//        }
+//        if (in_array(1, $arr)) {
+//            $correoe = true;
+//        }
+//        if (in_array(2, $arr)) {
+//            $correos = true;
+//        }
+        
+        $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
+        $arrc = array();
+        foreach ($usuariocrear as $values) {
+            $arrc[] = $values['ta_notificacion_in_id'];
         }
-        if (in_array(1, $arr)) {
-            $correoe = true;
+        if (in_array(1, $arrc)) {
+            $correoec = true;
         }
-        if (in_array(2, $arr)) {
-            $correos = true;
+        if (in_array(2, $arrc)) {
+            $correosc = true;
         }
 
         $usuario = $this->getUsuarioTable()->getUsuario($idusuario); //$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
         $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
         if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {
             if($aprobar==2){
-            if ($correoe) {
+//            if ($correoe) {
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />                                                       
-                                                     Hola ' . ucwords($usuario->va_nombre) . ',
+                                                     Hola ' . ucwords($usuario->va_nombre) . ',<br />
                                                      Usted se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                      Si desea mas información del grupo dar <a href="' . $this->_options->host->base . '/grupo/' . $idgrupo . '">Clic Aquí</a> <br />Equipo Juntate.pe     
                                                      </div>       
                                                      <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                                                     </div>
+                                                     
                                                </body>
                                                </html>';
 
                 $this->mensaje($usuario->va_email, $bodyHtml, 'Se ha unido al grupo');
+                
+//            }
+              if ($correoec) {
+//                    $usuario = $this->getGrupoTable()
+//                            ->grupoxUsuario($idgrupo)
+//                            ->toArray();
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                     El siguiente usuario se ha unido a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>'.
+                                                           utf8_decode($usuario->va_nombre).'<br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
+                                               </body>
+                                               </html>';
+
+                        $this->mensaje($storage->read()->va_email, $bodyHtmlAdmin, 'Pendiente de unirse al grupo');//$usuario[0]['va_email']
+
+                }
                 $activo = 1;
             }
-            }
            if($aprobar==1){
-            if ($correos) {
+//            if ($correos) {
                 $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
+                                                    Hola ' . ucwords($usuario->va_nombre) . ',<br />
                                                     Lo sentimos pero ha sido retirado del grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
-                                                     </div>
+                                                    Si desea tener información de otros grupos puede buscarlos en Juntate.pe 
+                                                    Equipo Juntate.pe
+                                                    </div>
+                                                    <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                     
                                                </body>
                                                </html>';
 
                 $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
-            }
+//            }
+                
+              if ($correosc) {
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                    Haz retirado al siguiente usuario de tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).': ' . utf8_decode($usuario->va_nombre) . '</strong><br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                   
+                                               </body>
+                                               </html>';
+                    if ($usuario) {
+                        $this->mensaje($storage->read()->va_email, $bodyHtmlAdmin, 'Dejaron a tu grupo');
+                    }
+                }
             $activo = 0;
         }
         }
@@ -643,18 +689,18 @@ class IndexController extends AbstractActionController
         $unir = $this->params()->fromQuery('act');
         $idusergrup = $this->getGrupoTable()->getGrupo($idgrup)->ta_usuario_in_id;
 
-        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+//        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
         $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($idusergrup)->toArray();
-        $arr = array();
-        foreach ($usuariosesion as $value) {
-            $arr[] = $value['ta_notificacion_in_id'];
-        }
-        if (in_array(1, $arr)) {
-            $correoe = true;
-        }
-        if (in_array(2, $arr)) {
-            $correos = true;
-        }
+//        $arr = array();
+//        foreach ($usuariosesion as $value) {
+//            $arr[] = $value['ta_notificacion_in_id'];
+//        }
+//        if (in_array(1, $arr)) {
+//            $correoe = true;
+//        }
+//        if (in_array(2, $arr)) {
+//            $correos = true;
+//        }
         $arrc = array();
         foreach ($usuariocrear as $values) {
             $arrc[] = $values['ta_notificacion_in_id'];
@@ -668,7 +714,7 @@ class IndexController extends AbstractActionController
 
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
-                if ($correoe) {
+//                if ($correoe) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -676,14 +722,16 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. esta pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                     Usted está pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                      </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
 
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Pendiente de unirse al grupo');
-                }
+//                }
                 if ($correoec) {
                     $usuario = $this->getGrupoTable()
                             ->grupoxUsuario($idgrup)
@@ -694,9 +742,12 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
                                                      El siguiente usuario esta solicitando unirse a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>'.
                                                            utf8_decode($storage->read()->va_nombre).'<br />
                                                      </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
                     if ($usuario) {
@@ -708,7 +759,7 @@ class IndexController extends AbstractActionController
             }
         } elseif ($unir == 0) {
             if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
-                if ($correos) {
+//                if ($correos) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -716,7 +767,7 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
                                                     Usted ha abandonado el grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                     Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br />
                                                     Equipo Juntate.pe            
@@ -725,7 +776,7 @@ class IndexController extends AbstractActionController
                                                </body>
                                                </html>';
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
-                }
+//                }
                 if ($correosc) {
                     $usuario = $this->getGrupoTable()
                             ->grupoxUsuario($idgrup)
@@ -736,9 +787,11 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
-                    
+                                                     Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
+                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).':' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
                                                      </div>
+                                                       <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
                     if ($usuario) {
