@@ -56,13 +56,14 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
-        $this->layout()->categorias = $categorias;
+//        $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+        $session = $storage->read();
         if (!isset($session)) {
-        $facebook = $this->facebook();
-        $this->layout()->login = $facebook['loginUrl'];
-        $this->layout()->user = $facebook['user']; }
+            $facebook = $this->facebook();
+            $this->layout()->login = $facebook['loginUrl'];
+            $this->layout()->user = $facebook['user'];
+        }
         $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
@@ -72,86 +73,73 @@ class IndexController extends AbstractActionController
         $tipo = $this->params()->fromQuery('categoria');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-         $this->layout()->search='group-header';
-     if ($valor || $tipo || $nombre) {
-        if ($nombre) {
-            if (isset($nombre)) {             
-                         $busqueda = $this->params()->fromQuery('valor'); 
-                         
-                         if($busqueda)
-                              {                            
-                                 if($busqueda=='Eventos')
-                                    {
-                                   $listaEvento = $this->getEventoTable()->listado2Evento($nombre);
-                                                                    $dd=$listaEvento->toArray();      
-                                                                        if ($dd[0]["va_nombre"]!=null) {
-                                                                            $listaEventos = $listaEvento;
-                                                                        } else { 
-                                                                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=3');
-                                                                        }     
-                                    }
-                                    elseif($busqueda=='Grupos'){
-                                     $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
-                                     }                            
+        $this->layout()->search = 'group-header';
+        if ($valor || $tipo || $nombre) {
+            if ($nombre) {
+                if (isset($nombre)) {
+                    $busqueda = $this->params()->fromQuery('valor');
 
-                                    }
-                                    else{
+                    if ($busqueda) {
+                        if ($busqueda == 'Eventos') {
+                            $listaEvento = $this->getEventoTable()->listado2Evento($nombre);
+                            $dd = $listaEvento->toArray();
+                            if ($dd[0]["va_nombre"] != null) {
+                                $listaEventos = $listaEvento;
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=3');
+                            }
+                        } elseif ($busqueda == 'Grupos') {
+                            $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                            if (count($grupo->toArray()) > 0) {
+                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
+                            }
+                        } else {
 
-                                           $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$busqueda.'&m=4');
-                                     } 
-
-                                    }
-                                       }
-                                       else
-                                   {   $grupo = $this->getGrupoTable()->buscarGrupo($nombre);    
-                                      if (count($grupo->toArray()) > 0) 
-                                       {
-                                     $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
-                                         }
-                                      else { 
-                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
-                                     }          }
-                                              
-            }
-        }
-
-        if ($tipo) {    
-            if (isset($tipo)) {
-              if (!empty($rango)) {
-                if ($rango == 'Grupos') {
-                    $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-                    if (count($listagrupos) <= 0) {
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=2');
-                    }
-                } else { 
-                    $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
-                    if (count($listaEventos) <= 0) {//echo'ma';exit;
-                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo='.$rango.'&m=1');
+                            $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                            if (count($grupo->toArray()) > 0) {
+                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                            } else {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
+                            }
+                        }
+                    } else {
+                        $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
+                        if (count($grupo->toArray()) > 0) {
+                            $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                        } else {
+                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
+                        }
                     }
                 }
-            } else {
-                $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
-            }       
             }
-        }
-       if ($valor) {
-            if (isset($valor)) {
-                 if ($valor == 'Grupos') {
-                    $listagrupos = $this->getGrupoTable()->fetchAll();
-                     $this->layout()->search='group-header';
-                } else {                       
+
+            if ($tipo) {
+                if (isset($tipo)) {
+                    if (!empty($rango)) {
+                        if ($rango == 'Grupos') {
+                            $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                            if (count($listagrupos) <= 0) {
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=2');
+                            }
+                        } else {
+                            $listaEventos = $this->getEventoTable()->eventocategoria($tipo);
+                            if (count($listaEventos) <= 0) {//echo'ma';exit;
+                                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=1');
+                            }
+                        }
+                    } else {
+                        $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                    }
+                }
+            }
+            if ($valor) {
+                if (isset($valor)) {
+                    if ($valor == 'Grupos') {
+                        $listagrupos = $this->getGrupoTable()->fetchAll();
+                        $this->layout()->search = 'group-header';
+                    } else {
 //                    if ($session->in_id) { 
 //                       $listaEventosPriva = $this->getEventoTable()->listadoEvento($session->in_id);
 //                       $listaEventos2 = $this->getEventoTable()->listadoEvento();
@@ -161,17 +149,17 @@ class IndexController extends AbstractActionController
 //                        $listaEventos = $this->getEventoTable()->listadoEvento();
 //                        $this->layout()->search='event-header';
 //                    }
-                    
-                 $listaEventos = (!$storage)?$this->getEventoTable()->listadoEvento():$this->getEventoTable()->listadoEvento($session->in_id);
-                 $this->layout()->search='event-header';
+
+                        $listaEventos = (!$storage) ? $this->getEventoTable()->listadoEvento() : $this->getEventoTable()->listadoEvento($session->in_id);
+                        $this->layout()->search = 'event-header';
+                    }
                 }
             }
-       }
-     }else{
+        } else {
             $listagrupos = $this->getGrupoTable()->fetchAll();
-            $this->layout()->active='active';
-     }
-     
+            $this->layout()->active = 'active';
+        }
+
 
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
@@ -184,7 +172,7 @@ class IndexController extends AbstractActionController
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
-        
+
         $url = $_SERVER['REQUEST_URI'];
         if ($url != '/') {
             $buscatipo = strpos($url, 'tipo');
@@ -198,26 +186,26 @@ class IndexController extends AbstractActionController
                 } else {
                     $urlf = $url;
                 }
-                $urlf=$urlf.'&';
-            }else{
-                $urlf=$urlf.'?';
-            } 
-            
+                $urlf = $urlf . '&';
+            } else {
+                $urlf = $urlf . '?';
+            }
         } else {
             $auxurl = strpos($url, '/');
-            $urlf=substr($url,0,$auxurl);
-            $urlf=$urlf.'?';
+            $urlf = substr($url, 0, $auxurl);
+            $urlf = $urlf . '?';
         }
-        
+
         return array(
             'grupos' => $paginator2,
             'eventos' => $paginator,
             'dato' => $valor,
-            'urlac'=>$urlf
+            'urlac' => $urlf,
+            'categorias'=>$categorias
         );
     }
 
-     public function categorias()
+    public function categorias()
     {        
         $categorias = $this->getGrupoTable()->tipoCategoria();
         return $categorias;
@@ -637,7 +625,9 @@ class IndexController extends AbstractActionController
                                                     <div style="color: #7D7D7D"><br />
                                                     Hola ' . ucwords($usuario->va_nombre) . ',<br />
                                                     Lo sentimos pero ha sido retirado del grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-                                                     </div>
+                                                    Si desea tener información de otros grupos puede buscarlos en Juntate.pe 
+                                                    Equipo Juntate.pe
+                                                    </div>
                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
                                                      
                                                </body>
@@ -654,7 +644,7 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
-                                                    Haz retirado al siguiente usuario de tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($usuario->va_nombre) . '</strong><br />
+                                                    Haz retirado al siguiente usuario de tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).': ' . utf8_decode($usuario->va_nombre) . '</strong><br />
                                                      </div>
                                                      <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
                                                    

@@ -211,7 +211,6 @@ class GrupoTable{
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
-        
         if ($notificacion != null) {
             $delete = $this->tableGateway->getSql()
                 ->delete()

@@ -143,21 +143,20 @@ class UsuarioForm extends Form {
                 'empty_option' => '--- Seleccionar ---',
             )
         ));
-////          
-//        $this->add(array(
-//            'name' => 'Remenber',
-//            'type' => 'MultiCheckbox',
-//             'attributes' => array(               
-//                'class' => 'checkbox inline',
-//                'id'   => 'en_destaque',
-//                 'placeholder'=>'Ingrese su destaque'
-//            ),
-//            'options' => array(
-//                   'label' => 'Remember Me ?:',
-//                  'value_options' => array(0=>'recordar'),
-//                )
-//        ));
-//          
+        $this->add(array(
+            'type' => 'Select',
+            'attributes' => array(
+                'multiple' => 'multiple',
+                'class'=>'select2-offscreen',
+                'id'=>'e1',
+                'style'=>'width:97.3%;',
+                'tabindex'=>-1
+            ),
+            'name' => 'select2',
+            'options' => array(
+                'value_options' => $this->tipoCategoria()
+            ),
+        ));
 
 
         $this->add(array(
@@ -213,6 +212,24 @@ class UsuarioForm extends Form {
         }
         return $auxtipo;
         }else{
+            return;
+        }
+    }
+ public function tipoCategoria() {
+        $this->dbAdapter = $this->getDbAdapter();
+        $adapter = $this->dbAdapter;
+        if ($adapter) {
+            $sql = new Sql($adapter);
+            $select = $sql->select()
+                    ->from('ta_categoria');
+            $selectString = $sql->getSqlStringForSqlObject($select);
+            $categoria = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+            $auxcateg = array();
+            foreach ($categoria as $catego) {
+                $auxcateg[$catego['in_id']] = $catego['va_nombre'];
+            }
+            return $auxcateg;
+        } else {
             return;
         }
     }

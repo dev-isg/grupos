@@ -23,6 +23,7 @@ class Usuario implements InputFilterAwareInterface{
     public $va_facebook;
     public $va_twitter;
     public $va_fecha_ingreso;
+    public $select2;
     
     
     protected $inputFilter;  
@@ -41,6 +42,7 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
             $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
             $this->va_fecha_ingreso=(!empty($data['va_fecha_ingreso'])) ? $data['va_fecha_ingreso'] : null;
+            $this->select2= (!empty($data['select2'])) ? $data['select2'] : null;
          }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -225,6 +227,11 @@ class Usuario implements InputFilterAwareInterface{
                     array('name' => 'StripTags'), 
                     array('name' => 'StringTrim'), 
                 ))));
+             
+             $inputFilter->add($factory->createInput(array(
+                        'name' => 'select2',
+                        'required' => false
+                    )));
               
              $this->inputFilter = $inputFilter;
          }
@@ -406,6 +413,11 @@ class Usuario implements InputFilterAwareInterface{
                     array('name' => 'StripTags'), 
                     array('name' => 'StringTrim'), 
                 ))));
+             
+             $inputFilter->add($factory->createInput(array(
+                        'name' => 'select2',
+                        'required' => false
+                    )));
               
              $this->inputFilter = $inputFilter;
          }

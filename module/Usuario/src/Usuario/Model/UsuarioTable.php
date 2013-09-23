@@ -148,14 +148,13 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario, $imagen,$valor=null,$pass=null)
+    public function guardarUsuario(Usuario $usuario, $imagen,$valor=null,$pass=null,$catg_ingresada=null)
     {
         // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
             'va_nombre' => $usuario->va_nombre,
             'va_email' => $usuario->va_email,
             'va_contrasena' => sha1($usuario->va_contrasena),
-//            'va_dni' => $usuario->va_dni,
             'va_foto' => $imagen,
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion,
@@ -163,7 +162,7 @@ class UsuarioTable
             'va_estado' =>'desactivo',
             'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
             'va_facebook' => $usuario->va_facebook,
-            'va_twitter' => $usuario->va_twitter
+            'va_twitter' => $usuario->va_twitter,
                 );
         $id = (int) $usuario->in_id;
         
@@ -174,53 +173,132 @@ class UsuarioTable
        }
 
         if ($id == 0) {
-            $data['va_fecha_ingreso']= date("Y-m-d H:i:s");
+            $data['va_fecha_ingreso'] = date("Y-m-d H:i:s");
             $this->tableGateway->insert($data);
-            $iduser=$this->tableGateway->getLastInsertValue();
-                     $adapter = $this->tableGateway->getAdapter();
-                    $sql = new Sql($adapter);
-                    $notifica = $sql->select()->from('ta_notificacion');
-                $selectStringNotifca = $this->tableGateway->getSql()->getSqlStringForSqlObject($notifica);
-                $adapter1 = $this->tableGateway->getAdapter();
-                $cantNotif=$adapter1->query($selectStringNotifca, $adapter1::QUERY_MODE_EXECUTE);
-                $cant=array();
-                 foreach($cantNotif as $arrnot){
-                    $cant[$arrnot['in_id']] = $arrnot['va_nombre'];
-                }
+            $iduser = $this->tableGateway->getLastInsertValue();
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $notifica = $sql->select()->from('ta_notificacion');
+            $selectStringNotifca = $this->tableGateway->getSql()->getSqlStringForSqlObject($notifica);
+            $adapter1 = $this->tableGateway->getAdapter();
+            $cantNotif = $adapter1->query($selectStringNotifca, $adapter1::QUERY_MODE_EXECUTE);
+            $cant = array();
+            foreach ($cantNotif as $arrnot) {
+                $cant[$arrnot['in_id']] = $arrnot['va_nombre'];
+            }
             foreach ($cant as $key => $value) {
-                $notif=$this->tableGateway->getSql()->insert()
-                    ->into('ta_notificacion_has_ta_usuario')
-                    ->values(array(
+                $notif = $this->tableGateway->getSql()->insert()
+                        ->into('ta_notificacion_has_ta_usuario')
+                        ->values(array(
                     'ta_notificacion_in_id' => $key,
                     'ta_usuario_in_id' => $iduser));
                 $selectStringNotif = $this->tableGateway->getSql()->getSqlStringForSqlObject($notif);
                 $adapter2 = $this->tableGateway->getAdapter();
                 $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
             }
-
-            
+            //para las categorias
+//            if ($catg_ingresada != null) {
+//                $categ = array();
+//                foreach ($catg_ingresada as $arrcateg) {
+//                    $categ[$arrcateg['in_id']] = $arrcateg['va_nombre'];
+//                }
+//                if (count($categ > 0)) {
+//                    foreach ($categ as $key => $value) {
+//                        $notif = $this->tableGateway->getSql()->insert()
+//                                ->into('ta_usuario_has_ta_categoria')
+//                                ->values(array(
+//                            'ta_categoria_in_id' => $key,
+//                            'ta_usuario_in_id' => $iduser));
+//                        $selectStringNotif = $this->tableGateway->getSql()->getSqlStringForSqlObject($notif);
+//                        $adapter2 = $this->tableGateway->getAdapter();
+//                        $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
+//                    }
+//                }
+//            }
         } else {
-            
             if ($this->getUsuario($id)) {
-                if($pass==''){
+                 $this->updateCategoria($catg_ingresada, $id);
+                if ($pass == '') {
                     $data['va_estado'] = 'activo';
-                $data['va_verificacion'] = '';
-                $this->tableGateway->update($data, array(
-                    'in_id' => $id));}
-                   else{
-                       $data['va_contrasena'] = $pass;
-                 $data['va_verificacion'] = '';
-                 $data['va_estado'] = 'activo';
-                
-                $this->tableGateway->update($data, array(
-                    'in_id' => $id)); 
-                
-                    }  
-                    
-               } else {
+                    $data['va_verificacion'] = '';
+                    $this->tableGateway->update($data, array(
+                        'in_id' => $id));
+                } else {
+                    $data['va_contrasena'] = $pass;
+                    $data['va_verificacion'] = '';
+                    $data['va_estado'] = 'activo';
+
+                    $this->tableGateway->update($data, array(
+                        'in_id' => $id));
+                }
+            } else {
                 throw new \Exception('no existe el usuario');
             }
         }
+    }
+    
+    /*
+     * Actualza las categorias en relacion con el usuario de la tabla ta_usuario_has_ta_categoria
+     */
+        public function updateCategoria($categoria, $id) {
+//        if ($categoria != null) {
+//            if (count($categoria) > 0) {
+                if (count($this->getCategoriaxUsuario($id)->toArray()) > 0) {
+                    $delete = $this->tableGateway->getSql()
+                            ->delete()
+                            ->from('ta_usuario_has_ta_categoria')
+                            ->where(array(
+                        'ta_usuario_in_id' => $id
+                            ));
+                    $selectStringDelete = $this->tableGateway->getSql()->getSqlStringForSqlObject($delete);
+                    $adapter1 = $this->tableGateway->getAdapter();
+                    $adapter1->query($selectStringDelete, $adapter1::QUERY_MODE_EXECUTE);
+
+                    foreach ($categoria as $key => $value) {
+                        $update = $this->tableGateway->getSql()
+                                ->insert()
+                                ->into('ta_usuario_has_ta_categoria')
+                                ->values(array(
+                            'ta_categoria_in_id' => $value,
+                            'ta_usuario_in_id' => $id
+                                ));
+
+                        $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+                        $adapter2 = $this->tableGateway->getAdapter();
+                        $adapter2->query($selectStringUpdate, $adapter2::QUERY_MODE_EXECUTE);
+                    }
+                } else {
+                      foreach ($categoria as $key => $value) {
+                        $update = $this->tableGateway->getSql()
+                                ->insert()
+                                ->into('ta_usuario_has_ta_categoria')
+                                ->values(array(
+                            'ta_categoria_in_id' => $value,
+                            'ta_usuario_in_id' => $id
+                                ));
+
+                        $selectStringUpdate = $this->tableGateway->getSql()->getSqlStringForSqlObject($update);
+                        $adapter3 = $this->tableGateway->getAdapter();
+                        $adapter3->query($selectStringUpdate, $adapter3::QUERY_MODE_EXECUTE);
+                    }
+                    
+                }
+//            }
+//        }
+    }
+    /*
+     * Obtiene las categorias del usuario
+     */
+         public function getCategoriaxUsuario($iduser){
+         $adapter = $this->tableGateway->getAdapter();
+         $sql = new Sql($adapter);
+         $selecttot = $sql->select()
+         ->from('ta_usuario_has_ta_categoria')
+         ->join('ta_categoria','ta_categoria.in_id=ta_usuario_has_ta_categoria.ta_categoria_in_id',array('nombre_categ'=>'va_nombre'),'left')
+         ->where(array('ta_usuario_has_ta_categoria.ta_usuario_in_id'=>$iduser));
+         $selectString = $sql->getSqlStringForSqlObject($selecttot);
+         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
     }
      /*
      * mienbros unidos al grupo al q pertenece otro usuario

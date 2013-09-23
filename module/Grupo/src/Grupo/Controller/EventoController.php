@@ -346,7 +346,6 @@ class EventoController extends AbstractActionController
 //        }
 //        var_dump($usuarios->toArray());exit;
         $comentarios = $this->getEventoTable()->comentariosevento($id);
-        
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
@@ -542,6 +541,47 @@ class EventoController extends AbstractActionController
                             $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Se unieron a tu evento');
                         }
                     }
+                }else{
+                    $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($id_grupo)->va_nombre;
+                    $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                     Usted está pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
+                                               </body>
+                                               </html>';
+
+                    $this->mensaje($storage->read()->va_email, $bodyHtml, 'Pendiente de unirse al grupo');
+//                }
+                    if ($correoec) {
+                        $usuario = $this->getGrupoTable()
+                                ->grupoxUsuario($id_grupo)
+                                ->toArray();
+                        $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
+                                                     El siguiente usuario esta solicitando unirse a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>' .
+                                utf8_decode($storage->read()->va_nombre) . '<br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
+                                               </body>
+                                               </html>';
+                        if ($usuario) {
+                            $this->mensaje($usuario[0]['va_email'], $bodyHtmlAdmin, 'Pendiente de unirse al grupo');
+                        }
+                    }
+                    
                 }
                 $activo = 1;
                 $userestado = $this->getEventoTable()->UsuariosxEvento($idevent, $iduser);//usuariosevento($idevent, $iduser,'activo'); //getEventoUsuario($idevent, $iduser);//

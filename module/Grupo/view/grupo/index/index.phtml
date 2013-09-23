@@ -5,6 +5,90 @@
         margin-bottom: 20px;
     }
 </style>
+<!-- //////////////////////////////////////////INICIO BANNER//////////////////////////////////////////-->
+    <?php if($this->search){?>
+	<div class="search <?php echo $this->search;?>">
+    <?php }else{ ?>
+    <div class="search">
+    <?php } ?>
+        	<div class="container">
+			<div class="row-fluid" style="position:relative;">
+				<div class="span8 form-search">
+                    <div class="logo-juntate">
+                        <a class="brand logo-juntate" href="/" title="juntate.pe">
+                            <img src="/img/juntate.png" title="juntate.pe">
+                        </a>
+                    </div>
+                    <div class="contenedor-slogan">
+                        <p class="primer">conoce amigos,</p>
+                        <p class="segundo"><span>organiza eventos</span> y más!</p>
+                    </div>
+                    <div class="contenedor-btn-form">
+                        <?php if(!$this->session){?>
+                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento">CREA UN EVENTO</a>
+                         <?php }else{?>
+                        <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt">CREA UN EVENTO</a>
+                        <?php }?>
+                        <form method="get" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
+                            
+                            <input type="text"
+                                value="<?php
+                                if ($_GET['dato']) {
+                                        $filter = new \Zend\I18n\Filter\Alnum(true);
+                                        $nombre = trim($filter->filter($_GET['dato']));
+                                        echo $nombre;
+                                    } else {
+                                        echo $_COOKIE['dato'];
+                                    }
+                                    ?>"
+                                name="dato"
+                                class="input-medium search-query span10 dropdown-toggle"
+                                data-toggle="dropdown" id="search-home" placeholder="INGRESA TU BUSQUEDA">
+                                <ul class="dropdown-menu" id="menu-categoria">
+                                    <?php
+                                    foreach ($this->categorias as $categorias) :
+                                        ?>
+                                    <li class="man-dev">
+                                            <ul>  
+                                                <li><a href="<?php echo $this->host('ruta') ?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php
+                                  if($_GET['tipo']) {
+                                        echo '&valor=' . $_GET['tipo'];
+                                    }elseif($_GET['valor']){ echo '&valor=' .$_GET['valor'];}
+                                    elseif($this->active1){echo '&valor=Eventos';}
+                                    else{echo '&valor=Grupos';}
+                                    ;
+                                        ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
+                                            </ul>
+                                        </li> 
+                                     <?php endforeach; ?>  
+                                </ul>
+                            <input type="Hidden" name="valor" class="btn btn-primary btn-evento-i" value="<?php  if($_GET['tipo']) {
+                                        echo $_GET['tipo'];
+                                    }elseif($_GET['valor']){ echo $_GET['valor'];}
+                                    else{echo 'Grupos';}
+                                    ; ?>"/>
+                            <input type="submit"  class="btn btn-primary btn-evento-i" value=""/>
+                        </form>
+                    </div>
+                </div>
+                    <div class="span4 btn-evento">
+                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
+                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}elseif($this->active1){echo $this->active1;}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
+                                EVENTOS
+                                <div class="pinchitoa"></div>
+                            </a>
+                            <a class="btn btn-primary <?php if(!$this->active){if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}}else{echo $this->active;}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
+                                GRUPOS
+                                <div class="pinchitob"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contenedor-back-ho"></div>
+                </div>
+            </div>
+        </div>
+      
+<!-- //////////////////////////////////////////FIN BANNER ////////////////////////////////////////////-->
 <div class="main-container">
     <div class="container">
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">

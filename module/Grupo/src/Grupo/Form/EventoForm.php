@@ -349,7 +349,7 @@ class EventoForm extends Form
 //            $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 //            $distrito=$results->toArray();
             
-        $auxtipo=array('PER-LIM'=>'Lima, Perú');
+        $auxtipo=array('PER-LIM'=>'Perú');
 //        foreach($distrito as $tipo){
 //            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];      
 //        }
