@@ -141,13 +141,9 @@
                                 <div class="control-group">
                                     <label class="control-label">Tus intereses</label>
                                     <div class="controls">
-                                        <select multiple id="e1" name="select2[]" style="width:97.3%;">
-                                            <option value="AL">Alabama</option>
-                                            <option value="Am">Amalapuram</option>
-                                            <option value="An">Anakapalli</option>
-                                            <option value="Ak">Akkayapalem</option>
-                                            <option value="WY">Wyoming</option>
-                                        </select>
+                                        <?php echo $this->formRow($form->get('select2')); ?>
+<!--                                        <select multiple id="e1" name="select2[]" style="width:97.3%;">
+                                        </select>-->
                                     </div>
                                 </div>
                             </div>

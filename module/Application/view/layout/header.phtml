@@ -38,9 +38,19 @@
             <a class="brand logo-res" href="/" style="margin-right:30px;">Juntate.pe</a>
           <?php if($_GET['nombre']) {?> <span class="category-home"><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span><?php } ?>
           <div class="nav-collapse collapse menu-juntate">
-            <form class="navbar-search pull-left" action="">
-                <input type="text" class="search-query span2" placeholder="Search">
-            </form>
+              <form class="navbar-search pull-left" method="get" action="<?php echo $this->host('ruta') ?>/buscar">
+                  <input type="text" 
+                         value="<?php
+                    if ($_GET['dato']) {
+                        $filter = new \Zend\I18n\Filter\Alnum(true);
+                        $nombre = trim($filter->filter($_GET['dato']));
+                        echo $nombre;
+                    } else {
+                        echo $_COOKIE['dato'];
+                    }
+                    ?>"
+                    name="dato" class="search-query span2" placeholder="Search">
+              </form>
             <ul class="nav pull-right">
                 <?php if(!$this->session){?>
                   <li><a class="inlineEvento eventDato" href="#inline_evento">Iniciar sesión</a></li>
@@ -68,122 +78,8 @@
         </div>
       </div>
     </div>
+    	<!-- /////////////////////////////////BANER////////////////////////////////-->
 
-	<!--<div class="navbar navbar-inverse navbar-fixed-top menu-grup">
-		<div class="navbar-inner">
-			<div class="container">
-                <?php if($_GET['nombre']) {?> <span class="category-home"><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span><?php } ?>
-                <div class="nav-collapse collapse navbar-responsive-collapse">
-					<ul class="nav pull-right menu-dev">
-                        <?php if(!$this->session){?>
-                        <li class="top-ini"><a href="#inline_evento" class="inlineEvento eventDato">Iniciar sesión</a></li>
-						<li class="divider-vertical divider-one"></li>
-						<li class="top-ini"><a href="/registrarse">Registrarse</a></li>
-                    <?php }else{?>
-                    <li class="dropdown">
-                      <a href="#" class="buttom dropdown-toggle" data-toggle="dropdown"><?php echo $this->session->va_nombre;?>
-                          
-                 <?php $valor = explode('/',$this->session->va_foto);
-                    if($valor[0]=='https:'){?> <img src="<?php echo $this->session->va_foto?>" alt="">
-                <?php } elseif($this->session->va_foto=='foto-carnet.jpg'){ ?><img src="<?php echo $this->host('img').'/foto-carnet.jpg'?>" alt=""> <?php }
-                            else { ?><img src="<?php echo $this->host('images').'/usuario/perfil/'.$this->session->va_foto?>" alt=""> <?php } ?>
-                      </a>
-						<ul class="dropdown-menu">
-							<li><a href="<?php echo $this->host('base');?>/micuenta">Mi perfil</a></li>
-							<li><a href="<?php echo $this->host('base');?>/cuenta/miseventos">Mis eventos </a></li>
-							<li><a href="<?php echo $this->host('base');?>/cuenta/misgrupos">Mis grupos</a></li>
-							<li class="divider"></li>                               
-                            <li><a href="<?php echo $this->url('login/process', array('action'=>'logout')); ?>">Cerrar sesión </a></li>
-						</ul>
-                    </li>
-                    <?php }?>
-                    </ul>
-				</div>
-			</div>
-		</div>
-	</div>-->
-    <?php if($this->search){?>
-	<div class="search <?php echo $this->search;?>">
-    <?php }else{ ?>
-    <div class="search">
-    <?php } ?>
-		<div class="container">
-			<div class="row-fluid" style="position:relative;">
-				<div class="span8 form-search">
-                    <div class="logo-juntate">
-                        <a class="brand logo-juntate" href="/" title="juntate.pe">
-                            <img src="/img/juntate.png" title="juntate.pe">
-                        </a>
-                    </div>
-                    <div class="contenedor-slogan">
-                        <p class="primer">conoce amigos,</p>
-                        <p class="segundo"><span>organiza eventos</span> y más!</p>
-                    </div>
-                    <div class="contenedor-btn-form">
-                        <?php if(!$this->session){?>
-                        <a href="#inline_evento" class="btn btn-success btn-home-evnt inlineEvento">CREA UN EVENTO</a>
-                         <?php }else{?>
-                        <a href="<?php echo $this->url('elegir-grupo');?>" class="btn btn-success btn-home-evnt">CREA UN EVENTO</a>
-                        <?php }?>
-                        <form method="get" class="form-search-dev span8 dropdown" name="search" action="<?php echo $this->host('ruta')?>/buscar">
-                            
-                            <input type="text"
-                                value="<?php
-                                if ($_GET['dato']) {
-                                        $filter = new \Zend\I18n\Filter\Alnum(true);
-                                        $nombre = trim($filter->filter($_GET['dato']));
-                                        echo $nombre;
-                                    } else {
-                                        echo $_COOKIE['dato'];
-                                    }
-                                    ?>"
-                                name="dato"
-                                class="input-medium search-query span10 dropdown-toggle"
-                                data-toggle="dropdown" id="search-home" placeholder="INGRESA TU BUSQUEDA">
-                                <ul class="dropdown-menu" id="menu-categoria">
-                                    <?php
-                                    foreach ($this->categorias as $categorias) :
-                                        ?>
-                                    <li class="man-dev">
-                                            <ul>  
-                                                <li><a href="<?php echo $this->host('ruta') ?>/buscar?nombre=<?php echo $this->escapeHtml($categorias->va_nombre); ?>&categoria=<?php echo $this->escapeHtml($categorias->in_id); ?><?php
-                                  if($_GET['tipo']) {
-                                        echo '&valor=' . $_GET['tipo'];
-                                    }elseif($_GET['valor']){ echo '&valor=' .$_GET['valor'];}
-                                    elseif($this->active1){echo '&valor=Eventos';}
-                                    else{echo '&valor=Grupos';}
-                                    ;
-                                        ?>"><?php echo $this->escapeHtml($categorias->va_nombre); ?></a></li>
-                                            </ul>
-                                        </li> 
-                                     <?php endforeach; ?>  
-                                </ul>
-                            <input type="Hidden" name="valor" class="btn btn-primary btn-evento-i" value="<?php  if($_GET['tipo']) {
-                                        echo $_GET['tipo'];
-                                    }elseif($_GET['valor']){ echo $_GET['valor'];}
-                                    else{echo 'Grupos';}
-                                    ; ?>"/>
-                            <input type="submit"  class="btn btn-primary btn-evento-i" value=""/>
-                        </form>
-                    </div>
-                </div>
-                    <div class="span4 btn-evento">
-                        <div class="btn-group group-right" data-toggle="buttons-radio"> 
-                            <a class="btn btn-primary <?php if( $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos'){echo 'active';}elseif($this->active1){echo $this->active1;}else{} ?> tab-home-g-a" href="<?php echo $this->host('ruta')?>/buscar?tipo=Eventos">
-                                EVENTOS
-                                <div class="pinchitoa"></div>
-                            </a>
-                            <a class="btn btn-primary <?php if(!$this->active){if($_GET['tipo']=='Grupos' or $_GET['valor']=='Grupos' ){echo 'active';}else{}}else{echo $this->active;}?> tab-home-g-b"  href="<?php echo $this->host('ruta')?>/buscar?tipo=Grupos">
-                                GRUPOS
-                                <div class="pinchitob"></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contenedor-back-ho"></div>
-                </div>
-            </div>
-        </div>
-      
         <!--Login-->
         <div style="display:none">
             <div id="inline_evento" style="padding:10px; background:#fff;">
