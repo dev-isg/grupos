@@ -26,7 +26,7 @@ class Usuario implements InputFilterAwareInterface{
     public $va_fecha_ingreso;
     public $select2;
     
-    
+
     protected $inputFilter;  
     
     public function exchangeArray($data){
@@ -39,7 +39,7 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : 'foto-carnet.jpg';
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : 1;
+           $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : $data->ta_ubigeo_in_id;
             $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
             $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
             $this->va_fecha_ingreso=(!empty($data['va_fecha_ingreso'])) ? $data['va_fecha_ingreso'] : null;
@@ -144,10 +144,7 @@ class Usuario implements InputFilterAwareInterface{
                 ), 
             )));
             
-                $inputFilter->add($factory->createInput(array(
-                        'name' => 'ta_ubigeo_in_id',
-                        'required' => false
-                    )));
+
              
 //             $inputFilter->add($factory->createInput(array(
 //                        'name' => 'va_dni',
@@ -397,7 +394,13 @@ class Usuario implements InputFilterAwareInterface{
                   $inputFilter->add($factory->createInput(array(
                         'name' => 'ta_ubigeo_in_id',
                         'required' => false
+                      
                    )));
+                  $inputFilter->add($factory->createInput(array(
+                        'name' => 'pais',
+                        'required' => true
+                   )));
+              
                   
             $inputFilter->add($factory->createInput(array( 
                 'name' => 'va_facebook', 

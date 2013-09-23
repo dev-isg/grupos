@@ -139,7 +139,7 @@ class UsuarioForm extends Form {
                 'id' => 'ta_ubigeo_in_id'
             ),
             'options' => array(
-               // 'value_options' =>$this->Provincia(),                                               
+                                             
                 'empty_option' => '--- Seleccionar ---',
             )
         ));
@@ -221,28 +221,7 @@ $this->add(array(
         }
     }
 
-//    public function Distrito() {
-//        $this->dbAdapter = $this->getDbAdapter();
-//        $adapter = $this->dbAdapter;
-//        if($adapter){
-//        $sql = new Sql($adapter);
-//        $select = $sql->select()
-//                        ->columns(array('in_iddistrito', 'va_distrito'))
-//                        ->from('ta_ubigeo')
-//                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
-//        $selectString = $sql->getSqlStringForSqlObject($select);
-//        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-//        $distrito = $results->toArray();
-//        
-//        $auxtipo = array();
-//        foreach ($distrito as $tipo) {
-//            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
-//        }
-//        return $auxtipo;
-//        }else{
-//            return;
-//        }
-//    }
+
 
     public function setDbAdapter(AdapterInterface $dbAdapter) {
         $this->dbAdapter = $dbAdapter;
