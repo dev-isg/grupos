@@ -29,7 +29,7 @@ class UsuarioTable
         
         return $resultSet;
     }
-
+   
     public function getUsuario($id)
     {
         $id = (int) $id;
@@ -519,7 +519,43 @@ public function idfacebook2($id,$logout)
       $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
 
+     public function getPais()
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('Code', 'Name'))
+                        ->from('country');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+       return $results->toArray();
+    }
+     public function getCiudad($ciudad)
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('ID', 'Name'))
+                        ->from('city')
+         ->where(array('CountryCode' =>$ciudad ))->group('ID');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+       return $results->toArray();
     
+    }
+     public function getCiudadPeru()
+    {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('in_id', 'va_distrito'))
+                        ->from('ta_ubigeo')
+         ->where(array('in_idpais' =>1))->group('in_id');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+       return $results->toArray();
+    
+    }
 }
 
 //,'ta_usuario_has_ta_grupo.ta_usuario_in_id<>?'=>$id

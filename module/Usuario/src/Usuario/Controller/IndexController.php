@@ -359,14 +359,29 @@ public function getAuthService() {
             'form' => $form,
             'mensaje' => $mensaje,
             'user' => $user,
-            'loginUrl'  =>$loginUrl,
-            
+            'loginUrl'  =>$loginUrl,   
         );
-        // return array();
     }
 
-
-    public function editarusuarioAction() {
+    
+       public function jsonpaisAction(){
+        $ubigeo=$this->getUsuarioTable()->getPais();
+        echo Json::encode($ubigeo);
+        exit();
+      }
+    
+        public function jsonciudadAction(){
+        $idpais=$this->params()->fromQuery('code');
+        if($idpais=='PER')
+         { $ubigeo=$this->getUsuarioTable()->getCiudadPeru();}
+        else
+        { $ubigeo=$this->getUsuarioTable()->getCiudad($idpais);}
+        echo Json::encode($ubigeo);
+        exit();
+    }
+    
+    
+    public function editarusuarioAction(){
         
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();

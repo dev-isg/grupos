@@ -139,10 +139,23 @@ class UsuarioForm extends Form {
                 'id' => 'ta_ubigeo_in_id'
             ),
             'options' => array(
+               // 'value_options' =>$this->Provincia(),                                               
+                'empty_option' => '--- Seleccionar ---',
+            )
+        ));
+$this->add(array(
+            'name' => 'pais',
+            'type' => 'Select',
+             'attributes' => array(               
+                'class' => 'span10',
+                'id'   => 'pais'
+            ),
+           'options' =>array(
                 'value_options' =>$this->Provincia(),                                               
                 'empty_option' => '--- Seleccionar ---',
             )
         ));
+
         $this->add(array(
             'type' => 'Select',
             'attributes' => array(
@@ -159,6 +172,7 @@ class UsuarioForm extends Form {
         ));
 
 
+
         $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',
@@ -173,47 +187,20 @@ class UsuarioForm extends Form {
    public function Provincia() {
         $this->dbAdapter = $this->getDbAdapter();
         $adapter = $this->dbAdapter;
-        if($adapter){
+    //    if($adapter){
         $sql = new Sql($adapter);
         $select = $sql->select()
-                        ->columns(array('in_idprovincia', 'va_provincia'))
-                        ->from('ta_ubigeo')
-                        ->where(array('va_departamento' => 'LIMA'))->group('in_idprovincia');
+                        ->columns(array('Code', 'Name'))
+                        ->from('country');
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        $distrito = $results->toArray();
-        
+        $pais= $results->toArray();  
         $auxtipo = array();
-        foreach ($distrito as $tipo) {
-            $auxtipo[$tipo['in_idprovincia']] = $tipo['va_provincia'];
+        foreach ($pais as $tipo) {
+            $auxtipo[$tipo['Code']] = $tipo['Name'];
         }
         return $auxtipo;
-        }else{
-            return;
-        }
-    }
 
-    public function Distrito() {
-        $this->dbAdapter = $this->getDbAdapter();
-        $adapter = $this->dbAdapter;
-        if($adapter){
-        $sql = new Sql($adapter);
-        $select = $sql->select()
-                        ->columns(array('in_iddistrito', 'va_distrito'))
-                        ->from('ta_ubigeo')
-                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
-        $selectString = $sql->getSqlStringForSqlObject($select);
-        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        $distrito = $results->toArray();
-        
-        $auxtipo = array();
-        foreach ($distrito as $tipo) {
-            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
-        }
-        return $auxtipo;
-        }else{
-            return;
-        }
     }
  public function tipoCategoria() {
         $this->dbAdapter = $this->getDbAdapter();
@@ -233,6 +220,29 @@ class UsuarioForm extends Form {
             return;
         }
     }
+
+//    public function Distrito() {
+//        $this->dbAdapter = $this->getDbAdapter();
+//        $adapter = $this->dbAdapter;
+//        if($adapter){
+//        $sql = new Sql($adapter);
+//        $select = $sql->select()
+//                        ->columns(array('in_iddistrito', 'va_distrito'))
+//                        ->from('ta_ubigeo')
+//                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
+//        $selectString = $sql->getSqlStringForSqlObject($select);
+//        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//        $distrito = $results->toArray();
+//        
+//        $auxtipo = array();
+//        foreach ($distrito as $tipo) {
+//            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
+//        }
+//        return $auxtipo;
+//        }else{
+//            return;
+//        }
+//    }
 
     public function setDbAdapter(AdapterInterface $dbAdapter) {
         $this->dbAdapter = $dbAdapter;
