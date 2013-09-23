@@ -138,26 +138,29 @@ class UsuarioForm extends Form {
                 'class' => 'span10',
                 'id' => 'ta_ubigeo_in_id'
             ),
-            'options' => array(
-                'value_options' =>$this->Provincia(),                                               
-                'empty_option' => '--- Seleccionar ---',
-            )
+             'options' => array(
+                   //  'label' => 'Pais',
+                     'value_options' => array(
+                          '' => 'selecccione :'            
+                     ),
+               'disable_inarray_validator' => true
+             )
         ));
-////          
-//        $this->add(array(
-//            'name' => 'Remenber',
-//            'type' => 'MultiCheckbox',
-//             'attributes' => array(               
-//                'class' => 'checkbox inline',
-//                'id'   => 'en_destaque',
-//                 'placeholder'=>'Ingrese su destaque'
-//            ),
-//            'options' => array(
-//                   'label' => 'Remember Me ?:',
-//                  'value_options' => array(0=>'recordar'),
-//                )
-//        ));
-//          
+$this->add(array(
+            'name' => 'pais',
+            'type' => 'Select',
+             'attributes' => array(               
+                'class' => 'span10',
+                'id'   => 'pais'
+            ),
+           'options' => array(
+                   //  'label' => 'Pais',
+                     'value_options' => array(
+                          '' => 'selecccione :'            
+                     ),
+               'disable_inarray_validator' => true
+             )
+        ));
 
 
         $this->add(array(
@@ -171,51 +174,51 @@ class UsuarioForm extends Form {
         ));
     }
     
-   public function Provincia() {
-        $this->dbAdapter = $this->getDbAdapter();
-        $adapter = $this->dbAdapter;
-        if($adapter){
-        $sql = new Sql($adapter);
-        $select = $sql->select()
-                        ->columns(array('in_idprovincia', 'va_provincia'))
-                        ->from('ta_ubigeo')
-                        ->where(array('va_departamento' => 'LIMA'))->group('in_idprovincia');
-        $selectString = $sql->getSqlStringForSqlObject($select);
-        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        $distrito = $results->toArray();
-        
-        $auxtipo = array();
-        foreach ($distrito as $tipo) {
-            $auxtipo[$tipo['in_idprovincia']] = $tipo['va_provincia'];
-        }
-        return $auxtipo;
-        }else{
-            return;
-        }
-    }
-
-    public function Distrito() {
-        $this->dbAdapter = $this->getDbAdapter();
-        $adapter = $this->dbAdapter;
-        if($adapter){
-        $sql = new Sql($adapter);
-        $select = $sql->select()
-                        ->columns(array('in_iddistrito', 'va_distrito'))
-                        ->from('ta_ubigeo')
-                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
-        $selectString = $sql->getSqlStringForSqlObject($select);
-        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-        $distrito = $results->toArray();
-        
-        $auxtipo = array();
-        foreach ($distrito as $tipo) {
-            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
-        }
-        return $auxtipo;
-        }else{
-            return;
-        }
-    }
+//   public function Provincia() {
+//        $this->dbAdapter = $this->getDbAdapter();
+//        $adapter = $this->dbAdapter;
+//        if($adapter){
+//        $sql = new Sql($adapter);
+//        $select = $sql->select()
+//                        ->columns(array('in_idprovincia', 'va_provincia'))
+//                        ->from('ta_ubigeo')
+//                        ->where(array('va_departamento' => 'LIMA'))->group('in_idprovincia');
+//        $selectString = $sql->getSqlStringForSqlObject($select);
+//        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//        $distrito = $results->toArray();
+//        
+//        $auxtipo = array();
+//        foreach ($distrito as $tipo) {
+//            $auxtipo[$tipo['in_idprovincia']] = $tipo['va_provincia'];
+//        }
+//        return $auxtipo;
+//        }else{
+//            return;
+//        }
+//    }
+//
+//    public function Distrito() {
+//        $this->dbAdapter = $this->getDbAdapter();
+//        $adapter = $this->dbAdapter;
+//        if($adapter){
+//        $sql = new Sql($adapter);
+//        $select = $sql->select()
+//                        ->columns(array('in_iddistrito', 'va_distrito'))
+//                        ->from('ta_ubigeo')
+//                        ->where(array('va_departamento' => 'LIMA', 'va_provincia' => 'LIMA'))->group('in_iddistrito');
+//        $selectString = $sql->getSqlStringForSqlObject($select);
+//        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+//        $distrito = $results->toArray();
+//        
+//        $auxtipo = array();
+//        foreach ($distrito as $tipo) {
+//            $auxtipo[$tipo['in_iddistrito']] = $tipo['va_distrito'];
+//        }
+//        return $auxtipo;
+//        }else{
+//            return;
+//        }
+//    }
 
     public function setDbAdapter(AdapterInterface $dbAdapter) {
         $this->dbAdapter = $dbAdapter;
