@@ -22,6 +22,7 @@ class Usuario implements InputFilterAwareInterface{
     public $ta_ubigeo_in_id;
     public $va_facebook;
     public $va_twitter;
+    
     public $va_fecha_ingreso;
     
     

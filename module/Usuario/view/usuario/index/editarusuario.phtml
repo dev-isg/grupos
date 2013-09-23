@@ -49,8 +49,15 @@
                                         <?php echo $this->formRow($form->get('va_genero')); ?>
                                     </div>
                                 </div>
+                     
+                                 <div class="control-group">
+                                    <label class="control-label" for="pais">Pais</label>
+                                    <div class="controls">
+                                         <?php echo $this->formRow($form->get('pais'));?>
+                                    </div>
+                                </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="ta_ubigeo_in_id">Distrito</label>
+                                    <label class="control-label" for="ta_ubigeo_in_id">Ciudad</label>
                                     <div class="controls">
                                          <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
                                     </div>
@@ -155,14 +162,13 @@
                     echo $this->form()->openTag($formnotif);
                     ?>     
                     <?php echo $this->formRow($formnotif->get('tipo_notificacion'));?>  
-
-                        <p class="crear-evento box">
-                             <?php echo $this->formSubmit($formnotif->get('submit'));?>                            
-                        </p>
-                        <?php echo $this->form()->closeTag();?>
-
-                </div>
+                    <p class="crear-evento box">
+                         <?php echo $this->formSubmit($formnotif->get('submit'));?>                            
+                    </p>
+                    <?php echo $this->form()->closeTag();?>
             </div>
+        </div>         
+        </div>
     </div> <!-- #main -->
 </div> <!-- #main-container -->
 
@@ -171,6 +177,30 @@
         $(".alert-message").alert();
         window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
         $("#e1").select2();
+
+        var cboPais = $("#cboPaisEmpresa");
+        var cboDepartamento = $("#cboDepartamentoEmpresa");
+        var cboDistrito = $("#cboDistritoEmpresa"); 
+        cboPais.change(function(){
+            var valPais =  $(this).find('option:selected').val();
+            $.ajax({
+                url: "/index/json-lista-departamentos/id/" + valPais , 
+                cache:true,
+                data: {},
+                success: function(nselect){
+                    var data = JSON.parse(nselect || {});
+                    var departList = [];
+                    cboDepartamento.empty();
+                    for (var key in data) {
+                        var val = data[key];
+                        var  departItem = '<option label="'+ val +'" value="'+ key +'">'+ val +'</option>';
+                        departList.push(departItem);                    
+                    }
+                    var joinDep = departList.join('');          
+                    cboDepartamento.append(joinDep);                
+                }
+            });
+        });
     });
 </script>
   
