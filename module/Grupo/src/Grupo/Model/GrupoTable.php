@@ -73,6 +73,7 @@ class GrupoTable{
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->select()
+        ->columns(array('nombre_usuario'=>'va_nombre','va_email'))
         ->from('ta_usuario')
         ->join('ta_grupo','ta_usuario.in_id=ta_grupo.ta_usuario_in_id',array('*'), 'left')
         ->where(array('ta_grupo.in_id'=>$idgrupo));

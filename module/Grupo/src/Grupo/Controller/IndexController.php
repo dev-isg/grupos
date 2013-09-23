@@ -556,58 +556,114 @@ class IndexController extends AbstractActionController
         $idusuario = $this->params()->fromQuery('id_usuario');
         $aprobar = $this->params()->fromQuery('act');
 
-        $usuarioapro = $this->getGrupoTable()->getNotifiacionesxUsuario($idusuario)->toArray();
-        $arr = array();
-        foreach ($usuarioapro as $value) {
-            $arr[] = $value['ta_notificacion_in_id'];
+//        $usuarioapro = $this->getGrupoTable()->getNotifiacionesxUsuario($idusuario)->toArray();
+//        $arr = array();
+//        foreach ($usuarioapro as $value) {
+//            $arr[] = $value['ta_notificacion_in_id'];
+//        }
+//        if (in_array(1, $arr)) {
+//            $correoe = true;
+//        }
+//        if (in_array(2, $arr)) {
+//            $correos = true;
+//        }
+        
+        $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($storage->read()->in_id)->toArray();
+        $arrc = array();
+        foreach ($usuariocrear as $values) {
+            $arrc[] = $values['ta_notificacion_in_id'];
         }
-        if (in_array(1, $arr)) {
-            $correoe = true;
+        if (in_array(1, $arrc)) {
+            $correoec = true;
         }
-        if (in_array(2, $arr)) {
-            $correos = true;
+        if (in_array(2, $arrc)) {
+            $correosc = true;
         }
 
         $usuario = $this->getUsuarioTable()->getUsuario($idusuario); //$this->getGrupoTable()->grupoxUsuario($idgrupo)->toArray();
         $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrupo)->va_nombre;
         if ($this->getGrupoTable()->aprobarUsuario($idgrupo, $idusuario, $aprobar)) {
             if($aprobar==2){
-            if ($correoe) {
+//            if ($correoe) {
                 $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />                                                       
-                                                     Hola ' . ucwords($usuario->va_nombre) . ',
+                                                     Hola ' . ucwords($usuario->va_nombre) . ',<br />
                                                      Usted se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                      Si desea mas información del grupo dar <a href="' . $this->_options->host->base . '/grupo/' . $idgrupo . '">Clic Aquí</a> <br />Equipo Juntate.pe     
                                                      </div>       
                                                      <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                                                     </div>
+                                                     
                                                </body>
                                                </html>';
 
                 $this->mensaje($usuario->va_email, $bodyHtml, 'Se ha unido al grupo');
+                
+//            }
+              if ($correoec) {
+//                    $usuario = $this->getGrupoTable()
+//                            ->grupoxUsuario($idgrupo)
+//                            ->toArray();
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                     El siguiente usuario se ha unido a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>'.
+                                                           utf8_decode($usuario->va_nombre).'<br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
+                                               </body>
+                                               </html>';
+
+                        $this->mensaje($storage->read()->va_email, $bodyHtmlAdmin, 'Pendiente de unirse al grupo');//$usuario[0]['va_email']
+
+                }
                 $activo = 1;
             }
-            }
            if($aprobar==1){
-            if ($correos) {
+//            if ($correos) {
                 $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
                                                <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
+                                                    Hola ' . ucwords($usuario->va_nombre) . ',<br />
                                                     Lo sentimos pero ha sido retirado del grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
                                                      </div>
+                                                    <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                     
                                                </body>
                                                </html>';
 
                 $this->mensaje($usuario->va_email, $bodyHtmlAdmin, 'Lo retiraron del grupo');
-            }
+//            }
+                
+              if ($correosc) {
+                    $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                                               <head>
+                                               <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                                               </head>
+                                               <body>
+                                                    <div style="color: #7D7D7D"><br />
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                    Haz retirado al siguiente usuario de tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($usuario->va_nombre) . '</strong><br />
+                                                     </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                   
+                                               </body>
+                                               </html>';
+                    if ($usuario) {
+                        $this->mensaje($storage->read()->va_email, $bodyHtmlAdmin, 'Dejaron a tu grupo');
+                    }
+                }
             $activo = 0;
         }
         }
@@ -643,18 +699,18 @@ class IndexController extends AbstractActionController
         $unir = $this->params()->fromQuery('act');
         $idusergrup = $this->getGrupoTable()->getGrupo($idgrup)->ta_usuario_in_id;
 
-        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
+//        $usuariosesion = $this->getGrupoTable()->getNotifiacionesxUsuario($iduser)->toArray();
         $usuariocrear = $this->getGrupoTable()->getNotifiacionesxUsuario($idusergrup)->toArray();
-        $arr = array();
-        foreach ($usuariosesion as $value) {
-            $arr[] = $value['ta_notificacion_in_id'];
-        }
-        if (in_array(1, $arr)) {
-            $correoe = true;
-        }
-        if (in_array(2, $arr)) {
-            $correos = true;
-        }
+//        $arr = array();
+//        foreach ($usuariosesion as $value) {
+//            $arr[] = $value['ta_notificacion_in_id'];
+//        }
+//        if (in_array(1, $arr)) {
+//            $correoe = true;
+//        }
+//        if (in_array(2, $arr)) {
+//            $correos = true;
+//        }
         $arrc = array();
         foreach ($usuariocrear as $values) {
             $arrc[] = $values['ta_notificacion_in_id'];
@@ -668,7 +724,7 @@ class IndexController extends AbstractActionController
 
         if ($unir == 1) {
             if ($this->getGrupoTable()->unirseGrupo($idgrup, $iduser)) {
-                if ($correoe) {
+//                if ($correoe) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -676,14 +732,16 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. esta pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-    
+                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
+                                                     Usted está pendiente de unirse al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                      </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
 
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Pendiente de unirse al grupo');
-                }
+//                }
                 if ($correoec) {
                     $usuario = $this->getGrupoTable()
                             ->grupoxUsuario($idgrup)
@@ -694,9 +752,12 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
+                                                     Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
                                                      El siguiente usuario esta solicitando unirse a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong>'.
                                                            utf8_decode($storage->read()->va_nombre).'<br />
                                                      </div>
+                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
                     if ($usuario) {
@@ -708,7 +769,7 @@ class IndexController extends AbstractActionController
             }
         } elseif ($unir == 0) {
             if ($this->getGrupoTable()->retiraGrupo($idgrup, $iduser)) {
-                if ($correos) {
+//                if ($correos) {
                     $user_info['nom_grup'] = $this->getGrupoTable()->getGrupo($idgrup)->va_nombre;
                     $bodyHtml = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
                                                <head>
@@ -716,7 +777,7 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',
+                                                    Hola ' . ucwords($storage->read()->va_nombre) . ',<br />
                                                     Usted ha abandonado el grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
                                                     Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br />
                                                     Equipo Juntate.pe            
@@ -725,7 +786,7 @@ class IndexController extends AbstractActionController
                                                </body>
                                                </html>';
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
-                }
+//                }
                 if ($correosc) {
                     $usuario = $this->getGrupoTable()
                             ->grupoxUsuario($idgrup)
@@ -736,9 +797,11 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
-                    
+                                                     Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
+                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).':' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
                                                      </div>
+                                                       <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                
                                                </body>
                                                </html>';
                     if ($usuario) {
