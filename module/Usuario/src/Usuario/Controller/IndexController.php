@@ -373,7 +373,7 @@ public function getAuthService() {
         public function jsonciudadAction(){
         $idpais=$this->params()->fromQuery('code');
         if($idpais=='PER')
-         { $ubigeo=$this->getUsuarioTable()->getCiudadPeru();}
+        { $ubigeo=$this->getUsuarioTable()->getCiudadPeru();}
         else
         { $ubigeo=$this->getUsuarioTable()->getCiudad($idpais);}
         echo Json::encode($ubigeo);
