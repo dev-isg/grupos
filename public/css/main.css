@@ -289,6 +289,13 @@ nav a:hover {
   margin-top: 10px;
   height: 72px;
 }
+.menu-login-f{
+  background: #fff;
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  height: 72px;  
+}
 .recuperacion {
   width: 100%;
   padding: 10px;
@@ -297,6 +304,13 @@ nav a:hover {
   margin-bottom: 0;
 }
 .menu-login span{
+  font-size: 25px;
+  padding: 10px 10px;
+  float: left;
+  font-family: "league_gothicregular";
+  font-weight: normal !important;
+}
+.menu-login-f span{
   font-size: 25px;
   padding: 10px 10px;
   float: left;
@@ -314,6 +328,11 @@ span.face{
   margin-top: 5px;
 }
 .menu-login img{
+  float:left;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.menu-login-f img{
   float:left;
   padding-top: 10px;
   padding-left: 20px;
@@ -506,6 +525,9 @@ div.upload input {
   color: white;
 }
 .contenido-group .menu-login{
+  margin-top: 0;
+}
+.contenido-group .menu-login-f{
   margin-top: 0;
 }
 .misdatos{background: #008641;}
@@ -956,7 +978,7 @@ vertical-align: middle;
     font-size: 14px;
 }
 .search{
-  margin-top: 34px;
+  
 }
 .btn-evento{
   float: right!important;
@@ -2705,6 +2727,9 @@ ul.score-list li:first-child {
   bottom: 0;
   width: 140px;
   height: 104px;
+}
+.main-container{
+  margin-top: 34px;
 }
 /*@font-face {
   font-family: "untitled-font-1";

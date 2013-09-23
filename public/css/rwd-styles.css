@@ -234,6 +234,16 @@
 	.navbar-inverse .navbar-search .search-query{
 		width: 300px;
 	}
+	.menu-login-f{
+		width: 100%;
+		height: auto;
+	}
+	.logincuenta{
+		width: 100%;
+	}
+	.menu-login-f{
+		overflow: hidden;
+	}
 }
 
 @media (max-width: 767px) { 
@@ -409,6 +419,22 @@
 	#menu-categoria li ul{
 		width: 100%;
 		text-align: left;
+	}
+	.menu-login-f{
+		width: 100%;
+		height: auto;
+	}
+	.logincuenta{
+		width: 100%;
+	}
+	.menu-login-f{
+		overflow: hidden;
+	}
+	.contenido-group{
+		margin-top: 10px;
+	}
+	.contenido-group header span{
+		width: 93%!important;
 	}
 }
 

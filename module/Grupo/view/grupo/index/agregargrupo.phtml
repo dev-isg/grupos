@@ -60,4 +60,38 @@
     </div>
 </div> <!-- #main-container -->
 
+<script type="text/javascript">
+    var cboPais = $("#pais");
+    var distriJ = $("#ta_ubigeo_in_id");
+    cboPais.change(function(){
+        var hi = cboPais.val();
+        if(hi === ''){
+            var inp = '<option value="">--- Seleccionar ---</option>';
+            distriJ.empty();
+            distriJ.append(inp);
+        }else{
+            var valPais =  $(this).find('option:selected').val();
+            $.ajax({
+                url: "/usuario/index/jsonciudad?code=" + valPais , 
+                cache:true,
+                data: {},
+                success: function(nselect){
+                    var data = JSON.parse(nselect || {});
+                    var departList = [];
+                    distriJ.empty();
+                    for (var key in data) {
+                        dataF = data[key];
+                        var keyL = dataF.ID;
+                        var val = dataF.Name;
+                        var  departItem = '<option value="'+ keyL +'">'+ val +'</option>';
+                        departList.push(departItem);
+                    }
+                    var joinDep = departList.join('');
+                    distriJ.append(joinDep);
+                }
+            });
+        }
+    });
+</script>
+
 

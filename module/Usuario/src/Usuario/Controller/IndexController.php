@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController {
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         if(count($usuariosgrupos)==0)
-        {$mensaje= 'Aún no participas en ningún grupo, Que esperas para crear uno';}
+        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para crear uno?';}
 //       $categorias = $this->getUsuarioTable()
 //                        ->categoriasunicas($id)->toArray();
 //        for ($i = 0; $i < count($categorias); $i++) {
@@ -118,7 +118,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $misgrupos = $this->getGrupoTable()->misgrupos($id);
           if(count($misgrupos)==0)
-        {$mensaje= 'Aún no has creado ningún grupo, Que esperas para crear uno';}
+        {$mensaje= 'Aún no has creado ningún grupo, ¿Qué esperas para crear uno?';}
         $valor = $this->headerAction($id);
          $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($misgrupos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -156,7 +156,7 @@ class IndexController extends AbstractActionController {
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
          if(count($eventosusuario)==0)
-        {$mensaje= 'Aún no participas en ningún evento, Que esperas para crear uno';}
+        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para crear uno?';}
 //         $index=new \Usuario\Controller\IndexController();
         $valor = $this->headerAction($id);
            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($eventosusuario));
@@ -197,7 +197,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         if(count($miseventos)==0)
-        {$mensaje= 'Aún no has creado ningún evento, Que esperas para crear uno';}
+        {$mensaje= 'Aún no has creado ningún evento, ¿Qué esperas para crear uno?';}
         $valor = $this->headerAction($id);
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($miseventos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -373,9 +373,12 @@ public function getAuthService() {
         public function jsonciudadAction(){
         $idpais=$this->params()->fromQuery('code');
         if($idpais=='PER')
-         { $ubigeo=$this->getUsuarioTable()->getCiudadPeru();}
+        { $ubigeo=$this->getUsuarioTable()->getCiudadPeru();}
         else
-        { $ubigeo=$this->getUsuarioTable()->getCiudad($idpais);}
+        { 
+            $ubigeo=$this->getUsuarioTable()->getCiudad($idpais);
+        }
+        //$ubigeo=$this->getUsuarioTable()->getCiudad($idpais);
         echo Json::encode($ubigeo);
         exit();
     }
@@ -625,13 +628,13 @@ public function getAuthService() {
             <li class="center-li"><a href=" ' . $ruta . '/cuenta/misgrupos"><i class="hh icon-group"> </i><p>Mis Grupos</p></a></li>
             <li class="center-li"><a href=" ' . $ruta . '/micuenta"  class="activomenu"><i class="hh icon-cuenta"></i><p>Mi cuenta</p></a></li>';
          }
-        $estados = '<div class="span12 menu-login">
+        $estados = '<div class="row-fluid"><div class="span12 menu-login-f">
           <img src="'.$imagen.'" alt="" class="img-user"> <span>Bienvenid@<br> ' . $nombre . '</span>
           <div class="logincuenta">
           <ul>'.$class.'<li class="center-li"><a href="/auth//logout"><i class="hh icon-salir"></i><p>Cerrar Sesion</p></a></li>
           </ul> 
           </div>                            
-        </div>';
+        </div></div>';
         return $estados;
     }
     
