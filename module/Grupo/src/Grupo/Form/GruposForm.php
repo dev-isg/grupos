@@ -165,10 +165,38 @@ class GruposForm extends Form
 //                )
 //        ));
           
-               
+             $this->add(array(
+            'name' => 'ta_ubigeo_in_id', //distrito
+            'type' => 'Select',
+            'attributes' => array(
+                'class' => 'span10',
+                'id' => 'ta_ubigeo_in_id'
+            ),
+            'options' => array('label' => 'Ciudad : ',
+               // 'value_options' =>$this->Provincia(),                                               
+                'empty_option' => '--- Seleccionar ---',
+            )
+        ));
+             
+$this->add(array(
+            'name' => 'pais',
+            'type' => 'Select',
+             'attributes' => array(               
+                'class' => 'span10',
+                'id'   => 'pais'
+            ),
+           'options' =>array('label' => 'Pais : ',
+                'value_options' =>$this->Pais(),                                               
+                'empty_option' => '--- Seleccionar ---',
+            )
+        ));      
+         
+         
+         
         $this->add(array(
             'name' =>'ta_categoria_in_id',
             'type' => 'Select',  
+          
             
              'attributes' => array(               
                 'class' => 'span12 categoria-evento gg',
@@ -261,7 +289,24 @@ class GruposForm extends Form
 
     }
 
-    
+     public function Pais() {
+        $this->dbAdapter = $this->getDbAdapter();
+        $adapter = $this->dbAdapter;
+    //    if($adapter){
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+                        ->columns(array('Code', 'Name'))
+                        ->from('country');
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        $pais= $results->toArray();  
+        $auxtipo = array();
+        foreach ($pais as $tipo) {
+            $auxtipo[$tipo['Code']] = $tipo['Name'];
+        }
+        return $auxtipo;
+
+    }
    public function tipoCategoria()
    {   
            
