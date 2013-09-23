@@ -472,7 +472,7 @@ public function idfacebook2($id,$logout)
         $select = $sql->select()
                         ->columns(array('ID'=>'in_id', 'Name'=>'va_provincia'))
                         ->from('ta_ubigeo')
-         ->where(array('in_idpais' =>1))->group('va_provincia');
+         ->where(array('in_idpais' =>1))->group('va_provincia')
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();
