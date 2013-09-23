@@ -548,9 +548,9 @@ public function idfacebook2($id,$logout)
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select()
-                        ->columns(array('in_id', 'va_distrito'))
+                        ->columns(array('ID'=>'in_id', 'Name'=>'va_provincia'))
                         ->from('ta_ubigeo')
-         ->where(array('in_idpais' =>1))->group('in_id');
+         ->where(array('in_idpais' =>1))->group('va_provincia');
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();
