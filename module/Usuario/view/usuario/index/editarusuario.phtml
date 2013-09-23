@@ -178,26 +178,27 @@
         window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
         $("#e1").select2();
 
-        var cboPais = $("#cboPaisEmpresa");
-        var cboDepartamento = $("#cboDepartamentoEmpresa");
-        var cboDistrito = $("#cboDistritoEmpresa"); 
+        var cboPais = $("#pais");
+        var distriJ = $("#ta_ubigeo_in_id");
         cboPais.change(function(){
             var valPais =  $(this).find('option:selected').val();
             $.ajax({
-                url: "/index/json-lista-departamentos/id/" + valPais , 
+                url: "/usuario/index/jsonciudad?code=" + valPais , 
                 cache:true,
                 data: {},
                 success: function(nselect){
                     var data = JSON.parse(nselect || {});
                     var departList = [];
-                    cboDepartamento.empty();
+                    distriJ.empty();
                     for (var key in data) {
-                        var val = data[key];
-                        var  departItem = '<option label="'+ val +'" value="'+ key +'">'+ val +'</option>';
-                        departList.push(departItem);                    
+                        dataF = data[key];
+                        var keyL = dataF.ID;
+                        var val = dataF.Name;
+                        var  departItem = '<option value="'+ key +'">'+ val +'</option>';
+                        departList.push(departItem);
                     }
-                    var joinDep = departList.join('');          
-                    cboDepartamento.append(joinDep);                
+                    var joinDep = departList.join('');
+                    distriJ.append(joinDep);
                 }
             });
         });
