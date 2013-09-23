@@ -978,7 +978,7 @@ vertical-align: middle;
     font-size: 14px;
 }
 .search{
-  margin-top: 34px;
+  
 }
 .btn-evento{
   float: right!important;
@@ -2727,6 +2727,9 @@ ul.score-list li:first-child {
   bottom: 0;
   width: 140px;
   height: 104px;
+}
+.main-container{
+  margin-top: 34px;
 }
 /*@font-face {
   font-family: "untitled-font-1";
