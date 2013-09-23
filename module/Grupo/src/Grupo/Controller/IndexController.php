@@ -73,7 +73,8 @@ class IndexController extends AbstractActionController
         $tipo = $this->params()->fromQuery('categoria');
         $rango = $this->params()->fromQuery('valor');
         $request = $this->getRequest();
-        $this->layout()->search = 'group-header';
+//        $this->layout()->search = 'group-header';
+        $search = 'group-header';
         if ($valor || $tipo || $nombre) {
             if ($nombre) {
                 if (isset($nombre)) {
@@ -156,13 +157,15 @@ class IndexController extends AbstractActionController
 //                    }
 
                         $listaEventos = (!$storage) ? $this->getEventoTable()->listadoEvento() : $this->getEventoTable()->listadoEvento($session->in_id);
-                        $this->layout()->search = 'event-header';
+//                        $this->layout()->search = 'event-header';
+                        $search = 'event-header';
                     }
                 }
             }
         } else {
             $listagrupos = $this->getGrupoTable()->fetchAll();
-            $this->layout()->active = 'active';
+//            $this->layout()->active = 'active';
+            $active = 'active';
         }
 
 
@@ -206,7 +209,11 @@ class IndexController extends AbstractActionController
             'eventos' => $paginator,
             'dato' => $valor,
             'urlac' => $urlf,
-            'categorias'=>$categorias
+            
+            'categorias'=>$categorias,
+            'search'=>$search,
+            'active'=>$active,
+            'session'=>$session
         );
     }
 
