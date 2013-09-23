@@ -181,6 +181,8 @@
         var cboPais = $("#pais");
         var distriJ = $("#ta_ubigeo_in_id");
         cboPais.change(function(){
+            cboPais
+            
             var valPais =  $(this).find('option:selected').val();
             $.ajax({
                 url: "/usuario/index/jsonciudad?code=" + valPais , 
