@@ -226,11 +226,10 @@
         jQuery(".alert-message").alert();
         window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 7000);
     });    
-            /* <![CDATA[ */
-
-            // Masonry
-            jQuery.noConflict()(function($){
-                //$(window).load(function() {
+    /* <![CDATA[ */
+    // Masonry
+    jQuery.noConflict()(function($){
+            //$(window).load(function() {
         $(document).ready(function() {
             var $container = $('#content');
 
@@ -241,7 +240,7 @@
               });
             });
 
-            // Infinite Scroll
+            //Infinite Scroll
 
             $container.infinitescroll({
                 navSelector  : '.pagination',    // selector for the paged navigation 
@@ -255,20 +254,19 @@
 
             // trigger Masonry as a callback
             function(newElements) {
-                // hide new items while they are loading
+                    // hide new items while they are loading
                 var $newElems = $(newElements).css({ opacity: 0});
-                // ensure that images load before adding to masonry layout
+                    // ensure that images load before adding to masonry layout
                 $newElems.imagesLoaded(function(){
-                  // show elems now they're ready
-                  $newElems.animate({ opacity: 1 });
-                  $container.masonry('appended', $newElems, true);
+                    // show elems now they're ready
+                    $newElems.animate({ opacity: 1 });
+                    $container.masonry('appended', $newElems, true);
                 });
               }
-            );
-         
-            });
+            );         
         });
-        /* ]]> */   
+    });
+    /* ]]> */
 </script>
 
 
