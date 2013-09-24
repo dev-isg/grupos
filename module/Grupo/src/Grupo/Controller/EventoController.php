@@ -316,6 +316,7 @@ class EventoController extends AbstractActionController
                    if ($eventofind) {
                        if ($eventofind->tipo == 'privado' && $eventofind->va_estado =='activo') {
                            $tipo = true;
+                           
                        } else {
                            $tipo = false;      
                        }
@@ -325,7 +326,7 @@ class EventoController extends AbstractActionController
                    } 
             }else{
                 $tipo=true;
-
+                
             }
         }
 

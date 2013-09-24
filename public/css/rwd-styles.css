@@ -244,6 +244,15 @@
 	.menu-login-f{
 		overflow: hidden;
 	}
+	.main-container{
+		margin-top: 0;
+	}
+	.dev-marca-face{
+		margin-bottom: 30px;
+	}
+	.dev-marca-face h1 {
+		margin-top: 0px;
+	}
 }
 
 @media (max-width: 767px) { 
@@ -441,6 +450,12 @@
 	}
 	.contenido-group{
 		padding-top: 10px;
+	}
+	.dev-marca-face{
+		margin-bottom: 30px;
+	}
+	.dev-marca-face h1 {
+		margin-top: 0px;
 	}
 }
 

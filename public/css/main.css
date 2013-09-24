@@ -1646,6 +1646,28 @@ span.nm{
   -o-text-shadow: 0 0 0;
   text-shadow: 0 0 0;
 }
+.btn-home-evnt:focus{
+  background-image: url(../img/btn-crear.png);
+  -webkit-transition: background-position 0 linear;
+     -moz-transition: background-position 0 linear;
+       -o-transition: background-position 0 linear;
+          transition: background-position 0 linear;
+  -webkit-box-shadow: 0 0 0;
+  -moz-box-shadow: 0 0 0;
+  -o-box-shadow: 0 0 0;
+  box-shadow: 0 0 0;
+}
+.btn-home-evnt:active{
+  background-image: url(../img/btn-crear.png); 
+  -webkit-transition: background-position 0 linear;
+     -moz-transition: background-position 0 linear;
+       -o-transition: background-position 0 linear;
+          transition: background-position 0 linear;
+  -webkit-box-shadow: 0 0 0;
+  -moz-box-shadow: 0 0 0;
+  -o-box-shadow: 0 0 0;
+  box-shadow: 0 0 0;
+}
 .btn-evento-i{
   background-color: transparent;
   background-image: url(../img/btn-se.png);
@@ -1693,6 +1715,10 @@ span.nm{
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
+  -webkit-transition: background-position 0 linear;
+     -moz-transition: background-position 0 linear;
+       -o-transition: background-position 0 linear;
+          transition: background-position 0 linear;
 }
 .tab-home-g-a{
   background: #00A6E1;
@@ -2114,7 +2140,12 @@ border-bottom: 1px solid #ddd;
 margin-bottom: 10px;
 float: left;
 }
-
+.img-grupo{
+  text-align: center;
+}
+.img-grupo img{
+  width: 200px;
+}
 .modificarimg{
   padding: 0px 0px 5px !important;
 }

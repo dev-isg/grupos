@@ -47,12 +47,12 @@ class IndexController extends AbstractActionController
         $renderer->inlineScript()
                 ->setScript('jQuery(document).ready(function(){valUsuario();});')
                 ->prependFile($this->_options->host->base . '/js/main.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();
@@ -309,10 +309,10 @@ class IndexController extends AbstractActionController
         $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
         if ($request->isPost()) {
-
+     $datos =$this->request->getPost();
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
-  
+           if ($File['name'] != '') {
           require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -323,22 +323,30 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();        
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2; 
+            
+             } else {
+                $imagen = 'defaultd.jpg';
+            }
+            
+
+           
     
-            $data = array_merge_recursive($this->getRequest()
-                ->getPost()
-                ->toArray(), $this->getRequest()
-                ->getFiles()
-                ->toArray());
-            $grupo = new Grupo();
-            $form->setInputFilter($grupo->getInputFilter());
-            $form->setData($data); // $request->getPost()
+//            $data = array_merge_recursive($this->getRequest()
+//                ->getPost()
+//                ->toArray(), $this->getRequest()
+//                ->getFiles()
+//                ->toArray());
+//            $grupo = new Grupo();
+//            $form->setInputFilter($grupo->getInputFilter());
+            $form->setData($datos); // $request->getPost()
                                    // $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            if ($form->isValid()) {
-                
-                $grupo->exchangeArray($form->getData());
-                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
+            if (!$form->isValid()) {
+
+               // $grupo->exchangeArray($form->getData());
+                    if ($File['name'] != '') {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen,'')) {
                     // obtiene el identity y consulta el
-                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
+                   $idgrupo=$this->getGrupoTable()->guardarGrupo($datos, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
                    if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
@@ -346,16 +354,23 @@ class IndexController extends AbstractActionController
                    }else{
                        return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
                    }
-                    
-//                    $invoiceWidget = $this->forward()->dispatch('Grupo\Controller\Evento', array( 
-//                                'action' => 'agregarevento'
-//                            ));
-//                     $mainViewModel->addChild($invoiceWidget, 'invoiceWidget');
-                    
-                } else {
+  
+                }
+                                else {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
+            }
+               else {
+               $idgrupo=$this->getGrupoTable()->guardarGrupo($datos, $notificacion, $storage->read()->in_id,$imagen);
+                   $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
+                   if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
+                       return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
+                       
+                   }else{
+                       return $this->redirect()->toRoute('agregar-evento',array('in_id'=>$idgrupo));
+                   }
+                    }
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages()); // $inputFilter->getInvalidInput()
@@ -421,16 +436,17 @@ class IndexController extends AbstractActionController
             $form->get('va_ciudad')->setValueOptions($arra); 
         $form->bind($grupo);
         $form->get('submit')->setAttribute('value', 'Editar');
-        $imagen=$this->_options->host->images.'/grupos/general/'.$grupo->va_imagen;
+        $imagen=$grupo->va_imagen;
         $request = $this->getRequest();
         
         if ($request->isPost()) {
+            $datos =$this->request->getPost();
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');  
-            
             if ($File['name'] != '') {
              require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
+            
             $info = pathinfo($File['name']);
             $valor = uniqid();
             $nom = $nonFile;
@@ -438,28 +454,35 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
+           
             } else {
                 $imagen = $grupo->va_imagen;
             }
             
-            $data = array_merge_recursive($this->getRequest()
-                ->getPost()
-                ->toArray(), $this->getRequest()
-                ->getFiles()
-                ->toArray());
-            $form->setInputFilter($grupo->getInputFilter());
-            $form->setData($data);
+//            $data = array_merge_recursive($this->getRequest()
+//                ->getPost()
+//                ->toArray(), $this->getRequest()
+//                ->getFiles()
+//                ->toArray());
+//            $form->setInputFilter($grupo->getInputFilter());
+            $form->setData($datos);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-//            var_dump($data);Exit;
-            if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+            if ($form->isValid()) { 
+                 if ($File['name'] != '') {  
+                     $id=$datos->in_id;
+                if ($this->redimensionarImagen($File, $nonFile,$imagen,$id)) {
+                    $this->getGrupoTable()->guardarGrupo($datos, $notificacion,$storage->read()->in_id,$imagen);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
+               }
+                 else{$this->getGrupoTable()->guardarGrupo($datos, $notificacion,$storage->read()->in_id,$imagen);
+                    $this->flashMessenger()->addMessage('Grupo editado correctamente');
+                    return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));}
+                
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
@@ -951,8 +974,10 @@ class IndexController extends AbstractActionController
         return $this->authservice;
     }
 
-    private function redimensionarImagen($File, $nonFile,$imagen)
-    { 
+    private function redimensionarImagen($File, $nonFile,$imagen,$id=null)
+    {  
+     
+        
         try {
             
             $anchura = 248;
@@ -967,7 +992,18 @@ class IndexController extends AbstractActionController
               $name =$imagen;
               
 
-              
+               if ($id != null) {
+                $grupo = $this->getGrupoTable()->getGrupo($id);
+                $imog = $grupo->va_imagen;
+                $eliminar1 = $this->_options->upload->images . '/grupo/general/' . $imog;
+                $eliminar2 = $this->_options->upload->images . '/grupo/original/' . $imog;
+                $eliminar3 = $this->_options->upload->images . '/grupo/principal/' . $imog;
+      
+                unlink($eliminar1);
+                unlink($eliminar2);
+                unlink($eliminar3);
+             
+            }
             // $altura=$tamanio[1];
           //  $valor = uniqid();
             if ($ancho > $alto) { // echo 'ddd';exit;
