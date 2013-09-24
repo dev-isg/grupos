@@ -153,8 +153,8 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
-                  <!--<?php if($this->privado){ ?>
-                  <div class="invitar-amigos">
+                  <?php if($this->privado){ ?>
+                 <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
                         <div class="accordion-heading">
@@ -165,16 +165,22 @@
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
-                            <div id="fb-root"></div>
+                              <div id="invita-correo">
+                                  <form method="post" action="/grupo/evento/invitar">
+                                      <input type="text" name="correos"/>
+                                      <input type="submit" name="Enviar"/>
+                                  </form>
+                              </div>
+<!--                            <div id="fb-root"></div>
                               <a href="#" onclick="FB.ui({method: 'apprequests', message: 'Uneté a juntate.pe'});">
                                 <span class="face">Invita a tus Amigos de Facebook! </span><img src="/img/invitar.png">
-                              </a>
+                              </a>-->
                           </div>
                         </div>
                       </div>                      
                     </div>
                   </div>
-                   <?php } ?>-->
+                   <?php } ?>
                   <div class="mapa-group map-wrapper">
                       <div id="map_canvas"></div>
                   </div>
@@ -188,7 +194,7 @@
 
 <!-- FORMULARIO COMENTARIO-->
 <div class="row-fluid">
-    <?php if ($this->session && $this->grupoestado=='activo') { ?>        
+    <?php if ($this->session && $this->grupoestado=='activo' && $this->privado==true) { ?>        
         <?php
         $fecha_actual = date("Y-m-d h:m:s");
         if ($this->eventos[0]['va_fecha'] >= $fecha_actual) {
