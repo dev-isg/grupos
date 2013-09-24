@@ -22,7 +22,7 @@ class Usuario implements InputFilterAwareInterface{
     public $ta_ubigeo_in_id;
     public $va_facebook;
     public $va_twitter;
-    
+    public $va_pais;
     public $va_fecha_ingreso;
     public $select2;
     
@@ -39,7 +39,8 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : 'foto-carnet.jpg';
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-           $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : $data->ta_ubigeo_in_id;
+            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
+            $this->va_pais= (!empty($data['va_pais'])) ? $data['va_pais'] : null;
             $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
             $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
             $this->va_fecha_ingreso=(!empty($data['va_fecha_ingreso'])) ? $data['va_fecha_ingreso'] : null;
@@ -209,7 +210,15 @@ class Usuario implements InputFilterAwareInterface{
                     ),
                 ),
             )));
-              
+               $inputFilter->add($factory->createInput(array(
+                        'name' => 'ta_ubigeo_in_id',
+                        'required' => false
+                      
+                   )));
+                  $inputFilter->add($factory->createInput(array(
+                        'name' => 'va_pais',
+                        'required' => false
+                   )));
             $inputFilter->add($factory->createInput(array( 
                 'name' => 'va_facebook', 
                 'required' => false, 
@@ -397,8 +406,8 @@ class Usuario implements InputFilterAwareInterface{
                       
                    )));
                   $inputFilter->add($factory->createInput(array(
-                        'name' => 'pais',
-                        'required' => true
+                        'name' => 'va_pais',
+                        'required' => false
                    )));
               
                   

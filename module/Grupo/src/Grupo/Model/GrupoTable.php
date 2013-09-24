@@ -109,6 +109,8 @@ class GrupoTable{
 //          'va_referencia'=>$grupo->va_referencia,
           'va_imagen'=>$imagen,
           'va_estado'=>$grupo->va_estado,
+          'va_pais'=>$grupo->va_pais,
+          'va_ciudad'=>$grupo->va_ciudad,
 //          'va_dirigido'=>$grupo->va_dirigido,
           'ta_usuario_in_id'=>$iduser,//$idusuario['in_id'],//$grupo->ta_usuario_in_id,
           'ta_categoria_in_id'=>$grupo->ta_categoria_in_id,
@@ -124,7 +126,8 @@ class GrupoTable{
       }
      
       if ($id == 0) {
-          $data['va_fecha']=date('c');
+          $fecha = date("Y-m-d h:m:s"); 
+          $data['va_fecha']=$fecha;
           $this->tableGateway->insert($data);
           $idgrupo=$this->tableGateway->getLastInsertValue();
           if($this->aprobarUsuario($idgrupo,$iduser, 'activo')){// $this->unirseGrupo($idgrupo,$iduser)
@@ -288,6 +291,7 @@ class GrupoTable{
       */
      
     public function aprobarUsuario($idgrupo, $idusuario, $aprobar) {
+        $fecha = date("Y-m-d h:m:s"); 
         if ($this->getGrupoUsuario($idgrupo, $idusuario)) {
             $consulta = $this->tableGateway->getSql()->update()->table('ta_usuario_has_ta_grupo')
                     ->set(array('va_estado' => $aprobar))//, 'va_aceptado' => $aprobar
@@ -295,7 +299,7 @@ class GrupoTable{
         }else{
            $consulta = $this->tableGateway->getSql()->insert()->into('ta_usuario_has_ta_grupo')
                    ->values(array('ta_usuario_in_id'=>$idusuario,'ta_grupo_in_id'=>$idgrupo,'va_estado'=>$aprobar, 
-                      'va_fecha'=>date('c')));
+                      'va_fecha'=>$fecha));
          }
             $selectString = $this->tableGateway->getSql()->getSqlStringForSqlObject($consulta);
             $adapter = $this->tableGateway->getAdapter();
