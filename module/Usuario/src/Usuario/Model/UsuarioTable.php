@@ -148,9 +148,8 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario(Usuario $usuario, $imagen,$valor=null,$pass=null,$catg_ingresada=null)
+    public function guardarUsuario( $usuario, $imagen,$valor=null,$pass=null,$catg_ingresada=null)
     {
-        // public function guardarUsuario(Usuario $usuario,$notificacion=null){
         $data = array(
             'va_nombre' => $usuario->va_nombre,
             'va_email' => $usuario->va_email,
@@ -197,32 +196,13 @@ class UsuarioTable
                 $adapter2 = $this->tableGateway->getAdapter();
                 $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
             }
-            //para las categorias
-//            if ($catg_ingresada != null) {
-//                $categ = array();
-//                foreach ($catg_ingresada as $arrcateg) {
-//                    $categ[$arrcateg['in_id']] = $arrcateg['va_nombre'];
-//                }
-//                if (count($categ > 0)) {
-//                    foreach ($categ as $key => $value) {
-//                        $notif = $this->tableGateway->getSql()->insert()
-//                                ->into('ta_usuario_has_ta_categoria')
-//                                ->values(array(
-//                            'ta_categoria_in_id' => $key,
-//                            'ta_usuario_in_id' => $iduser));
-//                        $selectStringNotif = $this->tableGateway->getSql()->getSqlStringForSqlObject($notif);
-//                        $adapter2 = $this->tableGateway->getAdapter();
-//                        $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
-//                    }
-//                }
-//            }
+
         } else {
             if ($this->getUsuario($id)) {
                  $this->updateCategoria($catg_ingresada, $id);
                 if ($pass == '') {
                     $data['va_estado'] = 'activo';
                     $data['va_verificacion'] = '';
-                   
                     $this->tableGateway->update($data, array(
                         'in_id' => $id));
                 } else {
