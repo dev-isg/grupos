@@ -97,8 +97,7 @@ class GrupoTable{
     
     
   public function guardarGrupo($grupo,$notificacion=null,$iduser=null,$imagen){
-
-          
+      
       $data=array(
          'va_nombre'=>$grupo->va_nombre,
          'va_descripcion'=>$grupo->va_descripcion,
@@ -142,7 +141,7 @@ class GrupoTable{
 //                   $adapter->query($selectString2, $adapter::QUERY_MODE_EXECUTE);
 //                }
 //             }
-      }else {
+      }else {//echo'sss';exit;
           
             if ($this->getGrupo($id)) {
                 $this->tableGateway->update($data, array('in_id' => $id));

@@ -306,6 +306,7 @@ public function getAuthService() {
                 $filter = new \Filter_Alnum();
                 $filtered = $filter->filter($nom);
                 $imagen = $filtered . '-' . $imf2;
+                $this->redimensionarFoto($File, $nonFile, $imagen, $id = null);
             } else {
                 $imagen = 'foto-carnet.jpg';
             }

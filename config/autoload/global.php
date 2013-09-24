@@ -41,11 +41,20 @@ return array(
         'version'=>1,
     ),*/
     'host' => array(
+<<<<<<< HEAD
+        'base' => 'http://192.168.1.35:82',
+        'static' => 'http://192.168.1.35:82',
+        'images' => 'http://192.168.1.35:82/imagenes',
+        'img'=>'http://192.168.1.35:82/img',
+        'ruta' => 'http://192.168.1.35:82',
+
+=======
        'base' => 'http://dev.juntate.pe',
         'static' => 'http://dev.juntate.pe',
         'images' => 'http://192.168.1.50:82/imagenes',
         'img'=>'http://192.168.1.50:82/img',
        'ruta' => 'http://dev.juntate.pe',
+>>>>>>> d0f7e00611e92f1117ec4758d4cf779c5f762840
         'version'=>1,
     ),
 

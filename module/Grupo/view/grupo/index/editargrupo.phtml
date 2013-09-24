@@ -31,7 +31,7 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                     <input type="hidden" name="url" value="<?php echo $this->urlorigen?>"/>
                     <?php echo $this->formHidden($form->get('in_id'));?>
                      <?php echo $this->formRow($form->get('va_pais'));?>
-                        <?php echo $this->formRow($form->get('va_ciudad'));?>
+                     <?php echo $this->formRow($form->get('va_ciudad'));?>
                     <?php echo $this->formRow($form->get('va_nombre'));?>
                     <?php echo $this->formRow($form->get('ta_categoria_in_id'));?>
                     <?php echo $this->formRow($form->get('va_descripcion'));?>
@@ -42,7 +42,11 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                         <div class="controls">
                             <div class="fileupload fileupload-new" data-provides="fileupload">
                                 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                    <img src="<?php echo $this->imagen;?>" />
+                                    <?php if($this->imagen=='defaultd.jpg'){ ?>
+                                    <img src="<?php echo $this->host('img')?>/defaultd.jpg" />
+                                    <?php   }else { ?>                                 
+                                    <img src="<?php echo $this->host('images') . '/grupos/general/' .$this->escapeHtml($this->imagen); ?> " />
+                                     <?php   } ?>
                                 </div>
                                 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                 <div>
