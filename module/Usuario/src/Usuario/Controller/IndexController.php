@@ -579,8 +579,22 @@ public function getAuthService() {
             ->prependFile($this->_options->host->base . '/js/main.js');
         $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
-        $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
-        $usuario->ta_ubigeo_in_id=$auxdistri;
+       // $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);        
+        //$usuario->ta_ubigeo_in_id=$auxdistri;
+        $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
+        $usuario->va_pais=$ubige[0]['Name'];
+        if($ubige[0]['Code']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }  }
+        else
+        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }
+        }
+         $usuario->ta_ubigeo_in_id=$y['Name'];     
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
         return array('usuario'=>$usuario,'mienbros'=>$usergroup);
     }

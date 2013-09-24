@@ -5,8 +5,13 @@
     			<div class="row-fluid">
     				<div class="span8 contenido-perfil-usuario">
     					<h2><?php echo ucwords($this->usuario->va_nombre);?></h2>
-    					<h5>Distrito:</h5>
+                                        <?php  if($this->usuario->va_pais){  ?>
+                                        <h5>Pais:</h5>
+                                        <span><?php echo ucwords($this->usuario->va_pais);?></span>
+    					<h5>Ciudad:</h5>
                                         <span><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?></span>
+                                        
+                                        <?php  }  ?>
     					<div class="row-fluid">
     						<div class="span12 title-miembro">
     							<h4>Miembro desde:</h4>
