@@ -1130,7 +1130,8 @@ class IndexController extends AbstractActionController
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
                          $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
+                         $name = $user_profile['name'];
+                         $link = $user_profile['link'];
                          $email = $user_profile['email'];
                          $naitik = $facebook->api('/naitik');
                           $generoface = $user_profile['gender'];
@@ -1149,7 +1150,7 @@ class IndexController extends AbstractActionController
                              AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
                              
