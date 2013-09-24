@@ -94,6 +94,8 @@ class EventoController extends AbstractActionController
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
             
+            
+                if ($File['name'] != '') {
             require './vendor/Classes/Filter/Alnum.php';
             $imf = $File['name'];
             $info = pathinfo($File['name']);
@@ -103,6 +105,8 @@ class EventoController extends AbstractActionController
             $filter = new \Filter_Alnum();
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2;
+                }else{$imagen= $imagen = 'defaultd.jpg';}
+            
             $data = array_merge_recursive($this->getRequest()
                 ->getPost()
                 ->toArray(), $this->getRequest()
@@ -114,8 +118,8 @@ class EventoController extends AbstractActionController
             $form->setData($data); 
             if ($form->isValid()) {
                 $evento->exchangeArray($form->getData());
-   
-                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
+                   if ($File['name'] != '') {
+                if ($this->redimensionarImagen($File, $nonFile,$imagen,'')) {
                  $idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen,$storage->read()->in_id);
                     return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
                 } else 
@@ -123,6 +127,12 @@ class EventoController extends AbstractActionController
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
+                
+                   }else{$idevento =   $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen,$storage->read()->in_id);
+                    return $this->redirect()->toRoute('evento',array('in_id'=>$idevento));}
+                
+                
+                
             } else {
                 
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
@@ -217,7 +227,10 @@ class EventoController extends AbstractActionController
             $form->setData($data);
             
             if ($form->isValid()) {
-                if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
+             
+
+                 if ($File['name'] != ''){             
+              if ($this->redimensionarImagen($File, $nonFile,$imagen,$evento->in_id)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
                 $this->flashMessenger()->addMessage('Evento editado correctamente');
                  return $this->redirect()->toRoute('evento',array('in_id'=>$id));
@@ -226,6 +239,11 @@ class EventoController extends AbstractActionController
                     echo 'problemas con el redimensionamiento';
                     exit();
                 }
+                 }else{$this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                $this->flashMessenger()->addMessage('Evento editado correctamente');
+                 return $this->redirect()->toRoute('evento',array('in_id'=>$id));}
+                
+                
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages());
@@ -692,8 +710,9 @@ class EventoController extends AbstractActionController
     
     
 
-    private function redimensionarImagen($File, $nonFile,$imagen)
+    private function redimensionarImagen($File, $nonFile,$imagen,$id=null)
     {
+               
         try {
             
             $anchura = 248;
@@ -711,6 +730,23 @@ class EventoController extends AbstractActionController
             // $altura=$tamanio[1];
           //  $valor = uniqid();
             $name=$imagen;
+            
+            
+              if ($id != null) {
+                $evento = $this->getEventoTable()->getEvento($id);
+                $imog = $evento->va_imagen;
+                $eliminar1 = $this->_options->upload->images . '/eventos/general/' . $imog;
+                $eliminar2 = $this->_options->upload->images . '/eventos/original/' . $imog;
+                $eliminar3 = $this->_options->upload->images . '/eventos/principal/' . $imog;
+                $eliminar4 = $this->_options->upload->images . '/eventos/detalle/' . $imog;
+                unlink($eliminar1);
+                unlink($eliminar2);
+                unlink($eliminar3);
+                unlink($eliminar4);
+             
+            }
+            
+            
             if ($ancho > $alto) { 
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
