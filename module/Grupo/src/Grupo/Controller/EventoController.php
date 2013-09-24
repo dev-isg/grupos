@@ -325,7 +325,17 @@ class EventoController extends AbstractActionController
         $session=$storage->read();
         
         $evento = $this->getEventoTable()->Evento($id);
-//        var_dump(html_entity_decode($evento[0]['va_descripcion']));exit;
+        $id_grupo = $evento[0]['id_grupo'];
+        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
+        
+//         if($evento[0]['va_tipo']=='privado'){
+//             if(!$grupoestado || $grupoestado!='activo'){
+//                 
+//                 return $this->redirect()->toUrl('/evento?m=1');
+//                 
+//             }
+//             
+//         }
 
         if($evento){
             if($evento[0]['va_tipo']=='privado'){
@@ -348,10 +358,10 @@ class EventoController extends AbstractActionController
             }
         }
 
-        $id_grupo = $evento[0]['id_grupo'];
+
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
         
-        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
+        
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
          $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
