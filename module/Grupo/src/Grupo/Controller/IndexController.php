@@ -51,8 +51,8 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/jquery.infinitescroll.min.js')
+                ->prependFile($this->_options->host->base . '/js/masonry/jquery.masonry.min.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         $categorias = $this->categorias();

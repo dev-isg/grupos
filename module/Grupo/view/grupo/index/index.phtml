@@ -199,12 +199,7 @@
             </div>
         </div>
         <?php }}?>
-    
-    
-    
-    
-    
-    
+
     </div>
 </div> <!-- #main-container -->
 
@@ -213,9 +208,17 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span12" id="pagina">
-                <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
-                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
-   
+                <div class="pagination" role="navigation">                
+                    <span>1</span>
+                        <a href="http://192.168.1.25:8081?page=2">2</a> 
+                        <a href="http://192.168.1.25:8081?page=3">3</a> 
+                        <a href="http://192.168.1.25:8081?page=4">4</a> 
+                        <a href="http://192.168.1.25:8081?page=5">5</a> 
+                        <a href="http://192.168.1.25:8081?page=6">6</a> 
+                        <a href="http://192.168.1.25:8081?page=7">7</a> 
+                        <a href="http://192.168.1.25:8081?page=8">8</a> 
+                        <a href="http://192.168.1.25:8081?page=9">9</a> 
+                  </div>
             </div>
         </div>
     </div>
