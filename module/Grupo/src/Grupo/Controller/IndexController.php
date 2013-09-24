@@ -130,8 +130,8 @@ class IndexController extends AbstractActionController
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=2');
                             }
                         } else {
-                            $listaEventos = $this->getEventoTable()->eventocategoria($tipo) ;
-//                            (!$storage) ? $this->getEventoTable()->eventocategoria($tipo) : $this->getEventoTable()->listadoEvento($session->in_id);
+//                            
+                            $listaEventos=(!$storage) ? $this->getEventoTable()->eventocategoria($tipo) : $this->getEventoTable()->listadoEvento($session->in_id,$tipo);
                             
                             if (count($listaEventos) <= 0) {//echo'ma';exit;
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=1');

@@ -46,7 +46,7 @@
 		                                <footer class="entry-extra clearfix">
 		                                    <span class="meta-views" title="Views">
 		                                    	<i class="icon-tag"></i>
-		                                    	<a href="#" title="Categoría"><?php echo  $this->escapeHtml($misgrupos->nombre_categoria);?></a>
+		                                    	<a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($misgrupos->idcategoria); ?>&valor=Grupos" title="Categoría"><?php echo  $this->escapeHtml($misgrupos->nombre_categoria);?></a>
 		                                	</span><!-- .meta-views -->
 		                                </footer>
 		                            </div>

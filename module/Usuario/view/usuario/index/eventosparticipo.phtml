@@ -43,7 +43,7 @@
 			                                </span><!-- .meta-comments -->
 			                                <span class="meta-views" title="Views">
 			                                    <i class="icon-tag"></i>
-			                                    <a href="#" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
+			                                    <a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($eventos->idcategoria); ?>&valor=Eventos" title="Categoría"><?php echo  $this->escapeHtml($eventos->nombre_categoria);?></a>
 			                                </span><!-- .meta-views -->
 		                                </footer>
 		                            </div>
