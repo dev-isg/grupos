@@ -180,13 +180,15 @@
                                 <input class="marcar-user" type="checkbox" data-user="<?php echo $usuarioaceptado->ta_usuario_in_id;?>"> 
                                 <label class="checkbox img-cargar-usuarios">
                                     
+                                    
                                      <?php $valor = explode('/',$usuarioaceptado->imagen); if($valor[0]=='https:'){ ?>  
                                 <img src="<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuarioaceptado->imagen)!="foto-carnet.jpg"){?>
                                 <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
                               <?php }else{?>
                                 <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
-                              <?php }  }?>     
+                              <?php }  }?>
+                            
                                     <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
                                     <?php  if($usuarioaceptado->descripcion_usuario!='0'){  ?> 
                                     <p>
