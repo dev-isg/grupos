@@ -118,7 +118,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $misgrupos = $this->getGrupoTable()->misgrupos($id);
           if(count($misgrupos)==0)
-        {$mensaje= 'Aún no has creado ningún grupo, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no has creado ningún grupo, ¿Qué esperas para participar en uno?';}
         $valor = $this->headerAction($id);
          $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($misgrupos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -197,7 +197,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         if(count($miseventos)==0)
-        {$mensaje= 'Aún no has creado ningún evento, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no has creado ningún evento, ¿Qué esperas para participar en  uno?';}
         $valor = $this->headerAction($id);
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($miseventos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));

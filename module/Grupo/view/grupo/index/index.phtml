@@ -94,24 +94,25 @@
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
       <div class="alert alert-margin alert-message">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'No hay eventos de la categoría'; ?>
+        <?php  echo 'Por el momento no hay eventos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Eventos"> BUSCAR<a>'; ?>
       </div>
     </div> <?php }elseif ($_GET['m']=='2') {?> <div class="row-fluid">
       <div class="alert alert-margin alert-message">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'No hay grupos de la categoría'; ?>
+      <?php  echo 'Por el momento no hay grupos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Grupos"> BUSCAR<a>'; ?>
+      
       </div>
     </div> <?php }
     elseif ($_GET['m']=='3') {?> <div class="row-fluid">
       <div class="alert alert-margin alert-message">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en EVENTOS'; ?>
+        <?php  echo 'Por el momento no se encontró  resultados para su búsqueda en EVENTOS'; ?>
       </div>
     </div> <?php }
     elseif($_GET['m']=='4') {?> <div class="row-fluid">
       <div class="alert alert-margin alert-message">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Lo sentimos no se encontró ningún resultado para su búsqueda en GRUPOS'; ?>
+        <?php  echo 'Por el momentono se encontró ningún resultados para su búsqueda en GRUPOS'; ?>
       </div>
     </div> <?php }
     } else {
