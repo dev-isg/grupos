@@ -344,7 +344,7 @@ class EventoTable{
             
      }
      
-    public function listadoEvento($iduser=null) {
+    public function listadoEvento($iduser=null,$idtipo=null) {
         $fecha = date("Y-m-d h:m:s");
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
@@ -377,7 +377,11 @@ class EventoTable{
                 ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')              
             ->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
             ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha,
-                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'))->group('in_id');
+                'ta_usuario_has_ta_evento.ta_usuario_in_id'=>$iduser,'ta_evento.va_tipo' => 'privado'));
+                 if($idtipo!=null){
+                    $selectpriva->where(array('ta_categoria.in_id'=>$idtipo));
+                 }
+                $selectpriva ->group('in_id');
          $selecttot->combine($selectpriva);
         }
 //        else{
