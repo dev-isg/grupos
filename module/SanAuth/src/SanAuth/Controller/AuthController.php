@@ -123,6 +123,7 @@ class AuthController extends AbstractActionController {
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
+                       $this->flashMessenger()->setNamespace('SanAuth');
                        $this->flashmessenger()->addMessage($message);
                     }
 
@@ -349,10 +350,11 @@ class AuthController extends AbstractActionController {
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                    Hola '.ucwords($usuario->va_nombre).', 
-                                                    Para recuperar tu contraseña debes hacer <a href="' . $config['host']['base'] . '/cambio-contrasena?contrasena=' . utf8_decode($results) . '">Clic Aquí</a>
-                                                    o copiar la siguiente url en su navegador:' . $config['host']['base'] . '/cambio-contrasena?contrasena=' . utf8_decode($results) .'          
+                                                    Hola '.ucwords($usuario->va_nombre).',<br /> 
+                                                    Para recuperar tu contraseña debes hacer <a href="' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) . '">Clic Aquí</a>
+                                                    o copiar la siguiente url en su navegador:<br />' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) .'          
                                                      </div>
+                                                     <img src="'.$config['host']['img'].'/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
 
@@ -388,7 +390,7 @@ class AuthController extends AbstractActionController {
     }
 
     public function recuperarAction() {
-        $password = $this->params()->fromQuery('contrasena');
+        $password = $this->params()->fromQuery('token');
         $form = new UpdatepassForm();
         $request = $this->getRequest();
         $form->setData($request->getPost());
@@ -400,7 +402,6 @@ class AuthController extends AbstractActionController {
                 } catch (\Exception $e) {
                     $this->flashMessenger()->addMessage('Este contraseña temporal no existe...');
                 }
-
                 if ($results) {
 
                     $nuevopass = $this->params()->fromPost('va_contrasena');
@@ -409,7 +410,7 @@ class AuthController extends AbstractActionController {
                     } else {
                         $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar corréctamente...');
                     }
-                    return $this->redirect()->toUrl('/cambio-contrasena?contrasena=' . $password);
+                    return $this->redirect()->toUrl('/cambio-contrasena?token=' . $password);
                 }
             }
         }

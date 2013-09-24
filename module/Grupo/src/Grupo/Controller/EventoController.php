@@ -312,7 +312,8 @@ class EventoController extends AbstractActionController
 
     public function detalleeventoAction()
     {
-
+//        $this->flashMessenger()->clearMessagesFromNamespace('SanAuth\Controller');
+        
         $form = new ComentarioForm();
         
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -329,10 +330,11 @@ class EventoController extends AbstractActionController
         if($evento){
             if($evento[0]['va_tipo']=='privado'){
                    $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
-                  
+  
                    if ($eventofind) {
                        if ($eventofind->tipo == 'privado' && $eventofind->va_estado =='activo') {
                            $tipo = true;
+                           
                        } else {
                            $tipo = false;      
                        }
@@ -342,7 +344,7 @@ class EventoController extends AbstractActionController
                    } 
             }else{
                 $tipo=true;
-
+                
             }
         }
 
@@ -402,6 +404,7 @@ class EventoController extends AbstractActionController
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
+//        $accion=$this->params('action');
         
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
@@ -689,7 +692,51 @@ class EventoController extends AbstractActionController
         $message->setEncoding('UTF-8');
     
         $transport = $this->getServiceLocator()->get('mail.transport');
-        $transport->send($message);
+        $error = new \Zend\Session\Container('mensaje');
+        try {
+            $transport->send($message);
+            $error->msge = 'Su mensaje ha sido enviado satisfactoriamente';
+        } catch (\Exception $e) {
+            $error->msge = 'No se pudo enviar el mensaje. Intentelo mas tarde';
+        }
+        
+    }
+    
+    public function invitarAction(){
+        $storage = new \Zend\Authentication\Storage\Session('Auth');
+        $correos=$this->params()->fromPost('correos');
+
+        $arrcorreos=explode(',',$correos);
+        
+        $idevento=$this->params()->fromPost('idE',163);
+        $evento=$this->getEventoTable()->getEvento($idevento);
+         $user_info['nom_event'] = $evento->va_nombre;
+         $descripcion=$evento->va_descripcion;
+         $error = new \Zend\Session\Container('mensaje');
+        foreach($arrcorreos as $correo){
+            $bodyHtmlAdmin = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml">
+                       <head>
+                       <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+                       </head>
+                       <body>
+                            <div style="color: #7D7D7D">
+                            Hola '.$correo.',<br />
+                             '.ucwords(utf8_decode($storage->read()->va_nombre)).' te ha invitado a participar en el evento: <br />
+                                 <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong> - '. html_entity_decode($descripcion) .'<br />
+                                 Para mayor información del evento puedes hacer clic en el siguiente enlace <a href="' . $this->_options->host->base . '/evento/' . $idevento . '">'. utf8_decode($user_info['nom_event']) .'</a> o copiar la URL '. $this->_options->host->base . '/evento/' . $idevento .' y podrás unirte al evento.
+                             </div>
+                             <img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/>
+                       </body>
+                       </html>';
+
+    $this->mensaje($correo, $bodyHtmlAdmin, 'Alguien te ha invitado');
+          
+          $arrerror[]=$error->msge;    
+        }
+                $result = new JsonModel(array(
+                    'enviados' => $arrerror
+                ));
+        return $result;
     }
 
     public function fooAction()

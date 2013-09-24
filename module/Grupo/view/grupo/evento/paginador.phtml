@@ -5,7 +5,7 @@
 <!-- Numbered page links -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
-    <a href='<?php echo $this->host("base").$this->variable;?>page=<?php echo $page; ?>'><?php echo $page; ?></a> 
+    <a href='<?php echo $this->variable;?>page=<?php echo $page; ?>'><?php echo $page; ?></a> 
   <?php else: ?>
   <span><?php echo $page; ?></span>
   <?php endif; ?>

@@ -355,7 +355,11 @@ class EventoTable{
 
                 ->join('ta_categoria', 'ta_grupo.ta_categoria_in_id=ta_categoria.in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
                  ->where(array('ta_evento.va_estado' => 'activo', 'ta_evento.va_fecha>=?' => $fecha, 
-                'ta_evento.va_tipo!=?' => 'privado'))->group('in_id');
+                'ta_evento.va_tipo!=?' => 'privado'));
+            if($idtipo!=null){
+                    $selecttot->where(array('ta_categoria.in_id'=>$idtipo));
+                 }
+                 $selecttot->group('in_id');
 //        if($iduser != null){
 //            if($this->getEventosxUsuario($iduser)){
 //            $selecttot->join('ta_usuario_has_ta_evento','ta_usuario_has_ta_evento.ta_evento_in_id=ta_evento.in_id',array(),'left')
@@ -636,6 +640,7 @@ class EventoTable{
                 ->join('ta_categoria', 'ta_categoria.in_id=ta_grupo.ta_categoria_in_id', array('nombre_categoria' => 'va_nombre', 'idcategoria' => 'in_id'), 'left')
                 ->where(array(
                     'ta_usuario_has_ta_grupo.va_estado' => 'activo',
+                    'ta_usuario_has_ta_evento.va_estado' => 'activo',
                     'ta_grupo.va_estado' => 'activo','ta_usuario_has_ta_evento.va_estado' => 'activo', 
                     'ta_evento.va_estado' => 'activo', 'ta_usuario_has_ta_evento.ta_usuario_in_id' => $id
                 ))->where('ta_evento.ta_usuario_in_id !=' . $id)
@@ -680,7 +685,6 @@ class EventoTable{
           ->order('in_id desc')
                     ->group('in_id');  
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//        var_dump($selectString);Exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
         return $resultSet->buffer();
     }
