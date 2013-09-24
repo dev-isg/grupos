@@ -280,7 +280,7 @@ public function getAuthService() {
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm();
+        $form = new UsuarioForm(null,$adpter);
         $form->get('submit')->setValue('Crear Usuario');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
@@ -445,8 +445,11 @@ public function getAuthService() {
 
         $request = $this->getRequest();
 
-        if ($request->isPost()) {
+        if ($request->isPost()) {    
+         //$datos =$this->request->getPost();
+        
             $File = $this->params()->fromFiles('va_foto');
+          
             $nonFile = $this->params()->fromPost('va_nombre');
 
             if ($File['name'] != '') {
@@ -460,6 +463,7 @@ public function getAuthService() {
                 $filtered = $filter->filter($nom);
                 $imagen = $filtered . '-' . $imf2;
             } else {
+                              
                 $idusuario = $this->getUsuarioTable()->getUsuario($id);
                 $imagen = $idusuario->va_foto;
             }
@@ -469,15 +473,14 @@ public function getAuthService() {
                             ->toArray(), $this->getRequest()
                             ->getFiles()
                             ->toArray());
+           
             $form->setInputFilter($usuario->getInputFilter2());
-            $form->setData($data);
-            
-            
-//             $adapter = new \Zend\File\Transfer\Adapter\Http();
-//             $adapter->setValidators($adapter,$File['name']);
+//         
+          $form->setData($data);
+
  
             if ($form->isValid()) {
-                $catg_ingresada=$this->params()->fromPost('select2');
+            $catg_ingresada=$this->params()->fromPost('select2');
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
                     $pass = $dataa->va_contrasena;

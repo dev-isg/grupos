@@ -64,14 +64,18 @@ function crearevento(){
 
         $("#crear-group").validate({
             rules: {
-                va_nombre: "required",
-                ta_categoria_in_id: "required",
-                va_descripcion: "required"
+              va_nombre: "required",
+              ta_categoria_in_id: "required",
+              va_descripcion: "required",
+              pais: "required",
+              ta_ubigeo_in_id: "required"
             },
             messages: {
-                va_nombre: "Ingrese un nombre de grupo",
-                ta_categoria_in_id: "Ingrese una categoria de grupo",
-                va_descripcion : "Ingrese una descripción"                        
+              va_nombre: "Ingrese un nombre de grupo",
+              ta_categoria_in_id: "Ingrese una categoria de grupo",
+              va_descripcion : "Ingrese una descripción",
+              pais: "Elige un pais",
+              ta_ubigeo_in_id: "Elige la ciudad"
             }
         });
 

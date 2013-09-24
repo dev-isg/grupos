@@ -990,6 +990,17 @@ vertical-align: middle;
 .btn-evento a{
   
 }
+.mi-grupo header{
+  overflow: hidden;
+}
+.dropdown-toggle img{
+  width: 27px;
+  height: 27px;
+}
+.menu-login-f img{
+  width: 70px;
+  height: 60px;
+}
 .form-search input.search-query{
   border: 2px solid #00a4de;
   border-radius: 30px;

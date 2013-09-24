@@ -683,7 +683,9 @@ class EventoTable{
 //        var_dump($selectString);Exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE); 
         return $resultSet->buffer();
-    } 
+    }
+    
+    
      
 
 }
