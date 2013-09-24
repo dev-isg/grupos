@@ -216,7 +216,9 @@
                                     </div>
                                     <div class="span8 desc-user">
                                         <a href="/usuario/<?php echo $usuarios->ta_usuario_in_id;?>"><h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3></a>
-                                        <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?></p>
+                                      <?php if($usuarios->descripcion_usuario!='0') { ?>  
+                                        <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?>
+                                        </p><?php } ?>
                                     </div>
                                 </div>
                                 <div class="row-fluid unio">
