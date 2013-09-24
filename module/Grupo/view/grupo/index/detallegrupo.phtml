@@ -182,7 +182,7 @@
                                     
                                     
                                      <?php $valor = explode('/',$usuarioaceptado->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
+                                <img src="<?php echo $usuarioaceptado->imagen ;?>?width=73&height=68" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuarioaceptado->imagen)!="foto-carnet.jpg"){?>
                                 <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
                               <?php }else{?>
