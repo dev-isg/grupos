@@ -31,7 +31,7 @@ return array(
         'secret' => '5739ee928ea9149e62096e9bb91c501f'
     ),
 
-    'host' => array(
+    /*'host' => array(
         'base' => 'http://192.168.1.25:8081',
         'static' => 'http://192.168.1.25:8081',
         'images' => 'http://192.168.1.25:8081/imagenes',
@@ -39,7 +39,7 @@ return array(
         'ruta' => 'http://192.168.1.25:8081',
 
         'version'=>1,
-    ),
+    ),*/
 
         'mail' => array(
         'transport' => array(
