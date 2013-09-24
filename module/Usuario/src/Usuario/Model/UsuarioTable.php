@@ -159,9 +159,9 @@ class UsuarioTable
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion,
             'va_verificacion' => $valor,
-            'va_pais' => $usuario->va_pais,
+           
             'va_estado' =>'desactivo',
-            'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
+           
             'va_facebook' => $usuario->va_facebook,
             'va_twitter' => $usuario->va_twitter,
                 );
@@ -222,9 +222,12 @@ class UsuarioTable
                 if ($pass == '') {
                     $data['va_estado'] = 'activo';
                     $data['va_verificacion'] = '';
+                   
                     $this->tableGateway->update($data, array(
                         'in_id' => $id));
                 } else {
+                       $data['va_pais'] = $usuario->va_pais;
+                   $data['ta_ubigeo_in_id']=$usuario->ta_ubigeo_in_id;
                     $data['va_contrasena'] = $pass;
                     $data['va_verificacion'] = '';
                     $data['va_estado'] = 'activo';

@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController {
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         if(count($usuariosgrupos)==0)
-        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para participar en uno?';}
 //       $categorias = $this->getUsuarioTable()
 //                        ->categoriasunicas($id)->toArray();
 //        for ($i = 0; $i < count($categorias); $i++) {
@@ -156,7 +156,7 @@ class IndexController extends AbstractActionController {
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
          if(count($eventosusuario)==0)
-        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para participar en  uno?';}
 //         $index=new \Usuario\Controller\IndexController();
         $valor = $this->headerAction($id);
            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($eventosusuario));
