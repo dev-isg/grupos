@@ -726,6 +726,13 @@ public function getAuthService() {
             $cuentax = 70;
             $cuentay = 60;
             $generalx = 270;
+           
+            
+            $detallex=200;
+             $detalley=400;
+            
+            
+            
             $imf = $File['name'];
             $info = pathinfo($File['name']);
             $tamanio = getimagesize($File['tmp_name']);
@@ -743,6 +750,7 @@ public function getAuthService() {
                 $eliminar5 = $this->_options->upload->images . '/usuario/comentarios/' . $imog;
                 $eliminar6 = $this->_options->upload->images . '/usuario/perfil/' . $imog;
                 $eliminar7 = $this->_options->upload->images . '/usuario/cuenta/' . $imog;
+                $eliminar8 = $this->_options->upload->images . '/usuario/verusuario/' . $imog;
                 unlink($eliminar1);
                 unlink($eliminar2);
                 unlink($eliminar3);
@@ -750,10 +758,17 @@ public function getAuthService() {
                 unlink($eliminar5);
                 unlink($eliminar6);
                 unlink($eliminar7);
+                 unlink($eliminar8);
             }
             if ($ancho > $alto) {
                 $altura = (int) ($alto * $anchura / $ancho);
                 $anchura = (int) ($ancho * $altura / $alto);
+                
+                  $alturadetalleevento = (int) ($alto * $detallex / $ancho);
+               if($alturadetalleevento>400){$detalley=400;}
+               else{$detalley=$alturadetalleevento;}  
+               
+               
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
                     $name = $imagen;
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
@@ -764,12 +779,15 @@ public function getAuthService() {
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
+                        $verusuarioo = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
+                      imagecopyresized($verusuarioo, $viejafoto, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
+                                           
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
@@ -777,6 +795,7 @@ public function getAuthService() {
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
+                         $verusu = $this->_options->upload->images . '/usuario/verusuario/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
@@ -784,6 +803,7 @@ public function getAuthService() {
                         imagejpeg($comentariosfoto, $comentario);
                         imagejpeg($perfilfoto, $perfil);
                         imagejpeg($cuentafoto, $cuenta);
+                        imagejpeg($verusuarioo, $verusu);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
@@ -792,12 +812,14 @@ public function getAuthService() {
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
+                          $verusuarioo = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
+                        imagecopyresized($verusuarioo, $viejafoto, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
@@ -805,6 +827,7 @@ public function getAuthService() {
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
+                        $verusu = $this->_options->upload->images . '/usuario/verusuario/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
                         imagepng($generalfoto, $general);
@@ -812,11 +835,17 @@ public function getAuthService() {
                         imagejpeg($comentariosfoto, $comentario);
                         imagejpeg($perfilfoto, $perfil);
                         imagejpeg($cuentafoto, $cuenta);
+                           imagejpeg($verusuarioo, $verusu);
                     }
                     return true;
                 }
             }
             if ($ancho < $alto) {
+                
+                
+                 $anchodetalleevento = (int) ($ancho * $detalley / $alto);
+               if($anchodetalleevento>200){$detallex=200;}
+               else{$detallex = $anchodetalleevento; }
                 $altura = (int) ($alto * $anchura / $ancho);
                 if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg' or $info['extension'] == 'png' or $info['extension'] == 'PNG') {
                     $name = $imagen;
@@ -829,19 +858,23 @@ public function getAuthService() {
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
+                          $verusuarioo = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
-                        $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                      
+                                  imagecopyresized($verusuarioo, $viejafoto, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);$copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+                      $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
                         $detalle = $this->_options->upload->images . '/usuario/detalle/' . $name;
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
+                        $verusu = $this->_options->upload->images . '/usuario/verusuario/' . $name;
                         imagejpeg($nuevafoto, $copia);
                         imagejpeg($viejafoto, $origen);
                         imagejpeg($generalfoto, $general);
@@ -849,6 +882,7 @@ public function getAuthService() {
                         imagejpeg($comentariosfoto, $comentario);
                         imagejpeg($perfilfoto, $perfil);
                         imagejpeg($cuentafoto, $cuenta);
+                         imagejpeg($verusuarioo, $verusu);
                     } else {
                         $viejafoto = imagecreatefrompng($File['tmp_name']);
                         $nuevafoto = imagecreatetruecolor($anchura, $altura);
@@ -856,12 +890,15 @@ public function getAuthService() {
                         $comentariosfoto = imagecreatetruecolor($comentariosx, $comentariosy);
                         $perfilfoto = imagecreatetruecolor($perfilx, $perfily);
                         $cuentafoto = imagecreatetruecolor($cuentax, $cuentay);
+                        $verusuarioo = imagecreatetruecolor($detallex, $detalley);
                         imagecopyresized($nuevafoto, $viejafoto, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalfoto, $viejafoto, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
                         imagecopyresized($detallefoto, $viejafoto, 0, 0, 0, 0, $anchax, $altay, $ancho, $alto);
                         imagecopyresized($comentariosfoto, $viejafoto, 0, 0, 0, 0, $comentariosx, $comentariosy, $ancho, $alto);
                         imagecopyresized($perfilfoto, $viejafoto, 0, 0, 0, 0, $perfilx, $perfily, $ancho, $alto);
                         imagecopyresized($cuentafoto, $viejafoto, 0, 0, 0, 0, $cuentax, $cuentay, $ancho, $alto);
+                          imagecopyresized($verusuarioo, $viejafoto, 0, 0, 0, 0, $detallex, $detalley, $ancho, $alto);$copia = $this->_options->upload->images . '/usuario/principal/' . $name;
+  
                         $copia = $this->_options->upload->images . '/usuario/principal/' . $name;
                         $origen = $this->_options->upload->images . '/usuario/original/' . $name;
                         $general = $this->_options->upload->images . '/usuario/general/' . $name;
@@ -869,6 +906,7 @@ public function getAuthService() {
                         $comentario = $this->_options->upload->images . '/usuario/comentarios/' . $name;
                         $perfil = $this->_options->upload->images . '/usuario/perfil/' . $name;
                         $cuenta = $this->_options->upload->images . '/usuario/cuenta/' . $name;
+                         $verusu = $this->_options->upload->images . '/usuario/verusuario/' . $name;
                         imagepng($nuevafoto, $copia);
                         imagepng($viejafoto, $origen);
                         imagepng($generalfoto, $general);
@@ -876,6 +914,7 @@ public function getAuthService() {
                         imagejpeg($comentariosfoto, $comentario);
                         imagejpeg($perfilfoto, $perfil);
                         imagejpeg($cuentafoto, $cuenta);
+                         imagejpeg($verusuarioo, $verusu);
                     }
 
                     return true;

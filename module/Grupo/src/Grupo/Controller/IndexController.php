@@ -990,19 +990,19 @@ class IndexController extends AbstractActionController
             $ancho = $tamanio[0];
             $alto = $tamanio[1];
               $name =$imagen;
-              
-
+              $verusuariox=79;
+              $verusuarioy=79;
                if ($id != null) {
                 $grupo = $this->getGrupoTable()->getGrupo($id);
                 $imog = $grupo->va_imagen;
                 $eliminar1 = $this->_options->upload->images . '/grupo/general/' . $imog;
                 $eliminar2 = $this->_options->upload->images . '/grupo/original/' . $imog;
                 $eliminar3 = $this->_options->upload->images . '/grupo/principal/' . $imog;
-      
+                $eliminar4 = $this->_options->upload->images . '/grupo/verusuario/' . $imog;
                 unlink($eliminar1);
                 unlink($eliminar2);
                 unlink($eliminar3);
-             
+                unlink($eliminar4);
             }
             // $altura=$tamanio[1];
           //  $valor = uniqid();
@@ -1024,26 +1024,34 @@ class IndexController extends AbstractActionController
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                         $verusuario = imagecreatetruecolor($verusuariox, $verusuarioy);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($verusuario, $viejaimagen, 0, 0, 0, 0, $verusuariox, $verusuarioy, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/grupos/original/' . $name;
                         $general = $this->_options->upload->images . '/grupos/general/' . $name;
+                        $verusuarios = $this->_options->upload->images . '/grupos/verusuario/' . $name;
                         imagejpeg($nuevaimagen, $copia);
                         imagejpeg($viejaimagen, $origen);
                         imagejpeg($generalimagen, $general);
+                       imagejpeg($verusuario, $verusuarios);
                     } else {
                         $viejaimagen = imagecreatefrompng($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
                         $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $verusuario = imagecreatetruecolor($verusuariox, $verusuarioy);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                         imagecopyresized($verusuario, $viejaimagen, 0, 0, 0, 0, $verusuariox, $verusuarioy, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/grupos/original/' . $name;
                         $general = $this->_options->upload->images . '/grupos/general/' . $name;
+                         $verusuarios = $this->_options->upload->images . '/grupos/verusuario/' . $name;
                         imagepng($nuevaimagen, $copia);
                         imagepng($viejaimagen, $origen);
                         imagepng($generalimagen, $general);
+                           imagejpeg($verusuario, $verusuarios);
                     }
                     return true;
                 }
@@ -1062,27 +1070,35 @@ class IndexController extends AbstractActionController
                     if ($info['extension'] == 'jpg' or $info['extension'] == 'JPG' or $info['extension'] == 'jpeg') {
                         $viejaimagen = imagecreatefromjpeg($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
-                        $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $generalimagen = imagecreatetruecolor($generalx, $altura);     
+                        $verusuario = imagecreatetruecolor($verusuariox, $verusuarioy);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($verusuario, $viejaimagen, 0, 0, 0, 0, $verusuariox, $verusuarioy, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/grupos/original/' . $name;
                         $general = $this->_options->upload->images . '/grupos/general/' . $name;
+                         $verusuarios = $this->_options->upload->images . '/grupos/verusuario/' . $name;
                         imagejpeg($nuevaimagen, $copia);
                         imagejpeg($viejaimagen, $origen);
                         imagejpeg($generalimagen, $general);
+                        imagejpeg($verusuario, $verusuarios);
                     } else {
                         $viejaimagen = imagecreatefrompng($File['tmp_name']);
                         $nuevaimagen = imagecreatetruecolor($anchura, $altura);
-                        $generalimagen = imagecreatetruecolor($generalx, $altura);
+                        $generalimagen = imagecreatetruecolor($generalx, $altura);  
+                        $verusuario = imagecreatetruecolor($verusuariox, $verusuarioy);
                         imagecopyresized($nuevaimagen, $viejaimagen, 0, 0, 0, 0, $anchura, $altura, $ancho, $alto);
                         imagecopyresized($generalimagen, $viejaimagen, 0, 0, 0, 0, $generalx, $altura, $ancho, $alto);
+                        imagecopyresized($verusuario, $viejaimagen, 0, 0, 0, 0, $verusuariox, $verusuarioy, $ancho, $alto);
                         $copia = $this->_options->upload->images . '/grupos/principal/' . $name;
                         $origen = $this->_options->upload->images . '/grupos/original/' . $name;
                         $general = $this->_options->upload->images . '/grupos/general/' . $name;
+                         $verusuarios = $this->_options->upload->images . '/grupos/verusuario/' . $name;
                         imagepng($nuevaimagen, $copia);
                         imagepng($viejaimagen, $origen);
                         imagepng($generalimagen, $general);
+                        imagejpeg($verusuario, $verusuarios);
                     }
                     
                     return true;
