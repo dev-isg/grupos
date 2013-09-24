@@ -280,7 +280,7 @@ public function getAuthService() {
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm();
+        $form = new UsuarioForm(null,$adpter);
         $form->get('submit')->setValue('Crear Usuario');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
