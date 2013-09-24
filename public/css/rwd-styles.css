@@ -436,6 +436,12 @@
 	.contenido-group header span{
 		width: 93%!important;
 	}
+	.main-container{
+		margin-top: 0;
+	}
+	.contenido-group{
+		padding-top: 10px;
+	}
 }
 
 @media (max-width: 720px) { 

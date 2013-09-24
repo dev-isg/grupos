@@ -1100,10 +1100,10 @@ vertical-align: middle;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .event:first-child{
-  margin-top: 10px!important;
+  margin-top: 20px!important;
 }
 .box{
   -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
