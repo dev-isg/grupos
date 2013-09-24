@@ -30,8 +30,8 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                 <div class="span8 space-group">
                     <input type="hidden" name="url" value="<?php echo $this->urlorigen?>"/>
                     <?php echo $this->formHidden($form->get('in_id'));?>
-                     <?php echo $this->formRow($form->get('pais'));?>
-                        <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
+                     <?php echo $this->formRow($form->get('va_pais'));?>
+                        <?php echo $this->formRow($form->get('va_ciudad'));?>
                     <?php echo $this->formRow($form->get('va_nombre'));?>
                     <?php echo $this->formRow($form->get('ta_categoria_in_id'));?>
                     <?php echo $this->formRow($form->get('va_descripcion'));?>
@@ -68,3 +68,37 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
 		</div>
     </div>
 </div> <!-- #main-container -->
+
+<script type="text/javascript">
+    var cboPais = $("#pais");
+    var distriJ = $("#va_ciudad");
+    cboPais.change(function(){
+        var hi = cboPais.val();
+        if(hi === ''){
+            var inp = '<option value="">--- Seleccionar ---</option>';
+            distriJ.empty();
+            distriJ.append(inp);
+        }else{
+            var valPais =  $(this).find('option:selected').val();
+            $.ajax({
+                url: "/usuario/index/jsonciudad?code=" + valPais , 
+                cache:true,
+                data: {},
+                success: function(nselect){
+                    var data = JSON.parse(nselect || {});
+                    var departList = [];
+                    distriJ.empty();
+                    for (var key in data) {
+                        dataF = data[key];
+                        var keyL = dataF.ID;
+                        var val = dataF.Name;
+                        var  departItem = '<option value="'+ keyL +'">'+ val +'</option>';
+                        departList.push(departItem);
+                    }
+                    var joinDep = departList.join('');
+                    distriJ.append(joinDep);
+                }
+            });
+        }
+    });
+</script>

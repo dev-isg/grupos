@@ -23,8 +23,8 @@
                     <div class="span8 space-group">
                         <input type="hidden" name="url" value="<?php echo $this->urlorigen?>"/>
                         <?php echo $this->formHidden($form->get('in_id'));?>
-                        <?php echo $this->formRow($form->get('pais'));?>
-                        <?php echo $this->formRow($form->get('ta_ubigeo_in_id'));?>
+                        <?php echo $this->formRow($form->get('va_pais'));?>
+                        <?php echo $this->formRow($form->get('va_ciudad'));?>
                         <?php echo $this->formRow($form->get('va_nombre'));?>
                         <?php echo $this->formRow($form->get('ta_categoria_in_id'));?>
                         <?php echo $this->formRow($form->get('va_descripcion'));?>
@@ -62,7 +62,7 @@
 
 <script type="text/javascript">
     var cboPais = $("#pais");
-    var distriJ = $("#ta_ubigeo_in_id");
+    var distriJ = $("#va_ciudad");
     cboPais.change(function(){
         var hi = cboPais.val();
         if(hi === ''){

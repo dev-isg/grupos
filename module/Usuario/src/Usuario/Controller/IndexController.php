@@ -261,7 +261,7 @@ public function getAuthService() {
    
      public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       
-          
+         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -422,6 +422,26 @@ public function getAuthService() {
         $header = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
+         if($usuario->va_pais!=null)
+       {  
+        $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
+        $array = array();
+        foreach ($ubige as $y) {
+            $array[$y['ID']] = $y['Name']; }
+        if($ubige[0]['Code']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }  }
+        else
+        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; } }
+            
+            $form->get('va_pais')->setValue($array);
+            $form->get('ta_ubigeo_in_id')->setValueOptions($arra); 
+        }
         $form->bind($usuario);
         $form->get('submit')->setAttribute('value', 'Actualizar');
 

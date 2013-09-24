@@ -386,16 +386,25 @@ class IndexController extends AbstractActionController
             ));
         }
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new GruposForm($adpter);
+        $form = new GruposForm($adpter); 
+        $ubige=$this->getUsuarioTable()->getPais($grupo->va_pais);
+        $array = array();
+        foreach ($ubige as $y) {
+            $array[$y['ID']] = $y['Name']; }
+        if($ubige[0]['Code']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($grupo->va_ciudad);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }}
+        else
+        {$ciudad=$this->getUsuarioTable()->getCiudad('',$grupo->va_ciudad);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; } }
+ 
+            $form->get('va_pais')->setValue($array);
+            $form->get('va_ciudad')->setValueOptions($arra); 
         $form->bind($grupo);
-//        var_dump($grupo->va_imagen);Exit;
-        // $var=$this->getGrupoTable()->getNotifiaciones($id)->toArray();
-        // $aux = array();
-        // foreach($var as $y){
-        // $aux[]=$y['ta_notificacion_in_id'];
-        // }
-        // $form->get('tipo_notificacion')->setValue($aux);
-//        $form->get('va_imagen')->setAttribute('value', '');
         $form->get('submit')->setAttribute('value', 'Editar');
         $imagen=$this->_options->host->images.'/grupos/general/'.$grupo->va_imagen;
         $request = $this->getRequest();

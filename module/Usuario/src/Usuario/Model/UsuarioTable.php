@@ -159,6 +159,7 @@ class UsuarioTable
             'va_genero' => $usuario->va_genero,
             'va_descripcion' => $usuario->va_descripcion,
             'va_verificacion' => $valor,
+            'va_pais' => $usuario->va_pais,
             'va_estado' =>'desactivo',
             'ta_ubigeo_in_id'=>$usuario->ta_ubigeo_in_id,
             'va_facebook' => $usuario->va_facebook,
@@ -519,38 +520,47 @@ public function idfacebook2($id,$logout)
       $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
 
-     public function getPais()
+     public function getPais($pais)
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select()
                         ->columns(array('Code', 'Name'))
-                        ->from('country');
+                        ->from('country')
+                ->where(array('Code'=>$pais));
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();
     }
-     public function getCiudad($ciudad)
+     public function getCiudad($ciudad,$ID=null)
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select()
                         ->columns(array('ID', 'Name'))
-                        ->from('city')
-         ->where(array('CountryCode' =>$ciudad ))->group('ID');
-        $selectString = $sql->getSqlStringForSqlObject($select);
+                        ->from('city');
+          if($ID!=null)
+              {  $select->where(array('ID' =>$ID ))->group('ID'); 
+              
+              }
+          else {  $select->where(array('CountryCode' =>$ciudad ))->group('ID');}
+          $selectString = $sql->getSqlStringForSqlObject($select);
+       
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();
     
     }
-     public function getCiudadPeru()
+     public function getCiudadPeru($ciudad=null)
     {
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select()
                         ->columns(array('ID'=>'in_id', 'Name'=>'va_provincia'))
-                        ->from('ta_ubigeo')
-         ->where(array('in_idpais' =>1))->group('va_provincia');
+                        ->from('ta_ubigeo');
+        if($ciudad!=null){      $select->where(array('in_idpais' =>1,'in_id'=>$ciudad))->group('va_provincia');}
+        
+        else{  $select->where(array('in_idpais' =>1))->group('va_provincia');}
+   
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();

@@ -138,13 +138,13 @@ class UsuarioForm extends Form {
                 'class' => 'span10',
                 'id' => 'ta_ubigeo_in_id'
             ),
-            'options' => array(
-                                             
+             'options' =>array(                                    
                 'empty_option' => '--- Seleccionar ---',
             )
+           
         ));
 $this->add(array(
-            'name' => 'pais',
+            'name' => 'va_pais',
             'type' => 'Select',
              'attributes' => array(               
                 'class' => 'span10',

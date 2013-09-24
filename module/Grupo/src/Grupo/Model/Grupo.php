@@ -22,9 +22,9 @@ class Grupo implements InputFilterAwareInterface
     //foraneas
     public $ta_usuario_in_id;
     public $ta_categoria_in_id;
-    public $ta_ubigeo_in_id;
+    public $va_ciudad;
     
-    public $pais;
+    public $va_pais;
     public $departamento;
     public $provincia;
     public $distrito;
@@ -46,6 +46,9 @@ class Grupo implements InputFilterAwareInterface
             $this->va_imagen= (!empty($data['va_imagen'])) ? $data['va_imagen'] : null;
 //            $this->va_dirigido= (!empty($data['va_dirigido'])) ? $data['va_dirigido'] : null;
             $this->va_estado= (!empty($data['va_estado'])) ? $data['va_estado'] : 1;
+             $this->va_pais= (!empty($data['va_pais'])) ? $data['va_pais'] : null; 
+             $this->va_ciudad= (!empty($data['va_ciudad'])) ? $data['va_ciudad'] : null;
+             
             
             $this->ta_usuario_in_id= (!empty($data['ta_usuario_in_id'])) ? $data['ta_usuario_in_id'] : 1;
             $this->ta_categoria_in_id= (!empty($data['ta_categoria_in_id'])) ? $data['ta_categoria_in_id'] : null;
@@ -180,7 +183,15 @@ class Grupo implements InputFilterAwareInterface
 //            )));
 //            
 
-            
+                $inputFilter->add($factory->createInput(array(
+                        'name' => 'va_ciudad',
+                        'required' => true
+                      
+                   )));
+                  $inputFilter->add($factory->createInput(array(
+                        'name' => 'va_pais',
+                        'required' => true
+                   )));
               $inputFilter->add($factory->createInput(array(
                 'name'     => 'ta_categoria_in_id',
                 'required' => true,
