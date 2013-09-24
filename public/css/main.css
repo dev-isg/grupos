@@ -2140,7 +2140,12 @@ border-bottom: 1px solid #ddd;
 margin-bottom: 10px;
 float: left;
 }
-
+.img-grupo{
+  text-align: center;
+}
+.img-grupo img{
+  width: 200px;
+}
 .modificarimg{
   padding: 0px 0px 5px !important;
 }

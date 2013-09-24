@@ -255,34 +255,16 @@
 
             // trigger Masonry as a callback
             function(newElements) {
-                var $newElems = $( newElements ).css({ opacity: 0 });
-
-                $newElems.imagesLoaded(function()   {
-                    $newElems.animate({ opacity: 1 });
-                    $container.masonry( 'appended', $newElems, true ); 
-
-                    // post like system
-                    $(".post-like a").click(function() {
-
-                        heart = $(this);
-                        post_id = heart.data("post_id");
-
-                        $.ajax({
-                                type: "post",
-                                url: ajax_var.url,
-                                data: "action=post-like&nonce="+ajax_var.nonce+"&post_like=&post_id="+post_id,
-                                success: function(count){
-                                    if(count != "already") {
-                                        heart.addClass("voted");
-                                        heart.siblings(".count").text(count);
-                                    }
-                                }
-                        });
-                        return false;
-                    }) // end post like system
-
+                // hide new items while they are loading
+                var $newElems = $(newElements).css({ opacity: 0});
+                // ensure that images load before adding to masonry layout
+                $newElems.imagesLoaded(function(){
+                  // show elems now they're ready
+                  $newElems.animate({ opacity: 1 });
+                  $container.masonry('appended', $newElems, true);
                 });
-            });
+              }
+            );
          
             });
         });
