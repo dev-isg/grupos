@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController {
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         if(count($usuariosgrupos)==0)
-        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para participar en uno?';}
 //       $categorias = $this->getUsuarioTable()
 //                        ->categoriasunicas($id)->toArray();
 //        for ($i = 0; $i < count($categorias); $i++) {
@@ -156,7 +156,7 @@ class IndexController extends AbstractActionController {
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
          if(count($eventosusuario)==0)
-        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para crear uno?';}
+        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para participar en  uno?';}
 //         $index=new \Usuario\Controller\IndexController();
         $valor = $this->headerAction($id);
            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($eventosusuario));
@@ -261,7 +261,7 @@ public function getAuthService() {
    
      public function agregarusuarioAction() {//session_destroy();
         // AGREGAR CSS       
-          
+         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -280,7 +280,7 @@ public function getAuthService() {
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
 
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm();
+        $form = new UsuarioForm(null,$adpter);
         $form->get('submit')->setValue('Crear Usuario');
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $session=$storage->read();
@@ -422,6 +422,26 @@ public function getAuthService() {
         $header = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
+         if($usuario->va_pais!=null)
+       {  
+        $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
+        $array = array();
+        foreach ($ubige as $y) {
+            $array[$y['ID']] = $y['Name']; }
+        if($ubige[0]['Code']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }  }
+        else
+        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; } }
+            
+            $form->get('va_pais')->setValue($array);
+            $form->get('ta_ubigeo_in_id')->setValueOptions($arra); 
+        }
         $form->bind($usuario);
         $form->get('submit')->setAttribute('value', 'Actualizar');
 
@@ -559,8 +579,22 @@ public function getAuthService() {
             ->prependFile($this->_options->host->base . '/js/main.js');
         $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
-        $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);
-        $usuario->ta_ubigeo_in_id=$auxdistri;
+       // $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);        
+        //$usuario->ta_ubigeo_in_id=$auxdistri;
+        $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
+        $usuario->va_pais=$ubige[0]['Name'];
+        if($ubige[0]['Code']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }  }
+        else
+        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
+        $arra = array();
+        foreach ($ciudad as $y) {
+            $arra[$y['ID']] = $y['Name']; }
+        }
+         $usuario->ta_ubigeo_in_id=$y['Name'];     
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
         return array('usuario'=>$usuario,'mienbros'=>$usergroup);
     }

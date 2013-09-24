@@ -166,11 +166,11 @@ class GruposForm extends Form
 //        ));
           
              $this->add(array(
-            'name' => 'ta_ubigeo_in_id', //distrito
+            'name' => 'va_ciudad', //distrito
             'type' => 'Select',
             'attributes' => array(
                 'class' => 'span10',
-                'id' => 'ta_ubigeo_in_id'
+                'id' => 'va_ciudad'
             ),
             'options' => array('label' => 'Ciudad : ',
                // 'value_options' =>$this->Provincia(),                                               
@@ -179,7 +179,7 @@ class GruposForm extends Form
         ));
              
 $this->add(array(
-            'name' => 'pais',
+            'name' => 'va_pais',
             'type' => 'Select',
              'attributes' => array(               
                 'class' => 'span10',
