@@ -185,12 +185,12 @@ class Grupo implements InputFilterAwareInterface
 
                 $inputFilter->add($factory->createInput(array(
                         'name' => 'va_ciudad',
-                        'required' => true
+                        'required' => false
                       
                    )));
                   $inputFilter->add($factory->createInput(array(
                         'name' => 'va_pais',
-                        'required' => true
+                        'required' => false
                    )));
               $inputFilter->add($factory->createInput(array(
                 'name'     => 'ta_categoria_in_id',

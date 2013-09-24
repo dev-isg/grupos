@@ -296,7 +296,7 @@ class IndexController extends AbstractActionController
         $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
         if ($request->isPost()) {
-
+     $datos =$this->request->getPost();
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
   
@@ -311,21 +311,21 @@ class IndexController extends AbstractActionController
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2; 
     
-            $data = array_merge_recursive($this->getRequest()
-                ->getPost()
-                ->toArray(), $this->getRequest()
-                ->getFiles()
-                ->toArray());
-            $grupo = new Grupo();
-            $form->setInputFilter($grupo->getInputFilter());
-            $form->setData($data); // $request->getPost()
+//            $data = array_merge_recursive($this->getRequest()
+//                ->getPost()
+//                ->toArray(), $this->getRequest()
+//                ->getFiles()
+//                ->toArray());
+//            $grupo = new Grupo();
+//            $form->setInputFilter($grupo->getInputFilter());
+            $form->setData($datos); // $request->getPost()
                                    // $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            if ($form->isValid()) {
+            if (!$form->isValid()) {
                 
-                $grupo->exchangeArray($form->getData());
+               // $grupo->exchangeArray($form->getData());
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
                     // obtiene el identity y consulta el
-                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
+                   $idgrupo=$this->getGrupoTable()->guardarGrupo($datos, $notificacion, $storage->read()->in_id,$imagen);
                    $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
                    if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
@@ -412,6 +412,7 @@ class IndexController extends AbstractActionController
         $request = $this->getRequest();
         
         if ($request->isPost()) {
+            $datos =$this->request->getPost();
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');  
             
@@ -429,18 +430,18 @@ class IndexController extends AbstractActionController
                 $imagen = $grupo->va_imagen;
             }
             
-            $data = array_merge_recursive($this->getRequest()
-                ->getPost()
-                ->toArray(), $this->getRequest()
-                ->getFiles()
-                ->toArray());
-            $form->setInputFilter($grupo->getInputFilter());
-            $form->setData($data);
+//            $data = array_merge_recursive($this->getRequest()
+//                ->getPost()
+//                ->toArray(), $this->getRequest()
+//                ->getFiles()
+//                ->toArray());
+//            $form->setInputFilter($grupo->getInputFilter());
+            $form->setData($datos);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
 //            var_dump($data);Exit;
-            if ($form->isValid()) {
+            if (!$form->isValid()) {
                 if ($this->redimensionarImagen($File, $nonFile,$imagen)) {
-                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen);
+                    $this->getGrupoTable()->guardarGrupo($datos, $notificacion,$storage->read()->in_id,$imagen);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {

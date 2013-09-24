@@ -423,7 +423,7 @@ public function getAuthService() {
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
          if($usuario->va_pais!=null)
-       {  
+       {   
         $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
         $array = array();
         foreach ($ubige as $y) {
@@ -464,14 +464,13 @@ public function getAuthService() {
         }
 
         $request = $this->getRequest();
-
-        if ($request->isPost()) {    
-         //$datos =$this->request->getPost();
-        
+        if ($request->isPost()) { 
+        $datos =$this->request->getPost();
+       
             $File = $this->params()->fromFiles('va_foto');
+          // $form->setInputFilter($usuario->getInputFilter());
           
             $nonFile = $this->params()->fromPost('va_nombre');
-
             if ($File['name'] != '') {
                 require './vendor/Classes/Filter/Alnum.php';
                 $imf = $File['name'];
@@ -487,28 +486,26 @@ public function getAuthService() {
                 $idusuario = $this->getUsuarioTable()->getUsuario($id);
                 $imagen = $idusuario->va_foto;
             }
-
-            $data = array_merge_recursive($this->getRequest()
-                            ->getPost()
-                            ->toArray(), $this->getRequest()
-                            ->getFiles()
-                            ->toArray());
+//            $dato = array_merge_recursive($this->getRequest()
+//                            ->getPost()
+//                            ->toArray(), $this->getRequest()
+//                            ->getFiles()
+//                            ->toArray());
            
-            $form->setInputFilter($usuario->getInputFilter2());
-//         
-          $form->setData($data);
-
  
-            if ($form->isValid()) {
+            
+          $form->setData($datos);
+
+            if (!$form->isValid()){
             $catg_ingresada=$this->params()->fromPost('select2');
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
                     $pass = $dataa->va_contrasena;
                     $nombre=$this->params()->fromPost('va_nombre');
-                    if ($File['name'] != '') {//echo 'mamaya';exit;
+                    if ($File['name'] != '') {
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
                  
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada);
+                            $this->getUsuarioTable()->guardarUsuario($datos, $imagen, '', $pass,$catg_ingresada);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
@@ -519,8 +516,8 @@ public function getAuthService() {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
-                    } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada);
+                    } else    { 
+                        $this->getUsuarioTable()->guardarUsuario($datos, $imagen, '', $pass,$catg_ingresada);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
@@ -532,14 +529,14 @@ public function getAuthService() {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada);
+                            $this->getUsuarioTable()->guardarUsuario($datos, $imagen,null,null,$catg_ingresada);
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada);
+                        $this->getUsuarioTable()->guardarUsuario($datos, $imagen,null,null,$catg_ingresada);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
