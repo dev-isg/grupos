@@ -490,7 +490,7 @@ public function idfacebook2($id,$logout)
                    $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }
     
-     public function insertarusuariofacebbok($nombre,$email,$idfacebook,$foto,$logout,$genero)
+     public function insertarusuariofacebbok($nombre,$email,$idfacebook,$foto,$logout,$genero,$link)
     {   $contrasena = sha1($idfacebook) ;
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
@@ -498,7 +498,7 @@ public function idfacebook2($id,$logout)
                 ->into('ta_usuario')
                 ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,
                     'va_estado'=>'activo','va_contrasena'=>$contrasena,'va_foto'=>$foto
-                   ,'va_logout'=>$logout,'va_genero'=>$genero));
+                   ,'va_logout'=>$logout,'va_genero'=>$genero,'va_facebook'=>$link));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
       $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }

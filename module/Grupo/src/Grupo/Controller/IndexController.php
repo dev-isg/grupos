@@ -182,11 +182,13 @@ class IndexController extends AbstractActionController
 
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
-            $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $page=(int) $this->params()->fromQuery('page', 1);
+            $paginator->setCurrentPageNumber($page);
             $paginator->setItemCountPerPage(12);
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
             $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
-            $paginator2->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+            $page2=(int) $this->params()->fromQuery('page', 1);
+            $paginator2->setCurrentPageNumber($page2);
             $paginator2->setItemCountPerPage(12);
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
@@ -214,18 +216,38 @@ class IndexController extends AbstractActionController
             $urlf = substr($url, 0, $auxurl);
             $urlf = $urlf . '?';
         }
+        
+        $view= new ViewModel();
+        if ($paginator2) {
+            $tot2 = $paginator2->getPageRange();
+            if ($tot2 <= $page2) {
+                $view->setTerminal(true);
+             $view->setTemplate('layout/layout-error');
 
-        return array(
-            'grupos' => $paginator2,
-            'eventos' => $paginator,
-            'dato' => $valor,
-            'urlac' => $urlf,
-            
-            'categorias'=>$categorias,
-            'search'=>$search,
-            'active'=>$active,
-            'session'=>$session
-        );
+            }
+        }
+        if ($paginator) {
+            $tot = $paginator->getPageRange();
+
+            if ($tot <= $page) {
+                                $view->setTerminal(true);
+               $view->setTemplate('layout/layout-error');
+
+            }
+        }
+        $view->setVariables(         array(
+                    'grupos' => $paginator2,
+                    'eventos' => $paginator,
+                    'dato' => $valor,
+                    'urlac' => $urlf,
+
+                    'categorias'=>$categorias,
+                    'search'=>$search,
+                    'active'=>$active,
+                    'session'=>$session
+                ));
+        return $view;
+
     }
     
     public function buscarAction(){
@@ -1130,7 +1152,8 @@ class IndexController extends AbstractActionController
                        if ($user) {
                          $logoutUrl = $facebook->getLogoutUrl();
                          $id_facebook = $user_profile['id'];
-                         $name = $user_profile['name']; 
+                         $name = $user_profile['name'];
+                         $link = $user_profile['link'];
                          $email = $user_profile['email'];
                          $naitik = $facebook->api('/naitik');
                           $generoface = $user_profile['gender'];
@@ -1149,7 +1172,7 @@ class IndexController extends AbstractActionController
                              AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
-                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero); 
+                              $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                              return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
                              
