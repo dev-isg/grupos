@@ -15,7 +15,14 @@
         <div class="row-fluid">
             <div class="span3 group-sidebar" style="padding-bottom:15px;">
                 <div class="img-grupo">
-                    <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->grupo[0]['va_imagen'], ENT_QUOTES, 'utf-8'); ?>">
+            <?php if($this->grupo[0]['va_imagen']=='defaultd.jpg')  { ?> 
+                    
+     <img src="<?php echo $this->host('img') . '/defaultd.jpg' ; ?>">
+              
+                <?php } else { ?>
+  <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->grupo[0]['va_imagen'], ENT_QUOTES, 'utf-8'); ?>">
+           
+                    <?php } ?> 
                 </div>
                 <?php if($this->grupo[0]['ta_usuario_in_id']==$session->in_id){?>
                 <div class="editarGrupo">

@@ -62,8 +62,14 @@
 		                            <div class="users">
 		                                <div class="row-fluid">
 		                                    <div class="span3 img-user-ev">
-		                                    	<img src="<?php echo $this->host('images')?>/grupos/general/<?php echo $mienbro->imagen;?>">
-		                                    </div>
+                                 
+                                          <?php if($mienbro->imagen=='defaultd.jpg'){ ?>
+		                                    	<img src="<?php echo $this->host('img')?>/defaultd.jpg">
+		                                    <?php } else  { ?>
+                                                        
+                                             <img src="<?php echo $this->host('images')?>/grupos/general/<?php echo $mienbro->imagen;?>">      
+                                                    <?php } ?>
+                                                    </div>
 		                                    <div class="span9 desc-user">
 		                                        <h5><a href="<?php echo $this->url('detalle-grupo')?>/<?php echo $mienbro->ta_grupo_in_id;?>"><?php echo $mienbro->nombre_grupo;?></a></h5>
 		                                        <!--<p>co-fundador</p>-->
