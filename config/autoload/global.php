@@ -31,19 +31,19 @@ return array(
         'secret' => '5739ee928ea9149e62096e9bb91c501f'
     ),
 
-    /*'host' => array(
-        'base'=>'http://192.168.1.25:8081',
-        'static'=>'http://192.168.1.25:8081',
-        'images'=>'http://192.168.1.25:8081/imagenes',
-        'img'=>'http://192.168.1.25:8081/img',
-        'ruta'=>'http://192.168.1.25:8081',*/
-    
     'host' => array(
-       'base' => 'http://dev.juntate.pe',
-        'static' => 'http://dev.juntate.pe',
-        'images' => 'http://192.168.1.35:82/imagenes',
+        'base'=>'http://192.168.1.35:82',
+        'static'=>'http://192.168.1.35:82',
+        'images'=>'http://192.168.1.35:82/imagenes',
         'img'=>'http://192.168.1.35:82/img',
-       'ruta' => 'http://dev.juntate.pe',
+        'ruta'=>'http://192.168.1.35:82',
+    
+//    'host' => array(
+//       'base' => 'http://dev.juntate.pe',
+//        'static' => 'http://dev.juntate.pe',
+//        'images' => 'http://192.168.1.35:82/imagenes',
+//        'img'=>'http://192.168.1.35:82/img',
+//       'ruta' => 'http://dev.juntate.pe',
 
         'version'=>1,
     ),

@@ -96,7 +96,7 @@ class GrupoTable{
     }
     
     
-  public function guardarGrupo($grupo,$notificacion=null,$iduser=null,$imagen){
+  public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null,$imagen){
       
       $data=array(
          'va_nombre'=>$grupo->va_nombre,

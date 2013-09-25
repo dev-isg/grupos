@@ -621,8 +621,6 @@ public function getAuthService() {
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
         $config2 = self::$rutaStatic2;
-       
-       
          $valor = explode('/',$storage->read()->va_foto);
        if($valor[0]=='https:')
        {$imagen=$storage->read()->va_foto.'?width=70&height=60';}
