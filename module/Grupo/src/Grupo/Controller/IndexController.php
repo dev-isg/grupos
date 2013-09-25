@@ -345,7 +345,7 @@ class IndexController extends AbstractActionController
             $filter = new \Filter_Alnum();        
             $filtered = $filter->filter($nom);
             $imagen = $filtered . '-' . $imf2; 
-            
+
              } else {
                 $imagen = 'defaultd.jpg';
             }
