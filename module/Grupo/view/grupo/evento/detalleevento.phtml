@@ -182,32 +182,39 @@
                               <div id="invita-correo">
                                 <div class="row-fluid">
                                   <div class="span6">
-                                    <form method="post" action="/grupo/evento/invitar">
-                                      <input type="text" name="correos"/>
-                                      <input type="submit" name="Enviar"/>
+                                    <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
+                                      <h3>Ingresa correos separado por comas</h3>
+                                      <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
+                                      <input type="text" name="correos" class="inputModif"/>
+                                      <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
                                     </form>
                                   </div>
                                   <div class="span6">
-                                    <div class="span12 user-back-2">
-                                      <h3>Usuarios aprobados</h3>
-                                      <ul>
-                                        <li id="user-250">
-                                          <input class="marcar-user" type="checkbox" data-user="250"> 
-                                          <label class="checkbox img-cargar-usuarios">
-                                            <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
-                                            <a href="/usuario/250">kevin 8</a>
-                                            <p>Hello world -.................- !!!!!!!</p>
-                                          </label>
-                                        </li>
-                                        <li id="user-251">
-                                          <input class="marcar-user" type="checkbox" data-user="251"> 
-                                          <label class="checkbox img-cargar-usuarios">
-                                            <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
-                                            <a href="/usuario/251">Luciano2</a>
-                                            <p>Me gusta jugar, reir y hablar mucho</p>
-                                          </label>
-                                        </li>
-                                      </ul>
+                                    <div class="span12 user-back-2 email-user-d">
+                                      <form action="" id="gruposInvitar">
+                                        <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
+                                        <ul>
+                                          <li id="user-g">
+                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                            <label class="checkbox img-cargar-usuarios">
+                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
+                                              <a href="/usuario/250">kevin 8</a>
+                                              <p>Hello world -.................- !!!!!!!</p>
+                                            </label>
+                                          </li>
+                                          <li id="user-g">
+                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                            <label class="checkbox img-cargar-usuarios">
+                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
+                                              <a href="/usuario/251">Luciano2</a>
+                                              <p>Me gusta jugar, reir y hablar mucho</p>
+                                            </label>
+                                          </li>
+                                        </ul>
+                                        <div class="content-en">
+                                          <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>
+                                        </div>
+                                      </form>
                                     </div>
                                   </div>
                                 </div>
