@@ -332,7 +332,8 @@ class IndexController extends AbstractActionController
         $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
         if ($request->isPost()) {
-    // $datos =$this->request->getPost();
+     $datos =$this->request->getPost();
+
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
            if ($File['name'] != '') {
@@ -363,13 +364,13 @@ class IndexController extends AbstractActionController
             $form->setInputFilter($grupo->getInputFilter());
             $form->setData($data); // $request->getPost()
                                    // $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
-            if (!$form->isValid()) {
+     if ($form->isValid()) {
 
                 $grupo->exchangeArray($form->getData());
                     if ($File['name'] != '') {
                 if ($this->redimensionarImagen($File, $nonFile,$imagen,'')) {
                     // obtiene el identity y consulta el
-                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
+                   $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen,$datos->va_ciudad);
                    $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
                    if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
@@ -385,7 +386,7 @@ class IndexController extends AbstractActionController
                 }
             }
                else {
-               $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen);
+               $idgrupo=$this->getGrupoTable()->guardarGrupo($grupo, $notificacion, $storage->read()->in_id,$imagen,$datos->va_ciudad);
                    $this->flashMessenger()->addMessage('Su grupo ha sido creado correctamente.');
                    if($this->params()->fromPost('url')=='/cuenta/misgrupos' ||$this->params()->fromPost('url')=='/cuenta/grupoparticipo'){
                        return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$idgrupo));
@@ -397,6 +398,7 @@ class IndexController extends AbstractActionController
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
                     print_r($error->getMessages()); // $inputFilter->getInvalidInput()
+                     print_r($error->getName()); 
                 }
             }
         }
@@ -441,22 +443,26 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter); 
         $ubige=$this->getUsuarioTable()->getPais($grupo->va_pais);
+      // var_dump($ubige);exit;
         $array = array();
         foreach ($ubige as $y) {
             $array[$y['ID']] = $y['Name']; }
-        if($ubige[0]['Code']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($grupo->va_ciudad);
+       $ciudad = $this->getGrupoTable()->getGrupo2($id)->toArray();
+        if($ciudad[0]['va_pais']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudad[0]['va_ciudad']);
         $arra = array();
         foreach ($ciudad as $y) {
             $arra[$y['ID']] = $y['Name']; }}
         else
-        {$ciudad=$this->getUsuarioTable()->getCiudad('',$grupo->va_ciudad);
+        { 
+            $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudad[0]['va_ciudad']);
+    //   var_dump($ciudad[0]['Name']);exit;
         $arra = array();
         foreach ($ciudad as $y) {
             $arra[$y['ID']] = $y['Name']; } }
  
             $form->get('va_pais')->setValue($array);
-            $form->get('va_ciudad')->setValueOptions($arra); 
+      // $form->get('va_ciudad')->setValueOptions($arra); 
         $form->bind($grupo);
         $form->get('submit')->setAttribute('value', 'Editar');
         $imagen=$grupo->va_imagen;
@@ -482,19 +488,19 @@ class IndexController extends AbstractActionController
                 $imagen = $grupo->va_imagen;
             }
             
-//            $data = array_merge_recursive($this->getRequest()
-//                ->getPost()
-//                ->toArray(), $this->getRequest()
-//                ->getFiles()
-//                ->toArray());
-//            $form->setInputFilter($grupo->getInputFilter());
-            $form->setData($datos);
+            $data = array_merge_recursive($this->getRequest()
+                ->getPost()
+                ->toArray(), $this->getRequest()
+                ->getFiles()
+                ->toArray());
+            $form->setInputFilter($grupo->getInputFilter());
+            $form->setData($data);
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
             if ($form->isValid()) { 
                  if ($File['name'] != '') {  
                      $id=$datos->in_id;
                 if ($this->redimensionarImagen($File, $nonFile,$imagen,$id)) {
-                    $this->getGrupoTable()->guardarGrupo($datos, $notificacion,$storage->read()->in_id,$imagen);
+                    $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen,$datos->va_ciudad);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));
                 } else {
@@ -502,7 +508,7 @@ class IndexController extends AbstractActionController
                     exit();
                 }
                }
-                 else{$this->getGrupoTable()->guardarGrupo($datos, $notificacion,$storage->read()->in_id,$imagen);
+                 else{$this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen,$datos->va_ciudad);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');
                     return $this->redirect()->toRoute('detalle-grupo',array('in_id'=>$id));}
                 
@@ -521,7 +527,9 @@ class IndexController extends AbstractActionController
         return array(
             'in_id' => $id,
             'form' => $form,
-            'imagen'=>$imagen
+            'imagen'=>$imagen,
+            'nameCiudad'=>$ciudad[0]['Name'],
+             'nameID'=>$ciudad[0]['ID'],
         );
     }
 

@@ -21,9 +21,13 @@
 		                        <article id="post-9" class="img-dev-evento post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope>
 		                        <div class="post-block three_columns">
 		                            <div class="entry-thumb">
-		                                <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($misgrupos->in_id); ?>">
-		                                    <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($misgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
-		                                </a>
+		                                <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($misgrupos->in_id); ?>">  
+                                              <?php if($misgrupos->va_imagen=='defaultd.jpg') { ?>
+		                                    <img class="img-cart" src="<?php echo $this->host('img');  ?>/defaultd.jpg" title="" alt="" />
+		                               <?php  } else  {?>
+                                                    <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($misgrupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />   
+                                           <?php  } ?>
+                                                </a>
 		                                <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
 						                    <div class="content-edit">
 						                      <a href="<?php echo $this->host('base').$this->url('editar-grupo').'/'.$this->escapeHtml($misgrupos->in_id);?>" title="Editar detalle de evento">

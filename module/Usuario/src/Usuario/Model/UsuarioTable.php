@@ -528,7 +528,7 @@ public function idfacebook2($id,$logout)
        return $results->toArray();
     }
      public function getCiudad($ciudad,$ID=null)
-    {
+    { 
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select()

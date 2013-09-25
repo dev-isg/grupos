@@ -22,8 +22,12 @@
 		                        <div class="post-block three_columns">
 		                            <div class="entry-thumb">
 		                                <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($miseventos->in_id); ?>" class="preview" data-ui-lightbox>
-			                                <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($miseventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
-			                            </a>
+                                 <?php if($miseventos->va_imagen=='defaultd.jpg') { ?>                    
+			     <img class="img-cart" src="<?php   echo $this->host('img')?>/defaultd.jpg" alt=""/>
+			      <?php  } else {?> 
+                         <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($miseventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
+                              <?php }  ?>                  
+                                                </a>
 			                            <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
 						                    <div class="content-edit">                             
 						                      <a href="<?php echo $this->host('base').$this->url('editar-evento').'/'.$this->escapeHtml($miseventos->in_id);?>" title="Editar detalle de evento">

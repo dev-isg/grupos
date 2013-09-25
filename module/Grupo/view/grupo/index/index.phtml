@@ -128,7 +128,14 @@
                         <div class="post-block four_columns">
                             <div class="entry-thumb">
                                 <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->in_id); ?>">
-                                    <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
+                                    
+                                    <?php if($eventos->va_imagen=='defaultd.jpg') { ?>    
+                                    <img class="img-cart" src="<?php   echo $this->host('img')?>/defaultd.jpg" title="" alt="" />
+                                <?php } else { ?>
+                                    
+                                         <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
+                               
+                               <?php }  ?>     
                                 </a>
                             </div> <!-- .entry-thumb -->
                             <div class="content">
@@ -171,7 +178,11 @@
                         <div class="post-block four_columns">
                             <div class="entry-thumb">
                                 <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupos->in_id); ?>">
-                                    <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
+                               <?php if($grupos->va_imagen=='defaultd.jpg') { ?>          
+                                    <img class="img-cart" src="<?php echo $this->host('img') ?>/defaultd.jpg" title="" alt="" />
+                               <?php  }  else  { ?>
+                                         <img class="img-cart" src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />         
+                                   <?php  }  ?>   
                                 </a>
                             </div> <!--entry-thumb -->
                             <div class="content">
