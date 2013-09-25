@@ -17,7 +17,7 @@ class GruposForm extends Form
     {
         $this->setDbAdapter($dbAdapter);
 //        $this->setId($id);
-        parent::__construct('grupo');
+        parent::__construct('grupoEditar');
         $this->setAttribute('method', 'post');
         $this->setAttribute('endtype', 'multipart/form-data');
         

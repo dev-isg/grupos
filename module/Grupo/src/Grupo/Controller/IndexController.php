@@ -55,6 +55,7 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+         $view= new ViewModel();
         $categorias = $this->categorias();
 //        $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -183,14 +184,32 @@ class IndexController extends AbstractActionController
 
         if (count($listaEventos) > 0) {
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
-            $page=(int) $this->params()->fromQuery('page', 1);
-            $paginator->setCurrentPageNumber($page);
+            $page1 = (int) $this->params()->fromQuery('page', 1);
+            $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
+
+            if ($paginator) {
+                $tot = $paginator->getPages()->pageCount;
+//                var_dump($tot);
+//                var_dump($page1);exit;
+                if ($tot < $page1) {
+                    $view->setTerminal(true);
+                    $view->setTemplate('layout/layout-error');
+                }
+            }
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
             $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
-            $page2=(int) $this->params()->fromQuery('page', 1);
+            $page2 = (int) $this->params()->fromQuery('page', 1);
             $paginator2->setCurrentPageNumber($page2);
             $paginator2->setItemCountPerPage(12);
+
+            if ($paginator2) {
+                $tot2 = $paginator2->getPages()->pageCount;//getPageRange();
+                if ($tot2 < $page2) {
+                    $view->setTerminal(true);
+                    $view->setTemplate('layout/layout-error');
+                }
+            }
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
@@ -218,24 +237,6 @@ class IndexController extends AbstractActionController
             $urlf = $urlf . '?';
         }
         
-        $view= new ViewModel();
-        if ($paginator2) {
-            $tot2 = $paginator2->getPageRange();
-            if ($tot2 <= $page2) {
-                $view->setTerminal(true);
-             $view->setTemplate('layout/layout-error');
-
-            }
-        }
-        if ($paginator) {
-            $tot = $paginator->getPageRange();
-
-            if ($tot <= $page) {
-                                $view->setTerminal(true);
-               $view->setTemplate('layout/layout-error');
-
-            }
-        }
         $view->setVariables(         array(
                     'grupos' => $paginator2,
                     'eventos' => $paginator,
@@ -312,17 +313,13 @@ class IndexController extends AbstractActionController
         
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){crearevento();});')
+            ->setScript('$(document).ready(function(){crearevento();if($("#crear-group").length){valCrearEditar("#crear-group");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
             ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
-            ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         
         // $local = (int) $this->params()->fromQuery('id');
         $user_info = $this->getGrupoTable()->misgrupos($storage->read()->in_id);//usuarioxGrupo($storage->read()->in_id);
@@ -421,9 +418,12 @@ class IndexController extends AbstractActionController
         }
        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){crearevento();});')
+            ->setScript('$(document).ready(function(){crearevento();if($("#grupoEditar").length){valCrearEditar("#grupoEditar");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js');
+            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = (int) $this->params()->fromRoute('in_id', 0);

@@ -429,7 +429,7 @@ class EventoTable{
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
             //var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-           //  var_dump(count($resultSet->buffer()));exit;
+//             var_dump(count($resultSet));exit;
          if (!$resultSet) {
             throw new \Exception("No se puede encontrar el/los grupo(s)");
         }
