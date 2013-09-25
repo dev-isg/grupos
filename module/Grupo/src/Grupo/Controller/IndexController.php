@@ -183,33 +183,29 @@ class IndexController extends AbstractActionController
 
 
         if (count($listaEventos) > 0) {
-            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $page1 = (int) $this->params()->fromQuery('page', 1);
+            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
+//            var_dump($paginator->getPages());Exit;
+//            if($paginator->getPages()->pageCount<$page1){
+//                $view->setTemplate('layout/layout-error');
+//            }          
 
-            if ($paginator) {
-                $tot = $paginator->getPages()->pageCount;
-//                var_dump($tot);
-//                var_dump($page1);exit;
-                if ($tot < $page1) {
-                    $view->setTerminal(true);
-                    $view->setTemplate('layout/layout-error');
-                }
-            }
+           
+            
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
-            $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
             $page2 = (int) $this->params()->fromQuery('page', 1);
-            $paginator2->setCurrentPageNumber($page2);
-            $paginator2->setItemCountPerPage(12);
+            $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
 
-            if ($paginator2) {
-                $tot2 = $paginator2->getPages()->pageCount;//getPageRange();
-                if ($tot2 < $page2) {
-                    $view->setTerminal(true);
-                    $view->setTemplate('layout/layout-error');
-                }
-            }
+            $paginator2->setCurrentPageNumber($page2);
+
+            $paginator2->setItemCountPerPage(12);
+            
+//            if($paginator2->getPages()->pageCount<$page2){
+//                $view->setTemplate('layout/layout-error');
+//            }
+
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
@@ -236,7 +232,22 @@ class IndexController extends AbstractActionController
             $urlf = substr($url, 0, $auxurl);
             $urlf = $urlf . '?';
         }
-        
+//        if($paginator){
+////         $tot = $paginator->getPages()->pageCount;
+////                if ($tot < $page1) {
+////                    $view->setTerminal(true);
+////                    $view->setTemplate('layout/layout-error');
+////                }
+////        }
+//        
+//        if($paginator2){
+//       $tot2 = $paginator2->getPages()->pageCount;
+//   
+//                if ($tot2 < $page2) {
+//                    $view->setTerminal(true);
+//                    $view->setTemplate('layout/layout-error');
+//                }
+//        }
         $view->setVariables(         array(
                     'grupos' => $paginator2,
                     'eventos' => $paginator,
@@ -330,7 +341,7 @@ class IndexController extends AbstractActionController
         $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
         if ($request->isPost()) {
-     $datos =$this->request->getPost();
+           $datos =$this->request->getPost();
 
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
@@ -444,26 +455,15 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter); 
         $ubige=$this->getUsuarioTable()->getPais($grupo->va_pais);
-      // var_dump($ubige);exit;
         $array = array();
         foreach ($ubige as $y) {
             $array[$y['ID']] = $y['Name']; }
        $ciudad = $this->getGrupoTable()->getGrupo2($id)->toArray();
         if($ciudad[0]['va_pais']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudad[0]['va_ciudad']);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; }}
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudad[0]['va_ciudad']);}
         else
-        { 
-            $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudad[0]['va_ciudad']);
-    //   var_dump($ciudad[0]['Name']);exit;
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; } }
- 
-            $form->get('va_pais')->setValue($array);
-      // $form->get('va_ciudad')->setValueOptions($arra); 
+        { $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudad[0]['va_ciudad']);}
+       $form->get('va_pais')->setValue($array);
         $form->bind($grupo);
         $form->get('submit')->setAttribute('value', 'Editar');
         $imagen=$grupo->va_imagen;
@@ -499,7 +499,6 @@ class IndexController extends AbstractActionController
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
             if ($form->isValid()) { 
                  if ($File['name'] != '') {  
-                     $id=$datos->in_id;
                 if ($this->redimensionarImagen($File, $nonFile,$imagen,$id)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen,$datos->va_ciudad);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');

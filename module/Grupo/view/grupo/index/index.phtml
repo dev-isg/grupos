@@ -121,7 +121,6 @@
         <div class="row-fluid">
             <div class="span12 main wrapper" data-ui-scrollbar>
                 <div id="content">
-                
                     <?php foreach ($this->eventos  as $eventos) :?>   
                     <?php if(!empty($eventos->in_id)){ ?>
                     <article id="post-9" class="post-9 post type-post status-publish format-standard sticky hentry category-beauty tag-portrait tag-sexy tag-woman tag-young masonry-box clearfix" itemscope itemtype="http://schema.org/BlogPosting">
@@ -163,7 +162,9 @@
                         </div> <!-- .post-block -->  
                     </article><!-- #post-ID -->
                     <?php } ?>
+                    
                     <?php endforeach; ?>
+                  
             
                 </div>
                 <?php echo (count($this->eventos) > 0)?$this->paginationControl($this->eventos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";//$this->host('base').$urlact ?>

@@ -44,6 +44,21 @@ class UsuarioTable
         return $row->current();;
     }
     
+    
+     public function getUsuariociudad($id)
+    {
+         
+       $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->columns(array('va_pais','ta_ubigeo_in_id'))
+        ->from('ta_usuario')
+        ->where(array('in_id'=>$id));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;  
+    }
+    
     public  function getIntereses($idusuer){
         $adapter = $this->tableGateway->getAdapter();
         $sql=new Sql($adapter);
@@ -160,8 +175,8 @@ class UsuarioTable
         $this->tableGateway->update($data,array('in_id'=>$iduser));
     }
 
-    public function guardarUsuario( $usuario, $imagen,$valor=null,$pass=null,$catg_ingresada=null)
-    {
+    public function guardarUsuario(Usuario $usuario, $imagen,$valor=null,$pass=null,$catg_ingresada=null,$ciudad=null)
+    {  
         $data = array(
             'va_nombre' => $usuario->va_nombre,
             'va_email' => $usuario->va_email,
@@ -209,7 +224,7 @@ class UsuarioTable
                 $adapter2->query($selectStringNotif, $adapter2::QUERY_MODE_EXECUTE);
             }
 
-        } else {
+        } else { 
             if ($this->getUsuario($id)) {
                  $this->updateCategoria($catg_ingresada, $id);
                 if ($pass == '') {
@@ -219,7 +234,7 @@ class UsuarioTable
                         'in_id' => $id));
                 } else {
                        $data['va_pais'] = $usuario->va_pais;
-                   $data['ta_ubigeo_in_id']=$usuario->ta_ubigeo_in_id;
+                   $data['ta_ubigeo_in_id']=$ciudad;
                     $data['va_contrasena'] = $pass;
                     $data['va_verificacion'] = '';
                     $data['va_estado'] = 'activo';

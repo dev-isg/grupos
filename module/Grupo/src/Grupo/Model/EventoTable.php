@@ -396,9 +396,9 @@ class EventoTable{
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //      var_dump($selectString);exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
-
-
-        return $resultSet->buffer();
+        $resultSet->buffer();
+//        $resultSet->next();
+        return $resultSet;
     }
 
     public function listadocategoriasEvento($categoria)
@@ -427,7 +427,7 @@ class EventoTable{
           ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_tipo'=>'publico','ta_evento.va_fecha>=?'=>$fecha)) 
          ->order('in_id desc')->group('in_id');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-            //var_dump($selectString);exit;
+//            var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
 //             var_dump(count($resultSet));exit;
          if (!$resultSet) {
