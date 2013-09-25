@@ -563,25 +563,19 @@ public function getAuthService() {
         $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
         $intereses=$this->getUsuarioTable()->getIntereses($id);
-//        var_dump($intereses->toArray());Exit;
-       // $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);        
-        //$usuario->ta_ubigeo_in_id=$auxdistri;
         $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
         $usuario->va_pais=$ubige[0]['Name'];
-        if($ubige[0]['Code']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; }  }
+        $ciudads = $this->getUsuarioTable()->getUsuariociudad($id)->toArray();
+        if($ciudads[0]['va_pais']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudads[0]['ta_ubigeo_in_id']);}
         else
-        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; }
-        }
+        { $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudads[0]['ta_ubigeo_in_id']); }
+        
+        
+        
          $usuario->ta_ubigeo_in_id=$y['Name'];     
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
-        return array('usuario'=>$usuario,'mienbros'=>$usergroup,'intereses'=>$intereses);
+        return array('usuario'=>$usuario,'ciudad'=>$ciudad[0]['Name'],'mienbros'=>$usergroup,'intereses'=>$intereses);
     }
 
     public function notificarAction() {

@@ -67,6 +67,7 @@ class IndexController extends AbstractActionController
         $buscar = $this->params()->fromQuery('dato');
         $filter = new \Zend\I18n\Filter\Alnum(true);
         $nombre = trim($filter->filter($buscar));
+  
         setcookie('dato', $nombre);
         $valor = $this->params()->fromQuery('tipo');
         setcookie('tipo', $valor);
