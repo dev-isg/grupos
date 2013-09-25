@@ -62,7 +62,14 @@
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span4 dnv-img">
-                                        <a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><img src="<?php echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen) ?>" alt=""></a>
+                                        <a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>">
+                       <?php if($proximos_eventos->va_imagen=='defaultd.jpg') { ?>                      
+                                            
+                       <img src="<?php echo $this->host('img')?>/defaultd.jpg" alt=""></a>
+                       <?php  }  else  { ?>
+           <img src="<?php echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen) ?>" alt=""></a>
+                                                    
+                     <?php  } ?>                   
                                     </div>
                                     <div class="span8 dvn-decs">
                                         <div class="cont-eve">
