@@ -359,7 +359,7 @@
                     <div class="span2">
                   <?php $valor = explode('/',$this->session->va_foto);
                                     if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $this->session->va_foto ;?>">                                            
+                                        <img src="<?php echo $this->session->va_foto ;?>?width=80&height=75">                                            
                                     <?php } else {
                                         if(($this->session->va_foto)!="foto-carnet.jpg"){?>
                                             <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $this->session->va_foto ;?>" >
@@ -407,7 +407,7 @@
                           <div class="span2">
                        <?php $valor = explode('/',$comentarios->imagen);
                                     if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $comentarios->imagen;?>">                                            
+                                        <img src="<?php echo $comentarios->imagen;?>?width=80&height=75">                                            
                                     <?php } else {
                                         if(($comentarios->imagen)!="foto-carnet.jpg"){?>
                                             <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $comentarios->imagen;?>" >
@@ -493,7 +493,7 @@
                         <div class="row-fluid">
                             <div class="span4 img-user-ev">
                               <?php $valor = explode('/',$usuarios->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuarios->imagen ;?>" >                                            
+                                <img src="<?php echo $usuarios->imagen ;?>?width=73&height=68" >                                            
                               <?php } else {if(($usuarios->imagen)!="foto-carnet.jpg"){?>
                                 <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >
                               <?php }else{?>

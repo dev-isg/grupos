@@ -49,7 +49,7 @@
                                             
                                       <?php $valor = explode('/',$this->usuario->va_foto);
                                     if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $this->usuario->va_foto ;?>">                                            
+                                        <img src="<?php echo $this->usuario->va_foto ;?>?width=200&height=200">                                            
                                     <?php } else {
                                         if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
                                             <img src="<?php echo $this->host('images') ?>/usuario/verusuario/<?php echo $this->usuario->va_foto ;?>" >
