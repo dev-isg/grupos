@@ -1177,7 +1177,7 @@ class IndexController extends AbstractActionController
                       else {
                          // $url  = $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                      'redirect_uri'=>$this->_options->host->ruta.'/buscar'
+                      'redirect_uri'=>$this->_options->host->ruta
                            ));   
 
                        }   
