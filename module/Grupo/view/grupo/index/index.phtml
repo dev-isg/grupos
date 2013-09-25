@@ -205,17 +205,9 @@
 </div> <!-- #main-container -->
 
 <?php if(!$_GET['m']){ ?>
-<div class="content-pa">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span12" id="pagina">
-                <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
-                <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
-            </div>
-        </div>
-    </div>
-</div>
 
+    <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
+    <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
 <?php  }?>
 <script type="text/javascript">
     jQuery(document).ready(function(){

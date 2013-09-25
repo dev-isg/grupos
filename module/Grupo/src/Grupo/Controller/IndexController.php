@@ -310,17 +310,13 @@ class IndexController extends AbstractActionController
         
         // AGREGAR LIBRERIAS JAVASCRIPT EN EL FOOTER
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){crearevento();});')
+            ->setScript('$(document).ready(function(){crearevento();if($("#crear-group").length){valCrearEditar("#crear-group");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
             ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
-            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
-            ->prependFile($this->_options->host->base . '/js/ckeditor/ckeditor.js');
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
         
         // $local = (int) $this->params()->fromQuery('id');
         $user_info = $this->getGrupoTable()->misgrupos($storage->read()->in_id);//usuarioxGrupo($storage->read()->in_id);
@@ -417,9 +413,12 @@ class IndexController extends AbstractActionController
         }
        $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){crearevento();});')
+            ->setScript('$(document).ready(function(){crearevento();if($("#grupoEditar").length){valCrearEditar("#grupoEditar");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js');
+            ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
+            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
+            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
         $id = (int) $this->params()->fromRoute('in_id', 0);

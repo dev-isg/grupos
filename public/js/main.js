@@ -62,23 +62,6 @@ function crearevento(){
 
         /*Validar Formularios*/
 
-        $("#crear-group").validate({
-            rules: {
-              va_nombre: "required",
-              ta_categoria_in_id: "required",
-              va_descripcion: "required",
-              pais: "required",
-              ta_ubigeo_in_id: "required"
-            },
-            messages: {
-              va_nombre: "Ingrese un nombre de grupo",
-              ta_categoria_in_id: "Ingrese una categoria de grupo",
-              va_descripcion : "Ingrese una descripción",
-              pais: "Elige un pais",
-              ta_ubigeo_in_id: "Elige la ciudad"
-            }
-        });
-
         $("#crearEventos").validate({
             rules: {
                 va_nombre: "required",
@@ -320,6 +303,29 @@ var valregistro = function(elemento){
         }
             
     });
+}
+
+var valCrearEditar = function(elemento){
+  $(elemento).validate({
+    rules: {
+      va_pais: "required",
+      va_ciudad: "required",
+      va_nombre: "required",
+      ta_categoria_in_id: "required",
+      va_descripcion: "required",
+      pais: "required",
+      ta_ubigeo_in_id: "required"
+    },
+    messages: {
+      va_pais: "Elige su país",
+      va_ciudad: "Elige una ciudad",
+      va_nombre: "Ingrese un nombre de grupo",
+      ta_categoria_in_id: "Ingrese una categoría de grupo",
+      va_descripcion : "Ingrese una descripción",
+      pais: "Elige un país",
+      ta_ubigeo_in_id: "Elige la ciudad"
+    }
+  });
 }
 
 var valactualizar = function(elemento){
