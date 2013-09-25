@@ -1150,7 +1150,7 @@ class IndexController extends AbstractActionController
                $facebook = new \Facebook(array(
                  'appId'  => $this->_options->facebook->appId,
                  'secret' => $this->_options->facebook->secret,
-                 'cookie' => true ,
+                 'cookie' => false ,
                  'scope'  => 'email,publish_stream'
                    ));
             $user = $facebook->getUser();
