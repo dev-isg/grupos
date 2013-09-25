@@ -1016,7 +1016,7 @@ vertical-align: middle;
   height: 280px;
   width: 100%;
   float: left;
-  background: url(../img/he.jpg) repeat-x;
+  background: #D3ECF0 url(../img/he.jpg) repeat-x;
 }
 /*.event-header{
   border-bottom: 2px solid #00A6E1;
@@ -2149,7 +2149,6 @@ float: left;
   text-align: center;
 }
 .img-grupo img{
-  padding: 10px;
   background: #eee;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -2158,6 +2157,9 @@ float: left;
 }
 .img-grupo img{
   width: 200px;
+}
+.img-grupo-detalle img{
+  width: 100%;  
 }
 .modificarimg{
   padding: 0px 0px 5px !important;
