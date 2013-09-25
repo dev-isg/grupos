@@ -2806,6 +2806,29 @@ ul.score-list li:first-child {
 .main-container{
   margin-top: 34px;
 }
+#user-g input{
+  float: left;
+}
+.email-user-d h3{
+  font-size: 12px;
+  color: #333;
+  margin-top: 0;
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+.inputModif{
+  width: 88%; 
+}
+.email-user-d ul{
+  list-style: none;
+  margin-left: 0;
+  max-height: 270px;
+  overflow-y: scroll;
+}
+.email-user-d ul li {
+  float: left;
+  width: 100%;
+}
 /*@font-face {
   font-family: "untitled-font-1";
   src:url("../font/untitled-font-1.eot");
@@ -3312,4 +3335,26 @@ pre
 #event-description-wrap ol{
   margin-left: 0;
   padding-left: 20px
+}
+#form-correo-s h3{
+  font-size: 13px;
+  margin-top: 0;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+#form-correo-s em{
+  font-size: 11px;
+  color: #bbb;
+}
+#user-g{
+  position: relative;
+}
+#user-g label.error{
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+}
+#gruposInvitar ul li:first-child{
+  padding-top: 18px;
 }
