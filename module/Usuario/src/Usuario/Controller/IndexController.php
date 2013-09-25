@@ -577,6 +577,8 @@ public function getAuthService() {
             ->prependFile($this->_options->host->base . '/js/main.js');
         $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
+        $intereses=$this->getUsuarioTable()->getIntereses($id);
+//        var_dump($intereses->toArray());Exit;
        // $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);        
         //$usuario->ta_ubigeo_in_id=$auxdistri;
         $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
@@ -594,7 +596,7 @@ public function getAuthService() {
         }
          $usuario->ta_ubigeo_in_id=$y['Name'];     
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
-        return array('usuario'=>$usuario,'mienbros'=>$usergroup);
+        return array('usuario'=>$usuario,'mienbros'=>$usergroup,'intereses'=>$intereses);
     }
 
     public function notificarAction() {
@@ -621,11 +623,9 @@ public function getAuthService() {
         $nombre = $storage->read()->va_nombre;
         $config = self::$rutaStatic;
         $config2 = self::$rutaStatic2;
-       
-       
          $valor = explode('/',$storage->read()->va_foto);
        if($valor[0]=='https:')
-       {$imagen=$storage->read()->va_foto;}
+       {$imagen=$storage->read()->va_foto.'?width=70&height=60';}
        elseif($storage->read()->va_foto=='foto-carnet.jpg'){ $imagen = $config2 .'/foto-carnet.jpg';}
        else{$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;  }
         $accion=$this->params('action');

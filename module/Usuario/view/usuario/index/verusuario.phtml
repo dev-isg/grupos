@@ -5,15 +5,16 @@
     			<div class="row-fluid">
     				<div class="span8 contenido-perfil-usuario">
     					<h2><?php echo ucwords($this->usuario->va_nombre);?></h2>
-                                        <?php  if($this->usuario->va_pais){  ?>
-                                        <h5>Pais:</h5>
-                                        <span><?php echo ucwords($this->usuario->va_pais);?></span>
-    					<h5>Ciudad:</h5>
-                                        <span><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?></span>
-                                        
-                                        <?php  }  ?>
+
     					<div class="row-fluid">
-    						<div class="span12 title-miembro">
+                            <div class="span6">
+                                <h4>Ubicación:</h4>
+                               <?php  if($this->usuario->va_pais){  ?>
+                                        <em><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?>,<?php echo ucwords($this->usuario->va_pais);?></em>   
+                                        <?php  }  ?>
+                                <!--<em>miraflores, lima peru</em>-->
+                            </div>
+    						<div class="span6 title-miembro">
     							<h4>Miembro desde:</h4>
                                   <span><?php
                                     $fecha = date_create($this->escapeHtml($this->usuario->va_fecha_ingreso));
@@ -23,8 +24,9 @@
                                     ?></span>
     						</div>
     					</div>
-                                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
-    					<h4>Redes sociales</h4>
+                        
+                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
+    					<h4>Redes sociales:</h4>
     					<div class="social-net">
     						<ul>
     							<?php if($this->usuario->va_facebook){?><li class="facebook-dev"><a href="http://www.facebook.com/<?php echo $this->usuario->va_facebook;?>" target="_blank"></a></li><?php }?>
@@ -33,18 +35,26 @@
     					</div>
                                         <?php } ?>
     					
-                                      <?php if($this->usuario->va_descripcion!='0') { ?>  
+                                      <?php if($this->usuario->va_descripcion!='0') { ?>
+                                        <h4>Descripción:</h4>
                                         <p>
                                                 <?php echo $this->usuario->va_descripcion;?>
 <!--    						What is your business?, Aún no hay respuestas. What do you need to take your business to the next level?, Aún no hay respuestas. Who told you about us? Google? Yahoo? Homer Simpson? We ask so we can give them credit. Thank you in advance.-->
     					</p><?php  }  ?> 
+                                        <h4>Intereses:</h4>
+                                        <ul>
+                                       <?php foreach($this->intereses as $interes){?>
+                                        <li><?php echo $interes->nombre_categ;?></li>
+                                        <?php } ?>
+                                        </ul>
+
     				</div>
     				<div class="span4">
     					<div class="img-grupo" style="margin-bottom:15px;padding:0;">
                                             
                                       <?php $valor = explode('/',$this->usuario->va_foto);
                                     if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $this->usuario->va_foto ;?>">                                            
+                                        <img src="<?php echo $this->usuario->va_foto ;?>?width=200&height=200">                                            
                                     <?php } else {
                                         if(($this->usuario->va_foto)!="foto-carnet.jpg"){?>
                                             <img src="<?php echo $this->host('images') ?>/usuario/verusuario/<?php echo $this->usuario->va_foto ;?>" >

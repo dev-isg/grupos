@@ -214,7 +214,7 @@
                                     <div class="span4 img-user-ev">
                                     <?php $valor = explode('/',$usuarios->imagen);
                                     if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $usuarios->imagen ;?>">                                            
+                                        <img src="<?php echo $usuarios->imagen ;?>?width=73&height=68">                                            
                                     <?php } else {
                                         if(($usuarios->imagen)!="foto-carnet.jpg"){?>
                                             <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarios->imagen ;?>" >

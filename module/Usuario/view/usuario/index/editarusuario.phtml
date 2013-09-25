@@ -70,7 +70,7 @@
                                             <div class="img-thu-user fileupload-new thumbnail">
                                                 <?php $valor = explode('/', $this->usuario->va_foto);
                                                 if ($valor[0] == 'https:') { ?>  
-                                                    <img src="<?php echo $this->usuario->va_foto; ?>" style="width:130px;height:130px;">                                            
+                                                    <img src="<?php echo $this->usuario->va_foto; ?>?width=130&height=130">                                            
                                                 <?php } else {
                                                     if (($this->usuario->va_foto) != "foto-carnet.jpg") { ?>
                                                         <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto; ?>" style="width:130px;height:130px;">

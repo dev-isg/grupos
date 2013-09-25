@@ -44,6 +44,18 @@ class UsuarioTable
         return $row->current();;
     }
     
+    public  function getIntereses($idusuer){
+        $adapter = $this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        $select=$sql->select()->from('ta_usuario_has_ta_categoria')
+                 ->join('ta_categoria','ta_categoria.in_id=ta_usuario_has_ta_categoria.ta_categoria_in_id',
+                         array('nombre_categ'=>'va_nombre'),'left')
+                ->where(array('ta_usuario_has_ta_categoria.ta_usuario_in_id'=>$idusuer));
+        $selectString = $sql->getSqlStringForSqlObject($select);
+        $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $results;
+    }
+    
      public function Distrito($id) {
         $adapter = $this->tableGateway->getAdapter();
         if($adapter){
