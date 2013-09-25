@@ -1185,14 +1185,14 @@ class IndexController extends AbstractActionController
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                            //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
-                      }
+                                 }
                              
                           //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
                              } 
                       else {
                          // $url  = $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
                        $loginUrl = $facebook->getLoginUrl(array('scope'=>'email,publish_stream,read_friendlists',  
-                   //   'redirect_uri'=>$this->_options->host->ruta.'/'
+                    'redirect_uri'=>$this->_options->host->ruta.'/'
                            ));   
 
                        }   
