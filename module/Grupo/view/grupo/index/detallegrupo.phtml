@@ -197,7 +197,7 @@
                               <?php }  }?>
                             
                                     <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
-                                    <?php  if($usuarioaceptado->descripcion_usuario!='0'){  ?> 
+                                    <?php  if($usuarioaceptado->descripcion_usuario){  ?> 
                                     <p>
                                         <?php echo $usuarioaceptado->descripcion_usuario;?>
                                     </p>
@@ -232,7 +232,7 @@
                                     </div>
                                     <div class="span8 desc-user">
                                         <a href="/usuario/<?php echo $usuarios->ta_usuario_in_id;?>"><h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3></a>
-                                      <?php if($usuarios->descripcion_usuario!='0') { ?>  
+                                      <?php if($usuarios->descripcion_usuario) { ?>  
                                         <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?>
                                         </p><?php } ?>
                                     </div>
