@@ -13,7 +13,11 @@
                                         
                                         <?php  }  ?>
     					<div class="row-fluid">
-    						<div class="span12 title-miembro">
+                            <div class="span6">
+                                <h4>Ubicación:</h4>
+                                <em>miraflores, lima peru</em>
+                            </div>
+    						<div class="span6 title-miembro">
     							<h4>Miembro desde:</h4>
                                   <span><?php
                                     $fecha = date_create($this->escapeHtml($this->usuario->va_fecha_ingreso));
@@ -23,7 +27,8 @@
                                     ?></span>
     						</div>
     					</div>
-                                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
+                        
+                        <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
     					<h4>Redes sociales</h4>
     					<div class="social-net">
     						<ul>
