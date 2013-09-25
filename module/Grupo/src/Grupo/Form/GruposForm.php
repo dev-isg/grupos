@@ -165,18 +165,18 @@ class GruposForm extends Form
 //                )
 //        ));
           
-             $this->add(array(
-            'name' => 'va_ciudad', //distrito
-            'type' => 'Select',
-            'attributes' => array(
-                'class' => 'span10',
-                'id' => 'va_ciudad'
-            ),
-            'options' => array('label' => 'Ciudad : ',
-               // 'value_options' =>$this->Provincia(),                                               
-                'empty_option' => '--- Seleccionar ---',
-            )
-        ));
+//             $this->add(array(
+//            'name' => 'va_ciudad', //distrito
+//            'type' => 'Select',
+//            'attributes' => array(
+//                'class' => 'span10',
+//                'id' => 'va_ciudad'
+//            ),
+//            'options' => array('label' => 'Ciudad : ',
+//               // 'value_options' =>$this->Provincia(),                                               
+//             //   'empty_option' => '--- Seleccionar ---',
+//            )
+//        ));
              
 $this->add(array(
             'name' => 'va_pais',
