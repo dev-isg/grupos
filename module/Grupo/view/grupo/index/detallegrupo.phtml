@@ -150,9 +150,9 @@
                                 <label class="checkbox img-cargar-usuarios">
                                     
                             <?php $valor = explode('/',$usuariopendiente->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >                                            
+                                <img src="<?php echo $usuariopendiente->imagen ;?>?width=35&height=33" title="<?php echo $usuariopendiente->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuariopendiente->imagen)!="foto-carnet.jpg"){?>
-                                <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >
+                                <img src="<?php echo $this->host('images') ?>/usuario/aprovacion/<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >
                               <?php }else{?>
                                 <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" title="<?php echo $usuariopendiente->nombre_usuario;?>">
                               <?php }  }?>                    
@@ -182,9 +182,9 @@
                                     
                                     
                                      <?php $valor = explode('/',$usuarioaceptado->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
+                                <img src="<?php echo $usuarioaceptado->imagen ;?>?width=35&height=33" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuarioaceptado->imagen)!="foto-carnet.jpg"){?>
-                                <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
+                                <img src="<?php echo $this->host('images') ?>/usuario/aprovacion/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
                               <?php }else{?>
                                 <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
                               <?php }  }?>
