@@ -110,14 +110,14 @@ class IndexController extends AbstractActionController
                         $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                         if (count($grupo->toArray()) > 0) {
                              $search = 'group-header';
-//                                   $active = 'active';
+                                   $active = 'active';
                             $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
                             
                         } else {
                             $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                             if (count($listaEventos) > 0) {
                                 $search = 'event-header';
-//                                      $active = 'active';
+                                      $active1 = 'active';
                                 $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                             } else {
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
@@ -244,6 +244,7 @@ class IndexController extends AbstractActionController
                     'categorias'=>$categorias,
                     'search'=>$search,
                     'active'=>$active,
+                    'active1'=>$active1,
                     'session'=>$session
                 ));
         return $view;
