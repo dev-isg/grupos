@@ -1311,7 +1311,7 @@ p.crear-evento{
   margin-bottom: 10px;
 }
 .img-grupo img{
-  width: 100%;
+  width: 100%!important;
 }
 .group-sidebar{
   background: #fff;
