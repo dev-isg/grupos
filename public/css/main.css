@@ -3355,6 +3355,12 @@ pre
   left: 0;
   font-size: 11px;
 }
+#gruposInvitar{
+  margin-bottom: 0;
+}
+#gruposInvitar ul li input{
+  float: left;
+}
 #gruposInvitar ul li:first-child{
   padding-top: 18px;
 }
