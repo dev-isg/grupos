@@ -327,7 +327,7 @@ class IndexController extends AbstractActionController
         $urlorigen=($request->getHeader('Referer'))?$request->getHeader('Referer')->uri()->getPath():'/usuario/index/misgrupos';//$this->getRequest()->getHeader('Referer')->uri()->getPath();
         
         if ($request->isPost()) {
-     $datos =$this->request->getPost();
+           $datos =$this->request->getPost();
 
             $File = $this->params()->fromFiles('va_imagen');
             $nonFile = $this->params()->fromPost('va_nombre');
