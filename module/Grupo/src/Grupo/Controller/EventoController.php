@@ -419,7 +419,9 @@ class EventoController extends AbstractActionController
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
 //        $accion=$this->params('action');
-
+        
+        $grupoeventuser=$this->getEventoTable()->usuarioGrupoxEvento($id);
+//        var_dump($grupoeventuser->toArray());Exit;
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
@@ -440,7 +442,8 @@ class EventoController extends AbstractActionController
             'mensajes' => $mensajes,
             'privado' => $tipo,
             'grupoestado' => $grupoestado,
-            'foto' => $foto
+            'foto' => $foto,
+            'grupoeventusuario'=>$grupoeventuser
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         ));

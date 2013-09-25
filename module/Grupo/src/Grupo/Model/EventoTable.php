@@ -139,6 +139,37 @@ class EventoTable{
         ));
     }
     
+    
+    
+    
+         public function usuarioGrupoxEvento($idevento){
+             $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+             $selecttot=    $sql->select()->columns(array('va_fecha'))
+                        ->from('ta_usuario_has_ta_grupo')
+                        ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('idusuario'=>'in_id','nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')        
+                        ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
+                       ->join('ta_evento','ta_evento.ta_grupo_in_id=ta_grupo.in_id',array(),'left')
+                   ->where(array(
+                       'ta_evento.in_id'=>$idevento,
+//                       'ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+//                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
+                       'ta_usuario_has_ta_grupo.va_estado'=>'activo',
+                       ));
+
+//            $selecttot = $sql->select()
+//                    ->columns(array('va_fecha','va_estado'))
+//                    ->from('ta_usuario_has_ta_grupo')
+//                    ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
+//                   
+//                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $idgrupo,
+//                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+         
+     }
+    
 
         public function getGrupoUsuario($idgrupo,$iduser){
             $adapter = $this->tableGateway->getAdapter();
