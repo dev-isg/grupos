@@ -625,7 +625,7 @@ public function getAuthService() {
        
          $valor = explode('/',$storage->read()->va_foto);
        if($valor[0]=='https:')
-       {$imagen=$storage->read()->va_foto;}
+       {$imagen=$storage->read()->va_foto.'?width=70&height=60';}
        elseif($storage->read()->va_foto=='foto-carnet.jpg'){ $imagen = $config2 .'/foto-carnet.jpg';}
        else{$imagen =$config.'/usuario/cuenta/'.$storage->read()->va_foto;  }
         $accion=$this->params('action');
