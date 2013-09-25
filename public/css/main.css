@@ -3350,9 +3350,10 @@ pre
   position: relative;
 }
 #user-g label.error{
-    position: absolute;
+  position: absolute;
   top: 0;
   left: 0;
+  font-size: 11px;
 }
 #gruposInvitar ul li:first-child{
   padding-top: 18px;
