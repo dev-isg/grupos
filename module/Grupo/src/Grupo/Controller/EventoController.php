@@ -196,7 +196,7 @@ class EventoController extends AbstractActionController
         $form->bind($evento);
 
         $form->get('submit')->setAttribute('value', 'Editar');
-        $imagen=$this->_options->host->images.'/eventos/general/'.$evento->va_imagen;       
+        $imagen=$evento->va_imagen;       
         $request = $this->getRequest();
         
                     

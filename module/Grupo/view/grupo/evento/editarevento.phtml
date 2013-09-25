@@ -47,8 +47,13 @@
 									data-provides="fileupload">
 									<div class="fileupload-new thumbnail"
 										style="width: 200px; height: 150px;">
-										<img
-											src="<?php echo $this->imagen;?>" />
+                                                                            
+                                                                            <?php if($this->imagen=='defaultd.jpg'){ ?>
+                                    <img src="<?php echo $this->host('img')?>/defaultd.jpg" />
+                                    <?php   }else { ?> 
+										<img src="<?php echo $this->host('img')?>./evento/general/.<?php echo $this->imagen;?>" />
+                                                                                
+                                                                                <?php  } ?>
 									</div>
 									<div class="fileupload-preview fileupload-exists thumbnail"
 										style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>

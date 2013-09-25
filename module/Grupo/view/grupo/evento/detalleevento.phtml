@@ -43,7 +43,7 @@
                     
                     
                     <?php  if($this->eventos[0]['imagen']=='defaultd.jpg') { ?>
-           <img src="<?php echo $this->host('img') ?>. '/defaultd.jpg">
+           <img src="<?php echo $this->host('img') ?>/defaultd.jpg">
               <?php  } else {?>
            <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
                   <?php   }  ?>
@@ -77,8 +77,12 @@
               if($this->grupoestado=='activo'){?>
                  <div class="event-group">
                   <div class="content-img-det">
-                    <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
-                    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
+                 <?php  if($this->eventos[0]['va_imagen']=='defaultd.jpg') { ?>       
+                    <img class="det-img" src="<?php echo $this->host('img')?>/defaultd.jpg" title="Evto macabro" target="Evento macabro">
+                   <?php  } else { ?>
+             <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+                <?php  }  ?>
+ <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
                     <div class="content-edit">
                       <a href="/evento/editar/<?php echo $this->idevento?>" title="Editar detalle de evento">
                         <img src="/img/edit.png">
@@ -169,19 +173,46 @@
                       <div class="accordion-group">
                         <div class="accordion-heading">
                           <a class="accordion-toggle invitar" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                            Evitar amigos
+                            Invitar amigos
                             <img src="/img/add.png">
                           </a>
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
                               <div id="invita-correo">
-                                  <form method="post" action="/grupo/evento/invitar">
+                                <div class="row-fluid">
+                                  <div class="span6">
+                                    <form method="post" action="/grupo/evento/invitar">
                                       <input type="text" name="correos"/>
                                       <input type="submit" name="Enviar"/>
-                                  </form>
+                                    </form>
+                                  </div>
+                                  <div class="span6">
+                                    <div class="span12 user-back-2">
+                                      <h3>Usuarios aprobados</h3>
+                                      <ul>
+                                        <li id="user-250">
+                                          <input class="marcar-user" type="checkbox" data-user="250"> 
+                                          <label class="checkbox img-cargar-usuarios">
+                                            <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
+                                            <a href="/usuario/250">kevin 8</a>
+                                            <p>Hello world -.................- !!!!!!!</p>
+                                          </label>
+                                        </li>
+                                        <li id="user-251">
+                                          <input class="marcar-user" type="checkbox" data-user="251"> 
+                                          <label class="checkbox img-cargar-usuarios">
+                                            <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
+                                            <a href="/usuario/251">Luciano2</a>
+                                            <p>Me gusta jugar, reir y hablar mucho</p>
+                                          </label>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-<!--                            <div id="fb-root"></div>
+                              <!--<div id="fb-root"></div>
                               <a href="#" onclick="FB.ui({method: 'apprequests', message: 'Uneté a juntate.pe'});">
                                 <span class="face">Invita a tus Amigos de Facebook! </span><img src="/img/invitar.png">
                               </a>-->
@@ -208,8 +239,16 @@
          <?php if($this->eventos[0]['va_tipo']=='publico'){ ?>
                  <div class="event-group">
                   <div class="content-img-det">
-                    <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
-                    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
+                      
+           <?php  if($this->eventos[0]['va_imagen']=='defaultd.jpg') { ?>           
+                      
+            <img class="det-img" src="<?php echo $this->host('img')?>/defaultd.jpg" title="Evto macabro" target="Evento macabro">
+                <?php } else  {  ?>
+            
+             <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+             
+<?php } ?>
+    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
                     <div class="content-edit">
                       <a href="/evento/editar/<?php echo $this->idevento?>" title="Editar detalle de evento">
                         <img src="/img/edit.png">
@@ -295,24 +334,58 @@
                     </div>  <!-- /overall_score -->  
                   </div>
                   <?php if($this->privado){ ?>
-                 <div class="invitar-amigos">
+                  <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
                         <div class="accordion-heading">
                           <a class="accordion-toggle invitar" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                            Evitar amigos
+                            Invitar amigos
                             <img src="/img/add.png">
                           </a>
                         </div>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
                               <div id="invita-correo">
-                                  <form method="post" action="/grupo/evento/invitar">
-                                      <input type="text" name="correos"/>
-                                      <input type="submit" name="Enviar"/>
-                                  </form>
+                                <div class="row-fluid">
+                                  <div class="span6">
+                                    <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
+                                      <h3>Ingresa correos separado por comas</h3>
+                                      <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
+                                      <input type="text" name="correos" class="inputModif"/>
+                                      <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
+                                    </form>
+                                  </div>
+                                  <div class="span6">
+                                    <div class="span12 user-back-2 email-user-d">
+                                      <form action="" id="gruposInvitar">
+                                        <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
+                                        <ul>
+                                          <li id="user-g">
+                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                            <label class="checkbox img-cargar-usuarios">
+                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
+                                              <a href="/usuario/250">kevin 8</a>
+                                              <p>Hello world -.................- !!!!!!!</p>
+                                            </label>
+                                          </li>
+                                          <li id="user-g">
+                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                            <label class="checkbox img-cargar-usuarios">
+                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
+                                              <a href="/usuario/251">Luciano2</a>
+                                              <p>Me gusta jugar, reir y hablar mucho</p>
+                                            </label>
+                                          </li>
+                                        </ul>
+                                        <div class="content-en">
+                                          <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-<!--                            <div id="fb-root"></div>
+                              <!--<div id="fb-root"></div>
                               <a href="#" onclick="FB.ui({method: 'apprequests', message: 'Uneté a juntate.pe'});">
                                 <span class="face">Invita a tus Amigos de Facebook! </span><img src="/img/invitar.png">
                               </a>-->
@@ -502,7 +575,9 @@
                             </div>
                             <div class="span8 desc-user">
                                 <a href="/usuario/<?php echo $usuarios->id_usuario;?>"><h3><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></h3></a>
-                               <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
+                             <?php if($usuarios->descripcion_usuario)  { ?>
+                                <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="row-fluid unio">
@@ -539,6 +614,33 @@
     abandonarDatos();
     agregarComentario();
     enviarGrupo();
+
+    $('#form-correo-s').validate({
+      rules: {
+        correos: {
+          required: true          
+        }
+      },
+      messages: {
+        correos: {
+          required: "Ingrese correo electronico"          
+        }
+        
+      }
+    });
+    $('#gruposInvitar').validate({
+      rules: {
+        'userEnviar[]': {
+          required: true
+        }
+      },
+      messages: {
+        'userEnviar[]': {
+          required: "Selecciona un usuario"
+        }
+      }
+    });
+
   });
 
   function enviarDatos(){

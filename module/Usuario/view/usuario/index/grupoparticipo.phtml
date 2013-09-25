@@ -24,7 +24,7 @@
 		                            <div class="entry-thumb">
 		                                <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupospertenece->id); ?>" class="preview" data-ui-lightbox>
 		  <?php if($grupospertenece->imagen=='defaultd.jpg') { ?> 
-                     <img class="img-cart" src="<?php   echo $this->host('img')?>/defauld.jpg" alt=""/>
+                     <img class="img-cart" src="<?php   echo $this->host('img')?>/defaultd.jpg" alt=""/>
 			<?php  }else { ?>
                   <img class="img-cart" src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupospertenece->imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>                
                                                     <?php }?>

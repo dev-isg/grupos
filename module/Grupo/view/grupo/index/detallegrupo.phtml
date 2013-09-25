@@ -62,7 +62,14 @@
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span4 dnv-img">
-                                        <a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>"><img src="<?php echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen) ?>" alt=""></a>
+                                        <a href="/evento/<?php echo $this->escapeHtml($proximos_eventos->in_id); ?>">
+                       <?php if($proximos_eventos->va_imagen=='defaultd.jpg') { ?>                      
+                                            
+                       <img src="<?php echo $this->host('img')?>/defaultd.jpg" alt=""></a>
+                       <?php  }  else  { ?>
+           <img src="<?php echo $this->host('images') . '/eventos/principal/' . $this->escapeHtml($proximos_eventos->va_imagen) ?>" alt=""></a>
+                                                    
+                     <?php  } ?>                   
                                     </div>
                                     <div class="span8 dvn-decs">
                                         <div class="cont-eve">
@@ -150,9 +157,9 @@
                                 <label class="checkbox img-cargar-usuarios">
                                     
                             <?php $valor = explode('/',$usuariopendiente->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >                                            
+                                <img src="<?php echo $usuariopendiente->imagen ;?>?width=35&height=33" title="<?php echo $usuariopendiente->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuariopendiente->imagen)!="foto-carnet.jpg"){?>
-                                <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >
+                                <img src="<?php echo $this->host('images') ?>/usuario/aprovacion/<?php echo $usuariopendiente->imagen ;?>" title="<?php echo $usuariopendiente->nombre_usuario;?>" >
                               <?php }else{?>
                                 <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" title="<?php echo $usuariopendiente->nombre_usuario;?>">
                               <?php }  }?>                    
@@ -182,15 +189,15 @@
                                     
                                     
                                      <?php $valor = explode('/',$usuarioaceptado->imagen); if($valor[0]=='https:'){ ?>  
-                                <img src="<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
+                                <img src="<?php echo $usuarioaceptado->imagen ;?>?width=35&height=33" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >                                            
                               <?php } else {if(($usuarioaceptado->imagen)!="foto-carnet.jpg"){?>
-                                <img src="<?php echo $this->host('images') ?>/usuario/detalle/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
+                                <img src="<?php echo $this->host('images') ?>/usuario/aprovacion/<?php echo $usuarioaceptado->imagen ;?>" title="<?php echo $usuarioaceptado->nombre_usuario;?>" >
                               <?php }else{?>
                                 <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg" title="<?php echo $usuarioaceptado->nombre_usuario;?>">
                               <?php }  }?>
                             
                                     <a href="/usuario/<?php echo $usuarioaceptado->ta_usuario_in_id;?>"><?php echo $usuarioaceptado->nombre_usuario;?></a>
-                                    <?php  if($usuarioaceptado->descripcion_usuario!='0'){  ?> 
+                                    <?php  if($usuarioaceptado->descripcion_usuario){  ?> 
                                     <p>
                                         <?php echo $usuarioaceptado->descripcion_usuario;?>
                                     </p>
@@ -225,7 +232,7 @@
                                     </div>
                                     <div class="span8 desc-user">
                                         <a href="/usuario/<?php echo $usuarios->ta_usuario_in_id;?>"><h3><?php echo $this->escapeHtml($usuarios->nombre_usuario); ?></h3></a>
-                                      <?php if($usuarios->descripcion_usuario!='0') { ?>  
+                                      <?php if($usuarios->descripcion_usuario) { ?>  
                                         <p><?php echo $this->escapeHtml($usuarios->descripcion_usuario); ?>
                                         </p><?php } ?>
                                     </div>

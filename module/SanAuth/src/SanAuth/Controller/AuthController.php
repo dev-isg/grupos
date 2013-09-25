@@ -82,7 +82,7 @@ class AuthController extends AbstractActionController {
             $usuario = $this->getUsuarioTable()->usuario($token);
             if (count($usuario) > 0) {
                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-                $mensaje = 'Tu cuenta ya esta lista para usarse';
+                $mensaje = 'Bienvenid@ '.ucwords($usuario[0]['va_nombre']).'. Tu cuenta ya esta lista para usarse. ';
             } else {
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
             }
