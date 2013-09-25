@@ -310,24 +310,30 @@ class EventoController extends AbstractActionController
         return $this->grupoTable;
     }
 
-    public function detalleeventoAction()
-    {
-//        $this->flashMessenger()->clearMessagesFromNamespace('SanAuth\Controller');
+    public function detalleeventoAction() {
+        $view = new ViewModel();
+
         
         $form = new ComentarioForm();
-        
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-        $this->layout()->active1='active';
+        $this->layout()->active1 = 'active';
         $id = $this->params()->fromRoute('in_id');
         
+        try{
+            $fichaevento=$this->getEventoTable()->getEvento($id);
+        }catch(\Exception $e){
+            $view->setTerminal(true);
+            $view->setTemplate('layout/layout-error');
+        }   
+
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
-        
+        $session = $storage->read();
+
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
-        $grupoestado=$this->getEventoTable()->getGrupoUsuario($id_grupo,$session->in_id)->va_estado;
-        
+        $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id)->va_estado;
+
 //         if($evento[0]['va_tipo']=='privado'){
 //             if(!$grupoestado || $grupoestado!='activo'){
 //                 
@@ -337,34 +343,31 @@ class EventoController extends AbstractActionController
 //             
 //         }
 
-        if($evento){
-            if($evento[0]['va_tipo']=='privado'){
-                   $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
-  
-                   if ($eventofind) {
-                       if ($eventofind->tipo == 'privado' && $eventofind->va_estado =='activo') {
-                           $tipo = true;
-                           
-                       } else {
-                           $tipo = false;      
-                       }
+        if ($evento) {
+            if ($evento[0]['va_tipo'] == 'privado') {
+                $eventofind = $this->getEventoTable()->getEventoUsuario($id, $session->in_id);
 
-                   }else{
-                       $tipo = false;
-                   } 
-            }else{
-                $tipo=true;
-                
+                if ($eventofind) {
+                    if ($eventofind->tipo == 'privado' && $eventofind->va_estado == 'activo') {
+                        $tipo = true;
+                    } else {
+                        $tipo = false;
+                    }
+                } else {
+                    $tipo = false;
+                }
+            } else {
+                $tipo = true;
             }
         }
 
 
         $grupo = $this->getEventoTable()->grupoid($id_grupo);
-        
-        
+
+
         $eventospasados = $this->getEventoTable()->eventospasados($id_grupo);
         $eventosfuturos = $this->getEventoTable()->eventosfuturos($id_grupo);
-         $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
+        $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
 //        if($session) {
 //            if ($evento[0]['ta_usuario_in_id'] == $session->in_id) {
 //                $usuarios = $this->getEventoTable()->usuariosevento($id, $session->in_id, 'activo');
@@ -379,27 +382,28 @@ class EventoController extends AbstractActionController
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
 
         $renderer->inlineScript()
-            ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});valUsuario();});')
-            ->prependFile($this->_options->host->base . '/js/main.js')
-            ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
-            ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
-            ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
-            ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
-       
+                ->setScript('$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});});$(document).ready(function(){$("#map_canvas").juGoogleMap({marker:{lat:' . $evento[0]['va_latitud'] . ',lng:' . $evento[0]['va_longitud'] . ',address:"' . $evento[0]['va_direccion'] . '",addressRef:"' . $evento[0]['va_referencia'] . '"}});});$(document).ready(function(){$(".inlineEventoDet").colorbox({inline:true, width:"500px"});valUsuario();});')
+                ->prependFile($this->_options->host->base . '/js/main.js')
+                ->prependFile($this->_options->host->base . '/js/map/locale-es.js')
+                ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
+                ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
+                ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
+                ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js');
+
 
         if (!isset($session)) {
-        $face = new \Grupo\Controller\IndexController();
-        $facebook = $face->facebook();
-        $this->layout()->login = $facebook['loginUrl'];
-        $this->layout()->user = $facebook['user']; }
-//        $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
-      
-        if ($session) {
-            $participa=$this->getEventoTable()->compruebarUsuarioxEvento($session->in_id,$id);
-            $activo=$participa->va_estado=='activo'?true:false;
+            $face = new \Grupo\Controller\IndexController();
+            $facebook = $face->facebook();
+            $this->layout()->login = $facebook['loginUrl'];
+            $this->layout()->user = $facebook['user'];
         }
-        
+//        $grupocompr=$this->getEventoTable()-> getGrupoUsuario($id_grupo,$session->in_id);
+
+        if ($session) {
+            $participa = $this->getEventoTable()->compruebarUsuarioxEvento($session->in_id, $id);
+            $activo = $participa->va_estado == 'activo' ? true : false;
+        }
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
@@ -408,43 +412,39 @@ class EventoController extends AbstractActionController
                 return $this->redirect()->toUrl('/evento/' . $id);
             }
         }
-        
 
-        $foto=$participa->va_foto;
+
+        $foto = $participa->va_foto;
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($comentarios));
-        $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);
 //        $accion=$this->params('action');
-        
+
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
-
-        return array(
+        $view->setVariables(array(
             'eventos' => $evento,
             'grupo' => $grupo,
             'eventosfuturos' => $eventosfuturos,
             'eventospasados' => $eventospasados,
             'usuarios' => $usuarios,
-            
             'comentarios' => $comentarios,
-            'comentarioform' => $form, 
-            
+            'comentarioform' => $form,
             'idevento' => $id,
-            'session'=>$session,      
-            
+            'session' => $session,
 //            'grupocomprueba'=>$activo,//$grupocompr,  
-            
-            'participa'=>$activo,
-            'mensajes'=>$mensajes,
-            'privado'=>$tipo,
-            'grupoestado'=>$grupoestado,
-            'foto'=>$foto
+
+            'participa' => $activo,
+            'mensajes' => $mensajes,
+            'privado' => $tipo,
+            'grupoestado' => $grupoestado,
+            'foto' => $foto
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
-        )
-        ;
+        ));
+        return $view;
     }
     
     public function comentariosAction() {

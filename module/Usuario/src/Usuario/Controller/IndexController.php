@@ -577,6 +577,8 @@ public function getAuthService() {
             ->prependFile($this->_options->host->base . '/js/main.js');
         $id=$this->params()->fromRoute('in_id');//298
         $usuario=$this->getUsuarioTable()->getUsuario($id);
+        $intereses=$this->getUsuarioTable()->getIntereses($id);
+//        var_dump($intereses->toArray());Exit;
        // $auxdistri=$this->getUsuarioTable()->Distrito($usuario->ta_ubigeo_in_id);        
         //$usuario->ta_ubigeo_in_id=$auxdistri;
         $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
@@ -594,7 +596,7 @@ public function getAuthService() {
         }
          $usuario->ta_ubigeo_in_id=$y['Name'];     
         $usergroup=$this->getUsuarioTable()->UsuariosGrupo($id);
-        return array('usuario'=>$usuario,'mienbros'=>$usergroup);
+        return array('usuario'=>$usuario,'mienbros'=>$usergroup,'intereses'=>$intereses);
     }
 
     public function notificarAction() {
