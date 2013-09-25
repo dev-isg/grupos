@@ -55,6 +55,7 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
+         $view= new ViewModel();
         $categorias = $this->categorias();
 //        $this->layout()->categorias = $categorias;
         $storage = new \Zend\Authentication\Storage\Session('Auth');
@@ -111,14 +112,14 @@ class IndexController extends AbstractActionController
                         $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                         if (count($grupo->toArray()) > 0) {
                              $search = 'group-header';
-//                                   $active = 'active';
+                                   $active = 'active';
                             $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
                             
                         } else {
                             $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                             if (count($listaEventos) > 0) {
                                 $search = 'event-header';
-//                                      $active = 'active';
+                                      $active1 = 'active';
                                 $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
                             } else {
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=Grupos&m=4');
@@ -168,6 +169,7 @@ class IndexController extends AbstractActionController
 //                    }
 
                         $listaEventos = (!$storage) ? $this->getEventoTable()->listadoEvento() : $this->getEventoTable()->listadoEvento($session->in_id);
+//                        var_dump($listaEventos->toArray());Exit;
 //                        $this->layout()->search = 'event-header';
                         $search = 'event-header';
                         
@@ -182,15 +184,29 @@ class IndexController extends AbstractActionController
 
 
         if (count($listaEventos) > 0) {
+            $page1 = (int) $this->params()->fromQuery('page', 1);
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
-            $page=(int) $this->params()->fromQuery('page', 1);
-            $paginator->setCurrentPageNumber($page);
+            $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
+//            var_dump($paginator->getPages());Exit;
+//            if($paginator->getPages()->pageCount<$page1){
+//                $view->setTemplate('layout/layout-error');
+//            }          
+
+           
+            
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
+            $page2 = (int) $this->params()->fromQuery('page', 1);
             $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
-            $page2=(int) $this->params()->fromQuery('page', 1);
+
             $paginator2->setCurrentPageNumber($page2);
+
             $paginator2->setItemCountPerPage(12);
+            
+//            if($paginator2->getPages()->pageCount<$page2){
+//                $view->setTemplate('layout/layout-error');
+//            }
+
         } else {
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
@@ -217,25 +233,22 @@ class IndexController extends AbstractActionController
             $urlf = substr($url, 0, $auxurl);
             $urlf = $urlf . '?';
         }
-        
-        $view= new ViewModel();
-        if ($paginator2) {
-            $tot2 = $paginator2->getPageRange();
-            if ($tot2 <= $page2) {
-                $view->setTerminal(true);
-             $view->setTemplate('layout/layout-error');
-
-            }
-        }
-        if ($paginator) {
-            $tot = $paginator->getPageRange();
-
-            if ($tot <= $page) {
-                                $view->setTerminal(true);
-               $view->setTemplate('layout/layout-error');
-
-            }
-        }
+//        if($paginator){
+////         $tot = $paginator->getPages()->pageCount;
+////                if ($tot < $page1) {
+////                    $view->setTerminal(true);
+////                    $view->setTemplate('layout/layout-error');
+////                }
+////        }
+//        
+//        if($paginator2){
+//       $tot2 = $paginator2->getPages()->pageCount;
+//   
+//                if ($tot2 < $page2) {
+//                    $view->setTerminal(true);
+//                    $view->setTemplate('layout/layout-error');
+//                }
+//        }
         $view->setVariables(         array(
                     'grupos' => $paginator2,
                     'eventos' => $paginator,
@@ -245,6 +258,7 @@ class IndexController extends AbstractActionController
                     'categorias'=>$categorias,
                     'search'=>$search,
                     'active'=>$active,
+                    'active1'=>$active1,
                     'session'=>$session
                 ));
         return $view;

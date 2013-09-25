@@ -1,14 +1,20 @@
-<?php if ($this->pageCount): ?>
+<?php if ($this->pageCount):?>
+
 <div class="pagination" role="navigation" style="display:none;">
 <!-- Previous page link -->
 
 <!-- Numbered page links -->
+
 <?php foreach ($this->pagesInRange as $page): ?>
-  <?php if ($page != $this->current): ?>
+   <?php // if ($this->pageCount >$page){ ?>
+  <?php if ($page != $this->current){?>
     <a href='<?php echo $this->variable;?>page=<?php echo $page; ?>'><?php echo $page; ?></a> 
-  <?php else: ?>
+  <?php }else{ ?>
   <span><?php echo $page; ?></span>
-  <?php endif; ?>
+    <?php }?>
+  <?php // }else{ exit;}?>
 <?php endforeach; ?>
+
 </div>
+
 <?php endif; ?>

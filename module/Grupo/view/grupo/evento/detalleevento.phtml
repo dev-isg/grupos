@@ -194,22 +194,26 @@
                                       <form action="" id="gruposInvitar">
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
-                                          <li id="user-g">
+                                            <?php foreach($this->grupoeventusuario as $grupousuario){?>
+                                                <li id="user-<?php echo $grupousuario->idusuario;?>">
+                                                <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                                <label class="checkbox img-cargar-usuarios">
+                                                  <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
+                                                  <a href="/usuario/250"><?php echo $grupousuario->nombre_usuario;?></a> 
+                                                  <p><?php echo $grupousuario->descripcion_usuario;?></p>
+                                                </label>
+                                                </li>
+                                            
+                                            <?php }?>
+<!--                                          <li id="user-g">
                                             <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
                                             <label class="checkbox img-cargar-usuarios">
                                               <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
                                               <a href="/usuario/250">kevin 8</a>
                                               <p>Hello world -.................- !!!!!!!</p>
                                             </label>
-                                          </li>
-                                          <li id="user-g">
-                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
-                                            <label class="checkbox img-cargar-usuarios">
-                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
-                                              <a href="/usuario/251">Luciano2</a>
-                                              <p>Me gusta jugar, reir y hablar mucho</p>
-                                            </label>
-                                          </li>
+                                          </li>-->
+ 
                                         </ul>
                                         <div class="content-en">
                                           <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>
@@ -367,22 +371,17 @@
                                       <form action="" id="gruposInvitar">
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
-                                          <li id="user-g">
-                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
-                                            <label class="checkbox img-cargar-usuarios">
-                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
-                                              <a href="/usuario/250">kevin 8</a>
-                                              <p>Hello world -.................- !!!!!!!</p>
-                                            </label>
-                                          </li>
-                                          <li id="user-g">
-                                            <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
-                                            <label class="checkbox img-cargar-usuarios">
-                                              <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/luciano-alejandro-521d2d9317cbb.jpg" title="Luciano2">
-                                              <a href="/usuario/251">Luciano2</a>
-                                              <p>Me gusta jugar, reir y hablar mucho</p>
-                                            </label>
-                                          </li>
+                                             <?php foreach($this->grupoeventusuario as $grupousuario){?>
+                                                <li id="user-<?php echo $grupousuario->idusuario;?>">
+                                                <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                                <label class="checkbox img-cargar-usuarios">
+                                                  <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
+                                                  <a href="/usuario/250"><?php echo $grupousuario->nombre_usuario;?></a> 
+                                                  <p><?php echo $grupousuario->descripcion_usuario;?></p>
+                                                </label>
+                                                </li>
+                                            
+                                            <?php }?>
                                         </ul>
                                         <div class="content-en">
                                           <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>

@@ -139,6 +139,37 @@ class EventoTable{
         ));
     }
     
+    
+    
+    
+         public function usuarioGrupoxEvento($idevento){
+             $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+             $selecttot=    $sql->select()->columns(array('va_fecha'))
+                        ->from('ta_usuario_has_ta_grupo')
+                        ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('idusuario'=>'in_id','nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')        
+                        ->join('ta_grupo','ta_grupo.in_id=ta_usuario_has_ta_grupo.ta_grupo_in_id',array(),'left')
+                       ->join('ta_evento','ta_evento.ta_grupo_in_id=ta_grupo.in_id',array(),'left')
+                   ->where(array(
+                       'ta_evento.in_id'=>$idevento,
+//                       'ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
+//                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
+                       'ta_usuario_has_ta_grupo.va_estado'=>'activo',
+                       ));
+
+//            $selecttot = $sql->select()
+//                    ->columns(array('va_fecha','va_estado'))
+//                    ->from('ta_usuario_has_ta_grupo')
+//                    ->join('ta_usuario','ta_usuario.in_id=ta_usuario_has_ta_grupo.ta_usuario_in_id',array('nombre_usuario'=>'va_nombre','imagen'=>'va_foto','descripcion_usuario'=>'va_descripcion'),'left')
+//                   
+//                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $idgrupo,
+//                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+         
+     }
+    
 
         public function getGrupoUsuario($idgrupo,$iduser){
             $adapter = $this->tableGateway->getAdapter();
@@ -396,9 +427,9 @@ class EventoTable{
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //      var_dump($selectString);exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
-
-
-        return $resultSet->buffer();
+        $resultSet->buffer();
+//        $resultSet->next();
+        return $resultSet;
     }
 
     public function listadocategoriasEvento($categoria)
@@ -427,9 +458,9 @@ class EventoTable{
           ->where(array('ta_evento.va_nombre LIKE ?'=> '%'.$consulta.'%','ta_evento.va_estado'=>'activo','ta_evento.va_tipo'=>'publico','ta_evento.va_fecha>=?'=>$fecha)) 
          ->order('in_id desc')->group('in_id');
             $selectString = $sql->getSqlStringForSqlObject($selecttot);
-            //var_dump($selectString);exit;
+//            var_dump($selectString);exit;
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
-           //  var_dump(count($resultSet->buffer()));exit;
+//             var_dump(count($resultSet));exit;
          if (!$resultSet) {
             throw new \Exception("No se puede encontrar el/los grupo(s)");
         }
