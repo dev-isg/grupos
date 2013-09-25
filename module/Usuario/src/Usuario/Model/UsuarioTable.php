@@ -519,13 +519,14 @@ public function idfacebook2($id,$logout)
     
      public function insertarusuariofacebbok($nombre,$email,$idfacebook,$foto,$logout,$genero,$link)
     {   $contrasena = sha1($idfacebook) ;
+         $fecha = date("Y-m-d h:m:s");  
         $adapter = $this->tableGateway->getAdapter();
         $sql = new Sql($adapter);
         $selecttot = $sql->insert()
                 ->into('ta_usuario')
                 ->values(array('va_nombre'=>$nombre,'va_email'=>$email,'id_facebook'=>$idfacebook,
                     'va_estado'=>'activo','va_contrasena'=>$contrasena,'va_foto'=>$foto
-                   ,'va_logout'=>$logout,'va_genero'=>$genero,'va_facebook'=>$link));
+                   ,'va_logout'=>$logout,'va_genero'=>$genero,'va_facebook'=>$link,'va_fecha_ingreso'=>$fecha));
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
       $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
     }

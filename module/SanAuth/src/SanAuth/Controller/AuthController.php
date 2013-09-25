@@ -304,15 +304,15 @@ class AuthController extends AbstractActionController {
 
     public function logoutAction() {
         session_destroy();
-        $finsesion=  $this->params()->fromRoute('in_id_face');
+     //   $finsesion=  $this->params()->fromRoute('in_id_face');
 
         if ($this->getAuthService()->hasIdentity()) {
             $this->getSessionStorage()->forgetMe();
             $this->getAuthService()->clearIdentity();
 //            $this->flashmessenger()->addMessage("You've been logged out");
-        if($finsesion){
-            return $this->redirect()->toUrl($finsesion);
-         }
+//        if($finsesion){
+//            return $this->redirect()->toUrl($finsesion);
+//         }
         }
         return $this->redirect()->toRoute('home');
         // return $this->redirect()->toRoute('login');
