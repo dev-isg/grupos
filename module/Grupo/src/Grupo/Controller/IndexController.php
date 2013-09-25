@@ -167,6 +167,7 @@ class IndexController extends AbstractActionController
 //                    }
 
                         $listaEventos = (!$storage) ? $this->getEventoTable()->listadoEvento() : $this->getEventoTable()->listadoEvento($session->in_id);
+//                        var_dump($listaEventos->toArray());Exit;
 //                        $this->layout()->search = 'event-header';
                         $search = 'event-header';
                         
