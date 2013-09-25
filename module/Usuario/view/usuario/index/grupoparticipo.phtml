@@ -23,8 +23,12 @@
 		                        <div class="post-block three_columns">
 		                            <div class="entry-thumb">
 		                                <a href="<?php echo $this->host('base').$this->url('detalle-grupo').'/'.$this->escapeHtml($grupospertenece->id); ?>" class="preview" data-ui-lightbox>
-			                                <img class="img-cart" src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupospertenece->imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>
-			                            </a>
+		  <?php if($grupospertenece->imagen=='defaultd.jpg') { ?> 
+                     <img class="img-cart" src="<?php   echo $this->host('img')?>/defauld.jpg" alt=""/>
+			<?php  }else { ?>
+                  <img class="img-cart" src="<?php   echo $this->host('images') . '/grupos/general/' . htmlspecialchars($grupospertenece->imagen, ENT_QUOTES, 'utf-8');  ?>" alt=""/>                
+                                                    <?php }?>
+                                                </a>
 		                            </div> <!-- .entry-thumb -->
 		                            <div class="content">
 		                                <div class="entry-post-date" style="border-top-color: #2999b5">

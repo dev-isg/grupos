@@ -5,16 +5,23 @@
     			<div class="row-fluid">
     				<div class="span8 contenido-perfil-usuario">
     					<h2><?php echo ucwords($this->usuario->va_nombre);?></h2>
+<<<<<<< HEAD
                         <?php  if($this->usuario->va_pais){  ?>
                         <h5>Pais:</h5>
                         <span><?php echo ucwords($this->usuario->va_pais);?></span>
     					<h5>Ciudad:</h5>
                         <span><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?></span>
                         <?php  }  ?>
+=======
+
+>>>>>>> 70fbc2f936859a73aa7b320e7ae79628dd9f5b11
     					<div class="row-fluid">
                             <div class="span6">
                                 <h4>Ubicación:</h4>
-                                <em>miraflores, lima peru</em>
+                               <?php  if($this->usuario->va_pais){  ?>
+                                        <em><?php echo ucwords($this->usuario->ta_ubigeo_in_id);?>,<?php echo ucwords($this->usuario->va_pais);?></em>   
+                                        <?php  }  ?>
+                                <!--<em>miraflores, lima peru</em>-->
                             </div>
     						<div class="span6 title-miembro">
     							<h4>Miembro desde:</h4>
@@ -28,20 +35,37 @@
     					</div>
                         
                         <?php if($this->usuario->va_facebook || $this->usuario->va_twitter){ ?>
-    					<h4>Redes sociales</h4>
+    					<h4>Redes sociales:</h4>
     					<div class="social-net">
     						<ul>
     							<?php if($this->usuario->va_facebook){?><li class="facebook-dev"><a href="http://www.facebook.com/<?php echo $this->usuario->va_facebook;?>" target="_blank"></a></li><?php }?>
     							<?php if($this->usuario->va_twitter){?><li class="twitter-dev"><a href="http://www.twitter.com/<?php echo $this->usuario->va_twitter;?>" target="_blank"></a></li><?php }?>
     						</ul>
     					</div>
+<<<<<<< HEAD
                         <?php } ?>
 		
                         <?php if($this->usuario->va_descripcion!='0') { ?>  
                         <p>
                         <?php echo $this->usuario->va_descripcion;?>
                         <!--What is your business?, Aún no hay respuestas. What do you need to take your business to the next level?, Aún no hay respuestas. Who told you about us? Google? Yahoo? Homer Simpson? We ask so we can give them credit. Thank you in advance.-->
+=======
+                                        <?php } ?>
+    					
+                                      <?php if($this->usuario->va_descripcion!='0') { ?>
+                                        <h4>Descripción:</h4>
+                                        <p>
+                                                <?php echo $this->usuario->va_descripcion;?>
+<!--    						What is your business?, Aún no hay respuestas. What do you need to take your business to the next level?, Aún no hay respuestas. Who told you about us? Google? Yahoo? Homer Simpson? We ask so we can give them credit. Thank you in advance.-->
+>>>>>>> 70fbc2f936859a73aa7b320e7ae79628dd9f5b11
     					</p><?php  }  ?> 
+                                        <h4>Intereses:</h4>
+                                        <ul>
+                                       <?php foreach($this->intereses as $interes){?>
+                                        <li><?php echo $interes->nombre_categ;?></li>
+                                        <?php } ?>
+                                        </ul>
+
     				</div>
     				<div class="span4">
     					<div class="img-grupo" style="margin-bottom:15px;padding:0;">             

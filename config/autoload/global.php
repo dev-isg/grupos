@@ -1,4 +1,5 @@
- <?php
+<?php
+
 /**
  * Global Configuration Override
  *
@@ -10,9 +11,8 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
 return array(
-        'db' => array(
+    'db' => array(
         'driver' => 'Pdo',
         'username' => 'kevin',
         'password' => '123456',
@@ -21,11 +21,9 @@ return array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         )
     ),
-   'upload' => array(
+    'upload' => array(
         'images' => APPLICATION_PATH . '/public/imagenes',
-       
     ),
-
     'facebook' => array(
         'appId' => '171038663080276',
         'secret' => '5739ee928ea9149e62096e9bb91c501f'
@@ -44,17 +42,16 @@ return array(
         'images' => 'http://192.168.1.35:82/imagenes',
         'img'=>'http://192.168.1.35:82/img',
        'ruta' => 'http://dev.juntate.pe',*/
-
-        'version'=>1,
+        'version' => 1,
     ),
-        'mail' => array(
+    'mail' => array(
         'transport' => array(
             'options' => array(
-                'host'              => 'smtp.innovationssystems.com',
-                'connection_class'  => 'login',
+                'host' => 'smtp.innovationssystems.com',
+                'connection_class' => 'login',
                 'connection_config' => array(
-                    'username' => 'juntate@innovationssystems.com',//'listadelsabor@innovationssystems.com',
-                    'password' => 'Juntate123',//'L1st@d3ls@b0r',
+                    'username' => 'juntate@innovationssystems.com', //'listadelsabor@innovationssystems.com',
+                    'password' => 'Juntate123', //'L1st@d3ls@b0r',
                 ),
             ),
         ),
@@ -62,14 +59,14 @@ return array(
 //     'translator' => array(
 //          'locale' => 'es_ES'
 //      ),
-     'service_manager' => array(
-            'factories' => array(
-                'Zend\Db\Adapter\Adapter'
-                        => 'Zend\Db\Adapter\AdapterServiceFactory',
-            ),
-             'aliases' => array(
-                'translator' => 'MvcTranslator',
-            ),
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter'
+            => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ),
+        'aliases' => array(
+            'translator' => 'MvcTranslator',
+        ),
     ),
 //       'session' => array(
 //        'config' => array(

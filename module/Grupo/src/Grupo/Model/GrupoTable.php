@@ -67,6 +67,20 @@ class GrupoTable{
         }
         return $row;
     }
+     public function getGrupo2($id)
+    {
+       $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql($adapter);
+        $selecttot = $sql->select()
+        ->columns(array('va_ciudad','va_pais'))
+        ->from('ta_grupo')
+      //  ->join('ta_grupo','ta_usuario.in_id=ta_grupo.ta_usuario_in_id',array('*'), 'left')
+        ->where(array('in_id'=>$id));
+        $selectString = $sql->getSqlStringForSqlObject($selecttot);
+        $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $resultSet;
+    }
+    
     
     public function grupoxUsuario($idgrupo)
     {
@@ -96,8 +110,7 @@ class GrupoTable{
     }
     
     
-  public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null,$imagen){
-      
+  public function guardarGrupo(Grupo $grupo,$notificacion=null,$iduser=null,$imagen,$ciudad){
       $data=array(
          'va_nombre'=>$grupo->va_nombre,
          'va_descripcion'=>$grupo->va_descripcion,
@@ -109,7 +122,7 @@ class GrupoTable{
           'va_imagen'=>$imagen,
           'va_estado'=>$grupo->va_estado,
           'va_pais'=>$grupo->va_pais,
-          'va_ciudad'=>$grupo->va_ciudad,
+          'va_ciudad'=>$ciudad,
 //          'va_dirigido'=>$grupo->va_dirigido,
           'ta_usuario_in_id'=>$iduser,//$idusuario['in_id'],//$grupo->ta_usuario_in_id,
           'ta_categoria_in_id'=>$grupo->ta_categoria_in_id,

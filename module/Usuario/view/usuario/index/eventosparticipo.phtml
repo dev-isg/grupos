@@ -22,8 +22,13 @@
 		                        <div class="post-block three_columns">
 		                            <div class="entry-thumb">
 		                                <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->id); ?>" class="preview" data-ui-lightbox>
-		                               		<img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
-		                                </a>
+		       <?php if($eventos->imagen=='defaultd.jpg') { ?>                    
+                                                    <img class="img-cart" src="<?php   echo $this->host('img')?>/defauld.jpg">
+		      <?php } else  { ?> 
+                                                               <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->imagen, ENT_QUOTES, 'utf-8');  ?>">
+		                            
+                                                    <?php }?>
+                                                </a>
 		                            </div> <!-- .entry-thumb -->
 		                            <div class="content">
 		                                <div class="entry-post-date" style="border-top-color: #2999b5">
