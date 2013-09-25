@@ -35,7 +35,6 @@ return array(
         'images'=>'http://192.168.1.25:8081/imagenes',
         'img'=>'http://192.168.1.25:8081/img',
         'ruta'=>'http://192.168.1.25:8081',
-    
     /*'host' => array(
        'base' => 'http://dev.juntate.pe',
         'static' => 'http://dev.juntate.pe',

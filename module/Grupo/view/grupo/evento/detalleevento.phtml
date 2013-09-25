@@ -43,7 +43,7 @@
                     
                     
                     <?php  if($this->eventos[0]['imagen']=='defaultd.jpg') { ?>
-           <img src="<?php echo $this->host('img') ?>. '/defaultd.jpg">
+           <img src="<?php echo $this->host('img') ?>/defaultd.jpg">
               <?php  } else {?>
            <img src="<?php echo $this->host('images') . '/grupos/general/' . htmlspecialchars($this->eventos[0]['imagen'], ENT_QUOTES, 'utf-8');  ?>">
                   <?php   }  ?>
@@ -77,8 +77,12 @@
               if($this->grupoestado=='activo'){?>
                  <div class="event-group">
                   <div class="content-img-det">
-                    <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
-                    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
+                 <?php  if($this->eventos[0]['va_imagen']=='defaultd.jpg') { ?>       
+                    <img class="det-img" src="<?php echo $this->host('img')?>/defaultd.jpg" title="Evto macabro" target="Evento macabro">
+                   <?php  } else { ?>
+             <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+                <?php  }  ?>
+ <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
                     <div class="content-edit">
                       <a href="/evento/editar/<?php echo $this->idevento?>" title="Editar detalle de evento">
                         <img src="/img/edit.png">
@@ -235,8 +239,16 @@
          <?php if($this->eventos[0]['va_tipo']=='publico'){ ?>
                  <div class="event-group">
                   <div class="content-img-det">
-                    <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
-                    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
+                      
+           <?php  if($this->eventos[0]['va_imagen']=='defaultd.jpg') { ?>           
+                      
+            <img class="det-img" src="<?php echo $this->host('img')?>/defaultd.jpg" title="Evto macabro" target="Evento macabro">
+                <?php } else  {  ?>
+            
+             <img class="det-img" src="<?php echo $this->host('images') . '/eventos/detalle/' . $this->escapeHtml($this->eventos[0]['va_imagen'])  ?>" title="Evto macabro" target="Evento macabro">
+             
+<?php } ?>
+    <?php if($this->eventos[0]['ta_usuario_in_id']==$session->in_id){?>
                     <div class="content-edit">
                       <a href="/evento/editar/<?php echo $this->idevento?>" title="Editar detalle de evento">
                         <img src="/img/edit.png">
@@ -563,7 +575,9 @@
                             </div>
                             <div class="span8 desc-user">
                                 <a href="/usuario/<?php echo $usuarios->id_usuario;?>"><h3><?php echo  $this->escapeHtml($usuarios->nombre_usuario);?></h3></a>
-                               <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
+                             <?php if($usuarios->descripcion_usuario)  { ?>
+                                <p><?php echo  $this->escapeHtml($usuarios->descripcion_usuario);?></p>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="row-fluid unio">
