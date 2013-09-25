@@ -1184,9 +1184,10 @@ class IndexController extends AbstractActionController
                           { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
-                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  }
+                           //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
+                      }
                              
-                            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
+                          //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');  
                              } 
                       else {
                          // $url  = $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/');
