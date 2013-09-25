@@ -442,26 +442,15 @@ class IndexController extends AbstractActionController
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new GruposForm($adpter); 
         $ubige=$this->getUsuarioTable()->getPais($grupo->va_pais);
-      // var_dump($ubige);exit;
         $array = array();
         foreach ($ubige as $y) {
             $array[$y['ID']] = $y['Name']; }
        $ciudad = $this->getGrupoTable()->getGrupo2($id)->toArray();
         if($ciudad[0]['va_pais']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudad[0]['va_ciudad']);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; }}
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudad[0]['va_ciudad']);}
         else
-        { 
-            $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudad[0]['va_ciudad']);
-    //   var_dump($ciudad[0]['Name']);exit;
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; } }
- 
-            $form->get('va_pais')->setValue($array);
-      // $form->get('va_ciudad')->setValueOptions($arra); 
+        { $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudad[0]['va_ciudad']);}
+       $form->get('va_pais')->setValue($array);
         $form->bind($grupo);
         $form->get('submit')->setAttribute('value', 'Editar');
         $imagen=$grupo->va_imagen;
@@ -497,7 +486,6 @@ class IndexController extends AbstractActionController
             $notificacion = $this->params()->fromPost('tipo_notificacion', 0);
             if ($form->isValid()) { 
                  if ($File['name'] != '') {  
-                     $id=$datos->in_id;
                 if ($this->redimensionarImagen($File, $nonFile,$imagen,$id)) {
                     $this->getGrupoTable()->guardarGrupo($grupo, $notificacion,$storage->read()->in_id,$imagen,$datos->va_ciudad);
                     $this->flashMessenger()->addMessage('Grupo editado correctamente');

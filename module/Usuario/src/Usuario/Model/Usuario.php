@@ -19,7 +19,7 @@ class Usuario implements InputFilterAwareInterface{
     public $va_foto;
     public $va_genero;
     public $va_descripcion;
-    public $ta_ubigeo_in_id;
+   // public $ta_ubigeo_in_id;
     public $va_facebook;
     public $va_twitter;
     public $va_pais;
@@ -39,7 +39,7 @@ class Usuario implements InputFilterAwareInterface{
             $this->va_foto= (!empty($data['va_foto'])) ? $data['va_foto'] : 'foto-carnet.jpg';
             $this->va_genero= (!empty($data['va_genero'])) ? $data['va_genero'] : null;
             $this->va_descripcion= (!empty($data['va_descripcion'])) ? $data['va_descripcion'] : null;
-            $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
+          //  $this->ta_ubigeo_in_id= (!empty($data['ta_ubigeo_in_id'])) ? $data['ta_ubigeo_in_id'] : null;
             $this->va_pais= (!empty($data['va_pais'])) ? $data['va_pais'] : null;
             $this->va_facebook= (!empty($data['va_facebook'])) ? $data['va_facebook'] : null;
             $this->va_twitter= (!empty($data['va_twitter'])) ? $data['va_twitter'] : null;
@@ -115,7 +115,7 @@ class Usuario implements InputFilterAwareInterface{
             
              $inputFilter->add($factory->createInput(array( 
                 'name' => 'va_contrasena', 
-                'required' => true, 
+                'required' => false, 
                 'filters' => array( array('name' => 'StringTrim'), ), 
                 'validators' => array( 
                     array( 
@@ -131,7 +131,7 @@ class Usuario implements InputFilterAwareInterface{
              
             $inputFilter->add($factory->createInput(array( 
                 'name' => 'verificar_contrasena', 
-                'required' => true, 
+                'required' => false, 
                 'filters' => array ( array('name' => 'StringTrim'), ), 
                 'validators' => array( 
                     array( 
@@ -210,11 +210,11 @@ class Usuario implements InputFilterAwareInterface{
                     ),
                 ),
             )));
-               $inputFilter->add($factory->createInput(array(
-                        'name' => 'ta_ubigeo_in_id',
-                        'required' => false
-                      
-                   )));
+//               $inputFilter->add($factory->createInput(array(
+//                        'name' => 'ta_ubigeo_in_id',
+//                        'required' => false
+//                      
+//                   )));
                   $inputFilter->add($factory->createInput(array(
                         'name' => 'va_pais',
                         'required' => false

@@ -257,11 +257,7 @@ public function getAuthService() {
         return $this->storage;
     }
          
-
-   
      public function agregarusuarioAction() {//session_destroy();
-        // AGREGAR CSS       
-         
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->headLink()->prependStylesheet($this->_options->host->base . '/css/datetimepicker.css');
         $categorias = $this->getGrupoTable()->tipoCategoria();
@@ -278,7 +274,6 @@ public function getAuthService() {
                 ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
                 ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
-
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $form = new UsuarioForm(null,$adpter);
         $form->get('submit')->setValue('Crear Usuario');
@@ -426,22 +421,20 @@ public function getAuthService() {
          if($usuario->va_pais!=null)
        {   
         $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
+      // var_dump($ubige);exit;
         $array = array();
         foreach ($ubige as $y) {
             $array[$y['ID']] = $y['Name']; }
-        if($ubige[0]['Code']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($usuario->ta_ubigeo_in_id);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; }  }
+       $ciudads = $this->getUsuarioTable()->getUsuariociudad($id)->toArray();
+        if($ciudads[0]['va_pais']=='PER')
+        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudads[0]['ta_ubigeo_in_id']);}
         else
-        {$ciudad=$this->getUsuarioTable()->getCiudad('',$usuario->ta_ubigeo_in_id);
-        $arra = array();
-        foreach ($ciudad as $y) {
-            $arra[$y['ID']] = $y['Name']; } }
+        {
+            $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudads[0]['ta_ubigeo_in_id']);
+        }
             
             $form->get('va_pais')->setValue($array);
-            $form->get('ta_ubigeo_in_id')->setValueOptions($arra); 
+            //$form->get('ta_ubigeo_in_id')->setValueOptions($arra); 
         }
         $form->bind($usuario);
         $form->get('submit')->setAttribute('value', 'Actualizar');
@@ -467,9 +460,9 @@ public function getAuthService() {
         $request = $this->getRequest();
         if ($request->isPost()) { 
         $datos =$this->request->getPost();
-       
+       // var_dump($usuario);exit;
             $File = $this->params()->fromFiles('va_foto');
-          // $form->setInputFilter($usuario->getInputFilter());
+        
           
             $nonFile = $this->params()->fromPost('va_nombre');
             if ($File['name'] != '') {
@@ -487,17 +480,16 @@ public function getAuthService() {
                 $idusuario = $this->getUsuarioTable()->getUsuario($id);
                 $imagen = $idusuario->va_foto;
             }
-//            $dato = array_merge_recursive($this->getRequest()
-//                            ->getPost()
-//                            ->toArray(), $this->getRequest()
-//                            ->getFiles()
-//                            ->toArray());
+            $dato = array_merge_recursive($this->getRequest()
+                            ->getPost()
+                            ->toArray(), $this->getRequest()
+                            ->getFiles()
+                            ->toArray());
            
- 
-            
-          $form->setData($datos);
-
-            if (!$form->isValid()){
+              $form->setInputFilter($usuario->getInputFilter());
+          $form->setData($dato);
+          //var_dump($usuario->va_contrasena);exit;
+            if ($form->isValid()){ 
             $catg_ingresada=$this->params()->fromPost('select2');
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
@@ -505,20 +497,18 @@ public function getAuthService() {
                     $nombre=$this->params()->fromPost('va_nombre');
                     if ($File['name'] != '') {
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                 
-                            $this->getUsuarioTable()->guardarUsuario($datos, $imagen, '', $pass,$catg_ingresada);
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada,$datos->ta_ubigeo_in_id);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
-                            $storage->write($obj);
-                            
+                            $storage->write($obj); 
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
                     } else    { 
-                        $this->getUsuarioTable()->guardarUsuario($datos, $imagen, '', $pass,$catg_ingresada);
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada,$datos->ta_ubigeo_in_id);
                             $obj= $storage->read();
                             $obj->va_foto=$imagen;
                             $obj->va_nombre=$nombre;
@@ -530,29 +520,22 @@ public function getAuthService() {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                            $this->getUsuarioTable()->guardarUsuario($datos, $imagen,null,null,$catg_ingresada);
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada,$datos->ta_ubigeo_in_id);
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($datos, $imagen,null,null,$catg_ingresada);
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada,$datos->ta_ubigeo_in_id);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 }
-            } else {
-                
-        
-//             foreach ($form->getInputFilter()->getInvalidInput() as $value) { 
-//                 if($value->getName()=='va_foto'){
-//                    $error = $value->getMessages();
-//                }
-//             }
-//                 $form->setMessages(array('va_foto'=>$error));
+            } else { 
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {             
-                    print_r($error->getMessages());
+                   // print_r($error->getMessages());
+                   print_r($error->getName());
                 }
 
             }
@@ -566,7 +549,9 @@ public function getAuthService() {
             'valor' => $header,
             'formnotif' => $formNotif,
             'session'  =>$session,
-            'catego'=>$categ
+            'catego'=>$categ,
+            'nameCiudad'=>$ciudad[0]['Name'],
+             'nameID'=>$ciudad[0]['ID'],
         );
     }
     
