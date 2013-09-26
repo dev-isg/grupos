@@ -3364,3 +3364,12 @@ pre
 #gruposInvitar ul li:first-child{
   padding-top: 18px;
 }
+.controls ul{
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.controls ul li{
+  color: red;
+  font-size: 12px;
+}
