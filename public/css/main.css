@@ -177,7 +177,7 @@ nav a:hover {
 #cambio-pass label{
   display: block;
   font-size: 14px;
-  margin: 10px 0px 0px;
+  margin: 3px 0px 0px;
   color: #444;
   font-weight: 700;
   text-align: left;
@@ -1126,6 +1126,7 @@ vertical-align: middle;
 }
 .crear-evento-2{
   background: white;
+  padding-bottom: 5px;
 }
 .crear-evento-3{
   background: white;
@@ -3372,4 +3373,21 @@ pre
 .controls ul li{
   color: red;
   font-size: 12px;
+}
+label span{
+  color: red;
+  font-size: 16px;
+}
+.form_datetime2{
+  position: relative;
+}
+.form_datetime2 label.error{
+  position: absolute;
+  top: 30px;
+  left: 0;
+}
+form input.error,
+form select.error,
+form textarea.error{
+  margin-bottom: 2px;
 }

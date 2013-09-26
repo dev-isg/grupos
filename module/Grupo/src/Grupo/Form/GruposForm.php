@@ -77,20 +77,13 @@ class GruposForm extends Form
                 'placeholder'=>'Ingrese descripción',
                 'cols'=>80,
                 'rows'=>10
-            ),
-            'options' => array(
-                'label' => 'Descripción:',
-            ),
+            )
         ));
            
           
          $this->add(array(
             'name' => 'va_nombre',
             'type' => 'Text',
-          
-            'options' => array(
-                'label' => 'Nombre del Grupo :',          
-            ),
             'attributes' => array(               
                 'class' => 'span12 gg',
                 'placeholder'=>'Ingrese el nombre del grupo…'
@@ -185,7 +178,7 @@ $this->add(array(
                 'class' => 'span10',
                 'id'   => 'pais'
             ),
-           'options' =>array('label' => 'Pais : ',
+           'options' =>array(
                 'value_options' =>$this->Pais(),                                               
                 'empty_option' => '--- Seleccionar ---',
             )
@@ -195,17 +188,15 @@ $this->add(array(
          
         $this->add(array(
             'name' =>'ta_categoria_in_id',
-            'type' => 'Select',  
-          
-            
-             'attributes' => array(               
+            'type' => 'Select',
+            'attributes' => array(               
                 'class' => 'span12 categoria-evento gg',
 
             ),
-           'options' => array('label' => 'Categoria del Grupo : ',
-                     'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
-                     'empty_option'  => '--- Seleccionar ---'
-             )
+           'options' => array(
+                'value_options' => $this->tipoCategoria(),//array(1=>'banana'),
+                'empty_option'  => '--- Seleccionar ---'
+            )
         ));
         
 //          $this->add(array(

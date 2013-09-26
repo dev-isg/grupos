@@ -16,7 +16,7 @@
         </div>
         <?php }?>
         <div class="row-fluid">
-<div class="row-fluid crear-evento-grupos">
+        <div class="row-fluid crear-evento-grupos">
             <?php
         $form = $this->formevento;
 
@@ -42,6 +42,7 @@
         <div class="row-fluid crear-evento-1 event box">
             <h2>Describe tu evento</h2>
             <div class="span8 desc-evento">
+                <label for="nameEvento">Nombre del evento: <span>*</span></label>
                 <?php echo $this->formRow($form->get('va_nombre'));?>
                 <label>Descripción del evento:</label>
                 <?php echo $this->formRow($form->get('va_descripcion'));?>
@@ -125,7 +126,7 @@
             </div>
             <div class="span3 lugar-nm event-padding">
                 <div id="cityId-label" class="item-label">
-                    <label for="cityId" class="required">Tipo de evento</label>
+                    <label for="cityId" class="required">Tipo de evento: <span>*</span></label>
                 </div>
                     <div class="form-item">
                          <?php echo $this->formRow($form->get('va_tipo'));?>                      
@@ -135,7 +136,7 @@
             <div class="span5">
                 <div class="form-item tooltip-errors">
                     <div id="address-label" class="item-label">
-                        <label for="address" class="required">Dirección</label>
+                        <label for="address" class="required">Dirección: <span>*</span></label>
                     </div>
                     <div class="item-value">
                         <?php echo $this->formRow($form->get('va_direccion'));?>
@@ -146,7 +147,7 @@
             <div class="span3">
                 <div class="form-item tooltip-errors">
                     <div id="addressReference-label" class="item-label">
-                        <label for="addressReference" class="optional">Referencia de ubicación</label>
+                        <label for="addressReference" class="optional">Referencia de ubicación: <span>*</span></label>
                     </div>
                     <div class="item-value">
                          <?php echo $this->formRow($form->get('va_referencia'));?>                      

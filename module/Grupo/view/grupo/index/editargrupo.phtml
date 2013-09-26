@@ -30,13 +30,17 @@ var fecha_actual='<?php echo date("Y-m-d H:i:s");?>';
                 <div class="span8 space-group">
                     <input type="hidden" name="url" value="<?php echo $this->urlorigen?>"/>
                     <?php echo $this->formHidden($form->get('in_id'));?>
-                     <?php echo $this->formRow($form->get('va_pais'));?>
-                     <label for="pais">Ciudad : </label>
-                     <select id="va_ciudad"  name="va_ciudad" value=" "/>
-                <option value="<?php echo $this->nameID ; ?>"><?php echo $this->nameCiudad ; ?></option>
-                      </select>
+                    <label forr="nameGrupo">Nombre de Grupo: <span>*</span></label>
                     <?php echo $this->formRow($form->get('va_nombre'));?>
+                    <label forr="categoria">Categoria del Grupo: <span>*</span></label>
                     <?php echo $this->formRow($form->get('ta_categoria_in_id'));?>
+                    <label forr="pais">País: <span>*</span></label>
+                    <?php echo $this->formRow($form->get('va_pais'));?>
+                    <label for="pais">Ciudad: <span>*</span></label>
+                    <select id="va_ciudad"  name="va_ciudad" value=" "/>
+                        <option value="<?php echo $this->nameID ; ?>"><?php echo $this->nameCiudad ; ?></option>
+                    </select>
+                    <label for="descripcion">Descripción: <span>*</span></label>
                     <?php echo $this->formRow($form->get('va_descripcion'));?>
                 </div>
                 <div class="span4 space-group">

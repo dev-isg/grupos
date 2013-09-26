@@ -32,32 +32,32 @@
                             <div class="span8">
                                 <div class="control-group">
                                     <?php echo $this->formHidden($form->get('in_id'));?>
-                                    <label class="control-label" for="va_nombre">Nombre</label>
+                                    <label class="control-label" for="va_nombre">Nombre: <span>*</span></label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_nombre'));?>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="va_email">Correo electrónico</label>
+                                    <label class="control-label" for="va_email">Correo electrónico: <span>*</span></label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_email'));?>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="va_genero">Género</label>
+                                    <label class="control-label" for="va_genero">Género:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_genero')); ?>
                                     </div>
                                 </div>
                      
                                  <div class="control-group">
-                                    <label class="control-label" for="pais">Pais</label>
+                                    <label class="control-label" for="pais">Pais:</label>
                                     <div class="controls">
                                          <?php echo $this->formRow($form->get('va_pais'));?>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="ta_ubigeo_in_id">Ciudad</label>
+                                    <label class="control-label" for="ta_ubigeo_in_id">Ciudad:</label>
                                     <div class="controls">
                                         <select id="ta_ubigeo_in_id"  name="ta_ubigeo_in_id" value=" "/>
                           <option value="<?php echo $this->nameID ; ?>"><?php echo $this->nameCiudad ; ?></option>
@@ -102,13 +102,13 @@
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="control-group">
-                                    <label class="control-label" for="va_facebook">Facebook</label>
+                                    <label class="control-label" for="va_facebook">Facebook:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_facebook'));?>
                                     </div>
                                  </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="va_twitter">Twitter</label>
+                                    <label class="control-label" for="va_twitter">Twitter:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_twitter'));?>
                                     </div>
@@ -121,10 +121,10 @@
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="control-group">
-                                    <label class="control-label">Tus intereses</label>
+                                    <label class="control-label">Tus intereses:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('select2')); ?>
-<!--                                        <select multiple id="e1" name="select2[]" style="width:97.3%;">
+                                        <!--<select multiple id="e1" name="select2[]" style="width:97.3%;">
                                         </select>-->
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="control-group">
-                                    <label class="control-label" for="va_descripcion">Mis intereses</label>
+                                    <label class="control-label" for="va_descripcion">Mis intereses:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_descripcion'));?>
                                     </div>
