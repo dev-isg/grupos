@@ -181,9 +181,17 @@
                           <div class="accordion-inner">
                               <div id="invita-correo">
                                 <div class="row-fluid">
+                                    <?php if($this->mensaje_correo){?>
+                                   <div class="row-fluid">
+                                        <div class="alert alert-success alert-margin">
+                                          <?php echo $this->mensaje_correo;?>
+                                        </div>
+                                      </div>
+                                    <?php }?>
                                   <div class="span6">
                                     <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
-                                      <h3>Ingresa correos separado por comas</h3>
+                                      <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
+                                        <h3>Ingresa correos separado por comas</h3>
                                       <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
                                       <input type="text" name="correos" class="inputModif"/>
                                       <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
@@ -191,15 +199,16 @@
                                   </div>
                                   <div class="span6">
                                     <div class="span12 user-back-2 email-user-d">
-                                      <form action="" id="gruposInvitar">
+                                      <form method="post" action="/grupo/evento/invitar" id="gruposInvitar">
+                                          <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
                                             <?php foreach($this->grupoeventusuario as $grupousuario){?>
                                                 <li id="user-<?php echo $grupousuario->idusuario;?>">
-                                                <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                                <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
                                                 <label class="checkbox img-cargar-usuarios">
                                                   <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
-                                                  <a href="/usuario/250"><?php echo $grupousuario->nombre_usuario;?></a> 
+                                                  <a href="/usuario/<?php echo $grupousuario->idusuario;?>"><?php echo $grupousuario->nombre_usuario;?></a> 
                                                   <p><?php echo $grupousuario->descripcion_usuario;?></p>
                                                 </label>
                                                 </li>
@@ -354,12 +363,20 @@
                             <img src="/img/add.png">
                           </a>
                         </div>
+                            <?php if($this->mensaje_correo){?>
+                                   <div class="row-fluid">
+                                        <div class="alert alert-success alert-margin">
+                                          <?php echo $this->mensaje_correo;?>
+                                        </div>
+                                      </div>
+                                    <?php }?>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
                               <div id="invita-correo">
                                 <div class="row-fluid">
                                   <div class="span6">
                                     <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
+                                        <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                       <h3>Ingresa correos separado por comas</h3>
                                       <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
                                       <input type="text" name="correos" class="inputModif"/>
@@ -368,15 +385,16 @@
                                   </div>
                                   <div class="span6">
                                     <div class="span12 user-back-2 email-user-d">
-                                      <form action="" id="gruposInvitar">
+                                      <form method="post" action="/grupo/evento/invitar" id="gruposInvitar">
+                                          <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
                                              <?php foreach($this->grupoeventusuario as $grupousuario){?>
                                                 <li id="user-<?php echo $grupousuario->idusuario;?>">
-                                                <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
+                                                <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
                                                 <label class="checkbox img-cargar-usuarios">
                                                   <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
-                                                  <a href="/usuario/250"><?php echo $grupousuario->nombre_usuario;?></a> 
+                                                  <a href="/usuario/<?php echo $grupousuario->idusuario;?>"><?php echo $grupousuario->nombre_usuario;?></a> 
                                                   <p><?php echo $grupousuario->descripcion_usuario;?></p>
                                                 </label>
                                                 </li>
