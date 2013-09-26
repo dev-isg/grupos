@@ -426,6 +426,10 @@ class EventoController extends AbstractActionController
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
+        
+         $msgenvio= new \Zend\Session\Container('correo');
+        $mensajec= $msgenvio->msge;
+         
         $view->setVariables(array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -443,7 +447,8 @@ class EventoController extends AbstractActionController
             'privado' => $tipo,
             'grupoestado' => $grupoestado,
             'foto' => $foto,
-            'grupoeventusuario'=>$grupoeventuser
+            'grupoeventusuario'=>$grupoeventuser,
+            'mensaje_correo'=>$mensajec
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         ));
@@ -746,17 +751,39 @@ class EventoController extends AbstractActionController
 
     $this->mensaje($correo, $bodyHtmlAdmin, 'Alguien te ha invitado');
           
-          $arrerror[]=$error->msge;    
+          $arrmensaje[$correo]=$error->msge;    
         }
-        $auxerr=array_count_values($arrerror);
-        if($auxerr[1]===count($auxerr)){
-            $mensaje_error='';
+        
+        foreach($arrmensaje as $key=>$value){
+            if($value==0){
+                $arrerro[]=$key;
+            }else{
+                $arrok[]=$key;
+            }
             
         }
-        $result = new JsonModel(array(
-                    'enviados' => $arrerror
-                ));
-        return $result;
+        if (count($arrerro) >= 1) {
+            foreach ($arrerro as $auxerr) {
+                if (count($arrerro) > 1) {
+                    $mensaje = 'Los siguientes correos no se enviaron correctamente:<br\>' . $auxerr . '<br\>';
+                } else {
+                    $mensaje = 'El siguiente correo no se envió correctamente:<br\>' . $auxerr;
+                }
+            }
+        } else {
+            if (count($arrok) > 1) {
+                $mensaje = 'Los correos fueron enviados con exito';
+            } else {
+                $mensaje = 'Correo fue enviado con exito';
+            }
+        }
+         $msgenvio= new \Zend\Session\Container('correo');
+         $msgenvio->msge=$mensaje;
+        $this->redirect()->toRoute('evento');
+//        $result = new JsonModel(array(
+//                    'enviados' => $arrerror
+//                ));
+//        return $result;
     }
 
     public function fooAction()

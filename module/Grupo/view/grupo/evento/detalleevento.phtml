@@ -181,6 +181,13 @@
                           <div class="accordion-inner">
                               <div id="invita-correo">
                                 <div class="row-fluid">
+                                    <?php if($this->mensaje_correo){?>
+                                   <div class="row-fluid">
+                                        <div class="alert alert-success alert-margin">
+                                          <?php echo $this->mensaje_correo;?>
+                                        </div>
+                                      </div>
+                                    <?php }?>
                                   <div class="span6">
                                     <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
                                       <h3>Ingresa correos separado por comas</h3>
@@ -354,6 +361,13 @@
                             <img src="/img/add.png">
                           </a>
                         </div>
+                            <?php if($this->mensaje_correo){?>
+                                   <div class="row-fluid">
+                                        <div class="alert alert-success alert-margin">
+                                          <?php echo $this->mensaje_correo;?>
+                                        </div>
+                                      </div>
+                                    <?php }?>
                         <div id="collapseOne" class="accordion-body collapse">
                           <div class="accordion-inner">
                               <div id="invita-correo">
