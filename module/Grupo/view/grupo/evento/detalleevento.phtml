@@ -167,7 +167,7 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
-                  <?php if($this->privado){ ?>
+                  <?php if($this->grupoestado=='activo' && $this->privado==true){ ?>
                  <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
@@ -353,7 +353,7 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
-                  <?php if($this->privado){ ?>
+                  <?php if($this->grupoestado=='activo' && $this->privado==true){ ?>
                   <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
                       <div class="accordion-group">
