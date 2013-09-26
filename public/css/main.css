@@ -1311,7 +1311,7 @@ p.crear-evento{
   margin-bottom: 10px;
 }
 .img-grupo img{
-  width: 100%;
+  width: 100%!important;
 }
 .group-sidebar{
   background: #fff;
@@ -3354,6 +3354,12 @@ pre
   top: 0;
   left: 0;
   font-size: 11px;
+}
+#gruposInvitar{
+  margin-bottom: 0;
+}
+#gruposInvitar ul li input{
+  float: left;
 }
 #gruposInvitar ul li:first-child{
   padding-top: 18px;

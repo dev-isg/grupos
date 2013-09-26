@@ -205,7 +205,7 @@
                                                 </li>
                                             
                                             <?php }?>
-<!--                                          <li id="user-g">
+                                          <!--<li id="user-g">
                                             <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
                                             <label class="checkbox img-cargar-usuarios">
                                               <img src="http://192.168.1.25:8081/imagenes/usuario/detalle/kevin-8-5242fc4318613.jpg" title="kevin 8">
@@ -615,7 +615,7 @@
     
   var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
 
-  $(document).on('ready', function(){   
+  $(document).on('ready', function(){ 
     enviarDatos();
     abandonarDatos();
     agregarComentario();
@@ -645,6 +645,11 @@
           required: "Selecciona un usuario"
         }
       }
+    });
+
+    $(".btnCorreoForm").click(function(event){
+      alert('hola mundo');
+      event.preventDefault();
     });
 
   });
