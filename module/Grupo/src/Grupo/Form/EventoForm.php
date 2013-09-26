@@ -88,10 +88,6 @@ class EventoForm extends Form
          $this->add(array(
             'name' => 'va_nombre',
             'type' => 'Text',
-          
-            'options' => array(
-                'label' => 'Nombre del evento:',          
-            ),
             'attributes' => array(               
                 'class' => 'span12',
                 'id'   => 'va_nombre',
