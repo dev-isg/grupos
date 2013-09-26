@@ -188,12 +188,11 @@ class IndexController extends AbstractActionController
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
-//            var_dump($paginator->getPages());Exit;
-//            if($paginator->getPages()->pageCount<$page1){
+//             var_dump($page1);
+//           var_dump($paginator->getPages());Exit;
+//            if($paginator->getPages()->pageCount < $page1){
 //                $view->setTemplate('layout/layout-error');
-//            }          
-
-           
+//            }            
             
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
             $page2 = (int) $this->params()->fromQuery('page', 1);
@@ -233,14 +232,15 @@ class IndexController extends AbstractActionController
             $urlf = substr($url, 0, $auxurl);
             $urlf = $urlf . '?';
         }
+         
 //        if($paginator){
-////         $tot = $paginator->getPages()->pageCount;
-////                if ($tot < $page1) {
-////                    $view->setTerminal(true);
-////                    $view->setTemplate('layout/layout-error');
-////                }
-////        }
-//        
+//         $tot = $paginator->getPages()->pageCount;
+//                if ($tot < $page1) {
+//                    $view->setTerminal(true);
+//                    $view->setTemplate('layout/layout-error');
+//                }
+//        }
+        
 //        if($paginator2){
 //       $tot2 = $paginator2->getPages()->pageCount;
 //   
@@ -249,6 +249,7 @@ class IndexController extends AbstractActionController
 //                    $view->setTemplate('layout/layout-error');
 //                }
 //        }
+//        var_dump($paginator);exit;
         $view->setVariables(         array(
                     'grupos' => $paginator2,
                     'eventos' => $paginator,
