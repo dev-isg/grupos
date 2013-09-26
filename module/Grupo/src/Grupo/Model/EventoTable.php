@@ -427,7 +427,9 @@ class EventoTable{
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
 //      var_dump($selectString);exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
-        return $resultSet->buffer();
+        $resultSet1=$resultSet->buffer();
+        
+        return $resultSet1;
     }
 
     public function listadocategoriasEvento($categoria)

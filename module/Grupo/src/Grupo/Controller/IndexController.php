@@ -188,18 +188,19 @@ class IndexController extends AbstractActionController
             $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
             $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
-//             var_dump($page1);
-//           var_dump($paginator->getPages());Exit;
-//            if($paginator->getPages()->pageCount < $page1){
+//            if($paginator->getPages()->pageCount<$page1){
 //                $view->setTemplate('layout/layout-error');
+//            }
+//             $cant=$paginator->get
+//             if(count($listaEventos))
+//            if($paginator->getPages()->pageCount < $page1){
+//                echo 'no hay data';exit;
 //            }            
             
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
-            $page2 = (int) $this->params()->fromQuery('page', 1);
+            $page2 = (int) $this->params()->fromQuery('page', 1); 
             $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
-
             $paginator2->setCurrentPageNumber($page2);
-
             $paginator2->setItemCountPerPage(12);
             
 //            if($paginator2->getPages()->pageCount<$page2){
@@ -249,7 +250,11 @@ class IndexController extends AbstractActionController
 //                    $view->setTemplate('layout/layout-error');
 //                }
 //        }
-//        var_dump($paginator);exit;
+        
+//        foreach($paginator as $pag){
+//            var_dump($pag->in_id);
+//        }
+//        exit;
         $view->setVariables(         array(
                     'grupos' => $paginator2,
                     'eventos' => $paginator,

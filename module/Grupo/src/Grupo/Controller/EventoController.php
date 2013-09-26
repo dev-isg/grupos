@@ -708,9 +708,9 @@ class EventoController extends AbstractActionController
         $error = new \Zend\Session\Container('mensaje');
         try {
             $transport->send($message);
-            $error->msge = 'Su mensaje ha sido enviado satisfactoriamente';
+            $error->msge = 1;//'Su mensaje ha sido enviado satisfactoriamente';
         } catch (\Exception $e) {
-            $error->msge = 'No se pudo enviar el mensaje. Intentelo mas tarde';
+            $error->msge = 0;//'No se pudo enviar el mensaje. Intentelo mas tarde';
         }
         
     }
@@ -718,8 +718,10 @@ class EventoController extends AbstractActionController
     public function invitarAction(){
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $correos=$this->params()->fromPost('correos');
-
-        $arrcorreos=explode(',',$correos);
+        $correolista=$this->params()->fromPost('correolista');
+        $arrcorreos1=explode(',',$correos);
+        
+        $arrcorreos=  array_merge_recursive($arrcorreos1, $correolista);
         
         $idevento=$this->params()->fromPost('idE',163);
         $evento=$this->getEventoTable()->getEvento($idevento);
@@ -746,7 +748,12 @@ class EventoController extends AbstractActionController
           
           $arrerror[]=$error->msge;    
         }
-                $result = new JsonModel(array(
+        $auxerr=array_count_values($arrerror);
+        if($auxerr[1]===count($auxerr)){
+            $mensaje_error='';
+            
+        }
+        $result = new JsonModel(array(
                     'enviados' => $arrerror
                 ));
         return $result;
