@@ -59,9 +59,13 @@
                                 <div class="control-group">
                                     <label class="control-label" for="ta_ubigeo_in_id">Ciudad:</label>
                                     <div class="controls">
-                                    <select id="ta_ubigeo_in_id"  name="ta_ubigeo_in_id" value=" "/>
+                                        <select id="ta_ubigeo_in_id"  name="ta_ubigeo_in_id" value=" "/>
+                                        <?php if($this->nameCiudad ){?>
                                         <option value="<?php echo $this->nameID ; ?>"><?php echo $this->nameCiudad ; ?></option>
-                                     </select>
+                                        <?php }else{?>
+                                        <option value="">--- Seleccionar ---</option>
+                                       <?php }?>
+                                    </select>
                                     </div>
                                 </div>
                             </div>
