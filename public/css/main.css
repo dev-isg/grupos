@@ -2769,9 +2769,18 @@ ul.score-list li:first-child {
   margin-top: 15px;
   margin-bottom: 20px;
 }
+.compar{
+  margin-top: 25px;
+}
+.compar span{
+  float: left;
+  color: white;
+  margin-right: 15px;
+}
 .compar ul{
   list-style: none;
   margin-left: 0;
+  float: left;
 }
 .compar ul li{
   float: left;
@@ -2792,7 +2801,7 @@ ul.score-list li:first-child {
 }
 .foo1{
   position: relative;
-  height: 120px;
+  height: auto;
 }
 .contendor-efecto{
   background-image: url(../img/selllo.jpg);
@@ -2801,8 +2810,8 @@ ul.score-list li:first-child {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 140px;
-  height: 104px;
+  width: 80px;
+  height: 60px;
 }
 .main-container{
   margin-top: 34px;
@@ -3390,4 +3399,26 @@ form input.error,
 form select.error,
 form textarea.error{
   margin-bottom: 2px;
+}
+.terminos-condiciones ul{
+  list-style: none;
+  margin-left: 0;
+}
+.terminos-condiciones ul li{
+  float: left;
+  line-height: 80px;
+  margin-right: 20px;
+}
+.terminos-condiciones ul li a{
+  font-size: 16px;
+  color: white;
+}
+.page-juntate{
+  margin-top: 55px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
 }
