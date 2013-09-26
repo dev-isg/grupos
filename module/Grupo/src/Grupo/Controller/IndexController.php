@@ -976,6 +976,19 @@ class IndexController extends AbstractActionController
             $this->redirect()->toUrl('/grupo');
         }
     }
+        public function terminosAction()
+    {
+        // This shows the :controller and :action parameters in default route
+        // are working when you browse to /module-specific-root/skeleton/foo
+        return array();
+    }
+    
+        public function nosotrosAction()
+    {
+        // This shows the :controller and :action parameters in default route
+        // are working when you browse to /module-specific-root/skeleton/foo
+        return array();
+    }
 
     public function fooAction()
     {

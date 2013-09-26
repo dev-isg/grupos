@@ -232,6 +232,7 @@ class EventoController extends AbstractActionController
                  if ($File['name'] != ''){             
               if ($this->redimensionarImagen($File, $nonFile,$imagen,$evento->in_id)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
+                 $this->flashMessenger()->clearMessages();
                 $this->flashMessenger()->addMessage('Evento editado correctamente');
                  return $this->redirect()->toRoute('evento',array('in_id'=>$id));
 //                return $this->redirect()->toRoute('grupo');
@@ -312,8 +313,6 @@ class EventoController extends AbstractActionController
 
     public function detalleeventoAction() {
         $view = new ViewModel();
-
-        
         $form = new ComentarioForm();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
@@ -425,10 +424,11 @@ class EventoController extends AbstractActionController
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
+           
         }
-        
-         $msgenvio= new \Zend\Session\Container('correo');
-        $mensajec= $msgenvio->msge;
+//        var_dump($flashMessenger->getContainer()->correo);Exit;
+//         $msgenvio= new \Zend\Session\Container('correo');
+//        $mensajec= $msgenvio->msge;
          
         $view->setVariables(array(
             'eventos' => $evento,
@@ -721,14 +721,21 @@ class EventoController extends AbstractActionController
     }
     
     public function invitarAction(){
+        
         $storage = new \Zend\Authentication\Storage\Session('Auth');
         $correos=$this->params()->fromPost('correos');
-        $correolista=$this->params()->fromPost('correolista');
-        $arrcorreos1=explode(',',$correos);
+        $arrcorreos=explode(',',$correos);
+        $correolista=$this->params()->fromPost('userEnviar');
+        if($correolista){
+            $arrcorreos=array();
+            foreach($correolista as $auxcorreo){
+            $arrcorreos[]=$this->getUsuarioTable()->getUsuario($auxcorreo)->va_email;
+            }
+        }
+//        exit;
+//        $arrcorreos=  array_merge_recursive($arrcorreos1, $correolista);
         
-        $arrcorreos=  array_merge_recursive($arrcorreos1, $correolista);
-        
-        $idevento=$this->params()->fromPost('idE',163);
+        $idevento=$this->params()->fromPost('idE');
         $evento=$this->getEventoTable()->getEvento($idevento);
          $user_info['nom_event'] = $evento->va_nombre;
          $descripcion=$evento->va_descripcion;
@@ -753,7 +760,7 @@ class EventoController extends AbstractActionController
           
           $arrmensaje[$correo]=$error->msge;    
         }
-        
+//        var_dump($arrmensaje);
         foreach($arrmensaje as $key=>$value){
             if($value==0){
                 $arrerro[]=$key;
@@ -765,25 +772,28 @@ class EventoController extends AbstractActionController
         if (count($arrerro) >= 1) {
             foreach ($arrerro as $auxerr) {
                 if (count($arrerro) > 1) {
-                    $mensaje = 'Los siguientes correos no se enviaron correctamente:<br\>' . $auxerr . '<br\>';
+                    $mensaje = 'Los siguientes correos no se enviaron correctamente:<br\>'.$auxerr.'<br\>';
                 } else {
-                    $mensaje = 'El siguiente correo no se envió correctamente:<br\>' . $auxerr;
+                    $mensaje = 'El siguiente correo no se envió correctamente:<br\>'.$auxerr;
                 }
             }
         } else {
             if (count($arrok) > 1) {
                 $mensaje = 'Los correos fueron enviados con exito';
             } else {
-                $mensaje = 'Correo fue enviado con exito';
+                $mensaje = 'El correo fué enviado con exito';
             }
         }
-         $msgenvio= new \Zend\Session\Container('correo');
-         $msgenvio->msge=$mensaje;
-        $this->redirect()->toRoute('evento');
-//        $result = new JsonModel(array(
-//                    'enviados' => $arrerror
-//                ));
-//        return $result;
+//        $session = new \Zend\Session\SessionManager();
+//        $session->setName('mensaje');
+         
+        $flasmensaje=$this->flashMessenger();
+        $flasmensaje->clearMessages();
+//        $flasmensaje->setSessionManager($session);
+        $flasmensaje->addMessage($mensaje);
+//         $msgenvio= new \Zend\Session\Container('correo');
+//         $msgenvio->msge=$mensaje;
+        $this->redirect()->toRoute('evento',array('in_id'=>$idevento));
     }
 
     public function fooAction()
