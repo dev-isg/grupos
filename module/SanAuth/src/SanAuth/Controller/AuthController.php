@@ -195,7 +195,7 @@ class AuthController extends AbstractActionController {
                 $correo = $this->params()->fromPost('va_email');
                 $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
                 
-                            $this->getAuthService()
+                   $this->getAuthService()
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
