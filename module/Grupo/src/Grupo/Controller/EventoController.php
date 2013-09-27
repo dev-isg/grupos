@@ -332,6 +332,7 @@ class EventoController extends AbstractActionController
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
         $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id)->va_estado;
+//        var_dump($grupoestado);Exit;
 
 //         if($evento[0]['va_tipo']=='privado'){
 //             if(!$grupoestado || $grupoestado!='activo'){
@@ -748,15 +749,17 @@ class EventoController extends AbstractActionController
                        </head>
                        <body>
                             <div style="color: #7D7D7D">
-                            Hola '.$correo.',<br />
-                             '.ucwords(utf8_decode($storage->read()->va_nombre)).' te ha invitado a participar en el evento: <br />
-                                 <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong> '. html_entity_decode($descripcion) .'<br />
-                                 Para mayor información del evento puedes hacer clic en el siguiente enlace <a href="' . $this->_options->host->base . '/evento/' . $idevento . '">'. utf8_decode($user_info['nom_event']) .'</a> o copiar la URL '. $this->_options->host->base . '/evento/' . $idevento .' y podrás unirte al evento.
+                            Hola '.$correo.',<br /><br />
+                             '.ucwords(utf8_decode($storage->read()->va_nombre)).' te ha invitado a participar en el evento: <br /><br />
+                                 <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong><br /><br />
+                                 Para mayor información del evento puedes hacer clic en el siguiente enlace <a href="' . $this->_options->host->base . '/evento/' . $idevento . '">'. utf8_decode($user_info['nom_event']) .'</a><br /><br />
+                                 O copiar la URL '. $this->_options->host->base . '/evento/' . $idevento .' y podrás unirte al evento.
+                             <br /><br /><br />
                              </div>
                              <img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/>
                        </body>
                        </html>';
-
+//descripcion=html_entity_decode($descripcion)
     $this->mensaje($correo, $bodyHtmlAdmin, 'Alguien te invitó a un evento');
           
           $arrmensaje[$correo]=$error->msge;    
