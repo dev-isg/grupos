@@ -72,12 +72,12 @@ function crearevento(){
                 va_fecha: "required"
             },
             messages: {
-              va_nombre: "Ingrese un nombre del evento",
-              va_direccion: "Ingrese la dirección del evento",
-              va_referencia : "Ingrese dirección de referencia",
-              editor1 : "Ingrese una descripción del evento",
-              va_tipo: "Seleccione una categoría",
-              va_fecha: "Ingrese una fecha"
+              va_nombre: "Por favor ingrese un nombre del evento",
+              va_direccion: "Por favor ingrese la dirección del evento",
+              va_referencia : "Por favor ingrese dirección de referencia",
+              editor1 : "Por favor ingrese una descripción del evento",
+              va_tipo: "Por favor seleccione una categoría",
+              va_fecha: "Por favor ingrese una fecha"
             }
         });
     });
@@ -250,14 +250,14 @@ function valUsuario(){
     },
     messages:{
       va_email:{
-        required:"Por favor ingresa un Email",
-        email: "Ingrese un correo valido",
+        required:"Por favor ingresa su Email",
+        email: "Por favor ingrese su correo valido",
         remote: "Correo incorrecto"
       },
       va_contrasena: {
-        required : "Ingrese la clave",
-        minlength:"Ingresa una contraseña de 8 caracteres a mas",
-        remote: "Contraseña invalida"
+        required : "Por favor ingrese su contraseña",
+        minlength:"Por favor ingresa una contraseña de 8 caracteres a mas",
+        remote: "Contraseña inválida"
       }
     }
   });
@@ -286,20 +286,20 @@ var valregistro = function(elemento){
         },
         messages:{
             va_nombre: {
-                required:"Por favor ingresar un nombre"
+                required:"Por favor ingrese su nombre"
             },
             va_email:{
-                required:"Por favor ingresa un Email",
-                email: "Ingrese un correo valido"
+                required:"Por favor ingrese su correo electrónico",
+                email: "Por favor ingrese su correo valido"
             },
             va_contrasena: {
-                required : "Ingrese la clave",
-                minlength:"Ingresa un password de 8 caracteres a mas"
+                required : "Por favor ingrese su contraseña",
+                minlength:"Por favor ingrese una contraseña de 8 caracteres a mas"
             },
             verificar_contrasena: {
-                required : "Repita la clave",            
-                minlength:"Ingresa un password de 8 caracteres a mas",
-                equalTo : "Ingrese el mismo valor de Clave"
+                required : "Por favor confirme su contraseña",            
+                minlength:"Por favor ingresa una contraseña de 8 caracteres a mas",
+                equalTo : "Por favor ingrese la misma contraseña"
             }
          
         }
@@ -319,13 +319,13 @@ var valCrearEditar = function(elemento){
       ta_ubigeo_in_id: "required"
     },
     messages: {
-      va_pais: "Elige su país",
-      va_ciudad: "Elige una ciudad",
-      va_nombre: "Ingrese un nombre de grupo",
-      ta_categoria_in_id: "Ingrese una categoría de grupo",
-      va_descripcion : "Ingrese una descripción",
-      pais: "Elige un país",
-      ta_ubigeo_in_id: "Elige la ciudad"
+      va_pais: "Por favor elige su país",
+      va_ciudad: "Por favor elige una ciudad",
+      va_nombre: "Por favor ingrese un nombre de grupo",
+      ta_categoria_in_id: "Por favor seleccione una categoría de grupo",
+      va_descripcion : "Por favor ingrese una descripción",
+      pais: "Por favor elige un país",
+      ta_ubigeo_in_id: "Por favor elige la ciudad"
     }
   });
 }
@@ -343,11 +343,11 @@ var valactualizar = function(elemento){
     },
     messages:{
       va_nombre: {
-        required:"Por favor ingresar un nombre"
+        required:"Por favor ingrese su nombre"
       },
       va_email:{
-        required:"Por favor ingresa un Email",
-        email: "Ingrese un correo valido"
+        required:"Por favor ingrese su correo electrónico",
+        email: "Por favor ingrese un correo electrónico válido"
       }
     }   
   });

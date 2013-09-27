@@ -39,7 +39,7 @@
                 <p class="desc gh">
                 <?php echo $this->grupo[0]['va_descripcion']; ?><br> 
                 </p>
-                <p class="gh ft"><span class="cant-user ab">Nº Usuarios</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></p>
+                <p class="gh ft"><span class="cant-user ab">Nº Miembros</span> <span class="nm"><?php echo $this->grupo[0]['cantidad']; ?></span></p>
                 <p class="gh ft"><span class="cant-evento-f ab">Evento futuros</span> <span class="nm"><?php echo $this->eventosfuturos[0]['eventosfuturos']; ?></span></p>
                 <p class="gh ft"><span class="cant-evento-p ab">Evento pasados</span> <span class="nm"><?php echo $this->eventospasados[0]['eventospasados']; ?></span></p>
             </div>
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span12 mienbros-evento">
-                                        <p><?php echo $this->escapeHtml($proximos_eventos->miembros); ?> Miembros.</p>
+                                        <p><?php echo $this->escapeHtml($proximos_eventos->miembros); ?> Asistente.</p>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                             <?php } elseif($participa=='desactivo'){ ?>
                             <div class="row-fluid eliminar-grupo">
                                 <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a>
+                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Únete a nosotros!</a>
                                 </div>      
                             </div>
                             <?php }elseif($participa=='pendiente'){ ?>
@@ -131,14 +131,14 @@
                                 <?php }else{ ?>
                             <div class="row-fluid eliminar-grupo">
                                 <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Unete a nosotros!</a>
+                                    <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">¡Únete a nosotros!</a>
                                 </div>      
                             </div>
                             <?php } ?>
                                <?php  } else { ?>
                             <div class="row-fluid">
                                 <div class="span12 unete-grupo">
-                                    <a href="#inline_evento" class="btn btn-success inlineEvento">¡Unete a nosotros!</a> 
+                                    <a href="#inline_evento" class="btn btn-success inlineEvento">¡Únete a nosotros!</a> 
                                 </div>      
                             </div>
                             <?php } ?> 

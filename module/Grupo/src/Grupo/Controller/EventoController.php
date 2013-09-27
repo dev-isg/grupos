@@ -429,7 +429,7 @@ class EventoController extends AbstractActionController
 //        var_dump($flashMessenger->getContainer()->correo);Exit;
 //         $msgenvio= new \Zend\Session\Container('correo');
 //        $mensajec= $msgenvio->msge;
-         
+
         $view->setVariables(array(
             'eventos' => $evento,
             'grupo' => $grupo,
@@ -448,7 +448,8 @@ class EventoController extends AbstractActionController
             'grupoestado' => $grupoestado,
             'foto' => $foto,
             'grupoeventusuario'=>$grupoeventuser,
-            'mensaje_correo'=>$mensajec
+            'mensaje_correo'=>$mensajec,
+            'infoevento'=>$fichaevento
 //            'tipoprivado'=>$tipoprivado,
 //            'tipopublico'=>$tipopublico
         ));
@@ -749,14 +750,14 @@ class EventoController extends AbstractActionController
                             <div style="color: #7D7D7D">
                             Hola '.$correo.',<br />
                              '.ucwords(utf8_decode($storage->read()->va_nombre)).' te ha invitado a participar en el evento: <br />
-                                 <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong> - '. html_entity_decode($descripcion) .'<br />
+                                 <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_event']) . '</strong> '. html_entity_decode($descripcion) .'<br />
                                  Para mayor información del evento puedes hacer clic en el siguiente enlace <a href="' . $this->_options->host->base . '/evento/' . $idevento . '">'. utf8_decode($user_info['nom_event']) .'</a> o copiar la URL '. $this->_options->host->base . '/evento/' . $idevento .' y podrás unirte al evento.
                              </div>
                              <img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/>
                        </body>
                        </html>';
 
-    $this->mensaje($correo, $bodyHtmlAdmin, 'Alguien te ha invitado');
+    $this->mensaje($correo, $bodyHtmlAdmin, 'Alguien te invitó a un evento');
           
           $arrmensaje[$correo]=$error->msge;    
         }
@@ -779,9 +780,9 @@ class EventoController extends AbstractActionController
             }
         } else {
             if (count($arrok) > 1) {
-                $mensaje = 'Los correos fueron enviados con exito';
+                $mensaje = 'Los correos fueron enviados con éxito';
             } else {
-                $mensaje = 'El correo fué enviado con exito';
+                $mensaje = 'El correo fue enviado con éxito';
             }
         }
 //        $session = new \Zend\Session\SessionManager();

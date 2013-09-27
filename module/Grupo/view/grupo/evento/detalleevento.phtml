@@ -100,7 +100,7 @@
                         <ul class="score-list">
                           <li class="clearfix">
                             <div class="ficha-dep">
-                              Organizador:  
+                              Organizador(a):  
                             </div>
                             <div class="ficha-desc">
                                <?php echo $this->eventos[0]['nombre_user']; ?>
@@ -189,21 +189,13 @@
                                       </div>
                                     <?php }?>
                                   <div class="span6">
-                                    <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
-                                      <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
-                                        <h3>Ingresa correos separado por comas</h3>
-                                      <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
-                                      <input type="text" name="correos" class="inputModif"/>
-                                      <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
-                                    </form>
-                                  </div>
-                                  <div class="span6">
                                     <div class="span12 user-back-2 email-user-d">
                                       <form method="post" action="/grupo/evento/invitar" id="gruposInvitar">
                                           <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
                                             <?php foreach($this->grupoeventusuario as $grupousuario){?>
+                                            <?php if($this->infoevento->in_id != $grupousuario->idusuario){?>
                                                 <li id="user-<?php echo $grupousuario->idusuario;?>">
                                                 <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
                                                 <label class="checkbox img-cargar-usuarios">
@@ -212,7 +204,7 @@
                                                   <p><?php echo $grupousuario->descripcion_usuario;?></p>
                                                 </label>
                                                 </li>
-                                            
+                                            <?php }?>
                                             <?php }?>
                                           <!--<li id="user-g">
                                             <input class="enviar_correo" name="userEnviar[]" type="checkbox"> 
@@ -230,6 +222,16 @@
                                       </form>
                                     </div>
                                   </div>
+                                  <div class="span6">
+                                    <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
+                                      <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
+                                        <h3>Ingresa correos separado por comas</h3>
+                                      <em>Ejm: example@gmail.com, ejemplo@gmail.com</em>
+                                      <input type="text" name="correos" class="inputModif"/>
+                                      <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
+                                    </form>
+                                  </div>
+                                  
                                 </div>
                               </div>
                               <!--<div id="fb-root"></div>
@@ -253,7 +255,7 @@
                 </div>
                 <?php }else{ ?>
                 <div class="span12 login-comentario">
-                    <p>Evento es privado, unete al grupo para poder visualizarlo.</p>
+                    <p>Evento es privado, únete al grupo para poder visualizarlo.</p>
                 </div>
          <?php }} ?>       
          <?php if($this->eventos[0]['va_tipo']=='publico'){ ?>
@@ -375,6 +377,37 @@
                               <div id="invita-correo">
                                 <div class="row-fluid">
                                   <div class="span6">
+                                    <div class="span12 user-back-2 email-user-d">
+                                      <form method="post" action="/grupo/evento/invitar" id="gruposInvitar">
+                                          <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
+                                        <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
+                                        <div class="todo-marcar">
+                                            <input id="checkAll" class="marcar-check" onclick="checkTodos(this.id,'gruposInvitar');" value="" type="checkbox"> 
+                                            <label class="checkbox">
+                                              Marcar todos
+                                            </label>
+                                        </div>
+                                        <ul>
+                                          <?php foreach($this->grupoeventusuario as $grupousuario){?>
+                                            <?php if($this->infoevento->ta_usuario_in_id != $grupousuario->idusuario){?>
+                                            <li id="user-<?php echo $grupousuario->idusuario;?>">
+                                              <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
+                                              <label class="checkbox img-cargar-usuarios">
+                                                <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
+                                                <a href="/usuario/<?php echo $grupousuario->idusuario;?>"><?php echo $grupousuario->nombre_usuario;?></a> 
+                                                <p><?php echo $grupousuario->descripcion_usuario;?></p>
+                                              </label>
+                                            </li>
+                                             <?php }?>
+                                          <?php }?>
+                                        </ul>
+                                        <div class="content-en">
+                                          <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <div class="span6">
                                     <form method="post" action="/grupo/evento/invitar" id="form-correo-s">
                                         <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                       <h3>Ingresa correos separado por comas</h3>
@@ -382,30 +415,6 @@
                                       <input type="text" name="correos" class="inputModif"/>
                                       <input type="submit" class="btn btnCorreoForm" name="Enviar"/>
                                     </form>
-                                  </div>
-                                  <div class="span6">
-                                    <div class="span12 user-back-2 email-user-d">
-                                      <form method="post" action="/grupo/evento/invitar" id="gruposInvitar">
-                                          <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
-                                        <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
-                                        <ul>
-                                             <?php foreach($this->grupoeventusuario as $grupousuario){?>
-                                                <li id="user-<?php echo $grupousuario->idusuario;?>">
-                                                <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
-                                                <label class="checkbox img-cargar-usuarios">
-                                                  <img src="<?php echo $this->host('images')?>/usuario/perfil/<?php echo $grupousuario->imagen;?>" title="<?php echo $grupousuario->nombre_usuario;?>">
-                                                  <a href="/usuario/<?php echo $grupousuario->idusuario;?>"><?php echo $grupousuario->nombre_usuario;?></a> 
-                                                  <p><?php echo $grupousuario->descripcion_usuario;?></p>
-                                                </label>
-                                                </li>
-                                            
-                                            <?php }?>
-                                        </ul>
-                                        <div class="content-en">
-                                          <button type="submit" class="btn btn-warning btn-enviar-correo">Enviar</button>
-                                        </div>
-                                      </form>
-                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -439,14 +448,14 @@
         if ($this->eventos[0]['va_fecha'] >= $fecha_actual) {
             ?> 
             <div class="span12 comentar-form">
-                <h4><?php echo ucwords($this->session->va_nombre); ?>, ¡Comente aquí!</h4>
+                <h4><?php echo ucwords($this->session->va_nombre); ?>, ¡Comenta aquí!</h4>
                 <?php
                 $form = $this->comentarioform;
 
                 $form->setAttributes(array(
-                    'action' => $this->url.'/evento/'.$this->idevento,
-                    'method' => 'post',
-                    'id' => 'form-comente'
+                  'action' => $this->url.'/evento/'.$this->idevento,
+                  'method' => 'post',
+                  'id' => 'form-comente'
                 ));
 
                 $form->prepare();
@@ -455,15 +464,15 @@
                 <div class="row-fluid fn-form">
                     <div class="span2">
                   <?php $valor = explode('/',$this->session->va_foto);
-                                    if($valor[0]=='https:'){ ?>  
-                                        <img src="<?php echo $this->session->va_foto ;?>?width=80&height=75">                                            
-                                    <?php } else {
-                                        if(($this->session->va_foto)!="foto-carnet.jpg"){?>
-                                            <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $this->session->va_foto ;?>" >
-                                        <?php }else{?>
-                                            <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
-                                        <?php } 
-                                    }?>  
+                      if($valor[0]=='https:'){ ?>  
+                        <img src="<?php echo $this->session->va_foto ;?>?width=80&height=75">                                            
+                        <?php } else {
+                        if(($this->session->va_foto)!="foto-carnet.jpg"){?>
+                          <img src="<?php echo $this->host('images') ?>/usuario/comentarios/<?php echo $this->session->va_foto ;?>" >
+                        <?php }else{?>
+                          <img src="<?php echo $this->host('img') ?>/foto-carnet.jpg">
+                        <?php } 
+                      }?>  
                     </div>
                     <div class="span10">
                       <?php echo $this->formRow($form->get('va_descripcion')); ?>
@@ -517,10 +526,9 @@
                             <h4><a href="/usuario/<?php echo $comentarios->ta_usuario_in_id;?>"><?php echo  $this->escapeHtml($comentarios->nombre_usuario);?></a></h4>
                             <p><?php echo  $this->escapeHtml($comentarios->va_descripcion);?></p>
                             <p class="small muted">
-                             <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
-                                         $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?>
+                              <?php  $fecha = date_create($this->escapeHtml($comentarios->va_fecha));
+                              $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                              echo date_format($fecha, "d").' de '. $arrayMeses[date('m')-1].' del '.date_format($fecha, "Y"); ?>
                             </p>
                           </div>
                         </div>
@@ -552,7 +560,7 @@
                                   <?php } else { ?>
                                     <div class="row-fluid">
                                       <div class="span12 unete-grupo">                                        
-                                        <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Unete al evento</a>
+                                        <a href="#" class="btn btn-success uneteEvent" id="uneteEvent">Únete al evento</a>
                                       </div>
                                     </div>
                                   <?php } ?>
@@ -566,14 +574,14 @@
                               <?php } else { ?>
                                 <div class="row-fluid evento-desactivo">
                                   <div class="span12 unete-grupo">
-                                    <a href="#" class="btn btn-success uneteGrupo" id="uneteGrupo">¡Unete a nosotros!</a> 
+                                    <a href="#" class="btn btn-success uneteGrupo" id="uneteGrupo">¡unete a nosotros!</a> 
                                   </div>
                                 </div>
                               <?php } ?>
                           <?php } else { ?>
                           <div class="row-fluid">
                             <div class="span12 unete-grupo">
-                            <a href="#inline_evento" class="btn btn-success inlineEvento">Unete al evento</a>
+                            <a href="#inline_evento" class="btn btn-success inlineEvento">unete al evento</a>
                             </div>
                           </div> 
                         <?php }
@@ -630,10 +638,8 @@
 </div>
 <?php } ?>
 <script type="text/javascript">
-    
   var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
-
-  $(document).on('ready', function(){ 
+  $(document).on('ready', function(){
     enviarDatos();
     abandonarDatos();
     agregarComentario();
@@ -649,7 +655,6 @@
         correos: {
           required: "Ingrese correo electronico"          
         }
-        
       }
     });
     $('#gruposInvitar').validate({
@@ -664,12 +669,15 @@
         }
       }
     });
-
     $(".btnCorreoForm").click(function(event){
       
     });
 
   });
+
+  function checkTodos (id,pID) {
+    $( "#" + pID + " :checkbox").attr('checked', $('#' + id).is(':checked'));
+  }
 
   function enviarDatos(){
     var even = <?php echo $this->idevento; ?>;

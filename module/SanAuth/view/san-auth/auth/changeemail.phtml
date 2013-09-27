@@ -39,7 +39,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".alert-message").alert();
-		window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+		window.setTimeout(function() { $(".alert-message").alert('close'); }, 15000);
 
 		$("#recuperacion").validate({
             rules: {
@@ -50,8 +50,8 @@
             },
             messages: {
               	va_email: {
-	                required : "Ingrese su correo electronico",
-	                email:"Debe ingresar un correo valido"
+	                required : "Por favor ingrese su correo electrónico",
+	                email:"Debe ingresar un correo válido"
 	            }
             }
         });

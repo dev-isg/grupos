@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController {
         $valor = $this->headerAction($id);
         $usuariosgrupos = $this->getUsuarioTable()->usuariosgrupos($id);
         if(count($usuariosgrupos)==0)
-        {$mensaje= 'Aún no participas en ningún grupo, ¿Qué esperas para participar en uno?';}
+        {$mensaje= 'Aún no participas en ningún grupo, ¿qué esperas para participar en uno?';}
 //       $categorias = $this->getUsuarioTable()
 //                        ->categoriasunicas($id)->toArray();
 //        for ($i = 0; $i < count($categorias); $i++) {
@@ -118,7 +118,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $misgrupos = $this->getGrupoTable()->misgrupos($id);
           if(count($misgrupos)==0)
-        {$mensaje= 'Aún no has creado ningún grupo, ¿Qué esperas para participar en uno?';}
+        {$mensaje= 'Aún no has creado ningún grupo, ¿qué esperas para crear uno?';}
         $valor = $this->headerAction($id);
          $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($misgrupos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -156,7 +156,7 @@ class IndexController extends AbstractActionController {
 
          $eventosusuario = $this->getEventoTable()->usuarioseventos($id);
          if(count($eventosusuario)==0)
-        {$mensaje= 'Aún no participas en ningún evento, ¿Qué esperas para participar en  uno?';}
+        {$mensaje= 'Aún no participas en ningún evento, ¿qué esperas para participar en  uno?';}
 //         $index=new \Usuario\Controller\IndexController();
         $valor = $this->headerAction($id);
            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($eventosusuario));
@@ -197,7 +197,7 @@ class IndexController extends AbstractActionController {
         $id = $storage->read()->in_id;
         $miseventos = $this->getEventoTable()->miseventos($id);
         if(count($miseventos)==0)
-        {$mensaje= 'Aún no has creado ningún evento, ¿Qué esperas para participar en  uno?';}
+        {$mensaje= 'Aún no has creado ningún evento, ¿qué esperas para crear uno?';}
         $valor = $this->headerAction($id);
         $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($miseventos));
             $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
@@ -222,10 +222,13 @@ class IndexController extends AbstractActionController {
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . '</strong><br />
-            Tu cuenta en <a href="' .self::$rutaStatic3. '">juntate.pe</a> está casi lista para usar. Activa tu cuenta haciendo click en el enlace <br>
-            <a href="' .self::$rutaStatic3. '/auth?token=' . $valor . ' ">' .self::$rutaStatic3. '/auth?token=' . $valor . '</a><br />
-             <img src="'.self::$rutaStatic2.'/juntate.png" title="juntate.pe"/>
+                                                     Hola  <strong style="color:#133088; font-weight: bold;">' . $usuario . ',</strong><br /><br />
+                                        Tu cuenta en <a href="' .self::$rutaStatic3. '">juntate.pe</a> está casi lista para usar.<br /><br />
+                                        Activa tu cuenta haciendo <a href="' .self::$rutaStatic3. '/auth?token=' . $valor . ' ">"click aqui"</a> <br /><br />
+                                        O copia la siguiente dirección en tu navegador:<br /><br />
+                                        <a href="' .self::$rutaStatic3. '/auth?token=' . $valor . ' ">' .self::$rutaStatic3. '/auth?token=' . $valor . '</a>
+                                        <br /><br /><br />
+                                         <img src="'.self::$rutaStatic2.'/juntate.png" title="juntate.pe"/>
                                                      </div>
                                                </body>
                                                </html>';
@@ -328,7 +331,7 @@ public function getAuthService() {
 
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                         } else {
-                            echo 'problemas con el redimensionamiento';
+                            echo 'Problemas con el redimensionamiento';
                             exit();
                         }
                     } else {
@@ -338,11 +341,11 @@ public function getAuthService() {
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/registrarse?m=1');
                     }
                 } else {
-                    $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
+                    $mensaje = 'El correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
                     // return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/index/agregarusuario');
                 }
               }else{
-                  $mensaje = 'el correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
+                  $mensaje = 'El correo electrónico ' . $request->getPost('va_email') . ' ya esta asociado a un usuario';
               }
             } else {
                 foreach ($form->getInputFilter()->getInvalidInput() as $error) {
@@ -380,20 +383,23 @@ public function getAuthService() {
     }
     
     
-    public function editarusuarioAction(){
-        
+    public function editarusuarioAction() {
+
         $storage = new \Zend\Authentication\Storage\Session('Auth');
-        $session=$storage->read();
+        $session = $storage->read();
         $categorias = $this->getGrupoTable()->tipoCategoria();
         $this->layout()->categorias = $categorias;
-        
-       if($_COOKIE['tipo'] or $_GET['tipo'] or $_GET['valor'])
-         { if($_COOKIE['tipo']=='Eventos' or $_GET['tipo']=='Eventos' or $_GET['valor']=='Eventos')
-         {  $this->layout()->active1='active';}
-         else{$this->layout()->active='active';}
-         } 
-          else{$this->layout()->active='active';}
-    //   $this->layout()->active='active';
+
+        if ($_COOKIE['tipo'] or $_GET['tipo'] or $_GET['valor']) {
+            if ($_COOKIE['tipo'] == 'Eventos' or $_GET['tipo'] == 'Eventos' or $_GET['valor'] == 'Eventos') {
+                $this->layout()->active1 = 'active';
+            } else {
+                $this->layout()->active = 'active';
+            }
+        } else {
+            $this->layout()->active = 'active';
+        }
+        //   $this->layout()->active='active';
         $renderer = $this->serviceLocator->get('Zend\View\Renderer\RendererInterface');
         $renderer->inlineScript()
                 ->setScript('actualizarDatos();if($("#editarusuario").length){valactualizar("#editarusuario");};')
@@ -417,22 +423,21 @@ public function getAuthService() {
         }
         $header = $this->headerAction($id);
         $adpter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $form = new UsuarioForm(null,$adpter);
-         if($usuario->va_pais!=null)
-       {   
-        $ubige=$this->getUsuarioTable()->getPais($usuario->va_pais);
-      // var_dump($ubige);exit;
-        $array = array();
-        foreach ($ubige as $y) {
-            $array[$y['ID']] = $y['Name']; }
-       $ciudads = $this->getUsuarioTable()->getUsuariociudad($id)->toArray();
-        if($ciudads[0]['va_pais']=='PER')
-        { $ciudad=$this->getUsuarioTable()->getCiudadPeru($ciudads[0]['ta_ubigeo_in_id']);}
-        else
-        {
-            $ciudad=$this->getUsuarioTable()->getCiudad('',$ciudads[0]['ta_ubigeo_in_id']);
-        }
-            
+        $form = new UsuarioForm(null, $adpter);
+        if ($usuario->va_pais != null) {
+            $ubige = $this->getUsuarioTable()->getPais($usuario->va_pais);
+            // var_dump($ubige);exit;
+            $array = array();
+            foreach ($ubige as $y) {
+                $array[$y['ID']] = $y['Name'];
+            }
+            $ciudads = $this->getUsuarioTable()->getUsuariociudad($id)->toArray();
+            if ($ciudads[0]['va_pais'] == 'PER') {
+                $ciudad = $this->getUsuarioTable()->getCiudadPeru($ciudads[0]['ta_ubigeo_in_id']);
+            } else {
+                $ciudad = $this->getUsuarioTable()->getCiudad('', $ciudads[0]['ta_ubigeo_in_id']);
+            }
+
             $form->get('va_pais')->setValue($array);
             //$form->get('ta_ubigeo_in_id')->setValueOptions($arra); 
         }
@@ -458,12 +463,12 @@ public function getAuthService() {
         }
 
         $request = $this->getRequest();
-        if ($request->isPost()) { 
-        $datos =$this->request->getPost();
-       // var_dump($usuario);exit;
+        if ($request->isPost()) {
+            $datos = $this->request->getPost();
+            // var_dump($usuario);exit;
             $File = $this->params()->fromFiles('va_foto');
-        
-          
+
+
             $nonFile = $this->params()->fromPost('va_nombre');
             if ($File['name'] != '') {
                 require './vendor/Classes/Filter/Alnum.php';
@@ -476,7 +481,7 @@ public function getAuthService() {
                 $filtered = $filter->filter($nom);
                 $imagen = $filtered . '-' . $imf2;
             } else {
-                              
+
                 $idusuario = $this->getUsuarioTable()->getUsuario($id);
                 $imagen = $idusuario->va_foto;
             }
@@ -485,34 +490,34 @@ public function getAuthService() {
                             ->toArray(), $this->getRequest()
                             ->getFiles()
                             ->toArray());
-           
-              $form->setInputFilter($usuario->getInputFilter());
-          $form->setData($dato);
-          //var_dump($usuario->va_contrasena);exit;
-            if ($form->isValid()){ 
-            $catg_ingresada=$this->params()->fromPost('select2');
+
+            $form->setInputFilter($usuario->getInputFilter());
+            $form->setData($dato);
+            //var_dump($usuario->va_contrasena);exit;
+            if ($form->isValid()) {
+                $catg_ingresada = $this->params()->fromPost('select2');
                 if ($this->params()->fromPost('va_contrasena') == '') {
                     $dataa = $this->getUsuarioTable()->getUsuario($id);
                     $pass = $dataa->va_contrasena;
-                    $nombre=$this->params()->fromPost('va_nombre');
+                    $nombre = $this->params()->fromPost('va_nombre');
                     if ($File['name'] != '') {
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada,$datos->ta_ubigeo_in_id);
-                            $obj= $storage->read();
-                            $obj->va_foto=$imagen;
-                            $obj->va_nombre=$nombre;
-                            $storage->write($obj); 
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass, $catg_ingresada, $datos->ta_ubigeo_in_id);
+                            $obj = $storage->read();
+                            $obj->va_foto = $imagen;
+                            $obj->va_nombre = $nombre;
+                            $storage->write($obj);
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
-                    } else    { 
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass,$catg_ingresada,$datos->ta_ubigeo_in_id);
-                            $obj= $storage->read();
-                            $obj->va_foto=$imagen;
-                            $obj->va_nombre=$nombre;
-                            $storage->write($obj);
+                    } else {
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, '', $pass, $catg_ingresada, $datos->ta_ubigeo_in_id);
+                        $obj = $storage->read();
+                        $obj->va_foto = $imagen;
+                        $obj->va_nombre = $nombre;
+                        $storage->write($obj);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
@@ -520,24 +525,23 @@ public function getAuthService() {
 
                     if ($File['name'] != '') {//echo 'mamaya';exit;
                         if ($this->redimensionarFoto($File, $nonFile, $imagen, $id)) {
-                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada,$datos->ta_ubigeo_in_id);
+                            $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, null, null, $catg_ingresada, $datos->ta_ubigeo_in_id);
                             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                         } else {
                             echo 'problemas con el redimensionamiento';
                             exit();
                         }
                     } else {
-                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen,null,null,$catg_ingresada,$datos->ta_ubigeo_in_id);
+                        $this->getUsuarioTable()->guardarUsuario($usuario, $imagen, null, null, $catg_ingresada, $datos->ta_ubigeo_in_id);
 
                         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/micuenta?m=1');
                     }
                 }
-            } else { 
-                foreach ($form->getInputFilter()->getInvalidInput() as $error) {             
-                   // print_r($error->getMessages());
-                   print_r($error->getName());
+            } else {
+                foreach ($form->getInputFilter()->getInvalidInput() as $error) {
+                    // print_r($error->getMessages());
+                    print_r($error->getName());
                 }
-
             }
         }
         

@@ -44,7 +44,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".alert-message").alert();
-        window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+        window.setTimeout(function() { $(".alert-message").alert('close'); }, 15000);
 
 		$("#registro").validate({
             rules: {
@@ -60,13 +60,13 @@
             },
             messages: {
               	va_contrasena: {
-	                required : "Ingrese la clave",
-	                minlength:"Ingresa un password de 8 caracteres a mas"
+	                required : "Por favor ingrese su contraseña",
+	                minlength:"Por favor ingrese una contraseña de 8 caracteres a mas"
 	            },
 	            verificar_contrasena: {
-	                required : "Repita la clave",            
-	                minlength:"Ingresa un password de 8 caracteres a mas",
-	                equalTo : "Ingrese el mismo valor de Clave"
+	                required : "Por favor repita la contraseña",            
+	                minlength:"Por favor ingrese una contraseña de 8 caracteres a mas",
+	                equalTo : "Por favor ingrese la misma contraseña"
 	            }
             }
         });
