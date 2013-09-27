@@ -411,7 +411,7 @@ span.face{
   width: 100%;
   height: 40px;
   margin-top: 15px;
-  margin-left: 8em;
+  margin-left: 0;
 }
 .registro strong{
   color: red;
@@ -422,7 +422,9 @@ span.face{
 .fileupload-exists{
   font-weight: normal!important;
 }
-
+.detalle-img .btn{
+  padding: 4px 4px!important;
+}
 .cambiofotouser h1{
   font-family: "league_gothicregular" !important;
   font-weight: normal !important;
@@ -3379,6 +3381,17 @@ pre
   margin-left: 0;
   margin-bottom: 0;
 }
+.todo-marcar{
+  position: absolute;
+  top: 28px;
+  left: 0;
+  border-bottom: 1px solid #ccc;
+  width: 94%;
+  margin-bottom: 5px;
+}
+.todo-marcar .checkbox{
+  margin-bottom: 0;
+}
 .controls ul li{
   color: red;
   font-size: 12px;
@@ -3428,4 +3441,7 @@ form textarea.error{
 }
 .page-juntate p{
   line-height: 18px;
+}
+.marcar-check{
+  float: left;
 }

@@ -6,7 +6,7 @@
             <div class="row-fluid">
                 <div class="alert alert-success alert-margin alert-message">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <?php echo 'Datos guardados correctamente'?>
+                    <?php echo 'Sus datos han sido actualizados correctamente'?>
                 </div>
             </div>
         <?php } ?>
@@ -76,7 +76,7 @@
                                             <div class="img-thu-user fileupload-new thumbnail">
                                                 <?php $valor = explode('/', $this->usuario->va_foto);
                                                 if ($valor[0] == 'https:') { ?>  
-                                                    <img src="<?php echo $this->usuario->va_foto; ?>?width=130&height=130">                                            
+                                                    <img src="<?php echo $this->usuario->va_foto; ?>?width=140&height=130">                                            
                                                 <?php } else {
                                                     if (($this->usuario->va_foto) != "foto-carnet.jpg") { ?>
                                                         <img src="<?php echo $this->host('images') ?>/usuario/general/<?php echo $this->usuario->va_foto; ?>" style="width:130px;height:130px;">
@@ -137,7 +137,7 @@
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="control-group">
-                                    <label class="control-label" for="va_descripcion">Mis intereses:</label>
+                                    <label class="control-label" for="va_descripcion">Otros intereses:</label>
                                     <div class="controls">
                                         <?php echo $this->formRow($form->get('va_descripcion'));?>
                                     </div>
@@ -177,7 +177,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".alert-message").alert();
-        window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+        window.setTimeout(function() { $(".alert-message").alert('close'); }, 15000);
         $("#e1").select2();
 
         var cboPais = $("#pais");

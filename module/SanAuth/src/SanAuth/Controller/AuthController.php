@@ -82,18 +82,29 @@ class AuthController extends AbstractActionController {
             $usuario = $this->getUsuarioTable()->usuario($token);
             if (count($usuario) > 0) {
                 $this->getUsuarioTable()->cambiarestado($usuario[0]['in_id']);
-                $mensaje = 'Bienvenid@ '.ucwords($usuario[0]['va_nombre']).'. Tu cuenta ya esta lista para usarse. ';
+                $mensaje = 'Bienvenido '.ucwords($usuario[0]['va_nombre']).'. Tu cuenta ya esta lista para usarse. ';
             } else {
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
             }
         }
         
+       $form = $this->getForm();
+        
+//                $request=$this->getRequest();
+//                if($request->isPost()){
+//                 $form->setData($request->getPost());
+//                    if ($form->isValid()) {
+//                            $this->redirect()->toUrl('/auth//authenticate');
+//                        }
+//
+//                    }
+            
        $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $mensajes = $flashMessenger->getMessages();
         }
 
-        $form = $this->getForm();
+
         return array(
             'form' => $form,
             'mensaje' => $mensaje,
@@ -123,6 +134,8 @@ class AuthController extends AbstractActionController {
                 if ($usuario[0]['va_estado'] == 'activo') {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
+//                       
+                       $this->flashMessenger()->clearMessages();
                        $this->flashMessenger()->setNamespace('SanAuth');
                        $this->flashmessenger()->addMessage($message);
                     }
@@ -158,11 +171,13 @@ class AuthController extends AbstractActionController {
                     }
                 }
             }
-//          else {
+//            else {
 //              foreach ($form->getInputFilter()->getInvalidInput() as $error) {
 //                       foreach($error->getMessages() as $mensaje){
-//                            $this->flashmessenger()->addMessage($mensaje);
+//                             $this->flashmessenger()->addMessage($mensaje);
 //                       }
+//              }
+//             
 //              }
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
 //           }
@@ -170,7 +185,6 @@ class AuthController extends AbstractActionController {
         if ($id) {
             return $this->redirect()->toRoute($redirect, array('in_id' => $id));
         } else {
-
             return $this->redirect()->toRoute($redirect);
         }
     }
@@ -336,10 +350,10 @@ class AuthController extends AbstractActionController {
                     $results = $this->getUsuarioTable()->generarPassword($mail);
                     $usuario = $this->getUsuarioTable()->getUsuarioxEmail($mail);
 //                    $mensajes='Este correo fue enviado con exito...';
-                    $this->flashmessenger()->addMessage('Este correo fue enviado con éxito...');
+                    $this->flashmessenger()->addMessage('Se le ha enviado un correo a la cuenta indicada, por favor seguir las instrucciones.');
                 } catch (\Exception $e) {
 //                    $mensajes='Este correo no esta registrado...';
-                    $this->flashmessenger()->addMessage('Este correo no esta registrado...');
+                    $this->flashmessenger()->addMessage('Este correo no esta registrado.');
                 }
 
                 if ($results) {
@@ -350,10 +364,11 @@ class AuthController extends AbstractActionController {
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                    Hola '.ucwords($usuario->va_nombre).',<br /> 
-                                                    Para recuperar tu contraseña debes hacer <a href="' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) . '">Clic Aquí</a>
-                                                    o copiar la siguiente url en su navegador:<br />' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) .'          
+                                                    Hola '.ucwords($usuario->va_nombre).',<br /><br />  
+                                                    Para recuperar tu contraseña debes hacer <a href="' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) . '">Clic Aquí</a><br /><br /> 
+                                                    o copiar la siguiente url en su navegador:<br /><br />' . $config['host']['base'] . '/cambio-contrasena?token=' . utf8_decode($results) .'          
                                                      </div>
+                                                     <br /><br /><br />
                                                      <img src="'.$config['host']['img'].'/juntate.png" title="juntate.pe"/>
                                                </body>
                                                </html>';
@@ -406,9 +421,10 @@ class AuthController extends AbstractActionController {
 
                     $nuevopass = $this->params()->fromPost('va_contrasena');
                     if ($this->getUsuarioTable()->cambiarPassword($nuevopass, $results->in_id)) {
-                        $this->flashmessenger()->addMessage('La contraseña se actualizo corréctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se actualizo correctamente...');
+                        return $this->redirect()->toUrl('/auth');
                     } else {
-                        $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar corréctamente...');
+                        $this->flashmessenger()->addMessage('La contraseña se no se pudo actualizar correctamente...');
                     }
                     return $this->redirect()->toUrl('/cambio-contrasena?token=' . $password);
                 }

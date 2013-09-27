@@ -538,7 +538,8 @@ public function idfacebook2($id,$logout)
         $select = $sql->select()
                         ->columns(array('Code', 'Name'))
                         ->from('country')
-                ->where(array('Code'=>$pais));
+                ->where(array('Code'=>$pais))
+                ->order('Name ASC');
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
        return $results->toArray();
@@ -551,10 +552,10 @@ public function idfacebook2($id,$logout)
                         ->columns(array('ID', 'Name'))
                         ->from('city');
           if($ID!=null)
-              {  $select->where(array('ID' =>$ID ))->group('ID'); 
+              {  $select->where(array('ID' =>$ID ))->group('ID')->order('Name ASC'); 
               
               }
-          else {  $select->where(array('CountryCode' =>$ciudad ))->group('ID');}
+          else {  $select->where(array('CountryCode' =>$ciudad ))->group('ID')->order('Name ASC');}
           $selectString = $sql->getSqlStringForSqlObject($select);
        
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);

@@ -191,7 +191,8 @@ $this->add(array(
         $sql = new Sql($adapter);
         $select = $sql->select()
                         ->columns(array('Code', 'Name'))
-                        ->from('country');
+                        ->from('country')
+                        ->order('Name ASC');
         $selectString = $sql->getSqlStringForSqlObject($select);
         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         $pais= $results->toArray();  

@@ -90,33 +90,35 @@
         </div>
       
 <!-- //////////////////////////////////////////FIN BANNER ////////////////////////////////////////////-->
+
+
 <div class="main-container">
     <div class="container">
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
-      <div class="alert alert-margin alert-message">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Por el momento no hay eventos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Eventos"> BUSCAR<a>'; ?>
-      </div>
-    </div> <?php }elseif ($_GET['m']=='2') {?> <div class="row-fluid">
-      <div class="alert alert-margin alert-message">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-      <?php  echo 'Por el momento no hay grupos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Grupos"> BUSCAR<a>'; ?>
-      
-      </div>
-    </div> <?php }
-    elseif ($_GET['m']=='3') {?> <div class="row-fluid">
-      <div class="alert alert-margin alert-message">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Por el momento no se encontró  resultados para su búsqueda en EVENTOS'; ?>
-      </div>
-    </div> <?php }
-    elseif($_GET['m']=='4') {?> <div class="row-fluid">
-      <div class="alert alert-margin alert-message">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Por el momentono se encontró ningún resultados para su búsqueda en GRUPOS'; ?>
-      </div>
-    </div> <?php }
-    } else {
+        <div class="alert alert-margin alert-message">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?php  echo 'Por el momento no hay eventos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Eventos"> BUSCAR<a>'; ?>
+          </div>
+        </div> <?php }elseif ($_GET['m']=='2') {?> <div class="row-fluid">
+        <div class="alert alert-margin alert-message">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+          <?php  echo 'Por el momento no hay grupos registrados para la categoria que buscas.<p> Pero tenemos muchos otras categorías registradas aquí  <a href="'.$this->host('ruta').'/buscar?tipo=Grupos"> BUSCAR<a>'; ?>
+          
+        </div>
+        </div> <?php }
+        elseif ($_GET['m']=='3') {?> <div class="row-fluid">
+        <div class="alert alert-margin alert-message">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?php  echo 'Por el momento no se encontró  resultados para su búsqueda en EVENTOS'; ?>
+          </div>
+        </div> <?php }
+        elseif($_GET['m']=='4') {?> <div class="row-fluid">
+        <div class="alert alert-margin alert-message">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?php  echo 'Por el momentono se encontró ningún resultados para su búsqueda en GRUPOS'; ?>
+          </div>
+        </div> <?php }
+        } else {
     
         if(count($this->grupos)<=0) { ?>
         <div class="row-fluid">
@@ -128,14 +130,11 @@
                         <div class="post-block four_columns">
                             <div class="entry-thumb">
                                 <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->in_id); ?>">
-                                    
-                                    <?php if($eventos->va_imagen=='defaultd.jpg') { ?>    
+                                <?php if($eventos->va_imagen=='defaultd.jpg') { ?>    
                                     <img class="img-cart" src="<?php   echo $this->host('img')?>/defaultd.jpg" title="" alt="" />
                                 <?php } else { ?>
-                                    
-                                         <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
-                               
-                               <?php }  ?>     
+                                    <img class="img-cart" src="<?php   echo $this->host('images') . '/eventos/general/' . htmlspecialchars($eventos->va_imagen, ENT_QUOTES, 'utf-8');  ?>" title="" alt="" />
+                               <?php } ?>
                                 </a>
                             </div> <!-- .entry-thumb -->
                             <div class="content">
@@ -143,7 +142,7 @@
                                     <div class="date-month">
                                         <?php  $fecha = date_create($eventos->va_fecha);
                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
-                                      </div>
+                                    </div>
                                 </div>
                                 <h2>
                                     <a href="<?php echo $this->host('base').$this->url('evento').'/'.$this->escapeHtml($eventos->in_id); ?>"><?php echo $this->escapeHtml($eventos->va_nombre); ?></a>
@@ -188,7 +187,7 @@
                                 </a>
                             </div> <!--entry-thumb -->
                             <div class="content">
-                                <div class="entry-post-date" style="border-top-color: #2999b5">
+                                <div class="entry-post-date" style="border-top-color: #43a332">
                                     <div class="date-month">
                                         <?php  $fecha = date_create($grupos->va_fecha);
                                         echo $fecha = date_format($fecha, 'd/m/Y'); ?>                     
@@ -225,7 +224,7 @@
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery(".alert-message").alert();
-        window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 7000);
+        window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 15000);
     });    
     /* <![CDATA[ */
     // Masonry

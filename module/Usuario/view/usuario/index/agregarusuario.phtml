@@ -3,7 +3,7 @@
 <?php if ($_GET['m']==1) { ?> <div class="row-fluid">
       <div class="alert alert-margin alert-message">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <?php  echo 'Tu cuenta está casi lista para usarse. solo tienes que activarla desde tu correo electrónico'; ?>
+        <?php  echo 'Tu cuenta está casi lista para usarse, solo tienes que activarla desde tu correo electrónico'; ?>
       </div>
     </div> <?php } ?>
     <?php if($this->mensaje){?>
@@ -30,7 +30,7 @@
         ?>
         <div class="span4 cambiofotouser">
           <h1>Registro de Usuario</h1>
-          <p>Seleccione una Imagen para su perfil</p>
+          <p>Selecciona una Imagen para tu perfil</p>
           <div class="cambiofoto2">
             <div class="fileupload fileupload-new" data-provides="fileupload" >
               <div class="img-thu-user fileupload-new thumbnail">
@@ -102,6 +102,6 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $(".alert-message").alert();
-    window.setTimeout(function() { $(".alert-message").alert('close'); }, 7000);
+    window.setTimeout(function() { $(".alert-message").alert('close'); }, 15000);
   });
 </script>

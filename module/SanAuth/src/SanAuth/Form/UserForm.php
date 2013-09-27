@@ -73,6 +73,11 @@ class UserForm extends Form
         $inputFilter->add(array(
             'name' => 'va_email',
             'required' => true,
+            'validators' => array(
+                array(
+                    'name' => 'EmailAddress'
+                )
+            ),
         ));
          $inputFilter->add(array(
             'name' => 'va_token',

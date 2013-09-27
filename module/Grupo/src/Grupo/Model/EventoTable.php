@@ -152,8 +152,6 @@ class EventoTable{
                        ->join('ta_evento','ta_evento.ta_grupo_in_id=ta_grupo.in_id',array(),'left')
                    ->where(array(
                        'ta_evento.in_id'=>$idevento,
-//                       'ta_usuario_has_ta_grupo.ta_grupo_in_id' => $id,
-//                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser,
                        'ta_usuario_has_ta_grupo.va_estado'=>'activo',
                        ));
 
@@ -164,7 +162,7 @@ class EventoTable{
 //                   
 //                    ->where(array('ta_usuario_has_ta_grupo.ta_grupo_in_id' => $idgrupo,
 //                        'ta_usuario_has_ta_grupo.ta_usuario_in_id' => $iduser));
-            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+            $selectString = $sql->getSqlStringForSqlObject($selecttot);   
             $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $resultSet;
          

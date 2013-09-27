@@ -48,7 +48,7 @@
 		                                </h2>
 		                                <div class="divider-1px-meta"></div>
 		                                <footer class="entry-extra clearfix">
-		                                    <span class="meta-views" title="Views">
+		                                    <span class="meta-views" title="">
 		                                    	<i class="icon-tag"></i>
 		                                    	<a href="<?php echo $this->host('ruta').$this->url('buscar')?>?categoria=<?php echo $this->escapeHtml($misgrupos->idcategoria); ?>&valor=Grupos" title="Categoría"><?php echo  $this->escapeHtml($misgrupos->nombre_categoria);?></a>
 		                                	</span><!-- .meta-views -->
@@ -76,7 +76,7 @@
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery(".alert-message").alert();
-        window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 7000);
+        window.setTimeout(function() { jQuery(".alert-message").alert('close'); }, 15000);
     });
     /* <![CDATA[ */
 
