@@ -135,7 +135,7 @@ class AuthController extends AbstractActionController {
                     $result = $this->getAuthService()->authenticate();
                     foreach ($result->getMessages() as $message) {
 //                       
-                       $this->flashMessenger()->clearMessages();
+//                       $this->flashMessenger()->clearMessages();  
                        $this->flashMessenger()->setNamespace('SanAuth');
                        $this->flashmessenger()->addMessage($message);
                     }
@@ -170,17 +170,17 @@ class AuthController extends AbstractActionController {
                                         )));
                     }
                 }
-            }
-//            else {
+                          
+            }else {
 //              foreach ($form->getInputFilter()->getInvalidInput() as $error) {
 //                       foreach($error->getMessages() as $mensaje){
 //                             $this->flashmessenger()->addMessage($mensaje);
 //                       }
 //              }
-//             
 //              }
-                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
-//           }
+//                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+           }
+
         }
         if ($id) {
             return $this->redirect()->toRoute($redirect, array('in_id' => $id));
@@ -284,8 +284,54 @@ class AuthController extends AbstractActionController {
         }
     
     }
-    
-      public function validarcorreoAction(){
+    public function validarAction(){
+       $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if($usuario){
+                    if ($usuario[0]['va_estado'] == 'activo') {
+                        $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
+                        if ($password) {
+                            if($password===$contrasena){
+                                return new JsonModel(array(
+                                'success'=>true
+                                ));
+                            }else{
+                               $mensaje='El correo no concide con la contrasena';
+                               $result = new JsonModel(array(
+                                'menssage' =>$mensaje,
+                                'success'=>false
+                                ));
+                                return $result;
+                            }
+                        }else{
+                                return new JsonModel(array(
+                                'success'=>false
+                                ));
+                        }
+                    }else{
+                        $mensaje='El correo no se encuentra registrado';
+                        $result = new JsonModel(array(
+                                'menssage' =>$mensaje,
+                                'success'=>false
+                            ));
+                         return $result;
+                    }
+            }else{
+                    $mensaje='El correo no se encuentra registrado';
+                      return new JsonModel(array(
+                          'menssage' =>$mensaje,
+                           'success'=>false
+                            ));
+                    
+                }
+        }
+    }
+
+
+    public function validarcorreoAction(){
         $request = $this->getRequest();
         if ($request->isPost()) {
                 $correo = $this->params()->fromPost('va_email');     

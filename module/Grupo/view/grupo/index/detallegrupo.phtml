@@ -55,8 +55,17 @@
                                             $fecha = date_create($this->escapeHtml($proximos_eventos->va_fecha));
                                             $arrayMeses = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
                                                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-                                            echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y") . ' ' . date_format($fecha, "h:m:s");
-                                            ?>                                
+                                            echo date_format($fecha, "d") . ' de ' . $arrayMeses[date('m') - 1] . ' del ' . date_format($fecha, "Y") . ' ';
+                                            ?>  
+                                                <?php
+                                                $fecha = date_create($proximos_eventos->va_fecha);
+                                                $hora = date_format($fecha, 'H');
+                                                if ($hora < 12) {
+                                                    echo date_format($fecha, 'h') . ':' . date_format($fecha, 'i') . ' AM';
+                                                } else {
+                                                    echo date_format($fecha, 'h') . ':' . date_format($fecha, 'i') . ' PM';
+                                                }
+                                                ?>
                                         </p>
                                     </div>
                                 </div>

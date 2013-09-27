@@ -21,7 +21,6 @@
         });
     };
 </script>-->
-<?php if(!$_GET['m']){ ?>
 <div class="main-container">
     <div class="container">
         <?php if ($this->mensajes) { ?>
@@ -72,7 +71,9 @@
                 <li><a href="#">Jesser pariona</a></li>
               </ul>-->
             </div>
+                          
             <div class="span6 group-sidebar">
+                <?php if(!$this->grupoestado=='activo'){//if(!$_GET['m']){ ?>  
          <?php if($this->eventos[0]['va_tipo']=='privado'){ 
               if($this->grupoestado=='activo'){?>
                  <div class="event-group">
@@ -167,6 +168,9 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
+                                       <?php 
+                    if ( $this->eventos[0]['va_fecha'] >= date("Y-m-d h:m:s"))
+                    {?>
                   <?php if($this->grupoestado=='activo' && $this->privado==true){ ?>
                  <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
@@ -195,7 +199,7 @@
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <ul>
                                             <?php foreach($this->grupoeventusuario as $grupousuario){?>
-                                            <?php if($this->infoevento->in_id != $grupousuario->idusuario){?>
+                                            <?php if($this->infoevento->ta_usuario_in_id != $grupousuario->idusuario){?>
                                                 <li id="user-<?php echo $grupousuario->idusuario;?>">
                                                 <input class="enviar_correo" name="userEnviar[]" value="<?php echo $grupousuario->idusuario;?>" type="checkbox"> 
                                                 <label class="checkbox img-cargar-usuarios">
@@ -243,7 +247,7 @@
                       </div>                      
                     </div>
                   </div>
-                   <?php } ?>
+                   <?php } }?>
                   <div class="mapa-group map-wrapper">
                       <div id="map_canvas"></div>
                   </div>
@@ -255,7 +259,7 @@
                 </div>
                 <?php }else{ ?>
                 <div class="span12 login-comentario">
-                    <p>Evento es privado, únete al grupo para poder visualizarlo.</p>
+                    <p>Evento es privado, debes de unirte al grupo para poder visualizarlo.</p>
                 </div>
          <?php }} ?>       
          <?php if($this->eventos[0]['va_tipo']=='publico'){ ?>
@@ -355,6 +359,9 @@
                       <div class="clear"></div>
                     </div>  <!-- /overall_score -->  
                   </div>
+                    <?php 
+                    if ( $this->eventos[0]['va_fecha'] >= date("Y-m-d h:m:s"))
+                    {?>
                   <?php if($this->grupoestado=='activo' && $this->privado==true){ ?>
                   <div class="invitar-amigos">
                     <div class="accordion" id="accordion2">
@@ -427,7 +434,7 @@
                       </div>                      
                     </div>
                   </div>
-                   <?php } ?>
+                   <?php } }?>
                   <div class="mapa-group map-wrapper">
                       <div id="map_canvas"></div>
                   </div>
@@ -538,7 +545,13 @@
               </div>
             <?php } ?>
           </div>
+                                        <?php }else{ ?>
+<div class="span12 login-comentario">
+    <p>Este evento es privado, debes de unirte al grupo para poder visualizarlo.</p>
+</div>
+<?php } ?>
             </div>
+
             <div class="span3 group-sidebar grupo-right-sidebar">
               <?php if($this->eventos[0]['ta_usuario_in_id']!=$session->in_id){ ?>
               <div class="asistir-event">
@@ -626,17 +639,11 @@
                   </ul>
                </div>
             </div>
+
         </div>
     </div>
 </div> <!-- #main-container -->
-<?php }else{ ?>
-<div class="main-container">
-<div class="span12 login-comentario">
-    <p>Evento es privado, unete al grupo para poder visualizarlo.</p>
-</div>
-    
-</div>
-<?php } ?>
+
 <script type="text/javascript">
   var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
   $(document).on('ready', function(){

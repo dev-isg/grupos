@@ -92,6 +92,17 @@ return array(
                     )
                 )
             ),
+               'validar' => array(   
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/validar',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'SanAuth\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'validar'
+                    )
+                )
+            ),
             'cambio-contrasena' => array(
                 'type' => 'Literal',
                 'options' => array(
