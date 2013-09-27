@@ -389,7 +389,7 @@
                                           <input type="hidden" name="idE" value="<?php echo $this->idevento;?>"/>
                                         <h3>Elige a todo tus amigos para enviarles correo de invitación al evento.</h3>
                                         <div class="todo-marcar">
-                                            <input class="marcar-check" value="" type="checkbox"> 
+                                            <input id="checkAll" class="marcar-check" onclick="checkTodos(this.id,'gruposInvitar');" value="" type="checkbox"> 
                                             <label class="checkbox">
                                               Marcar todos
                                             </label>
@@ -645,10 +645,8 @@
 </div> <!-- #main-container -->
 
 <script type="text/javascript">
-    
   var hostUrl = '<?php echo $this->host("images")?>/usuario/detalle/';
-
-  $(document).on('ready', function(){ 
+  $(document).on('ready', function(){
     enviarDatos();
     abandonarDatos();
     agregarComentario();
@@ -664,7 +662,6 @@
         correos: {
           required: "Ingrese correo electronico"          
         }
-        
       }
     });
     $('#gruposInvitar').validate({
@@ -679,12 +676,15 @@
         }
       }
     });
-
     $(".btnCorreoForm").click(function(event){
       
     });
 
   });
+
+  function checkTodos (id,pID) {
+    $( "#" + pID + " :checkbox").attr('checked', $('#' + id).is(':checked'));
+  }
 
   function enviarDatos(){
     var even = <?php echo $this->idevento; ?>;

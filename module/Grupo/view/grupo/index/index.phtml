@@ -92,7 +92,19 @@
 <!-- //////////////////////////////////////////FIN BANNER ////////////////////////////////////////////-->
 
 
-<div class="main-container">
+<?php if($_GET['nombre']) {?> 
+    <div class="categoria-search">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12 group-sidebar" style="padding:15px;margin-bottom:0;">
+                    <h1><span><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+            
+<div class="main-container" style="margin-top:0px;">
     <div class="container">
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
         <div class="alert alert-margin alert-message">

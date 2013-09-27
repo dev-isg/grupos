@@ -37,7 +37,6 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand logo-res" href="/" style="margin-right:30px;">Juntate.pe</a>
-          <?php if($_GET['nombre']) {?> <span class="category-home"><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span><?php } ?>
           <div class="nav-collapse collapse menu-juntate">
               <form class="navbar-search pull-left" method="get" action="<?php echo $this->host('ruta') ?>/buscar">
                   <input type="text" 
@@ -79,114 +78,78 @@
         </div>
       </div>
     </div>
-    	<!-- /////////////////////////////////BANER////////////////////////////////-->
+	<!-- /////////////////////////////////BANER////////////////////////////////-->
 
-        <!--Login-->
-        <div style="display:none">
-            <div id="inline_evento" style="padding:10px; background:#fff;">
-                <h3>Iniciar sesión</h3>
-                <div class="span4 cambiofotouser dev-marca-face">
-               
-              </div>
-                <?php
-                $form = $this->formlogeo;
-                $form->setAttributes(array(
-                    'action' => $this->url('login/process', array(
-                        'action' => 'authenticate'
-                    )),
-                    'class' => 'bs-docs-example form-horizontal login-home'
-                ));
-                $form->prepare();
-                echo $this->form()->openTag($form);
-                ?>
-                 <input type="hidden" name="origen" value="" id="origen" />
-                 <input type="hidden" name="accion" value="<?php echo $this->accion;?>" />
-        			<div class="control-group">
-        				<label class="control-label" for="inputEmail">Correo:</label>
-        				<div class="controls">
-                            <?php echo $this->formRow($form->get('va_email'));?>
-                        </div>
-        			</div>
-        			<div class="control-group">
-        				<label class="control-label" for="inputPassword">Contraseña:</label>
-        				<div class="controls">
-                            <?php  echo $this->formRow($form->get('va_contrasena'));?>
-                        </div>
-        			</div>
-        			<div class="control-group">
-        				<div class="controls">
-                            <?php  echo $this->formSubmit($form->get('submit'));?>
-                        </div>
-        			</div>
-        			<div class="control-group" style="margin-bottom:0!important;">
-        				<div class="controls">
-                            <span class="reg-spam"><a href="/registrarse">Regístrate</a></span>
-                            <span><a href="/cambio">¿Olvidaste tu contraseña?</a></span>
-        				</div>
-        			</div>
-                    <?php  echo $this->form()->closeTag(); ?>
-
-
-                <div class="content-login-facebook">
-                    <p>Ingresa rápido por:</p>
-                 <?php if($this->user) {?>
-                   <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
-                     <?php  } else {?>
-                  <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
-                   <?php  }?>
-                </div>
+    <!--Login-->
+    <div style="display:none">
+        <div id="inline_evento" style="padding:10px; background:#fff;">
+            <h3>Iniciar sesión</h3>
+            <div class="span4 cambiofotouser dev-marca-face">
+           
+            </div>
+            <?php
+            $form = $this->formlogeo;
+            $form->setAttributes(array(
+                'action' => $this->url('login/process', array(
+                    'action' => 'authenticate'
+                )),
+                'class' => 'bs-docs-example form-horizontal login-home'
+            ));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            ?>
+            <input type="hidden" name="origen" value="" id="origen" />
+            <input type="hidden" name="accion" value="<?php echo $this->accion;?>" />
+    			<div class="control-group">
+    				<label class="control-label" for="inputEmail">Correo:</label>
+    				<div class="controls">
+                        <?php echo $this->formRow($form->get('va_email'));?>
+                    </div>
+    			</div>
+    			<div class="control-group">
+    				<label class="control-label" for="inputPassword">Contraseña:</label>
+    				<div class="controls">
+                        <?php  echo $this->formRow($form->get('va_contrasena'));?>
+                    </div>
+    			</div>
+    			<div class="control-group">
+    				<div class="controls">
+                        <?php  echo $this->formSubmit($form->get('submit'));?>
+                    </div>
+    			</div>
+    			<div class="control-group" style="margin-bottom:0!important;">
+    				<div class="controls">
+                        <span class="reg-spam"><a href="/registrarse">Regístrate</a></span>
+                        <span><a href="/cambio">¿Olvidaste tu contraseña?</a></span>
+    				</div>
+    			</div>
+                <?php  echo $this->form()->closeTag(); ?>
+            <div class="content-login-facebook">
+                <p>Ingresa rápido por:</p>
+             <?php if($this->user) {?>
+               <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+                 <?php  } else {?>
+              <p><a href="<?php echo $this->loginUrl; ?>"></a></p>
+               <?php  }?>
             </div>
         </div>
-
+    </div>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        
-        /*if(jQuery(".tab-home-g-b").hasClass('active')){
-            jQuery(".tab-home-g-a").hover(
-                function(){
-                    jQuery(".search").removeClass("group-header");
-                    jQuery(".search").addClass("event-header");
-                    jQuery('.tab-home-g-b .pinchitob').remove();
-                },
-                function(){
-                    jQuery(".search").removeClass("event-header");
-                    jQuery(".search").addClass("group-header");
-                    jQuery(".tab-home-g-b").append('<div class="pinchitob"></div>');
-                }
-            ); 
-            jQuery(".tab-home-g-b").hover(
-                function(){
-                    jQuery(".search").addClass("group-header");
-                },
-                function(){
-                    
-                }
-            );  
-        }
+        jQuery("#usuario").submit(function(){
+            $.ajax({
+                url: '/grupo/evento/unir',
+                type: 'get',
+                data: 'act=' + activo +'&idE='+even,
+                dataType: "json",
+                success: function(data){
 
-        if(jQuery(".tab-home-g-a").hasClass('active')){
-            jQuery(".tab-home-g-a").hover(
-                function(){
-                    jQuery(".search").addClass("event-header");
                 },
-                function(){
-                    
+                error: function(){
+                    console.log('Fallo conectando con el servidor')
                 }
-            ); 
-            jQuery(".tab-home-g-b").hover(
-                function(){
-                    jQuery(".search").addClass("group-header");
-                    jQuery(".search").removeClass("event-header");
-                    jQuery('.tab-home-g-a .pinchitoa').remove();
-                },
-                function(){
-                    jQuery(".search").removeClass("group-header");
-                    jQuery(".search").addClass("event-header");
-                    jQuery(".tab-home-g-a").append('<div class="pinchitoa"></div>');
-                }
-            );
-        }*/
-        
+            });
+        });
     });
 </script>
 

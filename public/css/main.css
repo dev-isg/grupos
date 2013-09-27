@@ -1467,7 +1467,7 @@ span.nm{
   margin-left: 0;
 }
 .content-grup-j h3{
-  font-size: 16px;
+  font-size: 14px;
   background: #ddd;
   line-height: 45px;
   padding-left: 10px;
@@ -1483,8 +1483,9 @@ span.nm{
   font-size: 18px;
 }
 .contenido-perfil-usuario h4{
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 0;
+  font-weight: bold;
 }
 .social-net{
   float: left;
@@ -2704,9 +2705,18 @@ ul.score-list li:first-child {
   -o-border-radius: 50%;
   border-radius: 50%;
   width: 73px;
-  height: 68px;
+  height: 48px;
 }
-
+.categoria-search h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.search.group-header{
+  margin-top: 34px;
+}
+.search.event-header{
+  margin-top: 34px;  
+}
 /*footer*/
 .footer-container{
   background: #00a4de;
@@ -2836,6 +2846,7 @@ ul.score-list li:first-child {
   margin-left: 0;
   max-height: 270px;
   overflow-y: scroll;
+  margin-top: 25px;
 }
 .email-user-d ul li {
   float: left;
@@ -3376,6 +3387,11 @@ pre
 #gruposInvitar ul li:first-child{
   padding-top: 18px;
 }
+#gruposInvitar label.error{
+  position: absolute;
+  top: 55px;
+  left: 0;
+}
 .controls ul{
   list-style: none;
   margin-left: 0;
@@ -3383,7 +3399,7 @@ pre
 }
 .todo-marcar{
   position: absolute;
-  top: 28px;
+  top: 35px;
   left: 0;
   border-bottom: 1px solid #ccc;
   width: 94%;
@@ -3444,4 +3460,7 @@ form textarea.error{
 }
 .marcar-check{
   float: left;
+}
+.user-dev-marca{
+  width: 750px;
 }
