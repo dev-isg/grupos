@@ -168,6 +168,11 @@ class AuthController extends AbstractActionController {
                                             'va_logout',
                                             'id_facebook'
                                         )));
+                        if ($id) {
+                            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+                        } else {
+                            return $this->redirect()->toRoute($redirect);
+                        }
                     }
                 }
                           
@@ -181,11 +186,6 @@ class AuthController extends AbstractActionController {
 //                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
            }
 
-        }
-        if ($id) {
-            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
-        } else {
-            return $this->redirect()->toRoute($redirect);
         }
     }
     
@@ -227,6 +227,15 @@ class AuthController extends AbstractActionController {
                                             'va_logout',
                                             'id_facebook'
                                         )));
+                    if ($id) {
+                      $success=true;
+                     return new JsonModel(array('success'=>$success,'in_id'=>$id));
+//                       return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+                   } else {
+                    $success=true;
+                     return new JsonModel(array('success'=>$success));
+//                       return $this->redirect()->toRoute($redirect);
+                   }
 
            }else{
                $success=false;
@@ -251,11 +260,6 @@ class AuthController extends AbstractActionController {
            }
         }
         
-        if ($id) {
-            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
-        } else {
-            return $this->redirect()->toRoute($redirect);
-        }
                 
     }
     
