@@ -251,11 +251,7 @@ class AuthController extends AbstractActionController {
            }
         }
         
-        if ($id) {
-            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
-        } else {
-            return $this->redirect()->toRoute($redirect);
-        }
+
                 
     }
     

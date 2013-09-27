@@ -220,10 +220,6 @@ function valUsuario(){
         minlength:"Por favor ingresa una contraseña de 8 caracteres a mas"
         //,remote: "Contraseña inválida"
       }
-    },
-    submitHandler: function(form){
-      //form.preventDefault();
-            
     }
   });
 }
