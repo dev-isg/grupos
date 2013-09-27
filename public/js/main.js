@@ -202,7 +202,7 @@ function valUsuario(){
     rules: {
       va_email: {
         required: true,
-        email: true,
+        email: true/*,
         remote: {
           type:'POST',
           dataType: 'json',
@@ -220,11 +220,11 @@ function valUsuario(){
               return false
             }
           }
-        }
+        }*/
       },
       va_contrasena:{
         required : true,
-        minlength: 8,
+        minlength: 8/*,
         remote: {
           type:'POST',
           dataType: 'json',
@@ -245,19 +245,19 @@ function valUsuario(){
               return false
             }
           }
-        }
+        }*/
       }
     },
     messages:{
       va_email:{
         required:"Por favor ingresa su Email",
-        email: "Por favor ingrese su correo valido",
-        remote: "Correo incorrecto"
+        email: "Por favor ingrese su correo valido"
+        //,remote: "Correo incorrecto"
       },
       va_contrasena: {
         required : "Por favor ingrese su contraseña",
-        minlength:"Por favor ingresa una contraseña de 8 caracteres a mas",
-        remote: "Contraseña inválida"
+        minlength:"Por favor ingresa una contraseña de 8 caracteres a mas"
+        //,remote: "Contraseña inválida"
       }
     }
   });
