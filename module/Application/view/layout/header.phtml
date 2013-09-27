@@ -136,20 +136,7 @@
     </div>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery("#usuario").submit(function(){
-            $.ajax({
-                url: '/grupo/evento/unir',
-                type: 'get',
-                data: 'act=' + activo +'&idE='+even,
-                dataType: "json",
-                success: function(data){
 
-                },
-                error: function(){
-                    console.log('Fallo conectando con el servidor')
-                }
-            });
-        });
     });
 </script>
 

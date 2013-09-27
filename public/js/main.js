@@ -259,6 +259,22 @@ function valUsuario(){
         minlength:"Por favor ingresa una contraseña de 8 caracteres a mas"
         //,remote: "Contraseña inválida"
       }
+    },
+    submitHandler: function(form){
+      var correoE = jQuery("#va_email").val();
+      var contraE = jQuery("#inputPassword").val();
+      jQuery.ajax({
+          url: '/validar',
+          type: 'POST',
+          data: { va_email: correoE, va_contrasena: contraE},
+          dataType: "json",
+          success: function(data){
+
+          },
+          error: function(){
+              console.log('Fallo conectando con el servidor')
+          }
+      });
     }
   });
 }

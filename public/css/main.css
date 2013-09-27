@@ -1919,7 +1919,7 @@ a.tab-home-g-b:hover .pinchitob{
   border-radius: 5px 5px 0 0;
 }
 .space-group{
-  padding: 10px 0px 10px 10px;
+  padding: 10px;
 }
 .main-container{
   margin-bottom: 20px;
@@ -2783,6 +2783,8 @@ ul.score-list li:first-child {
 }
 .compar{
   margin-top: 25px;
+  position: relative;
+  z-index: 9;
 }
 .compar span{
   float: left;
@@ -2851,6 +2853,116 @@ ul.score-list li:first-child {
 .email-user-d ul li {
   float: left;
   width: 100%;
+}
+
+#event-description-wrap ol{
+  margin-left: 0;
+  padding-left: 20px
+}
+#form-correo-s h3{
+  font-size: 13px;
+  margin-top: 0;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+#form-correo-s em{
+  font-size: 11px;
+  color: #bbb;
+}
+#user-g{
+  position: relative;
+}
+#user-g label.error{
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+}
+#gruposInvitar{
+  margin-bottom: 0;
+}
+#gruposInvitar ul li input{
+  float: left;
+}
+#gruposInvitar ul li:first-child{
+  padding-top: 18px;
+}
+#gruposInvitar label.error{
+  position: absolute;
+  top: 55px;
+  left: 0;
+}
+.controls ul{
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.todo-marcar{
+  position: absolute;
+  top: 35px;
+  left: 0;
+  border-bottom: 1px solid #ccc;
+  width: 94%;
+  margin-bottom: 5px;
+}
+.todo-marcar .checkbox{
+  margin-bottom: 0;
+}
+.controls ul li{
+  color: red;
+  font-size: 12px;
+}
+label span{
+  color: red;
+  font-size: 16px;
+}
+.form_datetime2{
+  position: relative;
+}
+.form_datetime2 label.error{
+  position: absolute;
+  top: 30px;
+  left: 0;
+}
+form input.error,
+form select.error,
+form textarea.error{
+  margin-bottom: 2px;
+}
+.terminos-condiciones ul{
+  list-style: none;
+  margin-left: 0;
+}
+.terminos-condiciones ul li{
+  float: left;
+  line-height: 80px;
+  margin-right: 20px;
+}
+.terminos-condiciones ul li a{
+  font-size: 16px;
+  color: white;
+}
+.page-juntate{
+  margin-top: 55px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px;
+}
+.page-juntate h3{
+  font-size: 16px;
+  font-weight: bold;
+}
+.page-juntate p{
+  line-height: 18px;
+}
+.marcar-check{
+  float: left;
+}
+.user-dev-marca{
+  width: 750px;
 }
 /*@font-face {
   font-family: "untitled-font-1";
@@ -3354,113 +3466,4 @@ pre
 
 .marker {
     background-color: Yellow;
-}
-#event-description-wrap ol{
-  margin-left: 0;
-  padding-left: 20px
-}
-#form-correo-s h3{
-  font-size: 13px;
-  margin-top: 0;
-  font-weight: bold;
-  margin-bottom: 0;
-}
-#form-correo-s em{
-  font-size: 11px;
-  color: #bbb;
-}
-#user-g{
-  position: relative;
-}
-#user-g label.error{
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 11px;
-}
-#gruposInvitar{
-  margin-bottom: 0;
-}
-#gruposInvitar ul li input{
-  float: left;
-}
-#gruposInvitar ul li:first-child{
-  padding-top: 18px;
-}
-#gruposInvitar label.error{
-  position: absolute;
-  top: 55px;
-  left: 0;
-}
-.controls ul{
-  list-style: none;
-  margin-left: 0;
-  margin-bottom: 0;
-}
-.todo-marcar{
-  position: absolute;
-  top: 35px;
-  left: 0;
-  border-bottom: 1px solid #ccc;
-  width: 94%;
-  margin-bottom: 5px;
-}
-.todo-marcar .checkbox{
-  margin-bottom: 0;
-}
-.controls ul li{
-  color: red;
-  font-size: 12px;
-}
-label span{
-  color: red;
-  font-size: 16px;
-}
-.form_datetime2{
-  position: relative;
-}
-.form_datetime2 label.error{
-  position: absolute;
-  top: 30px;
-  left: 0;
-}
-form input.error,
-form select.error,
-form textarea.error{
-  margin-bottom: 2px;
-}
-.terminos-condiciones ul{
-  list-style: none;
-  margin-left: 0;
-}
-.terminos-condiciones ul li{
-  float: left;
-  line-height: 80px;
-  margin-right: 20px;
-}
-.terminos-condiciones ul li a{
-  font-size: 16px;
-  color: white;
-}
-.page-juntate{
-  margin-top: 55px;
-  margin-bottom: 20px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  padding: 20px;
-}
-.page-juntate h3{
-  font-size: 16px;
-  font-weight: bold;
-}
-.page-juntate p{
-  line-height: 18px;
-}
-.marcar-check{
-  float: left;
-}
-.user-dev-marca{
-  width: 750px;
 }
