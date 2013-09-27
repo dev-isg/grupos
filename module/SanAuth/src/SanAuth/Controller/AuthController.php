@@ -188,6 +188,196 @@ class AuthController extends AbstractActionController {
             return $this->redirect()->toRoute($redirect);
         }
     }
+    
+    public function validarAction(){
+      $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+                
+                            $this->getAuthService()
+                        ->getAdapter()
+                        ->setIdentity($correo)
+                        ->setCredential($contrasena);
+           $result = $this->getAuthService()->authenticate();
+           if($result->isValid){
+                                       $urlorigen = $this->getRequest()->getHeader('Referer')->uri()->getPath();
+                        $arrurl = explode('/', $urlorigen);
+                        $id = end($arrurl);
+                        $accion = $request->getPost('accion');
+                        $origen = $request->getPost('origen', 'evento');
+                        if ($accion == 'detalleevento') {
+                            $redirect = 'evento';
+                        } elseif ($accion == 'detallegrupo') {
+                            $redirect = 'detalle-grupo';
+                        } elseif ($accion == 'index' && $origen != 'ingresarPrin') {
+                            $redirect = 'elegir-grupo'; //'agregar-grupo';
+                        } elseif ($accion == 'index' && $origen == 'ingresarPrin') {
+                            $redirect = 'home';
+                        }
+
+                        $storage = $this->getAuthService()->getStorage();
+                        $storage->write($this->getServiceLocator()
+                                        ->get('TableAuthService')
+                                        ->getResultRowObject(array(
+                                            'in_id',
+                                            'va_nombre',
+                                            'va_contrasena',
+                                            'va_email',
+                                            'va_foto',
+                                            'va_logout',
+                                            'id_facebook'
+                                        )));
+
+           }else{
+               $success=false;
+               return new JsonModel(array('success'=>$success));
+//               switch ($result->getCode()) {
+//                    case Result::FAILURE_IDENTITY_NOT_FOUND:
+//                        /** do stuff for nonexistent identity * */
+//                        break;
+//
+//                    case Result::FAILURE_CREDENTIAL_INVALID:
+//                        /** do stuff for invalid credential * */
+//                        break;
+//
+//                    case Result::SUCCESS:
+//                        /** do stuff for successful authentication * */
+//                        break;
+//
+//                    default:
+//                        /** do stuff for other failure * */
+//                        break;
+//                }
+           }
+        }
+        
+        if ($id) {
+            return $this->redirect()->toRoute($redirect, array('in_id' => $id));
+        } else {
+            return $this->redirect()->toRoute($redirect);
+        }
+                
+    }
+    
+//    public function validarAction(){
+//       $request = $this->getRequest();
+//        if ($request->isPost()) {
+//                $correo = $this->params()->fromPost('va_email');
+//                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+//                $usuario = $this->getUsuarioTable()->usuario1($correo);
+//
+//                if($usuario){
+//                    if ($usuario[0]['va_estado'] == 'activo') {
+//                        $result = $this->getAuthService()->authenticate(); 
+//                        
+////                        $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
+////                        if ($password) {
+////                            if($password===$contrasena){
+////                                return new JsonModel(array(
+////                                'success'=>true
+////                                ));
+////                            }else{
+////                               $mensaje='El correo no concide con la contrasena';
+////                               $result = new JsonModel(array(
+////                                'menssage' =>$mensaje,
+////                                'success'=>false
+////                                ));
+////                                return $result;
+////                            }
+////                        }else{
+////                                return new JsonModel(array(
+////                                'success'=>false
+////                                ));
+////                        }
+//                    }else{
+//                        $mensaje='El correo no se encuentra registrado';
+//                        $result = new JsonModel(array(
+//                                'menssage' =>$mensaje,
+//                                'success'=>false
+//                            ));
+//                         return $result;
+//                    }
+//            }else{
+//                    $mensaje='El correo no se encuentra registrado';
+//                      return new JsonModel(array(
+//                          'menssage' =>$mensaje,
+//                           'success'=>false
+//                            ));
+//                    
+//                }
+//        }
+//    }
+    
+    public function validarcorreoAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');     
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if($usuario){
+                     if ($usuario[0]['va_estado'] == 'activo') {
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
+                    }else{
+                       $mensaje='El correo no se encuentra registrado';
+                       $result = new JsonModel(array(
+                               'menssage' =>$mensaje,
+                               'success'=>false
+                           ));
+                        return $result;
+                   }                   
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                      return new JsonModel(array(
+                          'menssage' =>$mensaje,
+                           'success'=>false
+                            ));
+                    
+                }
+
+        }
+    
+    }
+    
+     public function validarcontrasenaAction(){
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+                $correo = $this->params()->fromPost('va_email');
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+                $usuario = $this->getUsuarioTable()->usuario1($correo);
+                if ($usuario[0]['va_estado'] == 'activo') {
+                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
+                    if ($password) {
+                        if($password===$contrasena){
+                            return new JsonModel(array(
+                            'success'=>true
+                            ));
+                        }else{
+                           $mensaje='El correo no concide con la contrasena';
+                           $result = new JsonModel(array(
+                            'menssage' =>$mensaje,
+                            'success'=>false
+                            ));
+                            return $result;
+                        }
+                    }else{
+                            return new JsonModel(array(
+                            'success'=>false
+                            ));
+                    }
+                }else{
+                    $mensaje='El correo no se encuentra registrado';
+                    $result = new JsonModel(array(
+                            'menssage' =>$mensaje,
+                            'success'=>false
+                        ));
+                     return $result;
+                }
+        }
+    
+    }
+    
 
     public function sessionfacebook($email,$pass)
     {  
@@ -237,130 +427,6 @@ class AuthController extends AbstractActionController {
             }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public function validarcontrasenaAction(){
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-                $correo = $this->params()->fromPost('va_email');
-                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
-                $usuario = $this->getUsuarioTable()->usuario1($correo);
-                if ($usuario[0]['va_estado'] == 'activo') {
-                    $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
-                    if ($password) {
-                        if($password===$contrasena){
-                            return new JsonModel(array(
-                            'success'=>true
-                            ));
-                        }else{
-                           $mensaje='El correo no concide con la contrasena';
-                           $result = new JsonModel(array(
-                            'menssage' =>$mensaje,
-                            'success'=>false
-                            ));
-                            return $result;
-                        }
-                    }else{
-                            return new JsonModel(array(
-                            'success'=>false
-                            ));
-                    }
-                }else{
-                    $mensaje='El correo no se encuentra registrado';
-                    $result = new JsonModel(array(
-                            'menssage' =>$mensaje,
-                            'success'=>false
-                        ));
-                     return $result;
-                }
-        }
-    
-    }
-    public function validarAction(){
-       $request = $this->getRequest();
-        if ($request->isPost()) {
-                $correo = $this->params()->fromPost('va_email');
-                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
-                $usuario = $this->getUsuarioTable()->usuario1($correo);
-                if($usuario){
-                    if ($usuario[0]['va_estado'] == 'activo') {
-                        $password=$this->getUsuarioTable()->getUsuario($usuario[0]['in_id'])->va_contrasena;
-                        if ($password) {
-                            if($password===$contrasena){
-                                return new JsonModel(array(
-                                'success'=>true
-                                ));
-                            }else{
-                               $mensaje='El correo no concide con la contrasena';
-                               $result = new JsonModel(array(
-                                'menssage' =>$mensaje,
-                                'success'=>false
-                                ));
-                                return $result;
-                            }
-                        }else{
-                                return new JsonModel(array(
-                                'success'=>false
-                                ));
-                        }
-                    }else{
-                        $mensaje='El correo no se encuentra registrado';
-                        $result = new JsonModel(array(
-                                'menssage' =>$mensaje,
-                                'success'=>false
-                            ));
-                         return $result;
-                    }
-            }else{
-                    $mensaje='El correo no se encuentra registrado';
-                      return new JsonModel(array(
-                          'menssage' =>$mensaje,
-                           'success'=>false
-                            ));
-                    
-                }
-        }
-    }
-
-
-    public function validarcorreoAction(){
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-                $correo = $this->params()->fromPost('va_email');     
-                $usuario = $this->getUsuarioTable()->usuario1($correo);
-                if($usuario){
-                     if ($usuario[0]['va_estado'] == 'activo') {
-                            return new JsonModel(array(
-                            'success'=>true
-                            ));
-                    }else{
-                       $mensaje='El correo no se encuentra registrado';
-                       $result = new JsonModel(array(
-                               'menssage' =>$mensaje,
-                               'success'=>false
-                           ));
-                        return $result;
-                   }                   
-                }else{
-                    $mensaje='El correo no se encuentra registrado';
-                      return new JsonModel(array(
-                          'menssage' =>$mensaje,
-                           'success'=>false
-                            ));
-                    
-                }
-
-        }
-    
-    }
 
     public function logoutAction() {
         session_destroy();
