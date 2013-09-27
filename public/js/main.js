@@ -202,50 +202,11 @@ function valUsuario(){
     rules: {
       va_email: {
         required: true,
-        email: true/*,
-        remote: {
-          type:'POST',
-          dataType: 'json',
-          url: '/validar-correo',
-          data:{
-            va_email: function(){
-              return jQuery('#va_email').val();
-            }
-          },
-          dataFilter: function(data){
-            var obj = jQuery.parseJSON(data);
-            if(obj.success == true){
-              return true
-            }else{
-              return false
-            }
-          }
-        }*/
+        email: true
       },
       va_contrasena:{
         required : true,
-        minlength: 8/*,
-        remote: {
-          type:'POST',
-          dataType: 'json',
-          url: '/validar-contrasena',
-          data:{
-            va_contrasena: function(){
-              return jQuery('#inputPassword').val();
-            },
-            va_email: function(){
-              return jQuery('#va_email').val();
-            }
-          },
-          dataFilter: function(data){
-            var obj = jQuery.parseJSON(data);
-            if(obj.success == true){
-              return true
-            }else{
-              return false
-            }
-          }
-        }*/
+        minlength: 8
       }
     },
     messages:{
@@ -261,9 +222,12 @@ function valUsuario(){
       }
     },
     submitHandler: function(form){
-      var correoE = jQuery("#va_email").val();
-      var contraE = jQuery("#inputPassword").val();
-      jQuery.ajax({
+      //form.preventDefault();
+      jQuery("#usuario").submit(function(e){
+        e.preventDefault();
+        var correoE = jQuery("#va_email").val();
+        var contraE = jQuery("#inputPassword").val();
+        jQuery.ajax({
           url: '/validar',
           type: 'POST',
           data: { va_email: correoE, va_contrasena: contraE},
@@ -274,7 +238,9 @@ function valUsuario(){
           error: function(){
               console.log('Fallo conectando con el servidor')
           }
+        });
       });
+      
     }
   });
 }
