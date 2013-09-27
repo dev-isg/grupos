@@ -188,12 +188,12 @@ function actualizarDatos(){
         });
           $(".mifoto").delegate("span","click",function(){
              $(".cambiofoto").hide();
-                $(".ocultarfoto").slideDown(); 
-                   $(".mifoto span").hide(); 
-                   $(".mifoto").animate({
-                   'width': "48.93617021276595%",
-                   'height': "180px"
-                     }); 
+              $(".ocultarfoto").slideDown(); 
+                $(".mifoto span").hide(); 
+                $(".mifoto").animate({
+                'width': "48.93617021276595%",
+                'height': "180px"
+              }); 
             });
     });
 }
