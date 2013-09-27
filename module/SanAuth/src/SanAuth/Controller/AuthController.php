@@ -192,16 +192,20 @@ class AuthController extends AbstractActionController {
     public function validarAction(){
       $request = $this->getRequest();
         if ($request->isPost()) {
-                $correo = $this->params()->fromPost('va_email');
-                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  
+                $correo = $this->params()->fromPost('va_email');//va_email
+                $contrasena = sha1($this->params()->fromPost('va_contrasena'));  //va_contrasena
                 
                    $this->getAuthService()
                         ->getAdapter()
                         ->setIdentity($correo)
                         ->setCredential($contrasena);
            $result = $this->getAuthService()->authenticate();
-           if($result->isValid){
-                                       $urlorigen = $this->getRequest()->getHeader('Referer')->uri()->getPath();
+           var_dump($correo);
+           var_dump($contrasena);
+           var_dump($result);
+           if($result->isValid()){
+               var_dump('biennnn');Exit;
+                        $urlorigen = $this->getRequest()->getHeader('Referer')->uri()->getPath();
                         $arrurl = explode('/', $urlorigen);
                         $id = end($arrurl);
                         $accion = $request->getPost('accion');
@@ -230,6 +234,7 @@ class AuthController extends AbstractActionController {
                                         )));
 
            }else{
+               var_dump('malll');Exit;
                $success=false;
                return new JsonModel(array('success'=>$success));
 //               switch ($result->getCode()) {
