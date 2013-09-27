@@ -2834,6 +2834,7 @@ ul.score-list li:first-child {
   margin-left: 0;
   max-height: 270px;
   overflow-y: scroll;
+  margin-top: 25px;
 }
 .email-user-d ul li {
   float: left;
