@@ -136,8 +136,11 @@ class AuthController extends AbstractActionController {
                     foreach ($result->getMessages() as $message) {
 //                       
 //                       $this->flashMessenger()->clearMessages();  
-                       $this->flashMessenger()->setNamespace('SanAuth');
-                       $this->flashmessenger()->addMessage($message);
+//                        $this->flashMessenger()->setNamespace('SanAuth');
+                        if($message){
+                            $this->flashmessenger()->addMessage('Usuario ó contraseña incorrecto');
+                        }
+                        
                     }
 
                     if ($result->isValid()) {
@@ -146,6 +149,7 @@ class AuthController extends AbstractActionController {
                         $id = end($arrurl);
                         $accion = $request->getPost('accion');
                         $origen = $request->getPost('origen', 'evento');
+
                         if ($accion == 'detalleevento') {
                             $redirect = 'evento';
                         } elseif ($accion == 'detallegrupo') {
@@ -173,10 +177,11 @@ class AuthController extends AbstractActionController {
                         } else {
                             return $this->redirect()->toRoute($redirect);
                         }
+                    } else {
+                        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
                     }
                 }
-                          
-            }else {
+            } else {
 //              foreach ($form->getInputFilter()->getInvalidInput() as $error) {
 //                       foreach($error->getMessages() as $mensaje){
 //                             $this->flashmessenger()->addMessage($mensaje);
@@ -184,8 +189,7 @@ class AuthController extends AbstractActionController {
 //              }
 //              }
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
-           }
-
+            }
         }
     }
     
