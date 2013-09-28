@@ -260,7 +260,6 @@ class AuthController extends AbstractActionController {
 //                }
            }
         }
-        
                 
     }
     

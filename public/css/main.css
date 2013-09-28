@@ -1933,6 +1933,9 @@ a.tab-home-g-b:hover .pinchitob{
 .typeahead li a strong{
   background: none;
 }
+.mensaje-error{
+  margin-bottom: 0!important;
+}
 .ju-google-map-overlay{
   display: none!important;
 }

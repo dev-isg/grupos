@@ -188,12 +188,12 @@ function actualizarDatos(){
         });
           $(".mifoto").delegate("span","click",function(){
              $(".cambiofoto").hide();
-                $(".ocultarfoto").slideDown(); 
-                   $(".mifoto span").hide(); 
-                   $(".mifoto").animate({
-                   'width': "48.93617021276595%",
-                   'height': "180px"
-                     }); 
+              $(".ocultarfoto").slideDown(); 
+                $(".mifoto span").hide(); 
+                $(".mifoto").animate({
+                'width': "48.93617021276595%",
+                'height': "180px"
+              }); 
             });
     });
 }
@@ -220,10 +220,6 @@ function valUsuario(){
         minlength:"Por favor ingresa una contraseña de 8 caracteres a mas"
         //,remote: "Contraseña inválida"
       }
-    },
-    submitHandler: function(form){
-      //form.preventDefault();
-            
     }
   });
 }

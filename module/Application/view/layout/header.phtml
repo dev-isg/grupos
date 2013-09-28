@@ -27,7 +27,7 @@
         <script src="<?php echo $this->host('ruta')?>/js/jquery.min.js"></script>
         <script src="<?php echo $this->host('ruta')?>/js/jquery-migrate.min.js"></script>
 </head>
-<body id="blog">
+<body id="blog">    
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -84,9 +84,6 @@
     <div style="display:none">
         <div id="inline_evento" style="padding:10px; background:#fff;">
             <h3>Iniciar sesión</h3>
-            <div class="span4 cambiofotouser dev-marca-face">
-           
-            </div>
             <?php
             $form = $this->formlogeo;
             $form->setAttributes(array(
@@ -95,6 +92,12 @@
             $form->prepare();
             echo $this->form()->openTag($form);
             ?>
+            <div class="control-group mensaje-error" style="display:none;">
+                <label class="control-label">&nbsp</label>
+                <div class="controls mensaje-label" style="color:red;">
+                    
+                </div>
+            </div>
             <input type="hidden" name="origen" value="" id="origen" />
             <input type="hidden" name="accion" value="<?php echo $this->accion;?>" />
     			<div class="control-group">
@@ -133,23 +136,46 @@
     </div>
 <script type="text/javascript">
     jQuery(document).ready(function(){
+        //alert(CrearDatoF);
+        jQuery("#usuario input").focus(function(){
+            jQuery(".mensaje-error").hide();
+        });
         jQuery("#usuario").submit(function(e){
             e.preventDefault();
             var correoE = jQuery("#va_email").val();
             var contraE = jQuery("#inputPassword").val();
+            var datoUrl = jQuery("#origen").val();
             jQuery.ajax({
               url: '/validar',
               type: 'POST',
               data: { va_email: correoE, va_contrasena: contraE},
               dataType: "json",
               success: function(data){
-
+                if(datoUrl == 'evento'){
+                    if(data.success === false){
+                        var mensajeM = 'Usuario ó contraseña incorrecto';
+                        jQuery(".mensaje-error").show();
+                        jQuery(".mensaje-label").text(mensajeM);
+                    }else{
+                        window.location.href = '/elegir-grupo';
+                    }
+                }else{
+                   if(data.success === false){
+                        var mensajeM = 'Usuario ó contraseña incorrecto';
+                        jQuery(".mensaje-error").show();
+                        jQuery(".mensaje-label").text(mensajeM);
+                    }else{
+                        var pathname = window.location.pathname;
+                        window.location.href = pathname;
+                    } 
+                }
+                
               },
               error: function(){
                   console.log('Fallo conectando con el servidor')
               }
             });
-          });
+        });
     });
 </script>
 
