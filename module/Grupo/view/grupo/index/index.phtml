@@ -98,7 +98,7 @@
             <div class="row-fluid">
                 <div class="span12 group-sidebar" style="padding:15px;margin-bottom:0;">
                     <h1><span><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span></h1>
-                    <?php if($this->cantevent){?>
+                    <?php if($this->cantevent){?>    
                     <!--<div><span><?php echo $this->cantevent; ?></span> resultados para la categoria <span><?php echo $_GET['nombre'] ?></span> </div>-->
                         <div><span><span>Resultados</span> <?php echo $this->cantevent; ?></span></div>
                         <?php }?>
@@ -117,10 +117,16 @@
             <div class="row-fluid">
                 <div class="span12 group-sidebar" style="padding:15px;margin-bottom:0;">
                     <?php if($this->cantevent){?>
-                        <div><span><?php echo $this->cantevent; ?></span> resultados para <span><?php echo $_GET['dato'] ?></span> </div>
+                        <h1><span><span>Resultados para:</span> <?php echo $_GET['dato'] ?></span></h1>
+                        <div><?php if($this->cantevent>1){?>Se han encontrado <span>(<?php echo $this->cantevent; ?>)</span> resultados.<?php }
+                        else{?>Se ha encontrado <span>(<?php echo $this->cantevent; ?>)</span> resultado. <?php }?></div>
                         <?php }?>
                      <?php if($this->cantgroup){?>
-                        <div><span><?php echo $this->cantgroup; ?></span> resultados para <span><?php echo $_GET['dato'] ?></span></div>
+                        <h1><span><span>Resultados para:</span> <?php echo $_GET['dato'] ?></span></h1>
+                        <div><?php if($this->cantgroup>1){?>Se han encontrado <span>(<?php echo $this->cantgroup; ?>)</span> resultados.<?php }
+                        else{?>Se ha encontrado <span>(<?php echo $this->cantgroup; ?>)</span> resultado. <?php }?></div>
+                        
+                        <!--<div><span><?php echo $this->cantgroup; ?></span> resultados para <span><?php echo $_GET['dato'] ?></span></div>-->
                         <?php }?>
                 </div>
             </div>
