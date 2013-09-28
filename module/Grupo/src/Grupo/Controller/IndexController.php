@@ -190,7 +190,8 @@ class IndexController extends AbstractActionController
             $paginator->setItemCountPerPage(12);
 //            var_dump(count($listaEventos->toArray()));
 //            var_dump(count($listaEventos->toArray())%12);
-            if(ceil(count($listaEventos->toArray())/12) <$page1){
+            $cante=count($listaEventos->toArray());
+            if(ceil($cante/12) <$page1){
                 $view->setTemplate('layout/layout-error');
             }
                 
@@ -200,8 +201,8 @@ class IndexController extends AbstractActionController
             $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
             $paginator2->setCurrentPageNumber($page2);
             $paginator2->setItemCountPerPage(12);
-            
-            if(ceil(count($listagrupos->toArray())/12) <$page2){
+            $cantg=count($listagrupos->toArray());
+            if(ceil($cantg/12) <$page2){
                 $view->setTemplate('layout/layout-error');
             }
 //            if($paginator2->getPages()->pageCount<$page2){
@@ -261,12 +262,13 @@ class IndexController extends AbstractActionController
                     'eventos' => $paginator,
                     'dato' => $valor,
                     'urlac' => $urlf,
-
                     'categorias'=>$categorias,
                     'search'=>$search,
                     'active'=>$active,
                     'active1'=>$active1,
-                    'session'=>$session
+                    'session'=>$session,
+                    'cantgroup'=>$cantg,
+                    'cantevent'=>$cante
                 ));
         return $view;
 

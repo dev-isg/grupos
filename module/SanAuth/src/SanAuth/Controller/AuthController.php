@@ -183,7 +183,7 @@ class AuthController extends AbstractActionController {
 //                       }
 //              }
 //              }
-//                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
            }
 
         }
@@ -227,6 +227,7 @@ class AuthController extends AbstractActionController {
                                             'va_logout',
                                             'id_facebook'
                                         )));
+                        
                     if ($id) {
                       $success=true;
                      return new JsonModel(array('success'=>$success,'in_id'=>$id));

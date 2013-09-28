@@ -332,8 +332,6 @@ class EventoController extends AbstractActionController
         $evento = $this->getEventoTable()->Evento($id);
         $id_grupo = $evento[0]['id_grupo'];
         $grupoestado = $this->getEventoTable()->getGrupoUsuario($id_grupo, $session->in_id)->va_estado;
-//        var_dump($grupoestado);Exit;
-
 //         if($evento[0]['va_tipo']=='privado'){
 //             if(!$grupoestado || $grupoestado!='activo'){
 //                 

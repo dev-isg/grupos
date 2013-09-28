@@ -98,10 +98,35 @@
             <div class="row-fluid">
                 <div class="span12 group-sidebar" style="padding:15px;margin-bottom:0;">
                     <h1><span><span>Categoria:</span> <?php echo $_GET['nombre'] ?></span></h1>
+                    <?php if($this->cantevent){?>
+                    <!--<div><span><?php echo $this->cantevent; ?></span> resultados para la categoria <span><?php echo $_GET['nombre'] ?></span> </div>-->
+                        <div><span><span>Resultados</span> <?php echo $this->cantevent; ?></span></div>
+                        <?php }?>
+                     <?php if($this->cantgroup){?>
+                        <div><span><span>Resultados</span> <?php echo $this->cantgroup; ?></span></div>
+                    <!--<div><span><?php echo $this->cantgroup; ?></span> resultados para la categoria <span><?php echo $_GET['nombre'] ?></span></div>-->
+                        <?php }?>
                 </div>
             </div>
         </div>
     </div>
+<?php }else{ ?>
+<?php if($_GET['dato']) {?> 
+    <div class="categoria-search">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12 group-sidebar" style="padding:15px;margin-bottom:0;">
+                    <?php if($this->cantevent){?>
+                        <div><span><?php echo $this->cantevent; ?></span> resultados para <span><?php echo $_GET['dato'] ?></span> </div>
+                        <?php }?>
+                     <?php if($this->cantgroup){?>
+                        <div><span><?php echo $this->cantgroup; ?></span> resultados para <span><?php echo $_GET['dato'] ?></span></div>
+                        <?php }?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php }?> 
 <?php } ?>
             
 <div class="main-container" style="margin-top:0px;">
@@ -133,6 +158,7 @@
         } else {
     
         if(count($this->grupos)<=0) { ?>
+        
         <div class="row-fluid">
             <div class="span12 main wrapper" data-ui-scrollbar>
                 <div id="content">
@@ -183,6 +209,7 @@
             </div>
         </div>  
         <?php } else { ?>
+        
         <div class="row-fluid">
             <div class="span12 main wrapper" data-ui-scrollbar>
                 <div id="content">
