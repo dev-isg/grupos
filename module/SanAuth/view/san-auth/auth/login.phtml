@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo $this->host('base');?>/js/jquery.validate.min.js"></script>
 <div class="main-container">
     <div class="container">
         <?php if($this->mensaje){ ?>
@@ -33,8 +34,9 @@
                     array(
                         'action'     => 'authenticate',//'login'//
                     )
-                ));         
-                $form->setAttribute('class','for-ji form-horizontal');
+                ));   
+                $form->setAttribute('id', 'usarioAut');      
+                $form->setAttribute('class','form-horizontal');
                 $form->prepare();
                 echo $this->form()->openTag($form);?>
 
@@ -64,5 +66,30 @@
     $(document).ready(function(){
         $(".alert-message").alert();
         window.setTimeout(function() { $(".alert-message").alert('close'); }, 15000);
+
+        $("#usarioAut").validate({
+            rules: {
+              va_email: {
+                required: true,
+                email: true
+              },
+              va_contrasena:{
+                required : true,
+                minlength: 8
+              }
+            },
+            messages:{
+              va_email:{
+                required:"Por favor ingresa su Email",
+                email: "Por favor ingrese su correo valido"
+                //,remote: "Correo incorrecto"
+              },
+              va_contrasena: {
+                required : "Por favor ingrese su contraseña",
+                minlength:"Por favor ingresa una contraseña de 8 caracteres a mas"
+                //,remote: "Contraseña inválida"
+              }
+            }
+          });
     });
 </script>
