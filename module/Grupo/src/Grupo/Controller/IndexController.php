@@ -132,7 +132,7 @@ class IndexController extends AbstractActionController
                 if (isset($tipo)) {
                     if (!empty($rango)) {
                         if ($rango == 'Grupos') {
-                            $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                            $listagrupos = $this->getGrupoTable()->buscarGrupoPag(null, $tipo);//buscarGrupo(null, $tipo);
                             if (count($listagrupos) <= 0) {
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $rango . '&m=2');
                             }
@@ -145,7 +145,7 @@ class IndexController extends AbstractActionController
                             }
                         }
                     } else {
-                        $listagrupos = $this->getGrupoTable()->buscarGrupo(null, $tipo);
+                        $listagrupos = $this->getGrupoTable()->buscarGrupoPag(null, $tipo);//buscarGrupo(null, $tipo);
                     }
                 }
             }
