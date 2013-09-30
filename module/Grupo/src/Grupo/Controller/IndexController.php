@@ -101,7 +101,7 @@ class IndexController extends AbstractActionController
 
                             $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                             if (count($grupo->toArray()) > 0) {
-                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                                $listagrupos = $this->getGrupoTable()->buscarGrupoPag($nombre);//buscarGrupo($nombre);
                             } else {
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
                             }
