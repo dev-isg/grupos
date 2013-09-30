@@ -1918,6 +1918,12 @@ a.tab-home-g-b:hover .pinchitob{
   -o-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
 }
+.thumbnail{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
 .space-group{
   padding: 10px;
 }
@@ -2723,7 +2729,6 @@ ul.score-list li:first-child {
 /*footer*/
 .footer-container{
   background: #00a4de;
-  width: 100%;
   height: 100%;
 }
 .footer-container .container{
@@ -2731,7 +2736,7 @@ ul.score-list li:first-child {
 }
 .footer2-container{
   background: #b9e04f; 
-  width: 100%;
+
   height: 42px;
 }
 .footer2-container p{
@@ -2935,6 +2940,8 @@ form textarea.error{
 .terminos-condiciones ul{
   list-style: none;
   margin-left: 0;
+  overflow: hidden;
+  margin-bottom: 0;
 }
 .terminos-condiciones ul li{
   float: left;
