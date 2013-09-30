@@ -22,8 +22,41 @@ class GrupoTable{
         where ta_grupo.va_estado=1 order by 
         (select ta_evento.va_fecha_ingreso from ta_evento 
         where ta_grupo_in_id=ta_grupo.in_id  order by ta_evento.in_id DESC LIMIT 1) DESC';
+      
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+       
         return $resultSet->buffer();
+    }
+    
+        public function fetchAllGrupo($id = null) {
+        $adapter = $this->tableGateway->getAdapter();
+        $sql=new Sql($adapter);
+        
+        $subquery=$sql->select()->columns(array('in_id'))
+                ->from('ta_evento')
+                ->where('ta_grupo_in_id=ta_grupo.in_id')
+                ->order('ta_evento.in_id desc')->limit(1);
+//        $subquery=$sql->select()->columns(array('va_fecha_ingreso'))->from('ta_evento')
+//                  ->where(array('ta_grupo_in_id'=>'ta_grupo.in_id'))->order('ta_evento.in_id DESC')->limit(1);
+//        
+        $select=$sql->select()->from('ta_grupo')
+                ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',
+                        array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id',
+                            'id_evento'=>new \Zend\Db\Sql\Expression('('.$sql->getSqlStringForSqlObject($subquery).')')),'left')
+                ->where(array('ta_grupo.va_estado'=>'activo'))->order('id_evento desc');
+//        var_dump($sql->getSqlStringForSqlObject($select));Exit;
+        
+//        $selectString = 'select ta_grupo.*,ta_categoria.va_nombre as nombre_categoria,
+//        ta_categoria.in_id as idcategoria    
+//        from ta_grupo left join ta_categoria on 
+//         ta_grupo.ta_categoria_in_id=ta_categoria.in_id   
+//        where ta_grupo.va_estado=1 order by 
+//        (select ta_evento.va_fecha_ingreso from ta_evento 
+//        where ta_grupo_in_id=ta_grupo.in_id  order by ta_evento.in_id DESC LIMIT 1) DESC';
+//      $resultSet =  $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+       $resultSet=new \Zend\Paginator\Adapter\DbSelect($select, $adapter);
+       
+        return $resultSet;
     }
 
     public function buscarGrupo($nombre=null,$tipo=null){
@@ -52,6 +85,39 @@ class GrupoTable{
         }
             
             return $resultSet->buffer();//->buffer();
+        
+    }
+    
+    
+        public function buscarGrupoPag($nombre=null,$tipo=null){
+            $adapter = $this->tableGateway->getAdapter();
+            $sql = new Sql($adapter);
+            $selecttot = $sql->select()
+                    ->from('ta_grupo')
+                    ->join('ta_categoria','ta_grupo.ta_categoria_in_id=ta_categoria.in_id',array('nombre_categoria'=>'va_nombre','idcategoria'=>'in_id'),'left')
+                    ->join('ta_usuario','ta_grupo.ta_usuario_in_id=ta_usuario.in_id',array('nombre_user'=>'va_nombre','va_email','va_dni','va_foto'),'left');
+//                    ->join('ta_evento','ta_grupo.in_id=ta_evento.ta_grupo_in_id',array(),'left');
+            if($tipo!=null){
+                $selecttot->where(array('ta_grupo.va_estado'=>'activo','ta_grupo.ta_categoria_in_id'=>$tipo));
+            }
+            if($nombre!=null){
+                $selecttot->where(array('ta_grupo.va_nombre LIKE ?'=>'%'.$nombre.'%','ta_grupo.va_estado'=>'activo'));
+                        // ->where(array('ta_grupo.va_estado'=>'activo'));
+                
+            }
+//            $selecttot ->order('ta_evento.va_fecha_ingreso desc');//->group('ta_grupo.in_id')->order('ta_grupo.in_id desc');
+             $selecttot ->order('ta_grupo.in_id DESC');
+//            $selectString = $sql->getSqlStringForSqlObject($selecttot);
+         
+//            $resultSet =  $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+
+            
+      $resultSet=new \Zend\Paginator\Adapter\DbSelect($selecttot, $adapter);
+                if (!$resultSet) {
+            throw new \Exception("Could not find row");
+        }
+       
+        return $resultSet;
         
     }
     /*

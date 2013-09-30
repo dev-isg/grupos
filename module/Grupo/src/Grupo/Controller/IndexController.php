@@ -94,7 +94,7 @@ class IndexController extends AbstractActionController
                         } elseif ($busqueda == 'Grupos') {
                             $grupo = $this->getGrupoTable()->buscarGrupo($nombre);
                             if (count($grupo->toArray()) > 0) {
-                                $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                                $listagrupos = $this->getGrupoTable()->buscarGrupoPag($nombre);//buscarGrupo($nombre);
                             } else {
                                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '?tipo=' . $busqueda . '&m=4');
                             }
@@ -113,7 +113,7 @@ class IndexController extends AbstractActionController
                         if (count($grupo->toArray()) > 0) {
                              $search = 'group-header';
                                    $active = 'active';
-                            $listagrupos = $this->getGrupoTable()->buscarGrupo($nombre);
+                            $listagrupos = $this->getGrupoTable()->buscarGrupoPag($nombre);//buscarGrupo($nombre);
                             
                         } else {
                             $listaEventos = $this->getEventoTable()->listado2Evento($nombre);
@@ -153,7 +153,7 @@ class IndexController extends AbstractActionController
             if ($valor) {
                 if (isset($valor)) {
                     if ($valor == 'Grupos') {
-                        $listagrupos = $this->getGrupoTable()->fetchAll();
+                        $listagrupos = $this->getGrupoTable()->fetchAllGrupo();//fetchAll();
                         //$this->layout()->search = 'group-header';
                         $search = 'group-header';
                   
@@ -177,19 +177,16 @@ class IndexController extends AbstractActionController
                 }
             }
         } else {
-            $listagrupos = $this->getGrupoTable()->fetchAll();
-//            $this->layout()->active = 'active';
+            $listagrupos = $this->getGrupoTable()->fetchAllGrupo();//$this->getGrupoTable()->fetchAll();
             $active = 'active';
         }
-
+        
 
         if (count($listaEventos) > 0) {
             $page1 = (int) $this->params()->fromQuery('page', 1);
-            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));
+            $paginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listaEventos));// $listaEventos
             $paginator->setCurrentPageNumber($page1);
             $paginator->setItemCountPerPage(12);
-//            var_dump(count($listaEventos->toArray()));
-//            var_dump(count($listaEventos->toArray())%12);
             $cante=count($listaEventos->toArray());
             if(ceil($cante/12) <$page1){
                 $view->setTemplate('layout/layout-error');
@@ -198,13 +195,13 @@ class IndexController extends AbstractActionController
 
         } elseif (count($listagrupos) > 0) { //echo 'we';exit;
             $page2 = (int) $this->params()->fromQuery('page', 1); 
-            $paginator2 = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\Iterator($listagrupos));
+            $paginator2 = new \Zend\Paginator\Paginator($listagrupos);//new \Zend\Paginator\Adapter\Iterator($listagrupos)
             $paginator2->setCurrentPageNumber($page2);
             $paginator2->setItemCountPerPage(12);
-            $cantg=count($listagrupos->toArray());
-            if(ceil($cantg/12) <$page2){
-                $view->setTemplate('layout/layout-error');
-            }
+//            $cantg=count($listagrupos->toArray());
+//            if(ceil($cantg/12) <$page2){
+//                $view->setTemplate('layout/layout-error');
+//            }
 
         } else {
               $mensaje_data='No se encontro data';

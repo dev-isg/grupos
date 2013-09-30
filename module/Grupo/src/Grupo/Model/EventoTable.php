@@ -423,7 +423,6 @@ class EventoTable{
 //        }
 //        $selecttot->group('in_id')->order('in_id desc'); 
         $selectString = $sql->getSqlStringForSqlObject($selecttot);
-//      var_dump($selectString);exit;
         $resultSet = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);//.' ORDER BY in_id DESC'
         $resultSet1=$resultSet->buffer();
         
