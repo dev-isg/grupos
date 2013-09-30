@@ -204,12 +204,11 @@ class IndexController extends AbstractActionController
             if(ceil($cantg/12) <$page2){
                 $view->setTemplate('layout/layout-error');
             }
-//            if($paginator2->getPages()->pageCount<$page2){
-//                $view->setTemplate('layout/layout-error');
-//            }
 
         } else {
-            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
+              $mensaje_data='No se encontro data';
+//            return $this->redirect()->toUrl('?m=2');
+//            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl() . '/auth');
         }
 
         $url = $_SERVER['REQUEST_URI'];
@@ -267,7 +266,8 @@ class IndexController extends AbstractActionController
                     'active1'=>$active1,
                     'session'=>$session,
                     'cantgroup'=>$cantg,
-                    'cantevent'=>$cante
+                    'cantevent'=>$cante,
+                    'mensaje_data'=>$mensaje_data
                 ));
         return $view;
 

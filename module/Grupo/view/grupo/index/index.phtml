@@ -137,6 +137,12 @@
             
 <div class="main-container" style="margin-top:0px;">
     <div class="container">
+        <?php if($mensaje_data){?>
+               <div class="alert alert-margin alert-message">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?php  echo $mensaje_data; ?>
+          </div>
+        <?php }else{?>
           <?php if ($_GET['m']) { if($_GET['m']=='1') {?> <div class="row-fluid">
         <div class="alert alert-margin alert-message">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -257,7 +263,7 @@
             </div>
         </div>
         <?php }}?>
-
+<?php }?>
     </div>
 </div> <!-- #main-container -->
 

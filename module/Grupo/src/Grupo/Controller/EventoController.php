@@ -228,7 +228,7 @@ class EventoController extends AbstractActionController
             
             if ($form->isValid()) {
              
-
+//                var_dump($imagen);
                  if ($File['name'] != ''){             
               if ($this->redimensionarImagen($File, $nonFile,$imagen,$evento->in_id)) {
                 $this->getEventoTable()->guardarEvento($evento, $idgrupo,$imagen);
