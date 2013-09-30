@@ -589,22 +589,3 @@
 
 @media (max-width: 176px) { 
 }
-/* Portrait - for retina devices, like Samsung Glaxy 3 */
-/*@media screen and (width: 720px) and (height: 1280px) and (orientation: portrait) {
-	#blog-entry { margin-right: -20px; }
-	.post-block.three_columns,
-	.post-block.four_columns,
-	.post-block.five_columns { width: 328px !important; margin-right: 20px; margin-bottom: 20px; }	
-	.welcome-text { padding: 15px; }
-	.welcome-text h1, .welcome-text h2, .welcome-text h3, .welcome-text h4 { font-size: 15px !important; line-height: 24px !important; }
-}*/
-
-/* Landscape - for retina devices, like Samsung Glaxy 3 */
-/*@media screen and (width: 1280px) and (height: 720px) and (orientation: landscape) {
-	#blog-entry { margin-right: -20px; }
-	.post-block.three_columns,
-	.post-block.four_columns,
-	.post-block.five_columns { width: 376px !important; margin-right: 20px; margin-bottom: 20px; }
-	.welcome-text { padding: 15px; }
-	.welcome-text h1, .welcome-text h2, .welcome-text h3, .welcome-text h4 { font-size: 15px !important; line-height: 24px !important; }	
-}*/
