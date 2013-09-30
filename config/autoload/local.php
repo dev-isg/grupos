@@ -19,11 +19,11 @@ return array(
 //    
 //
     'host' => array(
-       'base' => 'http://dev.juntate.pe',
-        'static' => 'http://dev.juntate.pe',
+       'base' => 'http://local.juntate',
+        'static' => 'http://local.juntate',
         'images' => 'http://192.168.1.50:82/imagenes',
         'img'=>'http://192.168.1.50:82/img',
-       'ruta' => 'http://dev.juntate.pe',
+       'ruta' => 'http://local.juntate',
         'version'=>1,
     ),
  
