@@ -780,6 +780,11 @@
         data: data_obj,
         dataType: "json",
         success: function(data){
+        
+           if(data.userestado["imagen"]==="foto-carnet.jpg"){
+               var hostUrl = '<?php echo $this->host("img")?>/';
+           }
+           
           //var datoId = data.userestado["id"];
           var comentarioF = '<li>'+
                               '<div class="content-comentario">'+
