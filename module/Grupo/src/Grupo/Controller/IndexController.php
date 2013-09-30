@@ -52,7 +52,6 @@ class IndexController extends AbstractActionController
                 ->prependFile($this->_options->host->base . '/js/masonry/retina.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/prettify.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/superfish.js')
-                ->prependFile($this->_options->host->base . '/js/masonry/post-like.js')
                 ->prependFile($this->_options->host->base . '/js/masonry/custom.js')
                 ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
          $view= new ViewModel();
@@ -307,7 +306,7 @@ class IndexController extends AbstractActionController
             ->prependFile($this->_options->host->base . '/js/map/ju.google.map.js')
             ->prependFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyA2jF4dWlKJiuZ0z4MpaLL_IsjLqCs9Fhk&sensor=true')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-            ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
+            ->prependFile($this->_options->host->base . '/js/min/bootstrap-datetimepicker.js')
             ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js')
@@ -337,7 +336,7 @@ class IndexController extends AbstractActionController
             ->setScript('$(document).ready(function(){crearevento();if($("#crear-group").length){valCrearEditar("#crear-group");}});')
             ->prependFile($this->_options->host->base . '/js/main.js')
             ->prependFile($this->_options->host->base . '/js/map/ju.img.picker.js')
-            ->prependFile($this->_options->host->base . '/js/bootstrap-datetimepicker.js')
+            ->prependFile($this->_options->host->base . '/js/min/bootstrap-datetimepicker.js')
             ->prependFile($this->_options->host->base . '/js/mockjax/jquery.mockjax.js')
             ->prependFile($this->_options->host->base . '/js/bootstrap-fileupload/bootstrap-fileupload.min.js')
             ->prependFile($this->_options->host->base . '/js/jquery.validate.min.js');
