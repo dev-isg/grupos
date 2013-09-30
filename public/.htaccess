@@ -1,3 +1,31 @@
+<FilesMatch "\.(ico|pdf|flv)$">
+Header set Cache-Control "max-age=29030400, public"
+</FilesMatch>
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|ico|pdf|flv)$">
+Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+<FilesMatch "\.(js|css)$">
+Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+
+<IfModule mod_mime.c>
+ AddType application/x-javascript .js
+ AddType text/css .css
+</IfModule>
+<IfModule mod_deflate.c>
+ AddOutputFilterByType DEFLATE text/css application/x-javascript text/x-component text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/javascript
+ <IfModule mod_setenvif.c>
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+ </IfModule>
+ <IfModule mod_headers.c>
+  Header append Vary User-Agent env=!dont-vary
+ </IfModule>
+</IfModule>
+
+
 RewriteEngine On
 # The following rule tells Apache that if the requested filename
 # exists, simply serve it.
@@ -13,4 +41,9 @@ RewriteRule ^.*$ - [NC,L]
 # fits all solution.
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
-RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
+#RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
+
+#RewriteRule !\.(jpg|jpeg|png|gif|swf|ico|pdf|flv)$ %{ENV:BASE}index.php
+RewriteRule !\.(jpg|jpeg|png|gif|swf|ico|pdf|flv)$ %{ENV:BASE}index.php
+
+RewriteRule .*(.jpg|.jpeg|.png|.gif|.swf|.ico|.pdf|.flv)$ /img/defaultd.jpg [L]
