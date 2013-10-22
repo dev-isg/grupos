@@ -228,7 +228,8 @@ class IndexController extends AbstractActionController {
                                         O copia la siguiente dirección en tu navegador:<br /><br />
                                         <a href="' .self::$rutaStatic3. '/auth?token=' . $valor . ' ">' .self::$rutaStatic3. '/auth?token=' . $valor . '</a>
                                         <br /><br /><br />
-                                         <img src="'.self::$rutaStatic2.'/juntate.png" title="juntate.pe"/>
+                                        <a href="'.self::$rutaStatic3.'"><img src="'.self::$rutaStatic2.'/juntate.png" title="juntate.pe"/></a>
+                                         
                                                      </div>
                                                </body>
                                                </html>';

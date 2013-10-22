@@ -678,10 +678,11 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />                                                       
                                                      Hola ' . ucwords($usuario->va_nombre) . ',<br />
-                                                     Usted se ha unido al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
+                                                     Usted se ha unido al grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrupo.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br />
                                                      Si desea mas información del grupo dar <a href="' . $this->_options->host->base . '/grupo/' . $idgrupo . '">Clic Aquí</a> <br />Equipo Juntate.pe     
-                                                     </div>       
-                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                     </div>
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
+                                              
                                                      
                                                </body>
                                                </html>';
@@ -700,13 +701,12 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola ' . ucwords($storage->read()->va_nombre) . ',<br /><br />
-                                                     El siguiente usuario se ha unido a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong><br /><br />'.
+                                                     El siguiente usuario se ha unido a tu grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrupo.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . ':</strong></a><br /><br />'.
                                                            utf8_decode($usuario->va_nombre).'<br /><br />
                                                      Equipo Juntate.pe
                                                      <br /><br /><br />
                                                      </div>
-                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>                                                     
                                                </body>
                                                </html>';
 
@@ -724,11 +724,12 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                     Hola ' . ucwords($usuario->va_nombre) . ',<br />
-                                                    Lo sentimos pero ha sido retirado del grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br /><br />
-                                                    Si desea tener información de otros grupos puede buscarlos en Juntate.pe<br /><br /> 
+                                                    Lo sentimos pero ha sido retirado del grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrupo.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br /><br />
+                                                    Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br /><br /> 
                                                     Equipo Juntate.pe <br /><br /><br />
                                                     </div>
-                                                    <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                    <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
+                                                    
                                                      
                                                </body>
                                                </html>';
@@ -744,11 +745,11 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br /><br />
-                                                    Haz retirado al siguiente usuario de tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).': ' . utf8_decode($usuario->va_nombre) . '</strong>
+                                                    Haz retirado al siguiente usuario de tu grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrupo.'"><strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).': ' . utf8_decode($usuario->va_nombre) . '</strong></a>
                                                     <br /><br /><br /> 
                                                     </div>
-                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                                                   
+                                                    <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
+
                                                </body>
                                                </html>';
                     if ($usuario) {
@@ -824,11 +825,11 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola ' . ucwords($storage->read()->va_nombre) . ',<br /><br />
-                                                     Usted está pendiente de unirse al grupo: <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br /><br />
+                                                     Usted está pendiente de unirse al grupo: <a href="'.$this->_options->host->base.'/grupo/'.$idgrup.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br /><br />
                                                      Equipo Juntate.pe  <br /><br /><br /> 
                                                      </div>
-                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
+
                                                </body>
                                                </html>';
 
@@ -845,10 +846,10 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br /><br />
-                                                     El usuario '.utf8_decode($storage->read()->va_nombre).' está solicitando unirse a tu grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br /><br />
+                                                     El usuario '.utf8_decode($storage->read()->va_nombre).' está solicitando unirse a tu grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrup.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br /><br />
                                                      Equipo Juntate.pe  <br /><br /><br /> 
                                                      </div>
-                                                     <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
                 
                                                </body>
                                                </html>';
@@ -870,11 +871,11 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                     Hola ' . ucwords($storage->read()->va_nombre) . ',<br /><br />
-                                                    Usted ha abandonado el grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br /><br />
+                                                    Usted ha abandonado el grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrup.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br /><br />
                                                     Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br /><br />
                                                     Equipo Juntate.pe  <br /><br /><br />          
                                                      </div>
-                                                     <img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/>
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
                                                </body>
                                                </html>';
                     $this->mensaje($storage->read()->va_email, $bodyHtml, 'Ha dejado un grupo');
@@ -890,10 +891,9 @@ class IndexController extends AbstractActionController
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
                                                      Hola ' . ucwords($usuario[0]['nombre_usuario']) . ',<br />
-                                                     El siguiente usuario ha abandonado a tu grupo <strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).':' . utf8_decode($storage->read()->va_nombre) . '</strong><br />
+                                                     El siguiente usuario ha abandonado a tu grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrup.'"><strong style="color:#133088; font-weight: bold;">'.utf8_decode($user_info['nom_grup']).':' . utf8_decode($storage->read()->va_nombre) . '</strong></a><br />
                                                      </div>
-                                                       <img src="' . $this->_options->host->base . '/img/juntate.png" title="juntate.pe"/>
-                
+                                                       <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
                                                </body>
                                                </html>';
                     if ($usuario) {
@@ -956,9 +956,10 @@ class IndexController extends AbstractActionController
                                                </head>
                                                <body>
                                                     <div style="color: #7D7D7D"><br />
-                                                     Uds. se ha dejado al grupo <strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong><br />
-                                              
+                                                     Uds. se ha dejado al grupo <a href="'.$this->_options->host->base.'/grupo/'.$idgrup.'"><strong style="color:#133088; font-weight: bold;">' . utf8_decode($user_info['nom_grup']) . '</strong></a><br />
+                                                     Si desea tener información de otros grupos puede buscarlos en <a href="' . $this->_options->host->base . '">Juntate.pe</a> <br /><br />    
                                                      </div>
+                                                     <a href="'.$this->_options->host->base.'"><img src="' . $this->_options->host->img . '/juntate.png" title="juntate.pe"/></a>
                                                </body>
                                                </html>';
             
