@@ -270,7 +270,7 @@
 <?php if(!$_GET['m']){ ?>
 
     <?php //$urlact=($_SERVER['REQUEST_URI']!='/')?$_SERVER['REQUEST_URI'].'&':'?';?>
-    <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'grupo/evento/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
+    <?php echo (count($this->grupos)> 0)?$this->paginationControl($this->grupos, 'Sliding', 'evento/index/paginador.phtml',array('variable'=>$this->urlac)):"";// $this->host('base').$urlact  '/grupo/index/index?tipo=Grupos&'?>
 <?php  }?>
 <script type="text/javascript">
     jQuery(document).ready(function(){
