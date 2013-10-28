@@ -1207,7 +1207,7 @@ class IndexController extends AbstractActionController
                          else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
                              AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
-                          { echo 'entrooo';exit;$imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                            //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
