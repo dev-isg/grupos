@@ -1198,7 +1198,7 @@ class IndexController extends AbstractActionController
                        if($user_profile==''){}
                        else
                         { $id_face=$this->getUsuarioTable()->usuariocorreo($id_facebook);  
- var_dump($id_face);exit;
+ 
                          if(count($id_face)>0)
                          {   $correo = $id_face[0]['va_email'];
                          if($id_face[0]['id_facebook']=='')  
@@ -1207,7 +1207,7 @@ class IndexController extends AbstractActionController
                          else{$this->getUsuarioTable()->idfacebook2($id_face[0]['in_id'],$logoutUrl);
                              AuthController::sessionfacebook($correo,$id_facebook); }}
                          else
-                          { $imagen = 'https://graph.facebook.com/'.$user.'/picture';
+                          { echo 'entrooo';exit;$imagen = 'https://graph.facebook.com/'.$user.'/picture';
                               $this->getUsuarioTable()->insertarusuariofacebbok($name,$email,$id_facebook,$imagen,$logoutUrl,$genero,$link); 
                               AuthController::sessionfacebook($email,$id_facebook); }
                            //  return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/'); 
